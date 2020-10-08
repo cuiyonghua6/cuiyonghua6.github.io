@@ -1,0 +1,1373 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="python基础,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="官网：https://www.sqlalchemy.org/ Python SQLAlchemy Cheatsheet ： https://www.pythonsheets.com/notes/python-sqlalchemy.html官方文档：https://docs.sqlalchemy.org/en/latest/orm/tutorial.html 首先 import sqlalchemy">
+<meta name="keywords" content="python基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sqlalchemy的一些概念">
+<meta property="og:url" content="http://yoursite.com/2019/03/python/python基础/20190302_sqlalchemy的一些概念/index.html">
+<meta property="og:site_name" content="Think Different">
+<meta property="og:description" content="官网：https://www.sqlalchemy.org/ Python SQLAlchemy Cheatsheet ： https://www.pythonsheets.com/notes/python-sqlalchemy.html官方文档：https://docs.sqlalchemy.org/en/latest/orm/tutorial.html 首先 import sqlalchemy">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-10-08T12:33:54.598Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="sqlalchemy的一些概念">
+<meta name="twitter:description" content="官网：https://www.sqlalchemy.org/ Python SQLAlchemy Cheatsheet ： https://www.pythonsheets.com/notes/python-sqlalchemy.html官方文档：https://docs.sqlalchemy.org/en/latest/orm/tutorial.html 首先 import sqlalchemy">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/03/python/python基础/20190302_sqlalchemy的一些概念/">
+
+
+
+
+
+  <title> sqlalchemy的一些概念 | Think Different </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Think Different</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">享受编程和技术所带来的快乐</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/python/python基础/20190302_sqlalchemy的一些概念/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="崔永华（Andy）">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Think Different">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                sqlalchemy的一些概念
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-02T15:24:20+08:00">
+                2019-03-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/python基础/" itemprop="url" rel="index">
+                    <span itemprop="name">python基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">被围观
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>官网：<a href="https://www.sqlalchemy.org/" target="_blank" rel="noopener">https://www.sqlalchemy.org/</a></p>
+<p>Python SQLAlchemy Cheatsheet ： <a href="https://www.pythonsheets.com/notes/python-sqlalchemy.html" target="_blank" rel="noopener">https://www.pythonsheets.com/notes/python-sqlalchemy.html</a><br>官方文档：<a href="https://docs.sqlalchemy.org/en/latest/orm/tutorial.html" target="_blank" rel="noopener">https://docs.sqlalchemy.org/en/latest/orm/tutorial.html</a></p>
+<p>首先 <code>import sqlalchemy</code><br>可以这样检查版本 <code>sqlalchemy.__version__</code></p>
+<h4 id="1-sqlalchemy-简介"><a href="#1-sqlalchemy-简介" class="headerlink" title="1. sqlalchemy 简介"></a>1. sqlalchemy 简介</h4><p>开发人员常用的关系数据库有MySQL,Oracle, SQL Server, SQLite和PostgreSQL，操作数据库的方法大致有以下2种：</p>
+<ul>
+<li>直接使用数据库接口连接：在python的数据库连接模块中，分别有pymysql,cx_Oracle,pymssql,sqlite3,psycopg2。通常这类数据库的操作步骤是：连接数据库，执行SQL语句，提交事务，关闭数据库连接。每次操作都需要开启/关闭连接，这么频繁，对系统来说是一种浪费。</li>
+<li>通过orm框架来操作数据库：ORM(Object/Relation Mapping)对象-关系映射，主要实现对象到关系数据库的映射（或者说就是在python中设定一个类，在mysql中定义一个表，把关系数据库的表结构映射到这个类上），在实际工作中，企业级开发都是使用orm框架来实现数据库持久化操作的。</li>
+</ul>
+<p>常用的ORM框架模块有：SQLObject,stom,Django的ORM,peewee和SQLAlchemy。</p>
+<p><strong>SQLAlchemy</strong> 是 python 语言中一个比较有名的 ORM 框架。用于连接、操作数据库。提供SQL工具包以及对象-关系映射工具，使用MIT许可证发行。</p>
+<ul>
+<li>首次发行于2006年2月，是python社区广泛使用的orm工具之一，不亚于Django的orm框架。</li>
+<li>和传统直接操作SQL相比, 使用SQLAlchemy的对象来操作数据库更为直观.SQLAlchemy 内建数据库连接池，解决了连接操作相关繁琐的处理，提供方便的强大的log功能。</li>
+<li>类似java里的Hiernate的数据映射模型。</li>
+</ul>
+<h4 id="2-sqlalchemy-orm优缺点和适用范围"><a href="#2-sqlalchemy-orm优缺点和适用范围" class="headerlink" title="2. sqlalchemy orm优缺点和适用范围"></a>2. sqlalchemy orm优缺点和适用范围</h4><p>1、优点:  </p>
+<ul>
+<li>简单：ORM以最基本的形式建模数据。表的字段就是这个类的成员变量  </li>
+<li>可读性：ORM使数据库结构文档化。比如MySQL数据库就被ORM转换为了class类，程序员可以只把注意力放在代码逻辑上（当然能够熟练掌握MySQL更好）  </li>
+<li>可用性：ORM的避免了不规范、冗余、风格不统一的SQL语句，可以避免很多人为Bug，方便编码风格的统一和后期维护  </li>
+<li>可维护性：在数据表结构甚至数据库发生改变时，减少了相应的代码修改;可以很方便地引入数据缓存之类的附加功能  </li>
+</ul>
+<p>2、缺点:  </p>
+<ul>
+<li>自动化进行关系数据库的映射需要消耗系统性能。一般来说都可以忽略之，特别是有cache存在的时候  </li>
+<li>在处理多表联查、where条件复杂之类的查询时，ORM的语法会变得复杂  </li>
+<li>越是功能强大的ORM越是消耗内存，因为一个ORM Object会带有很多成员变量和成员函数。</li>
+</ul>
+<p>3、适用范围：适用于快速开发和团队合作开发，不适用于有大数据量(千万/亿级别)、大运算量、复杂查询的系统。</p>
+<h4 id="3-主流数据库的连接方式"><a href="#3-主流数据库的连接方式" class="headerlink" title="3. 主流数据库的连接方式"></a>3. 主流数据库的连接方式</h4><p>1、首先安装需要的模块：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip install SQLAlchemy</span><br><span class="line"><span class="comment"># 如mysql数据库需要长pymysql模块</span></span><br><span class="line">pip install pymysql</span><br></pre></td></tr></table></figure></p>
+<p>2、主流数据库的连接方式：</p>
+<table>
+<thead>
+<tr>
+<th>数据库</th>
+<th>连接字符串</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Microsoft SQL Server</td>
+<td>mssql+pymssql://username:password@ip:port/dbname</td>
+</tr>
+<tr>
+<td>MySQL</td>
+<td>mysql+pymysql://username:password@ip:port/dbname</td>
+</tr>
+<tr>
+<td>Oracle</td>
+<td>cx_Oracle://username:password@ip:port/dbname</td>
+</tr>
+<tr>
+<td>PostgreSQL</td>
+<td>postgressql://username:password@ip:port/dbname</td>
+</tr>
+<tr>
+<td>SQLite</td>
+<td>sqlite://file_path</td>
+</tr>
+</tbody>
+</table>
+<h4 id="4-连接实例-获取session"><a href="#4-连接实例-获取session" class="headerlink" title="4. 连接实例(获取session)"></a>4. 连接实例(获取session)</h4><blockquote>
+<p>连接数据库实例3个步骤：  </p>
+<pre><code>1. 创建engine  
+2. sessionmaker绑定engine  
+3. 创建session实例  
+</code></pre></blockquote>
+<p>create_engin的参数及session的创建如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 已连接mysql为例</span></span><br><span class="line"><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> create_engine</span><br><span class="line"><span class="keyword">from</span> sqlalchemy.orm <span class="keyword">import</span> sessionmaker</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">engine = create_engine(</span><br><span class="line">    <span class="comment"># 'postgresql+psycopg2://&#123;&#125;:&#123;&#125;@&#123;&#125;:&#123;&#125;/&#123;&#125;'.format(   连接postgresql</span></span><br><span class="line">    <span class="string">'mysql+pymysql://&#123;&#125;:&#123;&#125;@&#123;&#125;:&#123;&#125;/&#123;&#125;'</span>.format(    <span class="comment"># 连接mysql</span></span><br><span class="line">    POSTGRESQL_USER_NAME, </span><br><span class="line">    POSTGRESQL_PASSWORD, </span><br><span class="line">    POSTGRESQL_HOST, </span><br><span class="line">    POSTGRESQL_PORT, </span><br><span class="line">    POSTGRESQL_DB_NAME</span><br><span class="line">    ),</span><br><span class="line">    echo=Fase,          <span class="comment"># -- 如果为真，引擎将记录所有语句   用于调试</span></span><br><span class="line">    echo_pool=<span class="literal">False</span>,    <span class="comment"># -- 如果为true，则连接池将记录信息输出，例如连接失效以及连接回收到默认日志处理程序，用于调试</span></span><br><span class="line">    encoding=<span class="string">'utf-8'</span>,   <span class="comment"># 默认为 utf-8 . 这是sqlAlchemy用于在sqlAlchemy中发生的字符串编码/解码操作的字符串编码</span></span><br><span class="line">    pool_size=<span class="number">5</span>,   <span class="comment">#-- 设置连接数，默认设置5个连接数，设置为0表示没有限制</span></span><br><span class="line">    max_overflow=<span class="number">10</span>,    <span class="comment"># -- 允许在连接池中“溢出”的连接数，即可以在池大小设置（默认为5）之上或之外打开的连接数，默认连接数为10。</span></span><br><span class="line">    pool_timeout=<span class="number">30</span>,    <span class="comment">#  -- 连接超时时间，默认为30秒，超过时间的连接都会连接失败。即在放弃从池中获取连接之前等待的秒数</span></span><br><span class="line">    isolation_level=<span class="string">"AUTOCOMMIT"</span>  <span class="comment"># 设置引擎范围内的事务隔离级别隔离</span></span><br><span class="line">    pool_recycle=<span class="number">-1</span>  <span class="comment"># 连接重置周期，默认为-1，推荐设置7200，即如果连接数已空闲7200秒，就自动重新获取，以防止连接被关闭。</span></span><br><span class="line"></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Session = sessionmaker(bind=engine)</span><br><span class="line">session = Session()</span><br><span class="line"></span><br><span class="line"><span class="comment">#可以把 sessionmaker 想象成一个手机，engine 当做数据库的号码，拨通这个“号码”我们就创建了一个 Session 类。</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="5-设置事务级别-isolation-level"><a href="#5-设置事务级别-isolation-level" class="headerlink" title="5. 设置事务级别  isolation_level"></a>5. 设置事务级别  isolation_level</h4><p>置引擎范围内的事务隔离级别隔离:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create_engine(isolation_level=<span class="string">"READ_COMMITTED"</span>)  <span class="comment"># 事务隔离级别   对engine范围设置</span></span><br></pre></td></tr></table></figure></p>
+<p>可选值如下:</p>
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SERIALIZABLE</td>
+<td>串行读</td>
+<td>完全串行化的读，每次读都需要获得表级共享锁，读写相互都会阻塞</td>
+</tr>
+<tr>
+<td>REPEATABLE_READ</td>
+<td>可重复读</td>
+<td>确保同一事务的多个实例在并发读取数据时，会看到同样的数据行，InnoDB默认级别。在SQL标准中，该隔离级别消除了不可重复读，但是还存在幻读    MySQL默认隔离级别；</td>
+</tr>
+<tr>
+<td>READ_COMMITTED</td>
+<td>提交读</td>
+<td>只能读取到已经提交的数据。大部分数据库系统的默认隔离级别都是READ-COMMITED，但MySQL不是；</td>
+</tr>
+<tr>
+<td>READ_UNCOMMITTED</td>
+<td>未提交读</td>
+<td>事务中的修改，即使没有提交，对其他事务也是可见的，因此可能读到脏数据(脏读，dirty read)；</td>
+</tr>
+<tr>
+<td>AUTOCOMMIT</td>
+<td>自动提交</td>
+<td>在命令行执行sql语句，每执行一次操作实质上就是一次事务</td>
+</tr>
+</tbody>
+</table>
+<h4 id="6-sessionmaker-参数"><a href="#6-sessionmaker-参数" class="headerlink" title="6. sessionmaker 参数"></a>6. sessionmaker 参数</h4><p>1、autocommit</p>
+<blockquote>
+<p>autocommit参数表示是否自动提交事务,默认关闭,即默认sqlalchemy为每个请求（包含select操作）开启事务,但不会自动提交这个事务，需要手动提交事务。 </p>
+</blockquote>
+<blockquote>
+<p>如果autocommit=True，sqlalchemy会为每个请求（包含select操作）开启事务,并且自动提交这个事务。当你需要保证多条命令是原则性操作，则需使用<code>session.begin()</code>开启事务</p>
+</blockquote>
+<h5 id="isolation-level-”AUTOCOMMIT”-与-sessionmaker-autocommit-True-区别"><a href="#isolation-level-”AUTOCOMMIT”-与-sessionmaker-autocommit-True-区别" class="headerlink" title="isolation_level=”AUTOCOMMIT”  与 sessionmaker(autocommit=True)区别"></a>isolation_level=”AUTOCOMMIT”  与 sessionmaker(autocommit=True)区别</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sqlalchemy简单工作流程：</span><br><span class="line">代码（session.query） --&gt;  sqlalchemy  --&gt;  psycopg2  --&gt;  postgresql</span><br><span class="line"></span><br><span class="line">默认值时（autocommit不开启）：sqlalchemy在执行命令钱会通过psycopg2向数据库发送`begin`命令到数据库（之后所以命令都在事务中执行，不可在次执行session.begin命令）</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>相同点：最终效果相同（都会在执行select语句后自动提交）</p>
+</blockquote>
+<blockquote>
+<p>不同点： sessionmaker(autocommit=True) 效果：会在执行命令完毕后断开连接，并将此连接roolback回滚放回连接池。（官方不建议使用）<br>isolation_level=”AUTOCOMMIT”效果：在执行命令之前不会向数据库发送begin命令。</p>
+</blockquote>
+<p>因此两者都可以达到自动提交的效果，但实现方法完全不同。</p>
+<p>2、autoflush</p>
+<p>autoflush 为 True 时（默认是 True），session 进行查询之前会自动把当前累计的修改发送到数据库（注意：autoflush 并不是说在 session.add 之后会自动 flush），举个例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 创建了一个对象，这时，这个对象几乎没有任何意义，session 不知道它的存在</span><br><span class="line">&gt;&gt;&gt; user = User(name=&apos;cosven&apos;)</span><br><span class="line"></span><br><span class="line"># session.add 这个对象之后，它被 session 放到它的对象池里面去了，但这时不会发送任何 SQL 语句给数据库，数据库目前仍然不知道它的存在</span><br><span class="line">&gt;&gt;&gt;  session.add(user)</span><br><span class="line"> </span><br><span class="line"># session1.Query 执行之前，由于 autoflush 是 True，session 会先执行 session.flush()(session.flush 的意义：session将变积累的 SQL 语句发送给数据库。)，然后再发送查询语句</span><br><span class="line"># 所以，这个查询是能查到 user </span><br><span class="line">&gt;&gt;&gt; session1.query(User).filter_by(name=&apos;cosven&apos;).first()</span><br><span class="line">&lt;__main__.User object at 0x1108f04e0&gt;</span><br></pre></td></tr></table></figure></p>
+<p>如果 session 的 autoflush 为 False 的话，session 进行查询之前不会把当前累计的修改发送到数据库，而直接发送查询语句，所以下面这个查询是查不到对象的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; session.add(User(name=&apos;haha&apos;))</span><br><span class="line">&gt;&gt;&gt; session.query(User).filter_by(name=&apos;haha&apos;).first()  # None</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>autoflush 的意义：session 在进行<strong>查询之前</strong>，<strong>自动</strong>的进行一次 flush 操作。</p>
+</blockquote>
+<p>3、expire_on_commit</p>
+<p>如果为True，在commit之后所以实例将完全过期，以便在完成事务之后，获取属性/对象都将从最近的数据库状态加载。</p>
+<h5 id="scoped-session-与-sessionmaker区别"><a href="#scoped-session-与-sessionmaker区别" class="headerlink" title="scoped_session 与 sessionmaker区别"></a>scoped_session 与 sessionmaker区别</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">from sqlalchemy import create_engine</span><br><span class="line">from sqlalchemy.orm import sessionmaker, scoped_session</span><br><span class="line"></span><br><span class="line">engine = create_engine()</span><br><span class="line"></span><br><span class="line">Session = scoped_session(</span><br><span class="line">            sessionmaker(</span><br><span class="line">                autoflush = True,</span><br><span class="line">                bind = engine))</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>sessionmaker，我们得到一个类，一个能产生session的工厂。(每次调用都会得倒不同的session)  </p>
+</blockquote>
+<blockquote>
+<p>scoped_session类似单例模式，当我们调用使用的时候，会先在Registry里找找之前是否已经创建session了。要是有，就把这个session返回。要是没有，就创建新的session，注册到Registry中以便下次返回给调用者。这样就实现了这样一个目的：在同一个线程中，call scoped_session 的时候，返回的是同一个对象</p>
+</blockquote>
+<h4 id="7-创建orm类"><a href="#7-创建orm类" class="headerlink" title="7. 创建orm类"></a>7. 创建orm类</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding =utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入需要的字段类型</span></span><br><span class="line"><span class="keyword">from</span> sqlalchemy.dialects.mysql <span class="keyword">import</span> LONGTEXT</span><br><span class="line"><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> Column, VARCHAR, TEXT, DATE, DATETIME</span><br><span class="line"></span><br><span class="line"><span class="comment"># Model基类,创建了一个BaseModel类,这个类的子类可以自动与一个表关联</span></span><br><span class="line">Base = declarative_base()</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ParseHtmlItem</span><span class="params">(Base)</span>:</span></span><br><span class="line">    <span class="comment"># 指定表名</span></span><br><span class="line">    __tablename__ = <span class="string">'huachuang_parse_html'</span></span><br><span class="line">    <span class="comment"># 对于表的描述</span></span><br><span class="line">    desc = <span class="string">'华创项目解析详情页信息数据存储'</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 表结构</span></span><br><span class="line">    ANCHOR_TITLE = Column(VARCHAR(<span class="number">200</span>), doc=&#123;<span class="string">'zh'</span>: <span class="string">'列表页获取详情页标题(外部标题)'</span>&#125;)</span><br><span class="line">    TAG_TITLE = Column(VARCHAR(<span class="number">200</span>), doc=&#123;<span class="string">'zh'</span>: <span class="string">'标签标题'</span>&#125;)</span><br><span class="line">    TITLE = Column(VARCHAR(<span class="number">200</span>), doc=&#123;<span class="string">'zh'</span>: <span class="string">'详情页标题'</span>&#125;)</span><br><span class="line">    </span><br><span class="line"><span class="meta">    @classmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">creat_table</span><span class="params">(cls)</span>:</span></span><br><span class="line">        <span class="string">'''</span></span><br><span class="line"><span class="string">        创建数据表</span></span><br><span class="line"><span class="string">        '''</span></span><br><span class="line">        cls.__table__.create(bind=engine_postgresql, checkfirst=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="8-常用的SQLAlchemy字段类型"><a href="#8-常用的SQLAlchemy字段类型" class="headerlink" title="8. 常用的SQLAlchemy字段类型"></a>8. 常用的SQLAlchemy字段类型</h4><table>
+<thead>
+<tr>
+<th>类型名</th>
+<th>python中类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Integer</td>
+<td>int</td>
+<td>普通整数，一般是32位</td>
+</tr>
+<tr>
+<td>SmallInteger</td>
+<td>int</td>
+<td>取值范围小的整数，一般是16位</td>
+</tr>
+<tr>
+<td>BigInteger</td>
+<td>int或long</td>
+<td>不限制精度的整数</td>
+</tr>
+<tr>
+<td>Float</td>
+<td>float</td>
+<td>浮点数</td>
+</tr>
+<tr>
+<td>Numeric</td>
+<td>decimal.Decimal</td>
+<td>普通整数，一般是32位</td>
+</tr>
+<tr>
+<td>Varchar</td>
+<td>str</td>
+<td>变长字符串</td>
+</tr>
+<tr>
+<td>Text</td>
+<td>str</td>
+<td>变长字符串，对较长或不限长度的字符串做了优化</td>
+</tr>
+<tr>
+<td>Unicode</td>
+<td>unicode</td>
+<td>变长Unicode字符串</td>
+</tr>
+<tr>
+<td>UnicodeText</td>
+<td>unicode</td>
+<td>变长Unicode字符串，对较长或不限长度的字符串做了优化</td>
+</tr>
+<tr>
+<td>Boolean</td>
+<td>bool</td>
+<td>布尔值</td>
+</tr>
+<tr>
+<td>Date</td>
+<td>datetime.date</td>
+<td>时间</td>
+</tr>
+<tr>
+<td>Time</td>
+<td>datetime.datetime</td>
+<td>日期和时间</td>
+</tr>
+<tr>
+<td>LargeBinary</td>
+<td>str</td>
+<td>二进制文件</td>
+</tr>
+</tbody>
+</table>
+<p>** 常用的SQLAlchemy列选项</p>
+<table>
+<thead>
+<tr>
+<th>选项名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>primary_key</td>
+<td>如果为True，代表表的主键</td>
+</tr>
+<tr>
+<td>unique</td>
+<td>如果为True，代表这列不允许出现重复的值</td>
+</tr>
+<tr>
+<td>index</td>
+<td>如果为True，为这列创建索引，提高查询效率</td>
+</tr>
+<tr>
+<td>nullable</td>
+<td>如果为True，允许有空值，如果为False，不允许有空值</td>
+</tr>
+<tr>
+<td>default</td>
+<td>为这列定义默认值</td>
+</tr>
+</tbody>
+</table>
+<p><strong>注意：</strong><br> orm结构中可以只写<strong>部分字段</strong>，未写出的列会将其忽略</p>
+<h4 id="9-查询、过滤关键字"><a href="#9-查询、过滤关键字" class="headerlink" title="9. 查询、过滤关键字"></a>9. 查询、过滤关键字</h4><p>1、使用query查询表的内容：返回的结果是一个tuple<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">session = Session_class()</span><br><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> session.query(AlchemyTest).all():</span><br><span class="line">    print(row.TestName, row.TestNumber)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以使用label()对单独的一列进行命名,这样就对name这一列命名为name_label</span></span><br><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> session.query(User.name.label(<span class="string">'name_label'</span>)).all()</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 也可以用python的方法限定哪几行：</span></span><br><span class="line"><span class="keyword">for</span> u <span class="keyword">in</span> session.query(User).order_by(User.id)[<span class="number">1</span>:<span class="number">3</span>]</span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure></p>
+<p>filter_by()可以直接使用关键字进行限制条件，但是filter()能处理更复杂的限制条件。<br>如果有两个限制条件是AND关系，可以直接使用两次filter()处理：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">session.query(User).filter(User.name==<span class="string">'ed'</span>).filter(User.fullname==<span class="string">'Ed Jones'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>2、下面列表也展示了其他方法：（filter operator :）</p>
+<table>
+<thead>
+<tr>
+<th>作用</th>
+<th>符号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>相等</td>
+<td>==</td>
+</tr>
+<tr>
+<td>不相等</td>
+<td>!=</td>
+</tr>
+<tr>
+<td>通配符搜索</td>
+<td>like(’%关键字%’)</td>
+</tr>
+<tr>
+<td>通配符搜索(不敏感)</td>
+<td>ilike()</td>
+</tr>
+<tr>
+<td>存在于</td>
+<td>.in_([‘ed’, ‘wendy’, ‘jack’])</td>
+</tr>
+<tr>
+<td>不存在于</td>
+<td>~User.name.in_([‘ed’, ‘wendy’, ‘jack’])</td>
+</tr>
+<tr>
+<td>为空</td>
+<td>== None</td>
+</tr>
+<tr>
+<td>and</td>
+<td>.filter(User.name == ‘ed’, User.fullname == ‘Ed Jones’)</td>
+</tr>
+<tr>
+<td>or</td>
+<td>or_(User.name == ‘ed’, User.name == ‘wendy’)</td>
+</tr>
+<tr>
+<td>MATCH</td>
+<td>.match(‘wendy’)</td>
+</tr>
+</tbody>
+</table>
+<p>3、检索返回的列表，以及列表的标量 ：</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>all()</td>
+<td>返回所有</td>
+</tr>
+<tr>
+<td>first()</td>
+<td>返回第一行</td>
+</tr>
+<tr>
+<td>one()</td>
+<td>检查是不是只有一行结果</td>
+</tr>
+<tr>
+<td>one_or_none()</td>
+<td>检查是不是一行或者没有结果</td>
+</tr>
+<tr>
+<td>scalar()</td>
+<td>invokes the one() method, and upon success returns the first column of the row</td>
+</tr>
+</tbody>
+</table>
+<p>4、直接使用textual SQL语句 :<br>使用text()可以在query中使用literal strings：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">session.query(User).filter(text(<span class="string">"id&lt;224"</span>)).order_by(text(<span class="string">"id"</span>)).all()</span><br></pre></td></tr></table></figure></p>
+<p>如果要直接使用完整的整条sql，可以使用text()传给from_statement()：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">session.query(User).from_statement(text(<span class="string">"SELECT * FROM users where name=:name"</span>)).params(name=<span class="string">'ed'</span>).all()</span><br></pre></td></tr></table></figure></p>
+<p>5、计数：<br>可以直接使用 .count()计算有多少行：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">session.query(User).filter(User.name.like(<span class="string">'%ed'</span>)).count()</span><br></pre></td></tr></table></figure></p>
+<p>当需要将指定的东西进行计数，就使用func.count()：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">session.query(func.count(User.id)).scalar()</span><br></pre></td></tr></table></figure></p>
+<p>filter 与 filter_by 区别</p>
+<ul>
+<li>字段写法：filter筛选的字段是带类名（表名）的，而filter_by只需要筛选字段就可以；</li>
+<li>判断条件：filter比filter_by多了一个等号；</li>
+<li>作用范围：filter可用于单表或者多表查询，而filter_by只能用于单表查询。</li>
+</ul>
+<blockquote>
+<p>filter 可以像 sql 的 where 语句一样使用 &gt; &lt; 等条件。引用列名时，需要通过 类名.属性名 的方式。<br>filter_by 使用 python 的正常参数传递方法，指定列名时，不需要额外指定类名。</p>
+</blockquote>
+<h4 id="9-数据库操作（CRUD）"><a href="#9-数据库操作（CRUD）" class="headerlink" title="9. 数据库操作（CRUD）"></a>9. 数据库操作（CRUD）</h4><p>1、查询</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查询ParseHtmlItem.__tablename__ 表中全部数据</span></span><br><span class="line">session.query(ParseHtmlItem).all() </span><br><span class="line"></span><br><span class="line"><span class="comment"># 查询id为1的值</span></span><br><span class="line">session.query(ParseHtmlItem).filter_by(ID=<span class="number">1</span>).first()  <span class="comment"># 得到单个对象</span></span><br><span class="line">session.query(ParseHtmlItem).filter_by(ID=<span class="number">1</span>).all()    <span class="comment"># 得到列表</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查询id 小于5的数据</span></span><br><span class="line">session.query(ParseHtmlItem).filter(ParseHtmlItem.ID&lt;<span class="number">5</span>).all()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查询巨大数据量来实现分页的情况，推荐使用通过id区间来读取数据库（提高读取速度）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 取值</span></span><br><span class="line">data = session.query(ParseHtmlItem).filter_by(ID=<span class="number">1</span>).first()</span><br><span class="line">data.ID <span class="comment"># 取id的值</span></span><br></pre></td></tr></table></figure>
+<p>2、增加</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">item = ParseHtmlItem(</span><br><span class="line">                CONTENT_URL_HASH=content_url_hash,</span><br><span class="line">                ...</span><br><span class="line">            )</span><br><span class="line">session.add(item)</span><br><span class="line">session.commit()  <span class="comment"># autocommit=True时，可以不写此命令（但推荐写）</span></span><br></pre></td></tr></table></figure>
+<p>3、修改</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查询要修改的数据</span></span><br><span class="line">item = session.query(User).first()</span><br><span class="line">item.CONTENT_URL_HASH = <span class="string">""</span></span><br><span class="line">session.add(usr)</span><br><span class="line">session.commit()</span><br></pre></td></tr></table></figure>
+<p>4、删除</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查询要删除的数据</span></span><br><span class="line">item = session.query(User).first()</span><br><span class="line">session.delete(item)</span><br><span class="line">session.commit()</span><br></pre></td></tr></table></figure>
+<h4 id="10-flush与commit区别"><a href="#10-flush与commit区别" class="headerlink" title="10. flush与commit区别"></a>10. flush与commit区别</h4><p>在SQLAlchemy中每个事务对应一条或多条SQL语句，这些SQL语句需要经历如下步骤：  </p>
+<ol>
+<li>将sql语句发送到sql服务器。</li>
+<li>在当前事务中执行sql，但不会将修改写入磁盘。</li>
+<li><p>将修改写入磁盘</p>
+<p>&emsp;&emsp;flush  操作会执行1，2步骤。<br>&emsp;&emsp; commit操作执行1，2，3步骤。<br>&emsp;&emsp;因此，flush之后你可以在当前Session中看到效果，而commit之后你才能从其它Session中看到效果。</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flush 使用场景为：现在已经执行一些操作，但不想结束此事务。</span><br></pre></td></tr></table></figure>
+<h4 id="11-数据库操作错误拦截"><a href="#11-数据库操作错误拦截" class="headerlink" title="11. 数据库操作错误拦截"></a>11. 数据库操作错误拦截</h4><p>数据库操作可能因为数据类型/长度，网络原因等问题导致写入数据出错,因此要做好错误拦截避免程序关闭</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="comment"># try 中存放sql操作代码</span></span><br><span class="line">    item = ParseHtmlItem(</span><br><span class="line">                CONTENT_URL_HASH=content_url_hash,</span><br><span class="line">                ...</span><br><span class="line">            )</span><br><span class="line">    session.add(item)</span><br><span class="line">    session.commit() </span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">    <span class="comment"># 事务回滚，撤销此次事务修改</span></span><br><span class="line">    session.rollback()</span><br><span class="line">    logging.error(<span class="string">f"sql insert error: <span class="subst">&#123;e&#125;</span>"</span>)</span><br></pre></td></tr></table></figure>
+<p><strong><em>注意：</em></strong><br>使用select语句推荐<strong>使用错误拦截</strong>，并使用session.rollback()回滚事务（select查询时可能数据库因为一些原因导致此次查询错误，在下次查询时可能持续报错无法正常查询）</p>
+<h4 id="12-session-关闭-close"><a href="#12-session-关闭-close" class="headerlink" title="12. session 关闭  close"></a>12. session 关闭  close</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">session.close()</span><br></pre></td></tr></table></figure>
+<p>session创建和管理对数据库的连接，当调用close的时候，注意，sqlalchemy不会关闭与mysql的连接，而是把连接返回到连接池。</p>
+<p><strong>推荐</strong><br>当前session commit之后就执行close操作（原因：1.每次使用session时都会从连接池中取出，因此可以将session关闭主动放回连接池 2. 可以确保 transaction 有非常清晰的开始和结束，保持 transaction 简短，也就意味着让 transaction 能在一系列操作之后终止，而不是一直开放着。（保留session的生命周期（通常是transaction）独立））</p>
+<p><strong>注意</strong>：<br>未commit的transactions会被回滚</p>
+<h4 id="13-整体代码"><a href="#13-整体代码" class="headerlink" title="13. 整体代码"></a>13. 整体代码</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> create_engine</span><br><span class="line"><span class="keyword">from</span> sqlalchemy.orm <span class="keyword">import</span> sessionmaker</span><br><span class="line"><span class="keyword">from</span> sqlalchemy.ext.declarative <span class="keyword">import</span> declarative_base</span><br><span class="line"><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span>  Column, Integer, String</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">engine = create_engine(</span><br><span class="line">    <span class="comment"># postgresql+psycopg2://&#123;&#125;:&#123;&#125;@&#123;&#125;:&#123;&#125;/&#123;&#125;'.format(   连接postgresql</span></span><br><span class="line">    <span class="string">'mysql+pymysql://&#123;&#125;:&#123;&#125;@&#123;&#125;:&#123;&#125;/&#123;&#125;'</span>.format(    <span class="comment"># 连接mysql</span></span><br><span class="line">    POSTGRESQL_USER_NAME, </span><br><span class="line">    POSTGRESQL_PASSWORD, </span><br><span class="line">    POSTGRESQL_HOST, </span><br><span class="line">    POSTGRESQL_PORT, </span><br><span class="line">    POSTGRESQL_DB_NAME</span><br><span class="line">    ),</span><br><span class="line">    echo=Fase,          <span class="comment"># -- 如果为真，引擎将记录所有语句   用于调试</span></span><br><span class="line">    echo_pool=<span class="literal">False</span>,    <span class="comment"># -- 如果为true，则连接池将记录信息输出，例如连接失效以及连接回收到默认日志处理程序     用于调试</span></span><br><span class="line">    encoding=<span class="string">'utf-8'</span>,   <span class="comment"># 默认为 utf-8 . 这是sqlAlchemy用于在sqlAlchemy中发生的字符串编码/解码操作的字符串编码</span></span><br><span class="line">    pool_size=<span class="number">5</span>,   <span class="comment">#-- 在连接池中保持打开的连接数   设置为0表示没有限制</span></span><br><span class="line">    max_overflow=<span class="number">10</span>,    <span class="comment"># -- 允许在连接池中“溢出”的连接数，即可以在池大小设置（默认为5）之上或之外打开的连接数</span></span><br><span class="line">    pool_timeout=<span class="number">30</span>,    <span class="comment">#  -- 在放弃从池中获取连接之前等待的秒数</span></span><br><span class="line">    isolation_level=<span class="string">"AUTOCOMMIT"</span>  <span class="comment"># 设置引擎范围内的事务隔离级别隔离</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Session = sessionmaker(bind=engine)</span><br><span class="line">session = Session()</span><br><span class="line"></span><br><span class="line">Base = declarative_base()</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span><span class="params">(Base)</span>:</span></span><br><span class="line">    __tablename__ = <span class="string">'users'</span></span><br><span class="line">    id = Column(Integer, primary_key=<span class="literal">True</span>)</span><br><span class="line">    name = Column(String(<span class="number">50</span>))</span><br><span class="line">    fullname = Column(String(<span class="number">50</span>))</span><br><span class="line">    password = Column(String(<span class="number">12</span>))</span><br><span class="line">    </span><br><span class="line"><span class="meta">    @classmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">creat_table</span><span class="params">(cls)</span>:</span></span><br><span class="line">        <span class="string">'''</span></span><br><span class="line"><span class="string">        创建数据表</span></span><br><span class="line"><span class="string">        '''</span></span><br><span class="line">        cls.__table__.create(bind=engine_postgresql, checkfirst=<span class="literal">True</span>)</span><br><span class="line">    </span><br><span class="line"><span class="meta">    @classmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_all</span><span class="params">(cls)</span>:</span></span><br><span class="line">        <span class="string">'''</span></span><br><span class="line"><span class="string">        返回所有数据</span></span><br><span class="line"><span class="string">        '''</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">return</span>  session_postgresql.query(cls).all()</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            session_postgresql.rollback()</span><br><span class="line">            <span class="keyword">raise</span> Exception(<span class="string">f'数据库查询失败 ：<span class="subst">&#123;e&#125;</span>'</span>)</span><br><span class="line">        <span class="keyword">finally</span>:</span><br><span class="line">            session_postgresql.close()</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_item</span><span class="params">(self, id)</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    查询指定数据</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">return</span> session.query(self).filter_by(id == id).first()</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            session_postgresql.rollback()</span><br><span class="line">            <span class="keyword">raise</span> Exception(<span class="string">f'数据库查询失败 ：<span class="subst">&#123;e&#125;</span>'</span>)</span><br><span class="line">        <span class="keyword">finally</span>:</span><br><span class="line">            session_postgresql.close()</span><br></pre></td></tr></table></figure>
+<h4 id="14-案例-FAQ：session-autocommit-使用中错误"><a href="#14-案例-FAQ：session-autocommit-使用中错误" class="headerlink" title="14. 案例 FAQ：session   autocommit 使用中错误"></a>14. 案例 FAQ：session   autocommit 使用中错误</h4><h5 id="错误描述"><a href="#错误描述" class="headerlink" title="错误描述"></a>错误描述</h5><blockquote>
+<p>&emsp;&emsp;sqlalchemy 连接 数据库，select操作未commit提交（autocommit=False）这导致 pg 中产生大量的 “idle in transaction” 的长连接。导致需要 ACCESS EXCLUSIVE 锁的语句（如add column）阻塞，并阻塞所有后续需要 ACCESS SHARE 锁的读请求，导致程序异常。</p>
+</blockquote>
+<h5 id="错误例子-（还原）"><a href="#错误例子-（还原）" class="headerlink" title="错误例子 （还原）"></a>错误例子 （还原）</h5><p>session1 开启事务，并且查询test表：（autocommit=False时所有命令都会开启事务包括select语句）</p>
+<p>mysql&gt; begin;<br>Query OK, 0 rows affected (0.00 sec)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># 在此处开启事务模拟autocommit=False</span></span><br><span class="line">mysql&gt; begin;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from test1;</span><br><span class="line">+<span class="comment">----+------+-------+</span></span><br><span class="line">| id | page | page1 |</span><br><span class="line">+<span class="comment">----+------+-------+</span></span><br><span class="line">|  1 | NULL |  NULL |</span><br><span class="line">+<span class="comment">----+------+-------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+<p>session2 , 修改表结构，增加字段，这时候会卡住</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; alter table test1 add page2 int;</span><br></pre></td></tr></table></figure>
+<p>session3 再开一个终端，session3模拟其他用户的请求 , 请求也会被卡住</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from test1 where id=1;</span><br></pre></td></tr></table></figure>
+<p>查看processlist;</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show processlist;</span><br><span class="line">+<span class="comment">----+------+--------------------+------+---------+-------+---------------------------------+---------------------------------+</span></span><br><span class="line">| Id | User | Host               | db   | Command | Time  | State                           | Info                            |</span><br><span class="line">+<span class="comment">----+------+--------------------+------+---------+-------+---------------------------------+---------------------------------+</span></span><br><span class="line">|  7 | root | 192.168.33.1:53303 | test | Sleep   | 43035 |                                 | NULL                            |</span><br><span class="line">|  8 | root | localhost          | test | Query   |     0 | starting                        | <span class="keyword">show</span> <span class="keyword">processlist</span>                |</span><br><span class="line">|  <span class="number">9</span> | root | localhost          | <span class="keyword">test</span> | <span class="keyword">Query</span>   |   <span class="number">969</span> | Waiting <span class="keyword">for</span> <span class="keyword">table</span> metadata <span class="keyword">lock</span> | <span class="keyword">alter</span> <span class="keyword">table</span> test1 <span class="keyword">add</span> page2 <span class="built_in">int</span> |</span><br><span class="line">| <span class="number">10</span> | root | localhost          | <span class="keyword">test</span> | <span class="keyword">Query</span>   |   <span class="number">134</span> | Waiting <span class="keyword">for</span> <span class="keyword">table</span> metadata <span class="keyword">lock</span> | <span class="keyword">select</span> * <span class="keyword">from</span> test1 <span class="keyword">where</span> <span class="keyword">id</span>=<span class="number">1</span>  |</span><br><span class="line">+<span class="comment">----+------+--------------------+------+---------+-------+---------------------------------+---------------------------------+</span></span><br></pre></td></tr></table></figure>
+<p>id=9的线程，也就是alter表那个线程，在等待锁，此时已经锁住了test表，其他的线程也不能获取锁读取test表。</p>
+<h5 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h5><ol>
+<li>isolation_level=”AUTOCOMMIT”</li>
+<li>执行每条命令后都执行commit</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python基础/" rel="tag"># python基础</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/python/python基础/20190301_访问数据库/" rel="next" title="python访问数据库">
+                <i class="fa fa-chevron-left"></i> python访问数据库
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/python/python基础/20190303_sqlchemy的使用/" rel="prev" title="sqlalchemy的使用">
+                sqlalchemy的使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="崔永华（Andy）">
+          <p class="site-author-name" itemprop="name">崔永华（Andy）</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/cuiyonghua6" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://blog.csdn.net/cui_yonghua" target="_blank" title="CSDN">
+                  
+                    <i class="fa fa-fw fa-bandcamp"></i>
+                  
+                  CSDN
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/cuiyonghua" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/cuiyonghua" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-sqlalchemy-简介"><span class="nav-number">1.</span> <span class="nav-text">1. sqlalchemy 简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-sqlalchemy-orm优缺点和适用范围"><span class="nav-number">2.</span> <span class="nav-text">2. sqlalchemy orm优缺点和适用范围</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-主流数据库的连接方式"><span class="nav-number">3.</span> <span class="nav-text">3. 主流数据库的连接方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-连接实例-获取session"><span class="nav-number">4.</span> <span class="nav-text">4. 连接实例(获取session)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-设置事务级别-isolation-level"><span class="nav-number">5.</span> <span class="nav-text">5. 设置事务级别  isolation_level</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-sessionmaker-参数"><span class="nav-number">6.</span> <span class="nav-text">6. sessionmaker 参数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#isolation-level-”AUTOCOMMIT”-与-sessionmaker-autocommit-True-区别"><span class="nav-number">6.1.</span> <span class="nav-text">isolation_level=”AUTOCOMMIT”  与 sessionmaker(autocommit=True)区别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#scoped-session-与-sessionmaker区别"><span class="nav-number">6.2.</span> <span class="nav-text">scoped_session 与 sessionmaker区别</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-创建orm类"><span class="nav-number">7.</span> <span class="nav-text">7. 创建orm类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-常用的SQLAlchemy字段类型"><span class="nav-number">8.</span> <span class="nav-text">8. 常用的SQLAlchemy字段类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-查询、过滤关键字"><span class="nav-number">9.</span> <span class="nav-text">9. 查询、过滤关键字</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-数据库操作（CRUD）"><span class="nav-number">10.</span> <span class="nav-text">9. 数据库操作（CRUD）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-flush与commit区别"><span class="nav-number">11.</span> <span class="nav-text">10. flush与commit区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-数据库操作错误拦截"><span class="nav-number">12.</span> <span class="nav-text">11. 数据库操作错误拦截</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#12-session-关闭-close"><span class="nav-number">13.</span> <span class="nav-text">12. session 关闭  close</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#13-整体代码"><span class="nav-number">14.</span> <span class="nav-text">13. 整体代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#14-案例-FAQ：session-autocommit-使用中错误"><span class="nav-number">15.</span> <span class="nav-text">14. 案例 FAQ：session   autocommit 使用中错误</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#错误描述"><span class="nav-number">15.1.</span> <span class="nav-text">错误描述</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#错误例子-（还原）"><span class="nav-number">15.2.</span> <span class="nav-text">错误例子 （还原）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#解决方法"><span class="nav-number">15.3.</span> <span class="nav-text">解决方法</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">崔永华（Andy）</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
