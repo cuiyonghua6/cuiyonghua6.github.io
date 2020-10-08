@@ -90,18 +90,18 @@
 
 
 
-<meta name="description" content="牛客网python3: https://www.nowcoder.com/tutorial/10005/dc2c82d6557548beb0e2252869be13d8 用任何编程语言来开发程序，都是为了让计算机干活，比如下载一个MP3，编写一个文档等等，而计算机干活的CPU只认识机器指令，所以，尽管不同的编程语言差异极大，最后都得“翻译”成CPU可以执行的机器指令。而不同的编程语言，干同一个活，">
+<meta name="description" content="相互转换：将数值转换成字符串，可以使用str()和repr()函数 字符串1、判断类型：（9个）  s.isspace(): 如果字符串只包含空格字符，则返回true，否则返回false。 s.isalnum(): 如果字符串至少包含1个字符，并且所有字符均为数字，则返回true，否则返回false。 s.isalpha(): 如果字符串至少包含1个字符，并且所有字符均为字母，则返回true，否则">
 <meta name="keywords" content="python基础">
 <meta property="og:type" content="article">
-<meta property="og:title" content="大数据技术学习路线">
-<meta property="og:url" content="http://yoursite.com/2017/06/python/python基础/20190211_python简介/index.html">
+<meta property="og:title" content="python字符串和编码">
+<meta property="og:url" content="http://yoursite.com/2019/02/python/python基础/20190214_python字符串和编码/index.html">
 <meta property="og:site_name" content="Think Different">
-<meta property="og:description" content="牛客网python3: https://www.nowcoder.com/tutorial/10005/dc2c82d6557548beb0e2252869be13d8 用任何编程语言来开发程序，都是为了让计算机干活，比如下载一个MP3，编写一个文档等等，而计算机干活的CPU只认识机器指令，所以，尽管不同的编程语言差异极大，最后都得“翻译”成CPU可以执行的机器指令。而不同的编程语言，干同一个活，">
+<meta property="og:description" content="相互转换：将数值转换成字符串，可以使用str()和repr()函数 字符串1、判断类型：（9个）  s.isspace(): 如果字符串只包含空格字符，则返回true，否则返回false。 s.isalnum(): 如果字符串至少包含1个字符，并且所有字符均为数字，则返回true，否则返回false。 s.isalpha(): 如果字符串至少包含1个字符，并且所有字符均为字母，则返回true，否则">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-10-08T11:30:59.122Z">
+<meta property="og:updated_time" content="2020-10-08T11:40:28.128Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="大数据技术学习路线">
-<meta name="twitter:description" content="牛客网python3: https://www.nowcoder.com/tutorial/10005/dc2c82d6557548beb0e2252869be13d8 用任何编程语言来开发程序，都是为了让计算机干活，比如下载一个MP3，编写一个文档等等，而计算机干活的CPU只认识机器指令，所以，尽管不同的编程语言差异极大，最后都得“翻译”成CPU可以执行的机器指令。而不同的编程语言，干同一个活，">
+<meta name="twitter:title" content="python字符串和编码">
+<meta name="twitter:description" content="相互转换：将数值转换成字符串，可以使用str()和repr()函数 字符串1、判断类型：（9个）  s.isspace(): 如果字符串只包含空格字符，则返回true，否则返回false。 s.isalnum(): 如果字符串至少包含1个字符，并且所有字符均为数字，则返回true，否则返回false。 s.isalpha(): 如果字符串至少包含1个字符，并且所有字符均为字母，则返回true，否则">
 
 
 
@@ -129,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/06/python/python基础/20190211_python简介/">
+  <link rel="canonical" href="http://yoursite.com/2019/02/python/python基础/20190214_python字符串和编码/">
 
 
 
 
 
-  <title> 大数据技术学习路线 | Think Different </title>
+  <title> python字符串和编码 | Think Different </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -306,7 +306,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/python/python基础/20190211_python简介/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/python/python基础/20190214_python字符串和编码/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="崔永华（Andy）">
@@ -327,7 +327,7 @@
             
             
               
-                大数据技术学习路线
+                python字符串和编码
               
             
           </h2>
@@ -342,8 +342,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-23T15:24:20+08:00">
-                2017-06-23
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-14T15:24:20+08:00">
+                2019-02-14
               </time>
             
 
@@ -416,69 +416,88 @@
       
 
       
-        <p>牛客网python3: <a href="https://www.nowcoder.com/tutorial/10005/dc2c82d6557548beb0e2252869be13d8" target="_blank" rel="noopener">https://www.nowcoder.com/tutorial/10005/dc2c82d6557548beb0e2252869be13d8</a></p>
-<p>用任何编程语言来开发程序，都是为了让计算机干活，比如下载一个MP3，编写一个文档等等，而计算机干活的CPU只认识机器指令，所以，尽管不同的编程语言差异极大，最后都得“翻译”成CPU可以执行的机器指令。而不同的编程语言，干同一个活，编写的代码量，差距也很大。<br>比如，完成同一个任务，C语言要写1000行代码，Java只需要写100行，而Python可能只要20行；C程序运行1秒钟，Java程序可能需要2秒，而Python程序可能就需要10秒</p>
-<p>Java占据了世界上绝大部分电商，金融，通信等服务端应用的开发；<br>而C,C++占据了世界上大部分贴近操作系统的硬件编程；</p>
-<p>编译型语言：c,c++,Go,Swift,Object-c,Pascal<br>解释型语言：JavaScript,Python,Rby,PHP,Perl,Erlang<br>混合型：Java,C#</p>
-<h4 id="python介绍"><a href="#python介绍" class="headerlink" title="python介绍:"></a>python介绍:</h4><p>是一种解释型，面向对象的语言;<br>由吉多·范罗苏姆（Guido van Rossum）于1989年发明，1991年正式公布；<br>官网 <a href="www.python.org">www.python.org</a>;<br>设计哲学：优雅，明确，简单。</p>
-<p>许多大型网站就是用Python开发的，例如YouTube、Instagram，还有国内的豆瓣。很多大公司，包括Google、Yahoo等，甚至NASA（美国航空航天局）都大量地使用Python。</p>
-<h4 id="python的历史"><a href="#python的历史" class="headerlink" title="python的历史:"></a>python的历史:</h4><pre><code>1. 1989年圣诞节：Guido von Rossum开始写Python语言的编译器。
-2. 1991年2月：第一个Python编译器（同时也是解释器）诞生，它是用C语言实现的（后面），可以调用C语言的库函数。在最早的版本中，Python已经提供了对“类”，“函数”，“异常处理”等构造块的支持，还有对列表、字典等核心数据类型，同时支持以模块为基础来构造应用程序。
-3. 1994年1月：Python 1.0正式发布。
-4. 2000年10月16日：Python 2.0发布，增加了完整的垃圾回收，提供了对Unicode的支持。与此同时，Python的整个开发过程更加透明，社区对开发进度的影响逐渐扩大，生态圈开始慢慢形成。
-5. 2008年12月3日：Python 3.0发布，它并不完全兼容之前的Python代码，不过因为目前还有不少公司在项目和运维中使用Python 2.x版本，所以Python 3.x的很多新特性后来也被移植到Python 2.6/2.7版本中。
-6.2009年6月：Python发布3.1了版本。
-7.2011年2月：Python发布3.2了版本。
-8.2012年9月：Python发布3.3了版本。
-9.2014年3月：Python发布了3.4版本。
-10.2015年9月：Python发布了3.5版本。
-11.2016年12月：Python发布了3.6版本。
-</code></pre><p>目前我们使用的Python 3.7.x的版本是在2018年发布的，Python的版本号分为三段，形如A.B.C。其中A表示大版本号，一般当整体重写，或出现不向后兼容的改变时，增加A；B表示功能更新，出现新功能时增加B；C表示小的改动（例如：修复了某个Bug），只要有修改就增加C。如果对Python的历史感兴趣，可以阅读名为《Python简史》的博文。</p>
-<h4 id="python的优缺点"><a href="#python的优缺点" class="headerlink" title="python的优缺点:"></a>python的优缺点:</h4><p>Python的优点很多，简单的可以总结为以下几点。</p>
-<ol>
-<li>简单和明确，做一件事只有一种方法。</li>
-<li>学习曲线低，跟其他很多语言相比，Python更容易上手。</li>
-<li>开放源代码，拥有强大的社区和生态圈。</li>
-<li>解释型语言，天生具有平台可移植性。</li>
-<li>对两种主流的编程范式（面向对象编程和函数式编程）都提供了支持。</li>
-<li>可扩展性和可嵌入性，例如在Python中可以调用C/C++代码。</li>
-<li>代码规范程度高，可读性强，适合有代码洁癖和强迫症的人群。</li>
-<li>Python就为我们提供了非常完善的基础代码库，覆盖了网络、文件、GUI、数据库、文本等大量内容，被形象地称作“内置电池（batteries included）”。用Python开发，许多功能不必从零编写，直接使用现成的即可。</li>
-<li>Python还有大量的第三方库</li>
-</ol>
-<p>Python的缺点主要集中在以下几点。</p>
-<pre><code>1. 执行效率稍低，因此计算密集型任务可以由C/C++编写。
-2. 代码无法加密，但是现在很多公司都不销售卖软件而是销售服务，这个问题会被弱化。
-3. 在开发时可以选择的框架太多（如Web框架就有100多个），有选择的地方就有错误。
-</code></pre><h4 id="python的用途："><a href="#python的用途：" class="headerlink" title="python的用途："></a>python的用途：</h4><ol>
-<li>WEB应用：Facebook 豆瓣⋯</li>
-<li>爬虫程序： 网络数据采集</li>
-<li>科学计算： 云基础设施</li>
-<li>自动化运维;</li>
-<li>大数据（数据清洗）：科学计算和可视化、数据分析、量化交易</li>
-<li>云计算;</li>
-<li>桌面软件/游戏;</li>
-<li>人工智能：机器人开发、自然语言处理、图像识别;</li>
-<li>GUI开发</li>
-</ol>
-<h4 id="python的解释器分类："><a href="#python的解释器分类：" class="headerlink" title="python的解释器分类："></a>python的解释器分类：</h4><ul>
-<li>CPython（官方）: 用c语言编写的Python解释器;</li>
-<li>IPython是基于CPython之上的一个交互式解释器，只是在交互方式上有所增强，但是执行Python代码的功能和CPython是完全一样的。</li>
-<li>PyPy : 用Python语言编写的Python解释器;</li>
-<li>IronPython : 用.net编写的Python解释器;</li>
-<li>Jython : 用Java编写的Python解释器,可直接调用java类库，适合在java平台上开发</li>
+        <p>相互转换：<br>将数值转换成字符串，可以使用str()和repr()函数</p>
+<h4 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h4><p>1、判断类型：（9个）</p>
+<ul>
+<li>s.isspace(): 如果字符串只包含空格字符，则返回true，否则返回false。</li>
+<li>s.isalnum(): 如果字符串至少包含1个字符，并且所有字符均为数字，则返回true，否则返回false。</li>
+<li>s.isalpha(): 如果字符串至少包含1个字符，并且所有字符均为字母，则返回true，否则返回false。</li>
+<li>s.isdigit(): 如果字符串只包含数字则返回true，否则返回false。</li>
+<li>s.isnumeric(): 如果unicode字符串只包含数字字符，则返回true，否则返回false。</li>
+<li>s.istitle(): 如果字符串正确“标题大小写”，则返回true，否则返回false。</li>
+<li>s.isupper(): 如果字符串至少包含一个可变大小写字符，并且所有可变大小写字符均为大写，则返回true，否则返回false。</li>
+<li>s.islower(): 如果字符串至少包含1个字母，并且所有字符均为小写，则返回true，否则返回false。</li>
+<li>s.isdecimal() : 如果unicode字符串只包含十进制字符，则返回true，否则返回false。</li>
 </ul>
-<h4 id="python2-和-python3的区别："><a href="#python2-和-python3的区别：" class="headerlink" title="python2 和 python3的区别："></a>python2 和 python3的区别：</h4><pre><code>1. python3中，print不再是关键字，而是函数，
-2. 比如原来是 print ‘abc’ 现在是 print(‘abc’)但是 python2.6+ 可以使用 from future import print_function 来实现相同功能
-3. 在Python 3中，没有旧式类，只有新式类，
-4. 原来1/2（两个整数相除）结果是0，现在是0.5了，
-5. 新的字符串格式化方法format取代%,从 python2.6+ 开始已经在str和unicode中有该方法, 同时 python3依然支持 % 算符
-6. 对 bytes 和 原生 UNICODE 字符串的支持, 删除了 unicode 对象, str 为原生 unicode 字符串, bytes 替代了之前的 str.
-7. xrange重命名为range。同时更改的还有一系列内置函数及方法, 都返回迭代器对象, 而不是列表或者 元组, 比如 filter, map, dict.items 等
-8. != 取代 &lt; &gt; 在python2中 也很少有人用 &lt; &gt; 所以影响不大
-9. 某些类库的变化，组织结构变了些. 但功能没变. urlparse - &gt; urllib.parse 这样的变化
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> this</span><br><span class="line">print(this)  <span class="comment"># 可以看到Tim Peter撰写的“Python之禅”</span></span><br></pre></td></tr></table></figure>
-
+<p>2、查找和替换：（7个）</p>
+<ul>
+<li>s.startswith(str, beg=0,end=len(string)): 确定字符串或字符串的子字符串(如果给定起始索引beg和结束索引end)以str开头; 如果是则返回true，否则返回false。</li>
+<li>s.endswith(suffix, beg = 0, end = len(string)): 确定字符串或字符串的子字符串(如果启动索引结束和结束索引结束)都以后缀结尾; 如果是则返回true，否则返回false。</li>
+<li>s.find(str, beg = 0 end = len(string)): 如果索引beg和结束索引end给定，则确定str是否在字符串或字符串的子字符串中，如果找到则返回索引，否则为-1。</li>
+<li>s.rfind(): 从右边查找。</li>
+<li>s.index(str, beg = 0, end = len(string)): 与find()相同，但如果没有找到str，则引发异常。</li>
+<li>s.rindex( str, beg = 0, end = len(string)): 与index()相同，但在字符串中向后搜索。</li>
+<li>s.replace(old, new [, max]): 如果给定max值，则用new或最多最大出现替换字符串中所有出现的旧字符(old)。</li>
+</ul>
+<p>3、大小写转换：（5个）</p>
+<ul>
+<li>s.capitalize()：把字符串的第一个字母转为大写;</li>
+<li>s.title(): 返回字符串的标题版本，即所有单词第一个字母都以大写开头，其余的都是小写的。</li>
+<li>s.upper(): 将字符串中的小写字母转换为大写。</li>
+<li>s.lower(): 将字符串中的所有大写字母转换为小写。</li>
+<li>s.swapcase(): 反转在字符串中的所有字母大小写，即小写转大写，大写转小写。</li>
+</ul>
+<p>4、文本对齐：（3个）</p>
+<ul>
+<li>s.center(width, fillchar)：返回使用fillchar填充的字符串，原始字符串以总共width列为中心。</li>
+<li>s.ljust(width[, fillchar]): 返回一个空格填充的字符串，原始字符串左对齐到总共width列。</li>
+<li>s.rjust(width,[, fillchar]): 返回一个空格填充字符串，原始字符串右对齐到总共宽度(width)列。</li>
+</ul>
+<p>5、去除空白字符：（3个）</p>
+<ul>
+<li>s.strip([chars]): 对字符串执行lstrip()和rstrip()</li>
+<li>s.lstrip(): 删除字符串中的所有前导空格</li>
+<li>s.rstrip(): 删除字符串的所有尾随空格。</li>
+</ul>
+<p>6、拆分和连接：（5个）</p>
+<ul>
+<li>s.join(seq): m将序列seq中的元素以字符串表示合并(并入)到具有分隔符字符串的字符串中。</li>
+<li>s.split(str=: 根据分隔符str(空格，如果没有提供)拆分字符串并返回子字符串列表; 如果给定，最多分割为num子串。</li>
+<li>s.splitlines( num=string.count(‘\n’)))”): 全部拆分字符串(或num)新行符，并返回每行的列表，并删除新行符。</li>
+</ul>
+<p>7、其它</p>
+<ul>
+<li>s.count(str, beg = 0,end = len(string))：计算字符串中出现有多少次str或字符串的子字符串(如果开始索引beg和结束索引end,则在beg~end范围匹配)。 </li>
+<li>s.decode(encoding = ‘UTF-8’,errors = ‘strict’): 使用编码encoding解码该字符串。 编码默认为默认字符串encoding。</li>
+<li>s.encode(encoding = ‘UTF-8’,errors = ‘strict’): 返回字符串的编码字符串版本; 在错误的情况下，默认是抛出ValueError，除非使用’ignore‘或’replace‘给出错误。</li>
+<li>s.expandtabs(tabsize = 8): 将字符串中的制表符扩展到多个空格; 如果没有提供tabize，则默认为每个制表符为8个空格。</li>
+</ul>
+<p>maketrans(): 返回在translate函数中使用的转换表。<br>max(str): 从字符串str返回最大字母字符。<br>translate(table, deletechars=根据转换表STR(256个字符): 除去那些在del字符串转换字符串。<br>zfill(width): 返回原始字符串，左边填充为零，总共有宽度(width)字符; 对于数字zfill()保留给定的任何符号(少于一个零)。</p>
+<h4 id="编码："><a href="#编码：" class="headerlink" title="编码："></a>编码：</h4><p>python编码风格：PEP8（Python Enhancement Proposal）python增强提案</p>
+<ol>
+<li>模块，包名：简短全小写，非必要时不带下划线 如：sys,re;</li>
+<li>函数名，变量名：全小写，用下划线增加可读性，如：my_func(),my_var;</li>
+<li>类名：单词首字母大写，如：MyClass;</li>
+<li>常量名：全大写，下划线分隔，如：TAX_RETE；</li>
+<li>缩进：每级相差4个空格；</li>
+<li>比较操作：不要与True或者False值比较，如：if my_var</li>
+</ol>
+<p>ython 3的字符串使用Unicode，直接支持多语言。</p>
+<p>UTF-8编码把一个Unicode字符根据不同的数字大小编码成1-6个字节，常用的英文字母被编码成1个字节，汉字通常是3个字节，只有很生僻的字符才会被编码成4-6个字节。如果你要传输的文本包含大量英文字符，用UTF-8编码就能节省空间。</p>
+<p>在计算机内存中，统一使用Unicode编码，当需要保存到硬盘或者需要传输的时候，就转换为UTF-8编码，很多网页的源码上会有类似<code>&lt;meta charset=&quot;UTF-8&quot; /&gt;</code>的信息，表示该网页正是用的UTF-8编码。</p>
+<ul>
+<li>用记事本编辑的时候，从文件读取的UTF-8字符被转换为Unicode字符到内存里，编辑完成后，保存的时候再把Unicode转换为UTF-8保存到文件；</li>
+<li>浏览网页的时候，服务器会把动态生成的Unicode内容转换为UTF-8再传输到浏览器：</li>
+</ul>
+<p>如果要在网络上传输，或者保存到磁盘上，就需要把str变为以字节为单位的bytes。Python对bytes类型的数据用带b前缀的单引号或双引号表示，bytes的每个字符都只占用一个字节。为了避免乱码问题，应当始终坚持使用UTF-8编码对str和bytes进行转换。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 以Unicode表示的str通过encode()方法可以编码为指定的bytes</span></span><br><span class="line"><span class="string">'ABC'</span>.encode(<span class="string">'ascii'</span>)</span><br><span class="line"><span class="string">'中文'</span>.encode(<span class="string">'utf-8'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果我们从网络或磁盘上读取了字节流，那么读到的数据就是bytes。要把bytes变为str，就需要用decode()方法</span></span><br><span class="line"><span class="comment"># 如果bytes中只有一小部分无效的字节，可以传入errors='ignore'忽略错误的字节</span></span><br><span class="line"><span class="string">b'\xe4\xb8\xad\xff'</span>.decode(<span class="string">'utf-8'</span>, errors=<span class="string">'ignore'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 当Python解释器读取源代码时，为了让它按UTF-8编码读取，我们通常在文件开头写上这两行：</span></span><br><span class="line"><span class="comment"># 第一行注释是为了告诉Linux/OS X系统，这是一个Python可执行程序，Windows系统会忽略这个注释；</span></span><br><span class="line"><span class="comment"># 第二行注释是为了告诉Python解释器，按照UTF-8编码读取源代码，否则，你在源代码中写的中文输出可能会有乱码。</span></span><br><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="str类型和bytes类型"><a href="#str类型和bytes类型" class="headerlink" title="str类型和bytes类型"></a>str类型和bytes类型</h4><p>bytes：二进制<br>互联网上数据的都是以二进制的方式传输的</p>
+<p>str ：unicode的呈现形式<br>字符(Character)是各种文字和符号的总称，包括各国家文字、标点符号、图形符号、数字等<br>字符集(Character set)是多个字符的集合<br>字符集包括：ASCII字符集、GB2312字符集、GB18030字符集、Unicode字符集等</p>
+<p>ASCII编码是1个字节，而Unicode编码通常是2个字节。<br>UTF-8是Unicode的实现方式之一，UTF-8是它是一种变长的编码方式，可以是1，2，3个字节</p>
+<p>str 使用encode方法转化为 bytes<br>bytes通过decode转化为str</p>
+<p>编码方式解码方式必须一样，否则就会出现乱码</p>
+<h4 id="格式化字符串"><a href="#格式化字符串" class="headerlink" title="格式化字符串"></a>格式化字符串</h4><p>第一种格式化：在字符串内部，%s表示用字符串替换，%d表示用整数替换，%f表示用浮点数替换，%x表示用十六进制替换，有几个%?占位符，后面就跟几个变量或者值，顺序要对应好。</p>
+<p>第二种格式化：使用字符串的format()方法，它会用传入的参数依次替换字符串内的占位符{0}、{1}……，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'&#123;1&#125; and &#123;0&#125;'</span>.format(<span class="string">'spam'</span>, <span class="string">'eggs'</span>))  <span class="comment"># eggs and spam</span></span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -520,8 +539,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/04/my-post1/" rel="next" title="我的个人博客系统终于实施落地了">
-                <i class="fa fa-chevron-left"></i> 我的个人博客系统终于实施落地了
+              <a href="/2019/02/python/python基础/20190213_python关键字和内置函数/" rel="next" title="python关键字和内置函数">
+                <i class="fa fa-chevron-left"></i> python关键字和内置函数
               </a>
             
           </div>
@@ -530,8 +549,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/06/my-post2/" rel="prev" title="大数据技术学习路线">
-                大数据技术学习路线 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/02/python/python基础/20190215_python序列（列表，元组，字典，集合）/" rel="prev" title="python序列（列表，元组，字典，集合）">
+                python序列（列表，元组，字典，集合） <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -625,7 +644,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -720,7 +739,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#python介绍"><span class="nav-number">1.</span> <span class="nav-text">python介绍:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#python的历史"><span class="nav-number">2.</span> <span class="nav-text">python的历史:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#python的优缺点"><span class="nav-number">3.</span> <span class="nav-text">python的优缺点:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#python的用途："><span class="nav-number">4.</span> <span class="nav-text">python的用途：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#python的解释器分类："><span class="nav-number">5.</span> <span class="nav-text">python的解释器分类：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#python2-和-python3的区别："><span class="nav-number">6.</span> <span class="nav-text">python2 和 python3的区别：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串"><span class="nav-number">1.</span> <span class="nav-text">字符串</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编码："><span class="nav-number">2.</span> <span class="nav-text">编码：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#str类型和bytes类型"><span class="nav-number">3.</span> <span class="nav-text">str类型和bytes类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#格式化字符串"><span class="nav-number">4.</span> <span class="nav-text">格式化字符串</span></a></li></ol></div>
             
 
           </div>
