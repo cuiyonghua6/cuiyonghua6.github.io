@@ -1,0 +1,1002 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="python,爬虫,scrapy,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="deferscrapy的核心的代码大量用到deffer对象，还有一些并行的东西。 这里简单去学习下deffer和并行的方法知识 。 twisted.interet.defer 这个官方的api就是下面的网址了。http://twistedmatrix.com/documents/current/api/twisted.internet.defer.html我们可以看到这个defer是twisted">
+<meta name="keywords" content="python,爬虫,scrapy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="scrapy源码6：deffer和parallel的源码分析">
+<meta property="og:url" content="http://yoursite.com/2020/07/python/spider/scrapy/20200707_deffer和parallel/index.html">
+<meta property="og:site_name" content="崔永华的个人网站">
+<meta property="og:description" content="deferscrapy的核心的代码大量用到deffer对象，还有一些并行的东西。 这里简单去学习下deffer和并行的方法知识 。 twisted.interet.defer 这个官方的api就是下面的网址了。http://twistedmatrix.com/documents/current/api/twisted.internet.defer.html我们可以看到这个defer是twisted">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-10-13T11:58:46.459Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="scrapy源码6：deffer和parallel的源码分析">
+<meta name="twitter:description" content="deferscrapy的核心的代码大量用到deffer对象，还有一些并行的东西。 这里简单去学习下deffer和并行的方法知识 。 twisted.interet.defer 这个官方的api就是下面的网址了。http://twistedmatrix.com/documents/current/api/twisted.internet.defer.html我们可以看到这个defer是twisted">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/07/python/spider/scrapy/20200707_deffer和parallel/">
+
+
+
+
+
+  <title> scrapy源码6：deffer和parallel的源码分析 | 崔永华的个人网站 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">崔永华的个人网站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/python/spider/scrapy/20200707_deffer和parallel/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="崔永华（Andy）">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="崔永华的个人网站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                scrapy源码6：deffer和parallel的源码分析
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-07T10:35:00+08:00">
+                2020-07-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/爬虫/" itemprop="url" rel="index">
+                    <span itemprop="name">爬虫</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">被围观
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="defer"><a href="#defer" class="headerlink" title="defer"></a>defer</h4><p>scrapy的核心的代码大量用到deffer对象，还有一些并行的东西。 这里简单去学习下deffer和并行的方法知识 。</p>
+<p>twisted.interet.defer 这个官方的api就是下面的网址了。<br><a href="http://twistedmatrix.com/documents/current/api/twisted.internet.defer.html" target="_blank" rel="noopener">http://twistedmatrix.com/documents/current/api/twisted.internet.defer.html</a><br>我们可以看到这个defer是twisted提供的internet方法的包</p>
+<h4 id="twisted"><a href="#twisted" class="headerlink" title="twisted"></a>twisted</h4><p>先了解下twisted是个什么。<br>Twisted: The Framework Of Your Internet. 说明twisted是一个网络框架。<br><a href="http://twistedmatrix.com/documents/current/api/twisted.html" target="_blank" rel="noopener">http://twistedmatrix.com/documents/current/api/twisted.html</a> 这个官方api说的很精简啊， </p>
+<p>我们还是看看wiki上怎么说的: Twisted is an event-driven network programming framework written in Python and licensed under the MIT<br>License.<br>Twisted projects variously support TCP, UDP, SSL/TLS, IP multicast, Unix domain sockets, a large number of protocols (including HTTP, XMPP, NNTP, IMAP, SSH, IRC, FTP, and others), and much more. Twisted is based on the event-driven programming paradigm, which means that users of Twisted write short callbacks which are called by the framework.<br>大概意思如下：<br>Twisted是一个以Python编写的事件驱动的网络编程框架，并根据MIT许可证进行许可。<br>twisted的项目各种支持TCP，UDP，SSL / TLS，IP组播，Unix域套接字，大量协议<br>（包括HTTP，XMPP，NNTP，IMAP，SSH，IRC，FTP等）等等。<br>Twisted是基于事件驱动的编程范例，这意味着Twisted的用户写入框架调用的简短回调。</p>
+<p>知道twisted了， 还是应该了解下twisted的异步处理。<br>网址如下: <a href="http://blog.csdn.net/fxjtoday/article/details/6396932" target="_blank" rel="noopener">http://blog.csdn.net/fxjtoday/article/details/6396932</a><br>这个人的博客写的不错。 <a href="http://blog.csdn.net/fangjian1204/article/details/42084273" target="_blank" rel="noopener">http://blog.csdn.net/fangjian1204/article/details/42084273</a></p>
+<p>Method  addCallbacks    Add a pair of callbacks (success and error) to this Deferred.<br>Method  addCallback     Convenience method for adding just a callback.<br>Method  addErrback  Convenience method for adding just an errback.<br>Method  addBoth     Convenience method for adding a single callable as both a callback and an errback.</p>
+<p>这里有4个方法， addCallbacks,addBoth 一次添加成功和错误的2个回调。addCallback 添加成功的回调 ， addErrback 添加错误的回调。<br>Method  addTimeout  Time out this Deferred by scheduling it to be cancelled after timeout seconds.<br>        这个是设置下deferred的时间，超时的话会被取消的。<br>Method  chainDeferred   Chain another Deferred to this Deferred.</p>
+<p>Method  callback    Run all success callbacks that have been added to this Deferred.<br>    运行成功的回调<br>Method  errback     Run all error callbacks that have been added to this Deferred.<br>    运行所有的错误回调<br>Method  pause   Stop processing on a Deferred until unpause() is called.<br>    暂定deferred执行， 一直到unpause调用才继续执行<br>Method  unpause     Process all callbacks made since pause() was called.<br>    解除defered的pause的暂停操作<br>Method  cancel  Cancel this Deferred.<br>    取消这个defferd<br>Method  <strong>str</strong>     Return a string representation of this Deferred.<br>Method  <strong>iter</strong>    Undocumented<br>Method  send    Undocumented<br>Method  asFuture    Adapt a Deferred into a asyncio.Future which is bound to loop.<br>Class Method    fromFuture  Adapt an asyncio.Future to a Deferred.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line"><span class="comment"># 我们在defer.py里面有个方法如下 </span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">parallel</span><span class="params">(iterable, count, callable, *args, **named)</span>:</span></span><br><span class="line">    <span class="string">"""Execute a callable over the objects in the given iterable, in parallel,</span></span><br><span class="line"><span class="string">    using no more than ``count`` concurrent calls.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Taken from: http://jcalderone.livejournal.com/24285.html</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    coop = task.Cooperator()</span><br><span class="line">    work = (callable(elem, *args, **named) <span class="keyword">for</span> elem <span class="keyword">in</span> iterable)</span><br><span class="line">    <span class="keyword">return</span> defer.DeferredList([coop.coiterate(work) <span class="keyword">for</span> _ <span class="keyword">in</span> range(count)])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 先来看看这个task.Cooperator 是什么</span></span><br><span class="line"><span class="comment"># Cooperator的官方api 网址： http://twistedmatrix.com/documents/current/api/twisted.internet.task.Cooperator.html</span></span><br><span class="line"><span class="comment"># google翻译了下如下： </span></span><br><span class="line"><span class="comment"># 合作任务调度程序。</span></span><br><span class="line"><span class="comment"># 合作任务是一个迭代器，每个迭代代表一个原子工作单元。当迭代器产生时，它允许合作者决定下一个执行其任务。如果迭代器产生defer.Deferred，</span></span><br><span class="line"><span class="comment"># 则工作将暂停，直到defer.Deferred触发并完成其回调链。</span></span><br><span class="line"><span class="comment"># 当合作者有多个任务时，它会在所有任务之间分配工作。</span></span><br><span class="line"><span class="comment"># 有两种方法可以向协作者添加任务，进行合作和协调。合作是更有用的两个，因为它返回一个CooperativeTask，可以暂停，恢复和等待。 </span></span><br><span class="line"><span class="comment"># coiterate具有相同的效果，但只返回一个延迟。当任务完成时触发。</span></span><br><span class="line"><span class="comment"># 合作者可以用于许多事情，包括但不限于：</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#     运行一个或多个计算密集型任务而不阻止</span></span><br><span class="line"><span class="comment">#     通过同时运行总任务的子集来限制并行性</span></span><br><span class="line"><span class="comment">#     做一件事，等待延期开火，做下一件事，重复（即序列化一系列异步任务）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 多个合作者不能相互合作，所以在大多数情况下，您应该使用全局的合作伙伴。</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Method    __init__    Create a scheduler-like object to which iterators may be added.</span></span><br><span class="line"><span class="comment">#     创建可以添加迭代器的类似于调度程序的对象。</span></span><br><span class="line"><span class="comment"># Method    coiterate   Add an iterator to the list of iterators this Cooperator is #currently running.</span></span><br><span class="line"><span class="comment">#     将迭代器添加到此Cooperator当前正在运行的迭代器列表中。</span></span><br><span class="line"><span class="comment"># Method    cooperate   Start running the given iterator as a long-running cooperative task, by calling next() on it as a periodic timed event.</span></span><br><span class="line"><span class="comment">#     开始运行给定的迭代器作为一个长期运行的协作任务，通过调用next（）作为定期定时事件。</span></span><br><span class="line"><span class="comment"># Method    start   Begin scheduling steps.</span></span><br><span class="line"><span class="comment">#     开始安排步骤</span></span><br><span class="line"><span class="comment"># Method    stop    Stop scheduling steps. Errback the completion Deferreds of all iterators which have been added and forget about them.</span></span><br><span class="line"><span class="comment">#     停止调度步骤。 Errback完成所有迭代器已被添加并忘记了它们。</span></span><br><span class="line"><span class="comment"># Method    running     Is this Cooperator is currently running?</span></span><br><span class="line"><span class="comment">#     这个合作伙伴是否正在运行？</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 回到那个代码吧。 第一句    coop = task.Cooperator() 创建一个合作者对象。</span></span><br><span class="line"><span class="comment">#  work = (callable(elem, *args, **named) for elem in iterable) 遍历下iterable方法列表， 构造works元组</span></span><br><span class="line"><span class="comment"># coop.coiterate(work) 每一个work都去调用这个方法添加到coop中去， 返回一个deferred数组， 然后转化为defer.DeferredList</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">process_chain</span><span class="params">(callbacks, input, *a, **kw)</span>:</span></span><br><span class="line">    <span class="string">"""Return a Deferred built by chaining the given callbacks"""</span></span><br><span class="line">    d = defer.Deferred()</span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> callbacks:</span><br><span class="line">        d.addCallback(x, *a, **kw)</span><br><span class="line">    d.callback(input)</span><br><span class="line">    <span class="keyword">return</span> d</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个deferred对象， 添加一系列的成功回调方法， 然后执行所有的成功回调。 返回deffered对象。 </span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">process_chain_both</span><span class="params">(callbacks, errbacks, input, *a, **kw)</span>:</span></span><br><span class="line">    <span class="string">"""Return a Deferred built by chaining the given callbacks and errbacks"""</span></span><br><span class="line">    d = defer.Deferred()</span><br><span class="line">    <span class="keyword">for</span> cb, eb <span class="keyword">in</span> zip(callbacks, errbacks):</span><br><span class="line">        d.addCallbacks(cb, eb, callbackArgs=a, callbackKeywords=kw,</span><br><span class="line">            errbackArgs=a, errbackKeywords=kw)</span><br><span class="line">    <span class="keyword">if</span> isinstance(input, failure.Failure):</span><br><span class="line">        d.errback(input)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        d.callback(input)</span><br><span class="line">    <span class="keyword">return</span> d</span><br><span class="line"></span><br><span class="line"><span class="comment"># 这个方法， 创建一个deferred对象， 添加成功和失败回调对。 </span></span><br><span class="line"><span class="comment"># 如果input是成功的就调用成功回调， 失败调用失败的回调。 </span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">process_parallel</span><span class="params">(callbacks, input, *a, **kw)</span>:</span></span><br><span class="line">    <span class="string">"""Return a Deferred with the output of all successful calls to the given</span></span><br><span class="line"><span class="string">    callbacks</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    dfds = [defer.succeed(input).addCallback(x, *a, **kw) <span class="keyword">for</span> x <span class="keyword">in</span> callbacks]</span><br><span class="line">    d = defer.DeferredList(dfds, fireOnOneErrback=<span class="number">1</span>, consumeErrors=<span class="number">1</span>)</span><br><span class="line">    d.addCallbacks(<span class="keyword">lambda</span> r: [x[<span class="number">1</span>] <span class="keyword">for</span> x <span class="keyword">in</span> r], <span class="keyword">lambda</span> f: f.value.subFailure)</span><br><span class="line">    <span class="keyword">return</span> d</span><br><span class="line"><span class="comment"># 遍历 callbacks列表， 使用addcallback添加成功的回调。 </span></span><br><span class="line"><span class="comment"># defer.succeed(input) 应该是返回一个deferred对象。 </span></span><br><span class="line"><span class="comment"># 查看下官方api。 </span></span><br><span class="line"><span class="comment"># Function  succeed     Return a Deferred that has already had .callback(result) called.</span></span><br><span class="line"><span class="comment"># 现获取一个dfds 的数组， 然后转为list ， 再有2个参数。</span></span><br><span class="line"><span class="comment"># 添加2个匿名的回调方法。</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/爬虫/" rel="tag"># 爬虫</a>
+          
+            <a href="/tags/scrapy/" rel="tag"># scrapy</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/07/python/spider/scrapy/20200705_ middleware/" rel="next" title="scrapy源码5：middleware的源码分析">
+                <i class="fa fa-chevron-left"></i> scrapy源码5：middleware的源码分析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/07/python/spider/scrapy/20200708_downloader/" rel="prev" title="scrapy源码7：downloader的源码分析">
+                scrapy源码7：downloader的源码分析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="崔永华（Andy）">
+          <p class="site-author-name" itemprop="name">崔永华（Andy）</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">68</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/cuiyonghua6" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://blog.csdn.net/cui_yonghua" target="_blank" title="CSDN">
+                  
+                    <i class="fa fa-fw fa-bandcamp"></i>
+                  
+                  CSDN
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/cuiyonghua" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/cuiyonghua" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#defer"><span class="nav-number">1.</span> <span class="nav-text">defer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#twisted"><span class="nav-number">2.</span> <span class="nav-text">twisted</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">崔永华（Andy）</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

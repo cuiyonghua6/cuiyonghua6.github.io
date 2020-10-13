@@ -1,0 +1,969 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="python,爬虫,scrapy,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="这里我们看看scrapy.core.downloader 这个吧。12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788">
+<meta name="keywords" content="python,爬虫,scrapy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="scrapy源码7：downloader的源码分析">
+<meta property="og:url" content="http://yoursite.com/2020/07/python/spider/scrapy/20200708_downloader/index.html">
+<meta property="og:site_name" content="崔永华的个人网站">
+<meta property="og:description" content="这里我们看看scrapy.core.downloader 这个吧。12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-10-13T12:00:30.628Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="scrapy源码7：downloader的源码分析">
+<meta name="twitter:description" content="这里我们看看scrapy.core.downloader 这个吧。12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/07/python/spider/scrapy/20200708_downloader/">
+
+
+
+
+
+  <title> scrapy源码7：downloader的源码分析 | 崔永华的个人网站 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">崔永华的个人网站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/python/spider/scrapy/20200708_downloader/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="崔永华（Andy）">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="崔永华的个人网站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                scrapy源码7：downloader的源码分析
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-08T10:35:00+08:00">
+                2020-07-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/爬虫/" itemprop="url" rel="index">
+                    <span itemprop="name">爬虫</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">被围观
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这里我们看看scrapy.core.downloader 这个吧。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> absolute_import</span><br><span class="line"><span class="comment"># 建议尽可能多的使用绝对导入，因此在你的代码中使用from pkg improt string是适宜的。</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> warnings </span><br><span class="line"><span class="comment"># 这就是导入随机数和警告</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> deque</span><br><span class="line"><span class="comment"># 这些也是导入基本的包， 没啥问题。 </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> six</span><br><span class="line"><span class="keyword">from</span> twisted.internet <span class="keyword">import</span> reactor, defer, task</span><br><span class="line"><span class="comment"># 这里导入了兼容包six， 以及twisted 下的reactor反应堆， defer以及task。</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> scrapy.utils.defer <span class="keyword">import</span> mustbe_deferred</span><br><span class="line"><span class="comment"># 导入强制deferred </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> scrapy.utils.httpobj <span class="keyword">import</span> urlparse_cached</span><br><span class="line"><span class="comment"># 这个我们定位过去看看</span></span><br><span class="line"></span><br><span class="line">_urlparse_cache = weakref.WeakKeyDictionary()</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">urlparse_cached</span><span class="params">(request_or_response)</span>:</span></span><br><span class="line">    <span class="string">"""Return urlparse.urlparse caching the result, where the argument can be a</span></span><br><span class="line"><span class="string">    Request or Response object</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">if</span> request_or_response <span class="keyword">not</span> <span class="keyword">in</span> _urlparse_cache:</span><br><span class="line">        _urlparse_cache[request_or_response] = urlparse(request_or_response.url)</span><br><span class="line">    <span class="keyword">return</span> _urlparse_cache[request_or_response]</span><br><span class="line"><span class="comment"># 方法是返回一个结果urlparse,urlparse的缓存结果。 参数可以使请求也可以是响应。 </span></span><br><span class="line"><span class="comment"># 如果对象不再字典里面， 就缓存下， 然后返回。</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> scrapy.resolver <span class="keyword">import</span> dnscache</span><br><span class="line"><span class="comment"># dnscache = LocalCache(10000) ， 说明dnscache 是个dict 的。 </span></span><br><span class="line"><span class="keyword">from</span> scrapy <span class="keyword">import</span> signals 导入信号</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> .middleware <span class="keyword">import</span> DownloaderMiddlewareManager</span><br><span class="line"><span class="keyword">from</span> .handlers <span class="keyword">import</span> DownloadHandlers</span><br><span class="line"><span class="comment"># 导入了下载中间件和下载处理</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 这个文件2个类， 我们一个一个看。 </span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, concurrency, delay, randomize_delay)</span>:</span></span><br><span class="line">        self.concurrency = concurrency</span><br><span class="line">        self.delay = delay</span><br><span class="line">        self.randomize_delay = randomize_delay</span><br><span class="line"></span><br><span class="line">        self.active = set()</span><br><span class="line">        self.queue = deque()</span><br><span class="line">        self.transferring = set()</span><br><span class="line">        self.lastseen = <span class="number">0</span></span><br><span class="line">        self.latercall = <span class="literal">None</span></span><br><span class="line"><span class="comment"># 初始化工作 。 并发，延迟， 是否随机延迟， 活动集合， 队列， 正在传输集合， 最后调用， </span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">free_transfer_slots</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> self.concurrency - len(self.transferring)</span><br><span class="line">    <span class="comment"># 并发度 - 当前传输的个数=  得到空闲的传输槽</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">download_delay</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> self.randomize_delay:</span><br><span class="line">        <span class="keyword">return</span> random.uniform(<span class="number">0.5</span> * self.delay, <span class="number">1.5</span> * self.delay)</span><br><span class="line">    <span class="keyword">return</span> self.delay</span><br><span class="line"><span class="comment"># 下载延迟，如果随机延迟开启的话 在0.5 1.5倍delay之间返回一个值， 否则直接使用delay值。 </span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">close</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> self.latercall <span class="keyword">and</span> self.latercall.active():</span><br><span class="line">        self.latercall.cancel()</span><br><span class="line"><span class="comment"># 关闭下载器，  如果最后一个调用存在，代用cancel取消。</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__repr__</span><span class="params">(self)</span>:</span></span><br><span class="line">    cls_name = self.__class__.__name__</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"%s(concurrency=%r, delay=%0.2f, randomize_delay=%r)"</span> % (</span><br><span class="line">        cls_name, self.concurrency, self.delay, self.randomize_delay)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="string">"&lt;downloader.Slot concurrency=%r delay=%0.2f randomize_delay=%r "</span></span><br><span class="line">        <span class="string">"len(active)=%d len(queue)=%d len(transferring)=%d lastseen=%s&gt;"</span> % (</span><br><span class="line">            self.concurrency, self.delay, self.randomize_delay,</span><br><span class="line">            len(self.active), len(self.queue), len(self.transferring),</span><br><span class="line">            datetime.fromtimestamp(self.lastseen).isoformat()</span><br><span class="line">        )</span><br><span class="line">    )</span><br><span class="line"><span class="comment"># 这2个就是基本的方法了。 没啥问题的。 </span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_get_concurrency_delay</span><span class="params">(concurrency, spider, settings)</span>:</span></span><br><span class="line">    delay = settings.getfloat(<span class="string">'DOWNLOAD_DELAY'</span>)</span><br><span class="line">    <span class="keyword">if</span> hasattr(spider, <span class="string">'DOWNLOAD_DELAY'</span>):</span><br><span class="line">        warnings.warn(<span class="string">"%s.DOWNLOAD_DELAY attribute is deprecated, use %s.download_delay instead"</span> %</span><br><span class="line">                      (type(spider).__name__, type(spider).__name__))</span><br><span class="line">        delay = spider.DOWNLOAD_DELAY</span><br><span class="line">    <span class="keyword">if</span> hasattr(spider, <span class="string">'download_delay'</span>):</span><br><span class="line">        delay = spider.download_delay</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> hasattr(spider, <span class="string">'max_concurrent_requests'</span>):</span><br><span class="line">        concurrency = spider.max_concurrent_requests</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> concurrency, delay</span><br><span class="line"><span class="comment"># 获取并发的延迟， 从设置里面获取download_delay 也就是获取下载延迟设置。 </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果爬虫有对应的下载延迟设置， 提示警告。 还是采用其设置值。</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果爬虫有对应的download_delay设置，设置值。</span></span><br><span class="line"><span class="comment"># 如果有最大并发请求个数，最总返回一个最大并发数和延迟量。 </span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 接下来看看这个下载downloader类</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, crawler)</span>:</span></span><br><span class="line">    self.settings = crawler.settings</span><br><span class="line">    self.signals = crawler.signals</span><br><span class="line">    self.slots = &#123;&#125;</span><br><span class="line">    self.active = set()</span><br><span class="line">    self.handlers = DownloadHandlers(crawler)</span><br><span class="line">    self.total_concurrency = self.settings.getint(<span class="string">'CONCURRENT_REQUESTS'</span>)</span><br><span class="line">    self.domain_concurrency = self.settings.getint(<span class="string">'CONCURRENT_REQUESTS_PER_DOMAIN'</span>)</span><br><span class="line">    self.ip_concurrency = self.settings.getint(<span class="string">'CONCURRENT_REQUESTS_PER_IP'</span>)</span><br><span class="line">    self.randomize_delay = self.settings.getbool(<span class="string">'RANDOMIZE_DOWNLOAD_DELAY'</span>)</span><br><span class="line">    self.middleware = DownloaderMiddlewareManager.from_crawler(crawler)</span><br><span class="line">    self._slot_gc_loop = task.LoopingCall(self._slot_gc)</span><br><span class="line">    self._slot_gc_loop.start(<span class="number">60</span>)</span><br><span class="line"><span class="comment"># 这个是downloader的初始化方法， 根据一个crawler去初始化， </span></span><br><span class="line"><span class="comment"># 获取crawler的设置和信号， </span></span><br><span class="line"><span class="comment"># 构造一个slots集合， 和一个活动集合。 </span></span><br><span class="line"><span class="comment"># 根据crawler构造一个下载处理对象。 </span></span><br><span class="line"><span class="comment"># 从设置获取并行请求，每个与的最大请求书， 每个ip的并发请求限制， 随机下载延迟，  中间件通过中间件管理构造。 </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># task.LoopingCall 百度下， 是一个定时的反复，    </span></span><br><span class="line"> self._slot_gc_loop = task.LoopingCall(self._slot_gc)</span><br><span class="line">    self._slot_gc_loop.start(<span class="number">60</span>) </span><br><span class="line">    <span class="comment"># 这2句话的意思就是每60s就去执行下self._slot_gc方法。</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fetch</span><span class="params">(self, request, spider)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_deactivate</span><span class="params">(response)</span>:</span></span><br><span class="line">        self.active.remove(request)</span><br><span class="line">        <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line">    self.active.add(request)</span><br><span class="line">    dfd = self.middleware.download(self._enqueue_request, request, spider)</span><br><span class="line">    <span class="keyword">return</span> dfd.addBoth(_deactivate)</span><br><span class="line"><span class="comment"># 活动集合添加请求， 下载中间件完成下载获取deffered对象， 添加一个回调方法移除请求。 </span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">needs_backout</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> len(self.active) &gt;= self.total_concurrency</span><br><span class="line"><span class="comment"># 判断当前活动的个数是不是超出了总的并发量</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_get_slot_key</span><span class="params">(self, request, spider)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> <span class="string">'download_slot'</span> <span class="keyword">in</span> request.meta:</span><br><span class="line">        <span class="keyword">return</span> request.meta[<span class="string">'download_slot'</span>]</span><br><span class="line"></span><br><span class="line">    key = urlparse_cached(request).hostname <span class="keyword">or</span> <span class="string">''</span></span><br><span class="line">    <span class="keyword">if</span> self.ip_concurrency:</span><br><span class="line">        key = dnscache.get(key, key)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> key </span><br><span class="line"><span class="comment"># 这个先看看meta有没有download_slot ，如果有的话就直接返回</span></span><br><span class="line"><span class="comment"># 没有话，就从urlparse缓冲里面获取到主机名，如果为空，就设置为‘’ ，如果有ip并发限制</span></span><br><span class="line"><span class="comment"># 从dns缓冲中获取</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_get_slot</span><span class="params">(self, request, spider)</span>:</span></span><br><span class="line">    key = self._get_slot_key(request, spider)</span><br><span class="line">    <span class="keyword">if</span> key <span class="keyword">not</span> <span class="keyword">in</span> self.slots:</span><br><span class="line">        conc = self.ip_concurrency <span class="keyword">if</span> self.ip_concurrency <span class="keyword">else</span> self.domain_concurrency</span><br><span class="line">        conc, delay = _get_concurrency_delay(conc, spider, self.settings)</span><br><span class="line">        self.slots[key] = Slot(conc, delay, self.randomize_delay)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> key, self.slots[key]</span><br><span class="line"><span class="comment"># 获取key , 如果key不在slots里面， 如果ip限制了。 就使用ip限制， 否则使用域限制。 </span></span><br><span class="line"><span class="comment"># 获取并发和延迟从设置里面， 根据key创建一个slot</span></span><br><span class="line"><span class="comment"># 返回key 和slot</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_enqueue_request</span><span class="params">(self, request, spider)</span>:</span></span><br><span class="line">    key, slot = self._get_slot(request, spider)</span><br><span class="line">    request.meta[<span class="string">'download_slot'</span>] = key</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_deactivate</span><span class="params">(response)</span>:</span></span><br><span class="line">        slot.active.remove(request)</span><br><span class="line">        <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line">    slot.active.add(request)</span><br><span class="line">    deferred = defer.Deferred().addBoth(_deactivate)</span><br><span class="line">    slot.queue.append((request, deferred))</span><br><span class="line">    self._process_queue(spider, slot)</span><br><span class="line">    <span class="keyword">return</span> deferred</span><br><span class="line"><span class="comment"># 根据请求和爬虫获取key 和slot , 设置请求的meta， slot的active集合添加请求， 添加回调方法去移除活动集合。</span></span><br><span class="line"><span class="comment"># slot的队列添加一个。 调用process_queue 去处理队列。 返回deferred对象。</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_process_queue</span><span class="params">(self, spider, slot)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> slot.latercall <span class="keyword">and</span> slot.latercall.active():</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Delay queue processing if a download_delay is configured</span></span><br><span class="line">    now = time()</span><br><span class="line">    delay = slot.download_delay()</span><br><span class="line">    <span class="keyword">if</span> delay:</span><br><span class="line">        penalty = delay - now + slot.lastseen</span><br><span class="line">        <span class="keyword">if</span> penalty &gt; <span class="number">0</span>:</span><br><span class="line">            slot.latercall = reactor.callLater(penalty, self._process_queue, spider, slot)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Process enqueued requests if there are free slots to transfer for this slot</span></span><br><span class="line">    <span class="keyword">while</span> slot.queue <span class="keyword">and</span> slot.free_transfer_slots() &gt; <span class="number">0</span>:</span><br><span class="line">        slot.lastseen = now</span><br><span class="line">        request, deferred = slot.queue.popleft()</span><br><span class="line">        dfd = self._download(slot, request, spider)</span><br><span class="line">        dfd.chainDeferred(deferred)</span><br><span class="line">        <span class="comment"># prevent burst if inter-request delays were configured</span></span><br><span class="line">        <span class="keyword">if</span> delay:</span><br><span class="line">            self._process_queue(spider, slot)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"><span class="comment"># 处理队列的方法， 如果最后一个调用在，就返回， </span></span><br><span class="line"><span class="comment"># 获取当前时间， 从slot获取下载延迟， </span></span><br><span class="line"><span class="comment"># 如果有延迟， lastseen 上次slot使用时间， - now 得到 上次使用距离当前时间的差值， 加delay </span></span><br><span class="line"><span class="comment"># 如果大于0 说明 等待时间小于延迟时间了。 可以进行下一步操作了。 </span></span><br><span class="line"><span class="comment"># 设置下lastcall  设置下几秒之后执行方法。 也就是设置了。等待几秒去执行self._process_queue 方法。</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果还有空闲的传输clost的话， </span></span><br><span class="line"><span class="comment"># 设置lastseen为now,</span></span><br><span class="line"><span class="comment"># 从队列取出一个，调用_download返回一个deferred对象， 添加到deferred链上，如果有延迟，执行#_process_queue方法。</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_download</span><span class="params">(self, slot, request, spider)</span>:</span></span><br><span class="line">    <span class="comment"># The order is very important for the following deferreds. Do not change!</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 1. Create the download deferred</span></span><br><span class="line">    dfd = mustbe_deferred(self.handlers.download_request, request, spider)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 2. Notify response_downloaded listeners about the recent download</span></span><br><span class="line">    <span class="comment"># before querying queue for next request</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_downloaded</span><span class="params">(response)</span>:</span></span><br><span class="line">        self.signals.send_catch_log(signal=signals.response_downloaded,</span><br><span class="line">                                    response=response,</span><br><span class="line">                                    request=request,</span><br><span class="line">                                    spider=spider)</span><br><span class="line">        <span class="keyword">return</span> response</span><br><span class="line">    dfd.addCallback(_downloaded)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 3. After response arrives,  remove the request from transferring</span></span><br><span class="line">    <span class="comment"># state to free up the transferring slot so it can be used by the</span></span><br><span class="line">    <span class="comment"># following requests (perhaps those which came from the downloader</span></span><br><span class="line">    <span class="comment"># middleware itself)</span></span><br><span class="line">    slot.transferring.add(request)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">finish_transferring</span><span class="params">(_)</span>:</span></span><br><span class="line">        slot.transferring.remove(request)</span><br><span class="line">        self._process_queue(spider, slot)</span><br><span class="line">        <span class="keyword">return</span> _</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> dfd.addBoth(finish_transferring)</span><br><span class="line"><span class="comment"># 这个方法写的注释很是详细。 </span></span><br><span class="line"><span class="comment"># 创建一个下载deferred， </span></span><br><span class="line"><span class="comment"># 通知响应下载监听关于最近的下载，在查询队列为下一次请求之前。</span></span><br><span class="line"><span class="comment"># 在响应接收到到之后， 移除请求从传输状态到free的传输slot上，让其空间给其他请求使用。</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">close</span><span class="params">(self)</span>:</span></span><br><span class="line">    self._slot_gc_loop.stop()</span><br><span class="line">    <span class="keyword">for</span> slot <span class="keyword">in</span> six.itervalues(self.slots):</span><br><span class="line">        slot.close()</span><br><span class="line"><span class="comment"># 关闭方法，  关闭gc_loop </span></span><br><span class="line"><span class="comment"># 关闭所有slot。</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_slot_gc</span><span class="params">(self, age=<span class="number">60</span>)</span>:</span></span><br><span class="line">    mintime = time() - age</span><br><span class="line">    <span class="keyword">for</span> key, slot <span class="keyword">in</span> list(self.slots.items()):</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> slot.active <span class="keyword">and</span> slot.lastseen + slot.delay &lt; mintime:</span><br><span class="line">            self.slots.pop(key).close()</span><br><span class="line"><span class="comment"># 获取近一分钟内，遍历slots。</span></span><br><span class="line"><span class="comment"># 如果slot的状态不是active,上次访问+延迟&lt; mintime的话， 就从slots里面pop出来。 并关闭。</span></span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/爬虫/" rel="tag"># 爬虫</a>
+          
+            <a href="/tags/scrapy/" rel="tag"># scrapy</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/07/python/spider/scrapy/20200707_deffer和parallel/" rel="next" title="scrapy源码6：deffer和parallel的源码分析">
+                <i class="fa fa-chevron-left"></i> scrapy源码6：deffer和parallel的源码分析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/07/python/spider/scrapy/20200709_ contextfactory/" rel="prev" title="scrapy源码8 - contextfactory">
+                scrapy源码8 - contextfactory <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="崔永华（Andy）">
+          <p class="site-author-name" itemprop="name">崔永华（Andy）</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">68</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/cuiyonghua6" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://blog.csdn.net/cui_yonghua" target="_blank" title="CSDN">
+                  
+                    <i class="fa fa-fw fa-bandcamp"></i>
+                  
+                  CSDN
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/cuiyonghua" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/cuiyonghua" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">崔永华（Andy）</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,969 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="python,爬虫,scrapy,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989910010110210">
+<meta name="keywords" content="python,爬虫,scrapy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="scrapy源码11 - webclient">
+<meta property="og:url" content="http://yoursite.com/2020/07/python/spider/scrapy/20200713_ webclient/index.html">
+<meta property="og:site_name" content="崔永华的个人网站">
+<meta property="og:description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989910010110210">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-10-13T12:07:00.063Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="scrapy源码11 - webclient">
+<meta name="twitter:description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989910010110210">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/07/python/spider/scrapy/20200713_ webclient/">
+
+
+
+
+
+  <title> scrapy源码11 - webclient | 崔永华的个人网站 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">崔永华的个人网站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/python/spider/scrapy/20200713_ webclient/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="崔永华（Andy）">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="崔永华的个人网站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                scrapy源码11 - webclient
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-13T10:35:00+08:00">
+                2020-07-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/爬虫/" itemprop="url" rel="index">
+                    <span itemprop="name">爬虫</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">被围观
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br></pre></td><td class="code"><pre><span class="line">webclient.py 这个文件从名字上看出来应该是定义一个web 客户端的类。</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> time</span><br><span class="line">导入时间</span><br><span class="line"><span class="keyword">from</span> six.moves.urllib.parse <span class="keyword">import</span> urlparse, urlunparse, urldefrag</span><br><span class="line">导入urlparse,urlunparse,urldefrag</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> twisted.web.client <span class="keyword">import</span> HTTPClientFactory</span><br><span class="line">导入HTTPClientFactory</span><br><span class="line"><span class="keyword">from</span> twisted.web.http <span class="keyword">import</span> HTTPClient</span><br><span class="line">导入HTTPClient</span><br><span class="line"><span class="keyword">from</span> twisted.internet <span class="keyword">import</span> defer</span><br><span class="line">导入defer</span><br><span class="line"><span class="keyword">from</span> scrapy.http <span class="keyword">import</span> Headers</span><br><span class="line">导入herader</span><br><span class="line"><span class="keyword">from</span> scrapy.utils.httpobj <span class="keyword">import</span> urlparse_cached</span><br><span class="line">导入urlparse_cached </span><br><span class="line"><span class="keyword">from</span> scrapy.utils.python <span class="keyword">import</span> to_bytes</span><br><span class="line">导入to_bytes方法</span><br><span class="line"><span class="keyword">from</span> scrapy.responsetypes <span class="keyword">import</span> responsetypes</span><br><span class="line">导入responsetypes方法。</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">to_bytes</span><span class="params">(text, encoding=None, errors=<span class="string">'strict'</span>)</span>:</span></span><br><span class="line">    <span class="string">"""Return the binary representation of `text`. If `text`</span></span><br><span class="line"><span class="string">    is already a bytes object, return it as-is."""</span></span><br><span class="line">    <span class="keyword">if</span> isinstance(text, bytes):</span><br><span class="line">        <span class="keyword">return</span> text</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> isinstance(text, six.string_types):</span><br><span class="line">        <span class="keyword">raise</span> TypeError(<span class="string">'to_bytes must receive a unicode, str or bytes '</span></span><br><span class="line">                        <span class="string">'object, got %s'</span> % type(text).__name__)</span><br><span class="line">    <span class="keyword">if</span> encoding <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        encoding = <span class="string">'utf-8'</span></span><br><span class="line">    <span class="keyword">return</span> text.encode(encoding, errors)</span><br><span class="line">这个方法就是转字节的方法， 如果就是bytes就直接返回， 如果是不是unicode,str,就抛出异常， 设置下默认的encoding,</span><br><span class="line">转化为bytes,这个方法所在的文件里面还有to——unicode unicode_to_str的方法等等。 </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_parsed_url_args</span><span class="params">(parsed)</span>:</span></span><br><span class="line">    <span class="comment"># Assume parsed is urlparse-d from Request.url,</span></span><br><span class="line">    <span class="comment"># which was passed via safe_url_string and is ascii-only.</span></span><br><span class="line">    b = <span class="keyword">lambda</span> s: to_bytes(s, encoding=<span class="string">'ascii'</span>)</span><br><span class="line">    path = urlunparse((<span class="string">''</span>, <span class="string">''</span>, parsed.path <span class="keyword">or</span> <span class="string">'/'</span>, parsed.params, parsed.query, <span class="string">''</span>))</span><br><span class="line">    path = b(path)</span><br><span class="line">    host = b(parsed.hostname)</span><br><span class="line">    port = parsed.port</span><br><span class="line">    scheme = b(parsed.scheme)</span><br><span class="line">    netloc = b(parsed.netloc)</span><br><span class="line">    <span class="keyword">if</span> port <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        port = <span class="number">443</span> <span class="keyword">if</span> scheme == <span class="string">b'https'</span> <span class="keyword">else</span> <span class="number">80</span></span><br><span class="line">    <span class="keyword">return</span> scheme, netloc, host, port, path</span><br><span class="line">这个方法从名字上看是解析url参数的。 </span><br><span class="line">设置b变量为一个匿名的方法， 使用urlunparse获取路径</span><br><span class="line">将路径to_bytes, host 也to_bytes,port不用， scheme,netloc bytes话， </span><br><span class="line">如果端口没有指定的话， 如果scheme是https就设置<span class="number">443</span>， 其他情况下是<span class="number">80</span>端口。 </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_parse</span><span class="params">(url)</span>:</span></span><br><span class="line">    <span class="string">""" Return tuple of (scheme, netloc, host, port, path),</span></span><br><span class="line"><span class="string">    all in bytes except for port which is int.</span></span><br><span class="line"><span class="string">    Assume url is from Request.url, which was passed via safe_url_string</span></span><br><span class="line"><span class="string">    and is ascii-only.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    url = url.strip()</span><br><span class="line">    parsed = urlparse(url)</span><br><span class="line">    <span class="keyword">return</span> _parsed_url_args(parsed)</span><br><span class="line">这里返回一个元组(scheme, netloc, host, port, path)， 除了端口号是int之外，其他的都是bytes.</span><br><span class="line">这个url 只能是Request.url传递过来 。 </span><br><span class="line">url调用strip去除空格。使用urlparse获取一个parsed对象。 </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ScrapyHTTPPageGetter</span><span class="params">(HTTPClient)</span>:</span> </span><br><span class="line">这个类继承了HTTPClient.</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">connectionMade</span><span class="params">(self)</span>:</span></span><br><span class="line">    self.headers = Headers() <span class="comment"># bucket for response headers</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Method command</span></span><br><span class="line">    self.sendCommand(self.factory.method, self.factory.path)</span><br><span class="line">    <span class="comment"># Headers</span></span><br><span class="line">    <span class="keyword">for</span> key, values <span class="keyword">in</span> self.factory.headers.items():</span><br><span class="line">        <span class="keyword">for</span> value <span class="keyword">in</span> values:</span><br><span class="line">            self.sendHeader(key, value)</span><br><span class="line">    self.endHeaders()</span><br><span class="line">    <span class="comment"># Body</span></span><br><span class="line">    <span class="keyword">if</span> self.factory.body <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        self.transport.write(self.factory.body)</span><br><span class="line">    连接模式方法， 定义一个headers对象， 方法命令</span><br><span class="line">    设置头信息。传输body信息。 </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">lineReceived</span><span class="params">(self, line)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> HTTPClient.lineReceived(self, line.rstrip())</span><br><span class="line">行接受</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">handleHeader</span><span class="params">(self, key, value)</span>:</span></span><br><span class="line">    self.headers.appendlist(key, value)</span><br><span class="line">处理头信息</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">handleStatus</span><span class="params">(self, version, status, message)</span>:</span></span><br><span class="line">    self.factory.gotStatus(version, status, message)</span><br><span class="line">获取状态信息</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">handleEndHeaders</span><span class="params">(self)</span>:</span></span><br><span class="line">    self.factory.gotHeaders(self.headers)</span><br><span class="line">获取头</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">connectionLost</span><span class="params">(self, reason)</span>:</span></span><br><span class="line">    self._connection_lost_reason = reason</span><br><span class="line">    HTTPClient.connectionLost(self, reason)</span><br><span class="line">    self.factory.noPage(reason)</span><br><span class="line">这个方法不知道是干嘛的</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">handleResponse</span><span class="params">(self, response)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> self.factory.method.upper() == <span class="string">b'HEAD'</span>:</span><br><span class="line">        self.factory.page(<span class="string">b''</span>)</span><br><span class="line">    <span class="keyword">elif</span> self.length <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">and</span> self.length &gt; <span class="number">0</span>:</span><br><span class="line">        self.factory.noPage(self._connection_lost_reason)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        self.factory.page(response)</span><br><span class="line">    self.transport.loseConnection()</span><br><span class="line">处理响应，具体代码不知道做什么</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">timeout</span><span class="params">(self)</span>:</span></span><br><span class="line">    self.transport.loseConnection()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># transport cleanup needed for HTTPS connections</span></span><br><span class="line">    <span class="keyword">if</span> self.factory.url.startswith(<span class="string">b'https'</span>):</span><br><span class="line">        self.transport.stopProducing()</span><br><span class="line"></span><br><span class="line">    self.factory.noPage(\</span><br><span class="line">            defer.TimeoutError(<span class="string">"Getting %s took longer than %s seconds."</span> % \</span><br><span class="line">            (self.factory.url, self.factory.timeout)))</span><br><span class="line">这个方法不知道干嘛的。</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ScrapyHTTPClientFactory</span><span class="params">(HTTPClientFactory)</span>:</span></span><br><span class="line">scrapy实现了HTTPClientFactory，冰鞋部分方法，确保url object 缓存结果。</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, request, timeout=<span class="number">180</span>)</span>:</span></span><br><span class="line">    self._url = urldefrag(request.url)[<span class="number">0</span>]</span><br><span class="line">    <span class="comment"># converting to bytes to comply to Twisted interface</span></span><br><span class="line">    self.url = to_bytes(self._url, encoding=<span class="string">'ascii'</span>)</span><br><span class="line">    self.method = to_bytes(request.method, encoding=<span class="string">'ascii'</span>)</span><br><span class="line">    self.body = request.body <span class="keyword">or</span> <span class="literal">None</span></span><br><span class="line">    self.headers = Headers(request.headers)</span><br><span class="line">    self.response_headers = <span class="literal">None</span></span><br><span class="line">    self.timeout = request.meta.get(<span class="string">'download_timeout'</span>) <span class="keyword">or</span> timeout</span><br><span class="line">    self.start_time = time()</span><br><span class="line">    self.deferred = defer.Deferred().addCallback(self._build_response, request)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Fixes Twisted 11.1.0+ support as HTTPClientFactory is expected</span></span><br><span class="line">    <span class="comment"># to have _disconnectedDeferred. See Twisted r32329.</span></span><br><span class="line">    <span class="comment"># As Scrapy implements it's own logic to handle redirects is not</span></span><br><span class="line">    <span class="comment"># needed to add the callback _waitForDisconnect.</span></span><br><span class="line">    <span class="comment"># Specifically this avoids the AttributeError exception when</span></span><br><span class="line">    <span class="comment"># clientConnectionFailed method is called.</span></span><br><span class="line">    self._disconnectedDeferred = defer.Deferred()</span><br><span class="line"></span><br><span class="line">    self._set_connection_attributes(request)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># set Host header based on url</span></span><br><span class="line">    self.headers.setdefault(<span class="string">'Host'</span>, self.netloc)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># set Content-Length based len of body</span></span><br><span class="line">    <span class="keyword">if</span> self.body <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        self.headers[<span class="string">'Content-Length'</span>] = len(self.body)</span><br><span class="line">        <span class="comment"># just in case a broken http/1.1 decides to keep connection alive</span></span><br><span class="line">        self.headers.setdefault(<span class="string">"Connection"</span>, <span class="string">"close"</span>)</span><br><span class="line">    <span class="comment"># Content-Length must be specified in POST method even with no body</span></span><br><span class="line">    <span class="keyword">elif</span> self.method == <span class="string">b'POST'</span>:</span><br><span class="line">        self.headers[<span class="string">'Content-Length'</span>] = <span class="number">0</span></span><br><span class="line">定义初始化， 设置url,method,body ,headers , timeout,start_time, defered对象。 </span><br><span class="line">如果body 不为空， 获取长度设置headers,如果方法为post，则content_length设置为<span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_build_response</span><span class="params">(self, body, request)</span>:</span></span><br><span class="line">    request.meta[<span class="string">'download_latency'</span>] = self.headers_time-self.start_time</span><br><span class="line">    status = int(self.status)</span><br><span class="line">    headers = Headers(self.response_headers)</span><br><span class="line">    respcls = responsetypes.from_args(headers=headers, url=self._url)</span><br><span class="line">    <span class="keyword">return</span> respcls(url=self._url, status=status, headers=headers, body=body)</span><br><span class="line">构建响应， 设置meta属性， </span><br><span class="line">状态码为</span><br><span class="line">头信息为响应头</span><br><span class="line">respcls 这个不知道到是啥。 </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_set_connection_attributes</span><span class="params">(self, request)</span>:</span></span><br><span class="line">    parsed = urlparse_cached(request)</span><br><span class="line">    self.scheme, self.netloc, self.host, self.port, self.path = _parsed_url_args(parsed)</span><br><span class="line">    proxy = request.meta.get(<span class="string">'proxy'</span>)</span><br><span class="line">    <span class="keyword">if</span> proxy:</span><br><span class="line">        self.scheme, _, self.host, self.port, _ = _parse(proxy)</span><br><span class="line">        self.path = self.url</span><br><span class="line">设置连接属性， 获取parsed， 获取请求参数， </span><br><span class="line">获取请求的协议，修改部分属性的设置。 </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gotHeaders</span><span class="params">(self, headers)</span>:</span></span><br><span class="line">    self.headers_time = time()</span><br><span class="line">    self.response_headers = headers</span><br><span class="line"></span><br><span class="line">这个获取头信息的。</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/爬虫/" rel="tag"># 爬虫</a>
+          
+            <a href="/tags/scrapy/" rel="tag"># scrapy</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/07/python/spider/scrapy/20200712_tls/" rel="next" title="scrapy源码10 - tls">
+                <i class="fa fa-chevron-left"></i> scrapy源码10 - tls
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/07/python/spider/scrapy/20200715_ ajaxcrawl/" rel="prev" title="scrapy源码12 - ajaxcrawl">
+                scrapy源码12 - ajaxcrawl <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="崔永华（Andy）">
+          <p class="site-author-name" itemprop="name">崔永华（Andy）</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">68</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/cuiyonghua6" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://blog.csdn.net/cui_yonghua" target="_blank" title="CSDN">
+                  
+                    <i class="fa fa-fw fa-bandcamp"></i>
+                  
+                  CSDN
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/cuiyonghua" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/cuiyonghua" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">崔永华（Andy）</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
