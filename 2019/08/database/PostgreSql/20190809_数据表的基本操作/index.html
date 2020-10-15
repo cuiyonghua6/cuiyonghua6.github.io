@@ -1,0 +1,1028 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="数据库,PostgreSQL,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="创建数据表下面的案例是如何添加主键约束，外键约束，唯一约束，非空约束，默认约束等； 1.使用主键约束：有单字段主键，多字段联合主键；【例1】定义数据表tb_emp1，假设表中间没有主键id，为了唯一确定一个员工，可以把name、deptId联合起来做为主键，SQL语句如下：1234567CREATE TABLE tb_emp1 (name VARCHAR(25),deptId INT,salary">
+<meta name="keywords" content="数据库,PostgreSQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PostgreSQL介绍">
+<meta property="og:url" content="http://yoursite.com/2019/08/database/PostgreSql/20190809_数据表的基本操作/index.html">
+<meta property="og:site_name" content="崔永华的个人网站">
+<meta property="og:description" content="创建数据表下面的案例是如何添加主键约束，外键约束，唯一约束，非空约束，默认约束等； 1.使用主键约束：有单字段主键，多字段联合主键；【例1】定义数据表tb_emp1，假设表中间没有主键id，为了唯一确定一个员工，可以把name、deptId联合起来做为主键，SQL语句如下：1234567CREATE TABLE tb_emp1 (name VARCHAR(25),deptId INT,salary">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-10-15T09:59:07.839Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PostgreSQL介绍">
+<meta name="twitter:description" content="创建数据表下面的案例是如何添加主键约束，外键约束，唯一约束，非空约束，默认约束等； 1.使用主键约束：有单字段主键，多字段联合主键；【例1】定义数据表tb_emp1，假设表中间没有主键id，为了唯一确定一个员工，可以把name、deptId联合起来做为主键，SQL语句如下：1234567CREATE TABLE tb_emp1 (name VARCHAR(25),deptId INT,salary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/08/database/PostgreSql/20190809_数据表的基本操作/">
+
+
+
+
+
+  <title> PostgreSQL介绍 | 崔永华的个人网站 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">崔永华的个人网站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/database/PostgreSql/20190809_数据表的基本操作/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="崔永华（Andy）">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="崔永华的个人网站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                PostgreSQL介绍
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-06T15:24:20+08:00">
+                2019-08-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据库/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据库/PostgreSQL/" itemprop="url" rel="index">
+                    <span itemprop="name">PostgreSQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">被围观
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="创建数据表"><a href="#创建数据表" class="headerlink" title="创建数据表"></a>创建数据表</h4><p>下面的案例是如何添加主键约束，外键约束，唯一约束，非空约束，默认约束等；</p>
+<p>1.使用主键约束：有单字段主键，多字段联合主键；<br>【例1】定义数据表tb_emp1，假设表中间没有主键id，为了唯一确定一个员工，可以把name、deptId联合起来做为主键，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tb_emp1</span><br><span class="line"> (</span><br><span class="line"><span class="keyword">name</span> <span class="built_in">VARCHAR</span>(<span class="number">25</span>),</span><br><span class="line">deptId <span class="built_in">INT</span>,</span><br><span class="line">salary <span class="built_in">FLOAT</span>,</span><br><span class="line">PRIMARY <span class="keyword">KEY</span>(<span class="keyword">name</span>,deptId)</span><br><span class="line">);</span><br></pre></td></tr></table></figure></p>
+<p>2.使用外键约束：<br>【例2】创建一个部门表tb_dept1，名称不能为空，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tb_dept2</span><br><span class="line">(</span><br><span class="line"><span class="keyword">id</span>       <span class="built_in">int</span> PRIMARY <span class="keyword">KEY</span>,</span><br><span class="line"><span class="keyword">name</span>    <span class="built_in">VARCHAR</span>(<span class="number">22</span>)  <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">location  <span class="built_in">VARCHAR</span>(<span class="number">50</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure></p>
+<p>定义数据表tb_emp2，让它的键deptId作为外键关联到tb_dept2的主键id，SQL语句为：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tb_emp2 </span><br><span class="line">(</span><br><span class="line"><span class="keyword">id</span>      <span class="built_in">INT</span> PRIMARY <span class="keyword">KEY</span>,</span><br><span class="line"><span class="keyword">name</span>   <span class="built_in">VARCHAR</span>(<span class="number">25</span>),</span><br><span class="line">deptId  <span class="built_in">INT</span>, </span><br><span class="line">salary   <span class="built_in">FLOAT</span>,</span><br><span class="line"><span class="keyword">CONSTRAINT</span> fk_emp_dept2 <span class="keyword">FOREIGN</span> <span class="keyword">KEY</span>(deptId) <span class="keyword">REFERENCES</span> tb_dept1(<span class="keyword">id</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure></p>
+<p>3.使用唯一约束<br>【例3】定义数据表tb_dept2，指定部门的名称唯一，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tb_dept2 </span><br><span class="line">(</span><br><span class="line"><span class="keyword">id</span>      <span class="built_in">INT</span> PRIMARY <span class="keyword">KEY</span>,</span><br><span class="line"><span class="keyword">name</span>    <span class="built_in">VARCHAR</span>(<span class="number">22</span>) <span class="keyword">UNIQUE</span>,</span><br><span class="line">location  <span class="built_in">VARCHAR</span>(<span class="number">50</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure></p>
+<p>在定义完所有列之后指定唯一约束，语法规则如下：<br>[CONSTRAINT &lt;约束名&gt;] UNIQUE(&lt;字段名&gt;)<br>【例4】定义数据表tb_dept3，指定部门的名称唯一，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tb_dept3 </span><br><span class="line">(</span><br><span class="line"><span class="keyword">id</span>      <span class="built_in">INT</span> PRIMARY <span class="keyword">KEY</span>,</span><br><span class="line"><span class="keyword">name</span>    <span class="built_in">VARCHAR</span>(<span class="number">22</span>),</span><br><span class="line">location  <span class="built_in">VARCHAR</span>(<span class="number">50</span>),</span><br><span class="line"><span class="keyword">CONSTRAINT</span> STH <span class="keyword">UNIQUE</span>(<span class="keyword">name</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure></p>
+<p>4.非空约束和默认约束<br>【例5】定义数据表tb_emp7，指定员工的部门编号默认为1111，SQL语句如下：<br>CREATE TABLE tb_emp7<br>(<br>id      INT PRIMARY KEY,<br>name   VARCHAR(25) NOT NULL,<br>deptId  INT DEFAULT 1111,<br>salary  FLOAT,<br>CONSTRAINT fk_emp_dept3  FOREIGN KEY (deptId) REFERENCES tb_dept1(id)<br>);</p>
+<h4 id="修改数据表"><a href="#修改数据表" class="headerlink" title="修改数据表"></a>修改数据表</h4><p>【例4.6】将数据表tb_dept3改名为tb_department3。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tb_dept3 <span class="keyword">RENAME</span> <span class="keyword">TO</span> tb_department3;</span><br></pre></td></tr></table></figure></p>
+<p>【例4.7】将数据表tb_dept1中name字段的数据类型由VARCHAR(22)的修改成VARCHAR(30)。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tb_dept1 <span class="keyword">ALTER</span> <span class="keyword">COLUMN</span> <span class="keyword">name</span> <span class="keyword">TYPE</span> <span class="built_in">VARCHAR</span>(<span class="number">30</span>);</span><br></pre></td></tr></table></figure></p>
+<p>【例4.8】将数据表tb_dept1中的location字段名称改为loc，数据类型保持不变，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tb_dept1 <span class="keyword">RENAME</span> location <span class="keyword">TO</span> loc;</span><br></pre></td></tr></table></figure></p>
+<p>【例4.9】在数据表tb_dept1中添加一个没有完整性约束的INT类型的字段managerId（部门经理编号），SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tb_dept1 <span class="keyword">ADD</span> <span class="keyword">COLUMN</span> managerId <span class="built_in">INT</span>;</span><br></pre></td></tr></table></figure></p>
+<p>【例4.10】在数据表tb_dept1中添加一个不能为空的VARCHAR(12)类型的字段column1，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tb_dept1 <span class="keyword">ADD</span> <span class="keyword">COLUMN</span> column1 <span class="built_in">VARCHAR</span>(<span class="number">12</span>) <span class="keyword">not</span>  <span class="literal">null</span>;</span><br></pre></td></tr></table></figure></p>
+<h4 id="删除数据表"><a href="#删除数据表" class="headerlink" title="删除数据表"></a>删除数据表</h4><p>删除字段的语法格式如下：<br>ALTER TABLE &lt;表名&gt; DROP &lt;字段名&gt;;<br>“字段名”指需要从表中删除的字段的名称。<br>【例1】删除数据表tb_dept1表中的managerid字段。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tb_dept1 <span class="keyword">DROP</span> managerid;</span><br></pre></td></tr></table></figure></p>
+<p>【例2】删除数据表tb_emp9中的外键约束。<br>首先创建表tb_emp9，创建外键deptId关联tb_dept1表的主键id，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tb_emp9 </span><br><span class="line">(</span><br><span class="line"><span class="keyword">id</span>      <span class="built_in">INT</span> PRIMARY <span class="keyword">KEY</span>,</span><br><span class="line"><span class="keyword">name</span>   <span class="built_in">VARCHAR</span>(<span class="number">25</span>),</span><br><span class="line">deptId  <span class="built_in">INT</span>,</span><br><span class="line">salary   <span class="built_in">FLOAT</span>,</span><br><span class="line"><span class="keyword">CONSTRAINT</span> fk_emp_dept  <span class="keyword">FOREIGN</span> <span class="keyword">KEY</span> (deptId) <span class="keyword">REFERENCES</span> tb_dept1(<span class="keyword">id</span>)</span><br><span class="line">);</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tb_emp9 <span class="keyword">DROP</span> <span class="keyword">CONSTRAINT</span> fk_emp_dept;</span><br></pre></td></tr></table></figure></p>
+<p>【例3】删除数据表tb_dept2，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> tb_dept2;</span><br></pre></td></tr></table></figure></p>
+<p>语句执行完毕之后，数据表列表中已经不存在名称为tb_dept2的表，删除操作成功。<br>在数据库中创建两个关联表，首先，创建表tb_dept2，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tb_dept2 </span><br><span class="line">(</span><br><span class="line"><span class="keyword">id</span>       <span class="built_in">INT</span> PRIMARY <span class="keyword">KEY</span>,</span><br><span class="line"><span class="keyword">name</span>    <span class="built_in">VARCHAR</span>(<span class="number">22</span>),</span><br><span class="line">location  <span class="built_in">VARCHAR</span>(<span class="number">50</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure></p>
+<p>接下来创建表tb_emp，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tb_emp </span><br><span class="line">(</span><br><span class="line"><span class="keyword">id</span>       <span class="built_in">INT</span> PRIMARY <span class="keyword">KEY</span>,</span><br><span class="line"><span class="keyword">name</span>    <span class="built_in">VARCHAR</span>(<span class="number">25</span>),</span><br><span class="line">deptId   <span class="built_in">INT</span>, </span><br><span class="line">salary   <span class="built_in">FLOAT</span>,</span><br><span class="line"><span class="keyword">CONSTRAINT</span> fk_emp_dept  <span class="keyword">FOREIGN</span> <span class="keyword">KEY</span> (deptId) <span class="keyword">REFERENCES</span> tb_dept2(<span class="keyword">id</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure></p>
+<p>首先直接删除父表tb_dept2，输入删除语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> tb_dept2;</span><br></pre></td></tr></table></figure></p>
+<p>接下来，解除关联子表tb_emp的外键约束，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tb_emp <span class="keyword">DROP</span> <span class="keyword">CONSTRAINT</span> fk_emp_dept;</span><br></pre></td></tr></table></figure></p>
+<p>语句成功执行后，将取消表tb_enp和表tb_dept2之间的关联关系，此时，可以输入删除语句，将原来的父表tb_dept2删除，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> tb_dept2;</span><br></pre></td></tr></table></figure></p>
+<h4 id="PostgreSQL-11新特性-新增带默认值的字段不在重写数据表"><a href="#PostgreSQL-11新特性-新增带默认值的字段不在重写数据表" class="headerlink" title="PostgreSQL 11新特性-新增带默认值的字段不在重写数据表"></a>PostgreSQL 11新特性-新增带默认值的字段不在重写数据表</h4><p>步骤1：新增测试数据表tt，语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tt(<span class="keyword">id</span> <span class="built_in">int</span>, <span class="keyword">name</span> <span class="built_in">text</span>);</span><br></pre></td></tr></table></figure></p>
+<p>步骤2：插入500万行测试数据，语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> t1 (<span class="keyword">id</span>,<span class="keyword">name</span> ) <span class="keyword">SELECT</span> n, n || <span class="string">'_ALTER TABLE TEST '</span> <span class="keyword">FROM</span> generate_series (<span class="number">1</span>,<span class="number">5000000</span>) n;</span><br></pre></td></tr></table></figure></p>
+<p>步骤3：查看数据表tt的relfilenode和relpages信息，语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> relname,relfilenode, relpages <span class="keyword">FROM</span> pg_class <span class="keyword">WHERE</span> relname=<span class="string">'tt'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>步骤4：新增带默认值的字段ffname，语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tt <span class="keyword">ADD</span> <span class="keyword">COLUMN</span> ffname <span class="built_in">text</span> <span class="keyword">DEFAULT</span> <span class="string">'默认值'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>步骤5：再次查看数据表tt的relfilenode和relpages信息，语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> relname,relfilenode, relpages <span class="keyword">FROM</span> pg_class <span class="keyword">WHERE</span> relname=<span class="string">'tt'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>从结果可以看出，relfilenode和relpages的数据并没有发生变化</p>
+<h4 id="综合案例-数据表的基本操作"><a href="#综合案例-数据表的基本操作" class="headerlink" title="综合案例-数据表的基本操作"></a>综合案例-数据表的基本操作</h4><p>步骤1：登录数据库。<br>启动pgAdmin 4，输入密码连接服务器。<br>步骤2：创建数据库company，执行过程如下。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">DATABASE</span> company;</span><br></pre></td></tr></table></figure></p>
+<p>步骤3：创建表offices。<br>创建表offices的语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> offices </span><br><span class="line">(</span><br><span class="line">officeCode  <span class="built_in">INT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">UNIQUE</span>,</span><br><span class="line">city        <span class="built_in">VARCHAR</span>(<span class="number">50</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">address     <span class="built_in">VARCHAR</span>(<span class="number">50</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">country     <span class="built_in">VARCHAR</span>(<span class="number">50</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">postalCode  <span class="built_in">VARCHAR</span>(<span class="number">15</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">PRIMARY <span class="keyword">KEY</span>  (officeCode)</span><br><span class="line">);</span><br></pre></td></tr></table></figure></p>
+<p>步骤4 创建表employees。<br>创建表employees的语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> employees </span><br><span class="line">(</span><br><span class="line">employeeNumber  <span class="built_in">INT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> PRIMARY <span class="keyword">KEY</span>,</span><br><span class="line">lastName         <span class="built_in">VARCHAR</span>(<span class="number">50</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">firstName        <span class="built_in">VARCHAR</span>(<span class="number">50</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">mobile           <span class="built_in">VARCHAR</span>(<span class="number">25</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">officeCode       <span class="built_in">INT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">jobTitle         <span class="built_in">VARCHAR</span>(<span class="number">50</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">birth            <span class="built_in">DATE</span>,</span><br><span class="line">note            <span class="built_in">VARCHAR</span>(<span class="number">255</span>),</span><br><span class="line">sex             <span class="built_in">VARCHAR</span>(<span class="number">5</span>),</span><br><span class="line"><span class="keyword">CONSTRAINT</span> office_fk <span class="keyword">FOREIGN</span> <span class="keyword">KEY</span>(officeCode)  <span class="keyword">REFERENCES</span> offices(officeCode)</span><br><span class="line">);</span><br></pre></td></tr></table></figure></p>
+<p>步骤5：将表employees的birth字段改名为employee_birth。<br>修改字段名，需要用到ALTER TABLE语句，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> employees <span class="keyword">RENAME</span> birth <span class="keyword">TO</span> employee_birth;</span><br></pre></td></tr></table></figure></p>
+<p>步骤6：修改sex字段，数据类型为CHAR(1)，非空约束。<br>修改字段数据类型，需要用到ALTER TABLE语句，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> employees <span class="keyword">ALTER</span> <span class="keyword">COLUMN</span> sex <span class="keyword">TYPE</span> <span class="built_in">CHAR</span>(<span class="number">1</span>);</span><br></pre></td></tr></table></figure></p>
+<p>步骤7：修改sex字段为非空约束。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> employees <span class="keyword">ALTER</span> <span class="keyword">COLUMN</span> sex <span class="keyword">SET</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>;</span><br></pre></td></tr></table></figure></p>
+<p>步骤8：删除字段note。<br>删除字段，需要用到ALTER TABLE语句，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> employees <span class="keyword">DROP</span> note;</span><br></pre></td></tr></table></figure></p>
+<p>步骤9：增加字段名favoriate_activity，数据类型为VARCHAR(100)。<br>增加字段，需要用到ALTER TABLE语句，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> employees <span class="keyword">ADD</span> <span class="keyword">COLUMN</span> favoriate_activity <span class="built_in">VARCHAR</span>(<span class="number">100</span>);</span><br></pre></td></tr></table></figure></p>
+<p>步骤10：删除表offices。<br>在创建表employees表时候，设置了表的外键，该表关联了其父表的officeCode主键，如前面所述，删除关联表时，要先删除子表employees的外键约束，才能删除父表，因此，必须先删除employees表的外键约束。<br>1）删除employees表的外键约束，输入如下语句：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> employees <span class="keyword">DROP</span> <span class="keyword">CONSTRAINT</span> office_fk;</span><br></pre></td></tr></table></figure></p>
+<p>其中office_fk为employees表的外键约束的名称，语句执行成功后，即可删除offices父表。<br>2）删除表offices，输入如下语句：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> offices;</span><br></pre></td></tr></table></figure></p>
+<p>步骤11：将表employees名称修改为employees_info。<br>修改数据表名，需要用到ALTER TABLE语句，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> employees <span class="keyword">RENAME</span> <span class="keyword">TO</span> employees_info;</span><br></pre></td></tr></table></figure></p>
+<h4 id="常见问题及解答"><a href="#常见问题及解答" class="headerlink" title="常见问题及解答"></a>常见问题及解答</h4>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据库/" rel="tag"># 数据库</a>
+          
+            <a href="/tags/PostgreSQL/" rel="tag"># PostgreSQL</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/python/spider/百度图片爬虫/" rel="next" title="爬取百度图片并把图片存到本地">
+                <i class="fa fa-chevron-left"></i> 爬取百度图片并把图片存到本地
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/database/PostgreSql/20190806_postgresql介绍/" rel="prev" title="PostgreSQL介绍">
+                PostgreSQL介绍 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="崔永华（Andy）">
+          <p class="site-author-name" itemprop="name">崔永华（Andy）</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">83</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/cuiyonghua6" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://blog.csdn.net/cui_yonghua" target="_blank" title="CSDN">
+                  
+                    <i class="fa fa-fw fa-bandcamp"></i>
+                  
+                  CSDN
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/cuiyonghua" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/cuiyonghua" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建数据表"><span class="nav-number">1.</span> <span class="nav-text">创建数据表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改数据表"><span class="nav-number">2.</span> <span class="nav-text">修改数据表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除数据表"><span class="nav-number">3.</span> <span class="nav-text">删除数据表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PostgreSQL-11新特性-新增带默认值的字段不在重写数据表"><span class="nav-number">4.</span> <span class="nav-text">PostgreSQL 11新特性-新增带默认值的字段不在重写数据表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#综合案例-数据表的基本操作"><span class="nav-number">5.</span> <span class="nav-text">综合案例-数据表的基本操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常见问题及解答"><span class="nav-number">6.</span> <span class="nav-text">常见问题及解答</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">崔永华（Andy）</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

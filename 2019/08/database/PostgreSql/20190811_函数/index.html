@@ -1,0 +1,1092 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="数据库,PostgreSQL,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="数学函数1、绝对值函数ABS(x)和返回圆周率函数PI() 【例6.1】求2，-3.3和-33的绝对值，输入语句如下：1SELECT ABS(2), ABS(-3.3), ABS(-33); 【例6.2】返回圆周率值，输入语句如下：1SELECT pi(); 2、平方根函数SQRT(x)和求余函数MOD(x,y) 【例6.3】求9，40和-49的二次平方根，输入语句如下：1SELECT SQRT(">
+<meta name="keywords" content="数据库,PostgreSQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PostgreSQL：六. PostgreSQL函数">
+<meta property="og:url" content="http://yoursite.com/2019/08/database/PostgreSql/20190811_函数/index.html">
+<meta property="og:site_name" content="崔永华的个人网站">
+<meta property="og:description" content="数学函数1、绝对值函数ABS(x)和返回圆周率函数PI() 【例6.1】求2，-3.3和-33的绝对值，输入语句如下：1SELECT ABS(2), ABS(-3.3), ABS(-33); 【例6.2】返回圆周率值，输入语句如下：1SELECT pi(); 2、平方根函数SQRT(x)和求余函数MOD(x,y) 【例6.3】求9，40和-49的二次平方根，输入语句如下：1SELECT SQRT(">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-10-15T12:09:38.614Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PostgreSQL：六. PostgreSQL函数">
+<meta name="twitter:description" content="数学函数1、绝对值函数ABS(x)和返回圆周率函数PI() 【例6.1】求2，-3.3和-33的绝对值，输入语句如下：1SELECT ABS(2), ABS(-3.3), ABS(-33); 【例6.2】返回圆周率值，输入语句如下：1SELECT pi(); 2、平方根函数SQRT(x)和求余函数MOD(x,y) 【例6.3】求9，40和-49的二次平方根，输入语句如下：1SELECT SQRT(">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/08/database/PostgreSql/20190811_函数/">
+
+
+
+
+
+  <title> PostgreSQL：六. PostgreSQL函数 | 崔永华的个人网站 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">崔永华的个人网站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/database/PostgreSql/20190811_函数/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="崔永华（Andy）">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="崔永华的个人网站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                PostgreSQL：六. PostgreSQL函数
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-11T15:24:20+08:00">
+                2019-08-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据库/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据库/PostgreSQL/" itemprop="url" rel="index">
+                    <span itemprop="name">PostgreSQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">被围观
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="数学函数"><a href="#数学函数" class="headerlink" title="数学函数"></a>数学函数</h4><p>1、绝对值函数ABS(x)和返回圆周率函数PI()</p>
+<p>【例6.1】求2，-3.3和-33的绝对值，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">ABS</span>(<span class="number">2</span>), <span class="keyword">ABS</span>(<span class="number">-3.3</span>), <span class="keyword">ABS</span>(<span class="number">-33</span>);</span><br></pre></td></tr></table></figure></p>
+<p>【例6.2】返回圆周率值，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">pi</span>();</span><br></pre></td></tr></table></figure></p>
+<p>2、平方根函数SQRT(x)和求余函数MOD(x,y)</p>
+<p>【例6.3】求9，40和-49的二次平方根，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">SQRT</span>(<span class="number">9</span>), <span class="keyword">SQRT</span>(<span class="number">40</span>);</span><br></pre></td></tr></table></figure></p>
+<p>【例6.4】对MOD(31,8)，MOD(234, 10)，MOD(45.5,6)进行求余运算，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">MOD</span>(<span class="number">31</span>,<span class="number">8</span>),<span class="keyword">MOD</span>(<span class="number">234</span>, <span class="number">10</span>),<span class="keyword">MOD</span>(<span class="number">45.5</span>,<span class="number">6</span>);</span><br></pre></td></tr></table></figure></p>
+<p>3、获取整数的函数CEIL(x)、CEILING(x)、FLOOR(x)</p>
+<p>【例6.5】使用CEIL和CEILING函数返回最小整数，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span>  <span class="keyword">CEIL</span>(<span class="number">-3.35</span>),<span class="keyword">CEILING</span>(<span class="number">3.35</span>);</span><br></pre></td></tr></table></figure></p>
+<p>FLOOR(x)返回不大于x的最大整数值，返回值转化为一个BIGINT。<br>【例6.6】使用FLOOR函数返回最大整数，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">FLOOR</span>(<span class="number">-3.35</span>), <span class="keyword">FLOOR</span>(<span class="number">3.35</span>);</span><br></pre></td></tr></table></figure></p>
+<p>4、四舍五入函数ROUND(x)和ROUND(x,y)</p>
+<p>【例6.7】使用ROUND(x)函数对操作数进行四舍五入操作，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">ROUND</span>(<span class="number">-1.14</span>),<span class="keyword">ROUND</span>(<span class="number">-1.67</span>), <span class="keyword">ROUND</span>(<span class="number">1.14</span>),<span class="keyword">ROUND</span>(<span class="number">1.66</span>);</span><br></pre></td></tr></table></figure></p>
+<p>【例6.8】使用ROUND(x,y)函数对操作数进行四舍五入操作，结果保留小数点后面指定y位，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">ROUND</span>(<span class="number">1.38</span>, <span class="number">1</span>), <span class="keyword">ROUND</span>(<span class="number">1.38</span>, <span class="number">0</span>), <span class="keyword">ROUND</span>(<span class="number">232.38</span>, <span class="number">-1</span>), <span class="keyword">ROUND</span> (<span class="number">232.38</span>,<span class="number">-2</span>);</span><br></pre></td></tr></table></figure></p>
+<p>5、符号函数SIGN(x)</p>
+<p>【例6.9】使用SIGN函数返回参数的符号，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">SIGN</span>(<span class="number">-21</span>),<span class="keyword">SIGN</span>(<span class="number">0</span>), <span class="keyword">SIGN</span>(<span class="number">21</span>);</span><br></pre></td></tr></table></figure></p>
+<p>6、幂运算函数POW(x,y)、POWER(x,y)和EXP(x)</p>
+<p>【例6.10】使用POW和POWER函数进行乘方运算，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">POW</span>(<span class="number">2</span>,<span class="number">2</span>), <span class="keyword">POWER</span>(<span class="number">2</span>,<span class="number">2</span>),<span class="keyword">POW</span>(<span class="number">2</span>,<span class="number">-2</span>), <span class="keyword">POWER</span>(<span class="number">2</span>,<span class="number">-2</span>);</span><br></pre></td></tr></table></figure></p>
+<p>【例6.11】使用EXP函数计算e的乘方，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">EXP</span>(<span class="number">3</span>),<span class="keyword">EXP</span>(<span class="number">-3</span>),<span class="keyword">EXP</span>(<span class="number">0</span>);</span><br></pre></td></tr></table></figure></p>
+<p>7、对数运算函数LOG(x)</p>
+<p>【例6.12】使用LOG(x)函数计算自然对数，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">LOG</span>(<span class="number">3</span>);</span><br></pre></td></tr></table></figure></p>
+<p>8、角度与弧度相互转换的函数RADIANS(x)和DEGREES(x)</p>
+<p>【例6.13】使用RADIANS将角度转换为弧度，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">RADIANS</span>(<span class="number">90</span>),<span class="keyword">RADIANS</span>(<span class="number">180</span>);</span><br></pre></td></tr></table></figure></p>
+<p>【例6.14】使用DEGREES将弧度转换为角度，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DEGREES</span>(<span class="keyword">PI</span>()), <span class="keyword">DEGREES</span>(<span class="keyword">PI</span>() / <span class="number">2</span>);</span><br></pre></td></tr></table></figure></p>
+<p>9、正弦函数SIN(x)和反正弦函数ASIN(x)</p>
+<p>【例6.15】使用SIN函数计算正弦值，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">SIN</span>(<span class="number">1</span>), <span class="keyword">ROUND</span>(<span class="keyword">SIN</span>(<span class="keyword">PI</span>()));</span><br></pre></td></tr></table></figure></p>
+<p>【例6.16】使用ASIN函数计算反正弦值，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">ASIN</span>(<span class="number">0.8414709848078965</span>);</span><br></pre></td></tr></table></figure></p>
+<p>10、余弦函数COS(x)反余弦函数ACOS(x)</p>
+<p>【例6.17】使用COS函数计算余弦值，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">COS</span>(<span class="number">0</span>),<span class="keyword">COS</span>(<span class="keyword">PI</span>()),<span class="keyword">COS</span>(<span class="number">1</span>);</span><br></pre></td></tr></table></figure></p>
+<p>【例6.18】使用ACOS计算反余弦值，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">ACOS</span>(<span class="number">1</span>),<span class="keyword">ACOS</span>(<span class="number">0</span>), <span class="keyword">ROUND</span>(<span class="keyword">ACOS</span>(<span class="number">0.5403023058681398</span>));</span><br></pre></td></tr></table></figure></p>
+<p>11、正切函数、反正切函数和余切函数</p>
+<p>【例6.19】使用TAN函数计算正切值，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">TAN</span>(<span class="number">0.3</span>), <span class="keyword">ROUND</span>(<span class="keyword">TAN</span>(<span class="keyword">PI</span>()/<span class="number">4</span>));</span><br></pre></td></tr></table></figure></p>
+<p>【例6.20】使用ATAN函数计算反正切值，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">ATAN</span>(<span class="number">0.30933624960962325</span>), <span class="keyword">ATAN</span>(<span class="number">1</span>);</span><br></pre></td></tr></table></figure></p>
+<p>【例6.21】使用COT()函数计算正切值，输入语句如下，<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> COT(<span class="number">0.3</span>), <span class="number">1</span>/<span class="keyword">TAN</span>(<span class="number">0.3</span>),COT(<span class="keyword">PI</span>() / <span class="number">4</span>);</span><br></pre></td></tr></table></figure></p>
+<h4 id="字符串函数"><a href="#字符串函数" class="headerlink" title="字符串函数"></a>字符串函数</h4><p>1、计算字符数的函数char_length(str)和字符串长度(length)的函数</p>
+<p>【例6.21】使用CHAR_LENGTH函数计算字符串字符个数，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">CHAR_LENGTH</span>(<span class="string">'date'</span>), <span class="keyword">CHAR_LENGTH</span>(<span class="string">'egg'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>【例6.23】使用LENGTH函数计算字符串长度，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">LENGTH</span>(<span class="string">'date'</span>), <span class="keyword">LENGTH</span>(<span class="string">'egg'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>2、合并字符串CONCAT(s1,s2,…),CONCAT_WS(x,s1,s2,…)</p>
+<p>【例6.24】使用CONCAT函数连接字符串，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">CONCAT</span>(<span class="string">'PostgreSQL'</span>, <span class="string">'9.15'</span>),<span class="keyword">CONCAT</span>(<span class="string">'Postgre'</span>,<span class="literal">NULL</span>, <span class="string">'SQL'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>【例6.25】使用CONCAT_WS函数连接带分隔符的字符串，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">CONCAT_WS</span>(<span class="string">'-'</span>, <span class="string">'1st'</span>,<span class="string">'2nd'</span>, <span class="string">'3rd'</span>), <span class="keyword">CONCAT_WS</span>(<span class="string">'*'</span>, <span class="string">'1st'</span>, <span class="literal">NULL</span>, <span class="string">'3rd'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>3、获取指定长度的字符串的函数LEFT(s,n)和RIGHT(s,n)</p>
+<p>【例6.26】使用LEFT函数返回字符串中左边的字符，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">LEFT</span>(<span class="string">'football'</span>, <span class="number">5</span>);</span><br></pre></td></tr></table></figure></p>
+<p>【例6.27】使用RIGHT函数返回字符串中右边的字符，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">RIGHT</span>(<span class="string">'football'</span>, <span class="number">4</span>);</span><br></pre></td></tr></table></figure></p>
+<p>4、填充字符串LPAD(s1,len,s2)和RPAD(s1,len,s2)</p>
+<p>【例6.28】使用LPAD函数对字符串进行填充操作，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">LPAD</span>(<span class="string">'hello'</span>,<span class="number">4</span>,<span class="string">'??'</span>), <span class="keyword">LPAD</span>(<span class="string">'hello'</span>,<span class="number">10</span>,<span class="string">'??'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>【例6.29】使用LPAD函数对字符串进行填充操作，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> RPAD(<span class="string">'hello'</span>,<span class="number">4</span>,<span class="string">'?'</span>), RPAD(<span class="string">'hello'</span>,<span class="number">10</span>,<span class="string">'?'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>5、删除空格的函数LTRIM(s)、RTRIM(s)和TRIM(s)</p>
+<p>【例6.30】使用LTRIM函数删除字符串左边的空格，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="string">'(  book  )'</span>,<span class="keyword">CONCAT</span>(<span class="string">'('</span>,<span class="keyword">LTRIM</span>(<span class="string">'  book  '</span>),<span class="string">')'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>【例6.31】使用LTRIM函数删除字符串右边的空格，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="string">'(  book  )'</span>,<span class="keyword">CONCAT</span>(<span class="string">'('</span>, <span class="keyword">RTRIM</span> (<span class="string">'  book  '</span>),<span class="string">')'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>【例6.32】使用TRIM函数删除指定字符串两端的空格，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="string">'(  book  )'</span>,<span class="keyword">CONCAT</span>(<span class="string">'('</span>, <span class="keyword">TRIM</span>(<span class="string">'  book  '</span>),<span class="string">')'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>6、删除指定字符串的函数TRIM(s2 from s)</p>
+<p>【例6.33】使用TRIM(s1 FROM s)函数删除字符串中两端指定的字符，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">TRIM</span>(<span class="string">'xy'</span> <span class="keyword">FROM</span> <span class="string">'xyboxyokxyxy'</span>) ;</span><br></pre></td></tr></table></figure></p>
+<p>7、重复生成字符串的函数REPEAT(s,n)</p>
+<p>【例6.34】使用REPEAT函数重复生成相同的字符串，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">REPEAT</span>(<span class="string">'PostgreSQL'</span>, <span class="number">3</span>);</span><br></pre></td></tr></table></figure></p>
+<p>8、替换函数REPLATE(s,s1,s2)</p>
+<p>【例6.35】使用REPLACE函数进行字符串替代操作，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">REPLACE</span>(<span class="string">'xxx.PostgreSQL.com'</span>, <span class="string">'x'</span>, <span class="string">'w'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>9、获取指定子串的函数SUBSTRING(s,n,len)</p>
+<p>【例6.36】使用SUBSTRING函数获取指定位置处的子字符串，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">SUBSTRING</span>(<span class="string">'breakfast'</span>,<span class="number">5</span>) <span class="keyword">AS</span> col1, </span><br><span class="line"><span class="keyword">SUBSTRING</span>(<span class="string">'breakfast'</span>,<span class="number">5</span>,<span class="number">3</span>) <span class="keyword">AS</span> col2,</span><br><span class="line"> <span class="keyword">SUBSTRING</span>(<span class="string">'lunch'</span>, <span class="number">-3</span>) <span class="keyword">AS</span> col3,</span><br></pre></td></tr></table></figure></p>
+<p>10、匹配子串开始位置的函数POSITION(str1 in str)</p>
+<p>【例6.37】使用POSITION函数查找字符串中指定子字符串的开始位置，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">POSITION</span>(<span class="string">'ball'</span> <span class="keyword">IN</span> <span class="string">'football'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>11、字符串逆序的函数REVERSE(s)</p>
+<p>【例6.38】使用REVERSE函数反转字符串，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">REVERSE</span>(<span class="string">'abc'</span>);</span><br></pre></td></tr></table></figure></p>
+<h4 id="日期和时间函数"><a href="#日期和时间函数" class="headerlink" title="日期和时间函数"></a>日期和时间函数</h4><p>1、获取当前日期的函数和当前时间的函数</p>
+<p>【例6.39】使用日期函数获取系统当期日期，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">CURRENT_DATE</span>;</span><br></pre></td></tr></table></figure></p>
+<p>【例6.40】使用时间函数获取系统当期日期(返回时带时区)，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">CURRENT_TIME</span>;</span><br></pre></td></tr></table></figure></p>
+<p>【例6.41】使用时间函数获取系统当期日期(返回时不带时区)，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">LOCALTIME</span>;</span><br></pre></td></tr></table></figure></p>
+<p>2、返回当前日期和时间的函数</p>
+<p>【例6.42】使用日期时间函数获取当前系统日期和时间，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">CURRENT_TIMESTAMP</span>,<span class="keyword">LOCALTIMESTAMP</span>,<span class="keyword">NOW</span>();</span><br></pre></td></tr></table></figure></p>
+<p>3、获取指定值的日期</p>
+<p>【例6.43】使用EXTRACT函数从月份中提取日期，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">EXTRACT</span>(<span class="keyword">DAY</span> <span class="keyword">FROM</span> <span class="built_in">TIMESTAMP</span> <span class="string">'2012-09-10 10:18:40'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>【例6.44】使用EXTRACT函数从月份中提取月份，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">EXTRACT</span>(<span class="keyword">MONTH</span> <span class="keyword">FROM</span> <span class="built_in">TIMESTAMP</span> <span class="string">'2012-09-10 10:18:40'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>【例6.45】使用EXTRACT函数从月份中提取年份，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">EXTRACT</span>(<span class="keyword">YEAR</span> <span class="keyword">FROM</span> <span class="built_in">TIMESTAMP</span> <span class="string">'2012-09-10 10:18:40'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>【例6.46】使用EXTRACT函数查询指定日期是一年中的第几天，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">EXTRACT</span>(DOY <span class="keyword">FROM</span> <span class="built_in">TIMESTAMP</span> <span class="string">'2012-09-10 10:18:40'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>【例6.47】使用EXTRACT函数查询指定日期是一周中的星期几，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">EXTRACT</span>(DOW <span class="keyword">FROM</span> <span class="built_in">TIMESTAMP</span> <span class="string">'2012-09-10 10:18:40'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>【例6.48】使用EXTRACT函数查询指定日期是该年的第几季度(1-4)，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">EXTRACT</span>(<span class="keyword">QUARTER</span> <span class="keyword">FROM</span> <span class="built_in">TIMESTAMP</span> <span class="string">'2012-09-10 10:18:40'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>4、日期和时间的运算操作</p>
+<p>【例6.49】 计算指定日期加上间隔天数后的结果，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">DATE</span> <span class="string">'2019-09-28'</span> + <span class="built_in">integer</span> <span class="string">'10'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>【例6.50】 计算指定日期加上间隔小时后的结果，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">DATE</span> <span class="string">'2012-09-28'</span> + <span class="built_in">interval</span> <span class="string">'3 hour'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>【例6.51】 计算指定日期加上指定时间后的结果，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">DATE</span> <span class="string">'2012-09-28'</span> + <span class="built_in">time</span> <span class="string">'06:00'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>【例6.52】 计算指定日期和时间加上间隔时间后的结果，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">TIMESTAMP</span> <span class="string">'2012-09-28 02:00:00'</span> + <span class="built_in">interval</span> <span class="string">'10 hours'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>【例6.53】 计算指定日期之间的间隔天数，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">date</span> <span class="string">'2012-11-01'</span> - <span class="built_in">date</span> <span class="string">'2012-09-10'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>【例6.54】 计算指定日期减去间隔天数后的结果，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">DATE</span> <span class="string">'2012-09-28'</span> - <span class="built_in">integer</span> <span class="string">'10'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>【例6.55】 计算整数与天数相乘的结果，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="number">15</span> * <span class="built_in">interval</span> <span class="string">'2 day'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>【例6.56】 计算整数与秒数相乘的结果，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="number">50</span> * <span class="built_in">interval</span> <span class="string">'2 second'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>【例6.57】 计算小时数与整数相乘的结果，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">interval</span> <span class="string">'1 hour'</span> / <span class="built_in">integer</span>  <span class="string">'2'</span>;</span><br></pre></td></tr></table></figure></p>
+<h4 id="条件判断函数"><a href="#条件判断函数" class="headerlink" title="条件判断函数"></a>条件判断函数</h4><p>1、CASE expr WHEN v1 THEN r1 [WHEN v2 THEN r2][ELSE rn] END;<br>意思是如果expr的值等于某个vn，则返回对应位置THEN后面的结果，如果与所有值都不相等，则返回ELSE后面的rn。</p>
+<p>【例6.58】使用CASE value WHEN语句执行分支操作，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">CASE</span> <span class="number">2</span> <span class="keyword">WHEN</span> <span class="number">1</span> <span class="keyword">THEN</span> <span class="string">'one'</span> <span class="keyword">WHEN</span> <span class="number">2</span> <span class="keyword">THEN</span> <span class="string">'two'</span> <span class="keyword">ELSE</span> <span class="string">'more'</span> <span class="keyword">END</span>;</span><br></pre></td></tr></table></figure></p>
+<p>2、CASE WHEN v1 THEN r1 [WHEN v2 THEN r2][ELSE rn] END;</p>
+<p>【例6.59】使用CASE WHEN语句执行分支操作，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">CASE</span> <span class="keyword">WHEN</span> <span class="number">1</span>&lt;<span class="number">0</span> <span class="keyword">THEN</span> <span class="string">'true'</span> <span class="keyword">ELSE</span> <span class="string">'false'</span> <span class="keyword">END</span>;</span><br></pre></td></tr></table></figure></p>
+<h4 id="系统信息函数"><a href="#系统信息函数" class="headerlink" title="系统信息函数"></a>系统信息函数</h4><p>1、获取PostgreSQL版本号</p>
+<p>【例6.60】查看当前PostgreSQL版本号，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">VERSION</span>();</span><br></pre></td></tr></table></figure></p>
+<p>2、获取用户名的函数</p>
+<p>【例6.61】获取当前登陆用户名称，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">USER</span>, <span class="keyword">CURRENT_USER</span>;</span><br></pre></td></tr></table></figure></p>
+<h4 id="加密函数"><a href="#加密函数" class="headerlink" title="加密函数"></a>加密函数</h4><p>1、加密函数MD5(str)</p>
+<p>【例6.62】使用MD5函数加密字符串，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">MD5</span> (<span class="string">'mypwd'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>2、加密函数ENCODE(str,pswd_str)</p>
+<p>【例6.63】使用ENCODE加密字符串，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">ENCODE</span>(<span class="string">'secret'</span>,<span class="string">'hex'</span>), <span class="keyword">LENGTH</span>(<span class="keyword">ENCODE</span>(<span class="string">'secret'</span>,<span class="string">'hex'</span>));</span><br></pre></td></tr></table></figure></p>
+<p>3、解密函数DECODE(cypt_str,pswd_str)</p>
+<p>【例6.64】使用DECODE函数解密被ENCODE加密的字符串，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DECODE</span>(<span class="keyword">ENCODE</span>(<span class="string">'secret'</span>,<span class="string">'hex'</span>),<span class="string">'hex'</span>);</span><br></pre></td></tr></table></figure></p>
+<h4 id="改变数据类型的函数"><a href="#改变数据类型的函数" class="headerlink" title="改变数据类型的函数"></a>改变数据类型的函数</h4><p>CAST(x, AS type)函数将一个类型的值转换为另一个类型的值。</p>
+<p>【例6.65】使用CAST函数进行数据类型的转换，将整数类型100转成两位字符串的类型10，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">CAST</span>(<span class="number">100</span> <span class="keyword">AS</span> <span class="built_in">CHAR</span>(<span class="number">2</span>));</span><br></pre></td></tr></table></figure></p>
+<h4 id="常见问题及解答"><a href="#常见问题及解答" class="headerlink" title="常见问题及解答"></a>常见问题及解答</h4><p>疑问1：如何从日期时间值中获取年、月、日等部分日期或时间值？<br>在PostgreSQL中，日期和时间是以字符串形式存储在数据表中，可以截取字符串，如dt = ‘2020-03-01 12:30:30’,则可以输入left(dt, 4)截取年份，输入mid(dt, 6, 2)截取月份，其他同理。</p>
+<p>疑问2：如何计算年龄？<br>年龄通过当前年龄减去出生年份来计算的。例如extract(year form m_birth)返回的结果是出生的年份，然后通过extract(year from current_date)获取当前年份，两者相减就是年龄。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据库/" rel="tag"># 数据库</a>
+          
+            <a href="/tags/PostgreSQL/" rel="tag"># PostgreSQL</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/database/PostgreSql/20190810_数据类型和运算符/" rel="next" title="PostgreSQL：五. 数据类型和运算符">
+                <i class="fa fa-chevron-left"></i> PostgreSQL：五. 数据类型和运算符
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/database/PostgreSql/20190813_插入更新删除数据/" rel="prev" title="PostgreSQL：七. 插入，更新与删除数据">
+                PostgreSQL：七. 插入，更新与删除数据 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="崔永华（Andy）">
+          <p class="site-author-name" itemprop="name">崔永华（Andy）</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">83</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/cuiyonghua6" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://blog.csdn.net/cui_yonghua" target="_blank" title="CSDN">
+                  
+                    <i class="fa fa-fw fa-bandcamp"></i>
+                  
+                  CSDN
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/cuiyonghua" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/cuiyonghua" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#数学函数"><span class="nav-number">1.</span> <span class="nav-text">数学函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串函数"><span class="nav-number">2.</span> <span class="nav-text">字符串函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#日期和时间函数"><span class="nav-number">3.</span> <span class="nav-text">日期和时间函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#条件判断函数"><span class="nav-number">4.</span> <span class="nav-text">条件判断函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#系统信息函数"><span class="nav-number">5.</span> <span class="nav-text">系统信息函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#加密函数"><span class="nav-number">6.</span> <span class="nav-text">加密函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#改变数据类型的函数"><span class="nav-number">7.</span> <span class="nav-text">改变数据类型的函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常见问题及解答"><span class="nav-number">8.</span> <span class="nav-text">常见问题及解答</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">崔永华（Andy）</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
