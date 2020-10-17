@@ -90,19 +90,19 @@
 
 
 
-<meta name="description" content="变量：是数据在内存中分配的空间，程序用来处理数据，而变量用来存储数据。  变量名必须是大小写英文、数字和_的组合，且不能用数字开头  引用：在python中，变量也称为引用，因为变量存储的就是对象的地址，变量通过地址引用了对象，变量位于栈内存，对象位于堆内存。 常量：所谓常量就是不能变的变量 12345678# 在python的语法规范中推荐使用的方式：# -*- coding:utf-8 -*-">
+<meta name="description" content="变量：是数据在内存中分配的空间，程序用来处理数据，而变量用来存储数据。  变量名必须是大小写英文、数字和_的组合，且不能用数字开头  引用：在python中，变量也称为引用，因为变量存储的就是对象的地址，变量通过地址引用了对象，变量位于栈内存，对象位于堆内存。">
 <meta name="keywords" content="python基础">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python变量和数据类型">
 <meta property="og:url" content="http://yoursite.com/2019/02/python/python基础/20190212_python变量和数据类型/index.html">
 <meta property="og:site_name" content="崔永华的个人网站">
-<meta property="og:description" content="变量：是数据在内存中分配的空间，程序用来处理数据，而变量用来存储数据。  变量名必须是大小写英文、数字和_的组合，且不能用数字开头  引用：在python中，变量也称为引用，因为变量存储的就是对象的地址，变量通过地址引用了对象，变量位于栈内存，对象位于堆内存。 常量：所谓常量就是不能变的变量 12345678# 在python的语法规范中推荐使用的方式：# -*- coding:utf-8 -*-">
+<meta property="og:description" content="变量：是数据在内存中分配的空间，程序用来处理数据，而变量用来存储数据。  变量名必须是大小写英文、数字和_的组合，且不能用数字开头  引用：在python中，变量也称为引用，因为变量存储的就是对象的地址，变量通过地址引用了对象，变量位于栈内存，对象位于堆内存。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="evernotecid://B1CD39FE-B044-413D-A086-0649DB3F0070/appyinxiangcom/26430792/ENResource/p411">
-<meta property="og:updated_time" content="2020-10-08T11:36:02.332Z">
+<meta property="og:updated_time" content="2020-10-17T03:25:31.878Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python变量和数据类型">
-<meta name="twitter:description" content="变量：是数据在内存中分配的空间，程序用来处理数据，而变量用来存储数据。  变量名必须是大小写英文、数字和_的组合，且不能用数字开头  引用：在python中，变量也称为引用，因为变量存储的就是对象的地址，变量通过地址引用了对象，变量位于栈内存，对象位于堆内存。 常量：所谓常量就是不能变的变量 12345678# 在python的语法规范中推荐使用的方式：# -*- coding:utf-8 -*-">
+<meta name="twitter:description" content="变量：是数据在内存中分配的空间，程序用来处理数据，而变量用来存储数据。  变量名必须是大小写英文、数字和_的组合，且不能用数字开头  引用：在python中，变量也称为引用，因为变量存储的就是对象的地址，变量通过地址引用了对象，变量位于栈内存，对象位于堆内存。">
 <meta name="twitter:image" content="evernotecid://B1CD39FE-B044-413D-A086-0649DB3F0070/appyinxiangcom/26430792/ENResource/p411">
 
 
@@ -423,6 +423,7 @@
 <li>变量名必须是大小写英文、数字和_的组合，且不能用数字开头</li>
 </ul>
 <p>引用：在python中，变量也称为引用，因为变量存储的就是对象的地址，变量通过地址引用了对象，变量位于栈内存，对象位于堆内存。</p>
+<a id="more"></a>
 <p>常量：所谓常量就是不能变的变量</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># 在python的语法规范中推荐使用的方式：</span></span><br><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"><span class="comment"># a本身是一个变量，它指向的对象的内容才是'abc'：</span></span><br><span class="line"></span><br><span class="line">a = <span class="string">'abc'</span></span><br><span class="line"><span class="comment"># 变量a仍指向原有的字符串'abc'，但变量b却指向新字符串'Abc'了：</span></span><br><span class="line">b = a.replace(<span class="string">'a'</span>, <span class="string">'A'</span>)</span><br></pre></td></tr></table></figure>
 <h4 id="变量的格式化输出"><a href="#变量的格式化输出" class="headerlink" title="变量的格式化输出"></a>变量的格式化输出</h4><p>%s:字符串；<br>%d:有符号10进制数，%06d表示整数位数，不足以0补全；<br>%f:浮点数，%02f，小数点后显示2位；</p>
@@ -600,7 +601,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

@@ -90,18 +90,18 @@
 
 
 
-<meta name="description" content="安装与启动PostgreSQL 11安装与配置可参考官网：https://www.pgadmin.org/ Linux系统下安装Postgresql 11Linux操作系统的发行版比较多。本章节以常用的Linux系统CentOS 7操作系统为例，讲解如何安装Postgresql 11。步骤1：创建postgres用户。[root@VMTest postgresql11]# useradd -g p">
+<meta name="description" content="安装与启动PostgreSQL 11安装与配置可参考官网：https://www.pgadmin.org/ Linux系统下安装Postgresql 11">
 <meta name="keywords" content="数据库,PostgreSQL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PostgreSQL：二. PostgreSQL 11 的安装与配置">
 <meta property="og:url" content="http://yoursite.com/2019/08/database/PostgreSql/20190807_安装和配置/index.html">
 <meta property="og:site_name" content="崔永华的个人网站">
-<meta property="og:description" content="安装与启动PostgreSQL 11安装与配置可参考官网：https://www.pgadmin.org/ Linux系统下安装Postgresql 11Linux操作系统的发行版比较多。本章节以常用的Linux系统CentOS 7操作系统为例，讲解如何安装Postgresql 11。步骤1：创建postgres用户。[root@VMTest postgresql11]# useradd -g p">
+<meta property="og:description" content="安装与启动PostgreSQL 11安装与配置可参考官网：https://www.pgadmin.org/ Linux系统下安装Postgresql 11">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-10-15T12:07:19.063Z">
+<meta property="og:updated_time" content="2020-10-17T03:16:03.253Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PostgreSQL：二. PostgreSQL 11 的安装与配置">
-<meta name="twitter:description" content="安装与启动PostgreSQL 11安装与配置可参考官网：https://www.pgadmin.org/ Linux系统下安装Postgresql 11Linux操作系统的发行版比较多。本章节以常用的Linux系统CentOS 7操作系统为例，讲解如何安装Postgresql 11。步骤1：创建postgres用户。[root@VMTest postgresql11]# useradd -g p">
+<meta name="twitter:description" content="安装与启动PostgreSQL 11安装与配置可参考官网：https://www.pgadmin.org/ Linux系统下安装Postgresql 11">
 
 
 
@@ -417,7 +417,8 @@
 
       
         <h4 id="安装与启动PostgreSQL-11"><a href="#安装与启动PostgreSQL-11" class="headerlink" title="安装与启动PostgreSQL 11"></a>安装与启动PostgreSQL 11</h4><p>安装与配置可参考官网：<a href="https://www.pgadmin.org/" target="_blank" rel="noopener">https://www.pgadmin.org/</a></p>
-<h4 id="Linux系统下安装Postgresql-11"><a href="#Linux系统下安装Postgresql-11" class="headerlink" title="Linux系统下安装Postgresql 11"></a>Linux系统下安装Postgresql 11</h4><p>Linux操作系统的发行版比较多。本章节以常用的Linux系统CentOS 7操作系统为例，讲解如何安装Postgresql 11。<br>步骤1：创建postgres用户。<br>[root@VMTest postgresql11]# useradd -g postgres post123<br>步骤2：下载rpm离线安装包。下载地址如下：<br><a href="https://download.postgresql.org/pub/repos/yum/11/redhat/rhel-7-x86_64/" target="_blank" rel="noopener">https://download.postgresql.org/pub/repos/yum/11/redhat/rhel-7-x86_64/</a><br>需要下载的安装包如下：<br>postgresql11-11.2-1PGDG.rhel7.x86_64.rpm<br>postgresql11-libs-11.2-1PGDG.rhel7.x86_64.rpm<br>postgresql11-server-11.2-1PGDG.rhel7.x86_64.rpm<br>步骤3：使用rpm -ivh安装Postgresql 11的rpm包。<br>[root@VMTest ~]# cd /home/lpf/soft/postgresql11/             #安装包存放路径<br>[root@VMTest ~]# systemctl start postgresql-11   #启动postgresq<br>步骤4：如果要卸载Postgresql 11，则需要先停止Postgresql服务，然后执行以下命令即可：<br>[root@VMTest ~]# rpm -qe postgresql11-libs-11.2-1PGDG.rhel7.x86_64<br>[root@VMTest ~]# rpm -qe postgresql11-11.2-1PGDG.rhel7.x86_64<br>[root@VMTest ~]# rpm -qe postgresql11-server-11.2-1PGDG.rhel7.x86_64<br>步骤5：初始化数据库。<br>[root@VMTest ~]# /usr/pgsql-11/bin/postgresql-11-setup initdb<br>Initializing database … OK<br>步骤6：设置开机启动数据库。<br>[root@VMTest ~]# systemctl enable postgresql-11  #设置开机启动<br>[root@VMTest ~]# systemctl start postgresql-11   #启动postgresq</p>
+<h4 id="Linux系统下安装Postgresql-11"><a href="#Linux系统下安装Postgresql-11" class="headerlink" title="Linux系统下安装Postgresql 11"></a>Linux系统下安装Postgresql 11</h4><a id="more"></a>
+<p>Linux操作系统的发行版比较多。本章节以常用的Linux系统CentOS 7操作系统为例，讲解如何安装Postgresql 11。<br>步骤1：创建postgres用户。<br>[root@VMTest postgresql11]# useradd -g postgres post123<br>步骤2：下载rpm离线安装包。下载地址如下：<br><a href="https://download.postgresql.org/pub/repos/yum/11/redhat/rhel-7-x86_64/" target="_blank" rel="noopener">https://download.postgresql.org/pub/repos/yum/11/redhat/rhel-7-x86_64/</a><br>需要下载的安装包如下：<br>postgresql11-11.2-1PGDG.rhel7.x86_64.rpm<br>postgresql11-libs-11.2-1PGDG.rhel7.x86_64.rpm<br>postgresql11-server-11.2-1PGDG.rhel7.x86_64.rpm<br>步骤3：使用rpm -ivh安装Postgresql 11的rpm包。<br>[root@VMTest ~]# cd /home/lpf/soft/postgresql11/             #安装包存放路径<br>[root@VMTest ~]# systemctl start postgresql-11   #启动postgresq<br>步骤4：如果要卸载Postgresql 11，则需要先停止Postgresql服务，然后执行以下命令即可：<br>[root@VMTest ~]# rpm -qe postgresql11-libs-11.2-1PGDG.rhel7.x86_64<br>[root@VMTest ~]# rpm -qe postgresql11-11.2-1PGDG.rhel7.x86_64<br>[root@VMTest ~]# rpm -qe postgresql11-server-11.2-1PGDG.rhel7.x86_64<br>步骤5：初始化数据库。<br>[root@VMTest ~]# /usr/pgsql-11/bin/postgresql-11-setup initdb<br>Initializing database … OK<br>步骤6：设置开机启动数据库。<br>[root@VMTest ~]# systemctl enable postgresql-11  #设置开机启动<br>[root@VMTest ~]# systemctl start postgresql-11   #启动postgresq</p>
 <h4 id="常见问题及解答"><a href="#常见问题及解答" class="headerlink" title="常见问题及解答"></a>常见问题及解答</h4>
       
     </div>
@@ -462,7 +463,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/08/database/PostgreSql/20190806_postgresql介绍/" rel="next" title="PostgreSQL介绍">
+              <a href="/2019/08/database/PostgreSql/20190809_数据表的基本操作/" rel="next" title="PostgreSQL介绍">
                 <i class="fa fa-chevron-left"></i> PostgreSQL介绍
               </a>
             
@@ -589,7 +590,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

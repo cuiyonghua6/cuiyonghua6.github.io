@@ -90,18 +90,18 @@
 
 
 
-<meta name="description" content="1. 连接数据库使用create_engine()实现连接，需要了解create_engine()各个参数的作用12345# 连接数据库from sqlalchemy import create_engineengine = create_engine(    &quot;mysql+pymysql://root:1990@localhost:3306/crawl_test?charset=utf8&quot;,">
+<meta name="description" content="1. 连接数据库使用create_engine()实现连接，需要了解create_engine()各个参数的作用">
 <meta name="keywords" content="python基础">
 <meta property="og:type" content="article">
 <meta property="og:title" content="sqlalchemy的使用">
 <meta property="og:url" content="http://yoursite.com/2019/03/python/python基础/20190303_sqlchemy的使用/index.html">
 <meta property="og:site_name" content="崔永华的个人网站">
-<meta property="og:description" content="1. 连接数据库使用create_engine()实现连接，需要了解create_engine()各个参数的作用12345# 连接数据库from sqlalchemy import create_engineengine = create_engine(    &quot;mysql+pymysql://root:1990@localhost:3306/crawl_test?charset=utf8&quot;,">
+<meta property="og:description" content="1. 连接数据库使用create_engine()实现连接，需要了解create_engine()各个参数的作用">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-10-08T12:35:15.397Z">
+<meta property="og:updated_time" content="2020-10-17T03:28:28.253Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="sqlalchemy的使用">
-<meta name="twitter:description" content="1. 连接数据库使用create_engine()实现连接，需要了解create_engine()各个参数的作用12345# 连接数据库from sqlalchemy import create_engineengine = create_engine(    &quot;mysql+pymysql://root:1990@localhost:3306/crawl_test?charset=utf8&quot;,">
+<meta name="twitter:description" content="1. 连接数据库使用create_engine()实现连接，需要了解create_engine()各个参数的作用">
 
 
 
@@ -416,7 +416,7 @@
       
 
       
-        <h4 id="1-连接数据库"><a href="#1-连接数据库" class="headerlink" title="1. 连接数据库"></a>1. 连接数据库</h4><p>使用create_engine()实现连接，需要了解create_engine()各个参数的作用<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 连接数据库</span></span><br><span class="line"><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> create_engine</span><br><span class="line">engine = create_engine(</span><br><span class="line">    <span class="string">"mysql+pymysql://root:1990@localhost:3306/crawl_test?charset=utf8"</span>,</span><br><span class="line">    echo=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure></p>
+        <h4 id="1-连接数据库"><a href="#1-连接数据库" class="headerlink" title="1. 连接数据库"></a>1. 连接数据库</h4><p>使用create_engine()实现连接，需要了解create_engine()各个参数的作用<br><a id="more"></a><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 连接数据库</span></span><br><span class="line"><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> create_engine</span><br><span class="line">engine = create_engine(</span><br><span class="line">    <span class="string">"mysql+pymysql://root:1990@localhost:3306/crawl_test?charset=utf8"</span>,</span><br><span class="line">    echo=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure></p>
 <h4 id="2-创建数据表"><a href="#2-创建数据表" class="headerlink" title="2. 创建数据表"></a>2. 创建数据表</h4><p>定义实体映射类数据表结构，通过操作类属性从而操作数据表字段</p>
 <p>创建表结构的方式<br>创建一个自增的数字主键！！！：不需要特意的设定，SQLAlchemy will automatically set the first Integer PK column that’s not marked as a FK as autoincrement=True</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建数据表方法一</span></span><br><span class="line"><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> Column, Integer, String, DateTime</span><br><span class="line"><span class="keyword">from</span> sqlalchemy.ext.declarative <span class="keyword">import</span> declarative_base</span><br><span class="line">Base = declarative_base()</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">mytable</span><span class="params">(Base)</span>:</span></span><br><span class="line">    <span class="comment"># 表名</span></span><br><span class="line">    __tablename__ = <span class="string">'mytable'</span></span><br><span class="line">    <span class="comment"># 字段，属性</span></span><br><span class="line">    id = Column(Integer, primary_key=<span class="literal">True</span>)</span><br><span class="line">    name = Column(String(<span class="number">50</span>), unique=<span class="literal">True</span>)</span><br><span class="line">    age = Column(Integer)</span><br><span class="line">    birth = Column(DateTime)</span><br><span class="line">    class_name = Column(String(<span class="number">50</span>))</span><br><span class="line"></span><br><span class="line">Base.metadata.create_all(engine)</span><br></pre></td></tr></table></figure>
@@ -630,7 +630,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

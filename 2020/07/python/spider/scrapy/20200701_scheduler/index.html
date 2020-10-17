@@ -90,18 +90,18 @@
 
 
 
-<meta name="description" content="scheduler核心Scheduler主要负责scrapy请求队列的管理，即进队与出队。进一步来说，会涉及到队列的选择，队列去重，序列化。 12345678910from_crawler(cls, crawler):        settings = crawler.settings        dupefilter_cls = load_object(settings[&apos;DUPEFILTE">
+<meta name="description" content="scheduler核心Scheduler主要负责scrapy请求队列的管理，即进队与出队。进一步来说，会涉及到队列的选择，队列去重，序列化。">
 <meta name="keywords" content="python,爬虫,scrapy">
 <meta property="og:type" content="article">
 <meta property="og:title" content="scrapy源码2：scheduler的源码分析">
 <meta property="og:url" content="http://yoursite.com/2020/07/python/spider/scrapy/20200701_scheduler/index.html">
 <meta property="og:site_name" content="崔永华的个人网站">
-<meta property="og:description" content="scheduler核心Scheduler主要负责scrapy请求队列的管理，即进队与出队。进一步来说，会涉及到队列的选择，队列去重，序列化。 12345678910from_crawler(cls, crawler):        settings = crawler.settings        dupefilter_cls = load_object(settings[&apos;DUPEFILTE">
+<meta property="og:description" content="scheduler核心Scheduler主要负责scrapy请求队列的管理，即进队与出队。进一步来说，会涉及到队列的选择，队列去重，序列化。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-10-13T11:54:26.409Z">
+<meta property="og:updated_time" content="2020-10-17T03:30:46.876Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="scrapy源码2：scheduler的源码分析">
-<meta name="twitter:description" content="scheduler核心Scheduler主要负责scrapy请求队列的管理，即进队与出队。进一步来说，会涉及到队列的选择，队列去重，序列化。 12345678910from_crawler(cls, crawler):        settings = crawler.settings        dupefilter_cls = load_object(settings[&apos;DUPEFILTE">
+<meta name="twitter:description" content="scheduler核心Scheduler主要负责scrapy请求队列的管理，即进队与出队。进一步来说，会涉及到队列的选择，队列去重，序列化。">
 
 
 
@@ -417,6 +417,7 @@
 
       
         <h3 id="scheduler核心"><a href="#scheduler核心" class="headerlink" title="scheduler核心"></a>scheduler核心</h3><p>Scheduler主要负责scrapy请求队列的管理，即进队与出队。进一步来说，会涉及到队列的选择，队列去重，序列化。</p>
+<a id="more"></a>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from_crawler(cls, crawler):</span><br><span class="line">        settings = crawler.settings</span><br><span class="line">        dupefilter_cls = load_object(settings[<span class="string">'DUPEFILTER_CLASS'</span>])</span><br><span class="line">        dupefilter = dupefilter_cls.from_settings(settings)</span><br><span class="line">        pqclass = load_object(settings[<span class="string">'SCHEDULER_PRIORITY_QUEUE'</span>])</span><br><span class="line">        dqclass = load_object(settings[<span class="string">'SCHEDULER_DISK_QUEUE'</span>])</span><br><span class="line">        mqclass = load_object(settings[<span class="string">'SCHEDULER_MEMORY_QUEUE'</span>])</span><br><span class="line">        logunser = settings.getbool(<span class="string">'LOG_UNSERIALIZABLE_REQUESTS'</span>, settings.getbool(<span class="string">'SCHEDULER_DEBUG'</span>))</span><br><span class="line">        <span class="keyword">return</span> cls(dupefilter, jobdir=job_dir(settings), logunser=logunser,</span><br><span class="line">                   stats=crawler.stats, pqclass=pqclass, dqclass=dqclass, mqclass=mqclass)</span><br></pre></td></tr></table></figure>
 <p>创建了4个对象，分别是dupefilter,pqclass,dqclass,mqclass。</p>
 <h4 id="1-dupefilter过滤器（url去重）"><a href="#1-dupefilter过滤器（url去重）" class="headerlink" title="1. dupefilter过滤器（url去重）"></a>1. dupefilter过滤器（url去重）</h4><p>DUPEFILTER_CLASS = ‘scrapy.dupefilters.RFPDupeFilter’这个类的含义是”Request Fingerprint duplicates filter”，请求指纹副本过滤。也就是对每个request请求做一个指纹，保证相同的请求有相同的指纹。对重复的请求进行过滤。包含查询字符串、cookies字段的相同url也会被去重。</p>
@@ -599,7 +600,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

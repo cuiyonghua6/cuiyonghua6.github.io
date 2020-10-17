@@ -90,19 +90,19 @@
 
 
 
-<meta name="description" content="String类：不可变的字符序列常用方法：  int length():获取字符串的长度，其实也就是字符个数char charAt(int index):获取指定索引处的字符int indexOf(String str):获取str在字符串对象中第一次出现的索引String substring(int start,int end):从start开始，到end结束截取字符串boolean equal">
+<meta name="description" content="String类：不可变的字符序列常用方法：  int length():获取字符串的长度，其实也就是字符个数char charAt(int index):获取指定索引处的字符">
 <meta name="keywords" content="java,java基础">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java字符串String类">
 <meta property="og:url" content="http://yoursite.com/2017/04/java/java基础/2017425_字符串string类的/index.html">
 <meta property="og:site_name" content="崔永华的个人网站">
-<meta property="og:description" content="String类：不可变的字符序列常用方法：  int length():获取字符串的长度，其实也就是字符个数char charAt(int index):获取指定索引处的字符int indexOf(String str):获取str在字符串对象中第一次出现的索引String substring(int start,int end):从start开始，到end结束截取字符串boolean equal">
+<meta property="og:description" content="String类：不可变的字符序列常用方法：  int length():获取字符串的长度，其实也就是字符个数char charAt(int index):获取指定索引处的字符">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190710155404404.png">
-<meta property="og:updated_time" content="2020-10-12T12:24:20.362Z">
+<meta property="og:updated_time" content="2020-10-17T03:21:01.203Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java字符串String类">
-<meta name="twitter:description" content="String类：不可变的字符序列常用方法：  int length():获取字符串的长度，其实也就是字符个数char charAt(int index):获取指定索引处的字符int indexOf(String str):获取str在字符串对象中第一次出现的索引String substring(int start,int end):从start开始，到end结束截取字符串boolean equal">
+<meta name="twitter:description" content="String类：不可变的字符序列常用方法：  int length():获取字符串的长度，其实也就是字符个数char charAt(int index):获取指定索引处的字符">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190710155404404.png">
 
 
@@ -420,7 +420,11 @@
       
         <h4 id="String类：不可变的字符序列"><a href="#String类：不可变的字符序列" class="headerlink" title="String类：不可变的字符序列"></a>String类：不可变的字符序列</h4><p>常用方法：</p>
 <blockquote>
-<p>int length():获取字符串的长度，其实也就是字符个数<br>char charAt(int index):获取指定索引处的字符<br>int indexOf(String str):获取str在字符串对象中第一次出现的索引<br>String substring(int start,int end):从start开始，到end结束截取字符串<br>boolean equals(Object obj):比较字符串的内容是否相同<br>boolean equalsIgnoreCase(String str):比较字符串的内容是否相同,忽略大小写<br>boolean startsWith(String str):判断字符串对象是否以指定的str开头<br>boolean endsWith(String str):判断字符串对象是否以指定的str结尾<br>char[] toCharArray():把字符串转换为字符数组<br>String toLowerCase():把字符串转换为小写字符串<br>String toUpperCase():把字符串转换为大写字符串<br>String trim():去除字符串两端空格<br>String[] split(String str):按照指定符号分割字符串</p>
+<p>int length():获取字符串的长度，其实也就是字符个数<br>char charAt(int index):获取指定索引处的字符</p>
+</blockquote>
+<a id="more"></a>
+<blockquote>
+<p>int indexOf(String str):获取str在字符串对象中第一次出现的索引<br>String substring(int start,int end):从start开始，到end结束截取字符串<br>boolean equals(Object obj):比较字符串的内容是否相同<br>boolean equalsIgnoreCase(String str):比较字符串的内容是否相同,忽略大小写<br>boolean startsWith(String str):判断字符串对象是否以指定的str开头<br>boolean endsWith(String str):判断字符串对象是否以指定的str结尾<br>char[] toCharArray():把字符串转换为字符数组<br>String toLowerCase():把字符串转换为小写字符串<br>String toUpperCase():把字符串转换为大写字符串<br>String trim():去除字符串两端空格<br>String[] split(String str):按照指定符号分割字符串</p>
 </blockquote>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringMethodDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//创建字符串对象</span></span><br><span class="line">        String s = <span class="string">"helloworld"</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//int length():获取字符串的长度，其实也就是字符个数</span></span><br><span class="line">        System.out.println(s.length());<span class="comment">//结果为：10</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//char charAt(int index):获取指定索引处的字符</span></span><br><span class="line">        System.out.println(s.charAt(<span class="number">0</span>));<span class="comment">//结果为：h</span></span><br><span class="line">        System.out.println(s.charAt(<span class="number">1</span>));<span class="comment">//结果为：e</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//int indexOf(String str):获取str在字符串对象中第一次出现的索引</span></span><br><span class="line">        System.out.println(s.indexOf(<span class="string">"l"</span>));<span class="comment">//结果为：2</span></span><br><span class="line">        System.out.println(s.indexOf(<span class="string">"owo"</span>));<span class="comment">//结果为：4</span></span><br><span class="line">        System.out.println(s.indexOf(<span class="string">"ak"</span>));<span class="comment">//结果为：-1</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//String substring(int start):从start开始截取字符串</span></span><br><span class="line">        System.out.println(s.substring(<span class="number">0</span>));<span class="comment">//结果为：helloworld</span></span><br><span class="line">        System.out.println(s.substring(<span class="number">5</span>));<span class="comment">//结果为：world</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//String substring(int start,int end):从start开始，到end结束截取字符串</span></span><br><span class="line">        System.out.println(s.substring(<span class="number">0</span>, s.length()));<span class="comment">//结果为：helloworld</span></span><br><span class="line">        System.out.println(s.substring(<span class="number">3</span>,<span class="number">8</span>));<span class="comment">//结果为：lowor</span></span><br><span class="line"></span><br><span class="line">        String s3 = <span class="string">"hello"</span>;</span><br><span class="line">        String s4 = <span class="string">"hello"</span>;</span><br><span class="line">        String s5 = <span class="string">"Hello"</span>;</span><br><span class="line">        <span class="comment">//boolean equals(Object obj):比较字符串的内容是否相同</span></span><br><span class="line">        System.out.println(s3.equals(s4));<span class="comment">//结果为：true</span></span><br><span class="line">        <span class="comment">//boolean equalsIgnoreCase(String str):比较字符串的内容是否相同,忽略大小写</span></span><br><span class="line">        System.out.println(s3.equalsIgnoreCase(s5));<span class="comment">//结果为：true</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">//创建字符串对象</span></span><br><span class="line">        String s6 = <span class="string">"abcde"</span>;</span><br><span class="line">        <span class="comment">//char[] toCharArray():把字符串转换为字符数组</span></span><br><span class="line">        <span class="keyword">char</span>[] chs = s6.toCharArray();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> x=<span class="number">0</span>; x&lt;chs.length; x++) &#123;</span><br><span class="line">            System.out.println(chs[x]);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">          <span class="comment">//String[] split(String str):按照指定符号分割字符串</span></span><br><span class="line">        String s4 = <span class="string">"aa,bb,cc"</span>;</span><br><span class="line">        String[] strArray = s4.split(<span class="string">","</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> x=<span class="number">0</span>; x&lt;strArray.length; x++) &#123;</span><br><span class="line">            System.out.println(strArray[x]);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>从键盘输入一串字符,统计一个字符串大小写字母字符，数字字符出现的次数。(不考虑其他字符)</p>
@@ -503,8 +507,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/04/java/java基础/2017424_数组和string类/" rel="next" title="java数组">
-                <i class="fa fa-chevron-left"></i> java数组
+              <a href="/2017/04/java/java基础/2017423_运算和流程控制/" rel="next" title="java运算和流程控制">
+                <i class="fa fa-chevron-left"></i> java运算和流程控制
               </a>
             
           </div>
@@ -513,8 +517,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/04/java/java基础/2017427_java核心类/" rel="prev" title="java基础">
-                java基础 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/04/java/java基础/2017424_数组和string类/" rel="prev" title="java数组">
+                java数组 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -630,7 +634,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

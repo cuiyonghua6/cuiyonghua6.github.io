@@ -306,310 +306,6 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/others/数据结构C语言/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="崔永华（Andy）">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="崔永华的个人网站">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/others/数据结构C语言/" itemprop="url">
-                  C语言-数据结构-排序汇总（代码可直接运行）
-                </a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-23T15:24:20+08:00">
-                2017-07-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/其它/" itemprop="url" rel="index">
-                    <span itemprop="name">其它</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/其它/数据结构-C语言/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构(C语言)</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="分层"><a href="#分层" class="headerlink" title="分层"></a>分层</h2><h3 id="OSI模型有哪几层？"><a href="#OSI模型有哪几层？" class="headerlink" title="OSI模型有哪几层？"></a>OSI模型有哪几层？</h3><ol>
-<li>应用层（数据）：<strong>定义了应用进程间的通信和交互的规则，通过应用进程间的交互来完成特定网络应用。</strong></li>
-<li>表示层（数据）：<strong>用于应用层数据的编码和转换功能，确保一个系统的应用层发送的数据能被另一个系统的应用层识别。</strong></li>
-<li>会话层（数据）：<strong>负责建立、管理和终止表示层实体之间的通信会话。</strong></li>
-<li>传输层（段）：<strong>建立端到端的链接，为上层协议提供端到端的可靠和透明的数据传输服务，包括处理差错控制和流量控制等问题，向上层屏蔽了下层数据通信的细节。</strong></li>
-<li>网络层（包）：<strong>通过IP寻址来建立两个节点之间的连接，为源端的运输层送来的分组，选择合适的路由和交换节点，正确无误地按照地址传送给目的端的运输层。</strong></li>
-<li>数据链路层（帧）：<strong>将比特组合成字节，再将字节组合成帧，使用MAC地址访问介质，并进行差错检测。</strong></li>
-<li>物理层（比特流）：<strong>实现相邻计算机节点之间比特流的透明传送，尽可能屏蔽掉具体传输介质和物理设备的差异。</strong></li>
-</ol>
-<h3 id="每一层使用的是什么设备？"><a href="#每一层使用的是什么设备？" class="headerlink" title="每一层使用的是什么设备？"></a>每一层使用的是什么设备？</h3><ol>
-<li>网关：应用层、传输层</li>
-<li>路由器：网络层</li>
-<li>交换机：数据链路层、网络层</li>
-<li>网桥：数据链路层</li>
-<li>集线器：物理层</li>
-<li>中继器：物理层</li>
-</ol>
-<h2 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h2><h3 id="地址解析协议-ARP"><a href="#地址解析协议-ARP" class="headerlink" title="地址解析协议 ARP"></a>地址解析协议 ARP</h3><p>网络层实现主机之间的通信，而链路层实现具体每段链路之间的通信。因此在通信过程中，IP 数据报的源地址和目的地址始终不变，而 MAC 地址随着链路的改变而改变。</p>
-<p>ARP 实现由 IP 地址得到 MAC 地址。每个主机都有一个 ARP 高速缓存，里面有本局域网上的各主机和路由器的 IP 地址到 MAC 地址的映射表。</p>
-<p>如果主机 A 知道主机 B 的 IP 地址，但是 ARP 高速缓存中没有该 IP 地址到 MAC 地址的映射，此时主机 A 通过广播的方式发送 ARP 请求分组，主机 B 收到该请求后会发送 ARP 响应分组给主机 A 告知其 MAC 地址，随后主机 A 向其高速缓存中写入主机 B 的 IP 地址到 MAC 地址的映射。</p>
-<h3 id="网际控制报文协议-ICMP"><a href="#网际控制报文协议-ICMP" class="headerlink" title="网际控制报文协议 ICMP"></a>网际控制报文协议 ICMP</h3><p>ICMP 是为了更有效地转发 IP 数据报和提高交付成功的机会。它封装在 IP 数据报中，但是不属于高层协议。</p>
-<p>ICMP 报文分为差错报告报文和询问报文。</p>
-<h4 id="Ping"><a href="#Ping" class="headerlink" title="Ping"></a>Ping</h4><p>Ping 是 ICMP 的一个重要应用，主要用来测试两台主机之间的连通性。</p>
-<p>Ping 的原理是通过向目的主机发送 <code>ICMP Echo</code> 请求报文，目的主机收到之后会发送 Echo 回答报文。Ping 会根据时间和成功响应的次数估算出数据包往返时间以及丢包率。</p>
-<h4 id="Traceroute"><a href="#Traceroute" class="headerlink" title="Traceroute"></a>Traceroute</h4><p>Traceroute 是 ICMP 的另一个应用，用来跟踪一个分组从源点到终点的路径。</p>
-<p>Traceroute 发送的 IP 数据报封装的是无法交付的 UDP 用户数据报，并由目的主机发送终点不可达差错报告报文。</p>
-<ul>
-<li>源主机向目的主机发送一连串的 IP 数据报。第一个数据报 P1 的生存时间 TTL 设置为 1，当 P1 到达路径上的第一个路由器 R1 时，R1 收下它并把 TTL 减 1，此时 TTL 等于 0，R1 就把 P1 丢弃，并向源主机发送一个 ICMP 时间超过差错报告报文；</li>
-<li>源主机接着发送第二个数据报 P2，并把 TTL 设置为 2。P2 先到达 R1，R1 收下后把 TTL 减 1 再转发给 R2，R2 收下后也把 TTL 减 1，由于此时 TTL 等于 0，R2 就丢弃 P2，并向源主机发送一个 ICMP 时间超过差错报文。</li>
-<li>不断执行这样的步骤，直到最后一个数据报刚刚到达目的主机，主机不转发数据报，也不把 TTL 值减 1。但是因为数据报封装的是无法交付的 UDP，因此目的主机要向源主机发送 ICMP 终点不可达差错报告报文。</li>
-<li>之后源主机知道了到达目的主机所经过的路由器 IP 地址以及到达每个路由器的往返时间。</li>
-</ul>
-<h3 id="路由选择协议"><a href="#路由选择协议" class="headerlink" title="路由选择协议"></a>路由选择协议</h3><p>路由选择协议都是自适应的，能随着网络通信量和拓扑结构的变化而自适应地进行调整。</p>
-<p>互联网可以划分为许多较小的自治系统 AS，一个 AS 可以使用一种和别的 AS 不同的路由选择协议。</p>
-<p>可以把路由选择协议划分为两大类：</p>
-<ul>
-<li>自治系统内部的路由选择：RIP 和 OSPF</li>
-<li>自治系统间的路由选择：BGP</li>
-</ul>
-<h4 id="内部网关协议-RIP"><a href="#内部网关协议-RIP" class="headerlink" title="内部网关协议 RIP"></a>内部网关协议 RIP</h4><p>RIP 是一种基于距离向量的路由选择协议。距离是指跳数，直接相连的路由器跳数为 1。跳数最多为 15，超过 15 表示不可达。</p>
-<p>RIP 按固定的时间间隔仅和相邻路由器交换自己的路由表，经过若干次交换之后，所有路由器最终会知道到达本自治系统中任何一个网络的最短距离和下一跳路由器地址。</p>
-<p>RIP 协议实现简单，开销小。但是 RIP 能使用的最大距离为 15，限制了网络的规模。并且当网络出现故障时，要经过比较长的时间才能将此消息传送到所有路由器。</p>
-<h4 id="内部网关协议-OSPF"><a href="#内部网关协议-OSPF" class="headerlink" title="内部网关协议 OSPF"></a>内部网关协议 OSPF</h4><p>开放最短路径优先 OSPF，是为了克服 RIP 的缺点而开发出来的。</p>
-<p>开放表示 OSPF 不受某一家厂商控制，而是公开发表的；最短路径优先表示使用了 Dijkstra 提出的最短路径算法 SPF。</p>
-<p>OSPF 具有以下特点：</p>
-<ul>
-<li>向本自治系统中的所有路由器发送信息，这种方法是洪泛法。</li>
-<li>发送的信息就是与相邻路由器的链路状态，链路状态包括与哪些路由器相连以及链路的度量，度量用费用、距离、时延、带宽等来表示。</li>
-<li>只有当链路状态发生变化时，路由器才会发送信息。</li>
-</ul>
-<p>所有路由器都具有全网的拓扑结构图，并且是一致的。相比于 RIP，OSPF 的更新过程收敛的很快。</p>
-<h4 id="外部网关协议-BGP"><a href="#外部网关协议-BGP" class="headerlink" title="外部网关协议 BGP"></a>外部网关协议 BGP</h4><p>AS 之间的路由选择很困难，主要是由于：</p>
-<ul>
-<li>互联网规模很大；</li>
-<li>各个 AS 内部使用不同的路由选择协议，无法准确定义路径的度量；</li>
-<li>AS 之间的路由选择必须考虑有关的策略，比如有些 AS 不愿意让其它 AS 经过。</li>
-</ul>
-<p>BGP 只能寻找一条比较好的路由，而不是最佳路由。</p>
-<p>每个 AS 都必须配置 BGP 发言人，通过在两个相邻 BGP 发言人之间建立 TCP 连接来交换路由信息。</p>
-<h2 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h2><h3 id="UDP-和-TCP-的特点"><a href="#UDP-和-TCP-的特点" class="headerlink" title="UDP 和 TCP 的特点"></a>UDP 和 TCP 的特点</h3><ul>
-<li><p>UDP是无连接的，尽最大可能交付，没有拥塞控制，面向报文（对于应用程序传下来的报文不合并也不拆分，只是添加 UDP 首部），支持一对一、一对多、多对一和多对多的交互通信。</p>
-<p>虽然 UDP 不提供可靠交付，但在某些情况下 UDP 确是一种最有效的工作方式，比如： QQ 语音、 QQ 视频 、直播等等</p>
-</li>
-<li><p>TCP是面向连接的，提供可靠交付，有流量控制，拥塞控制，提供全双工通信，面向字节流（把应用层传下来的报文看成字节流，把字节流组织成大小不等的数据块），每一条 TCP 连接只能是点对点的（一对一）。</p>
-<p>TCP的可靠体现在TCP在传递数据之前，会有三次握手来建立连接，而且在数据传递时，有确认、窗口、重传、拥塞控制机制，在数据传完后，还会断开连接用来节约系统资源。这不仅使协议数据单元的首部增大很多，还要占用许多处理机资源。TCP 一般用于文件传输、发送和接收邮件、远程登录等场景。</p>
-</li>
-</ul>
-<h3 id="TCP-三次握手"><a href="#TCP-三次握手" class="headerlink" title="TCP 三次握手"></a>TCP 三次握手</h3><p>假设 A 为客户端，B 为服务器端。</p>
-<ul>
-<li>首先 B 处于 LISTEN（监听）状态，等待客户的连接请求。</li>
-<li>A 向 B 发送连接请求报文，SYN=1，ACK=0，选择一个初始的序号 x。</li>
-<li>B 收到连接请求报文，如果同意建立连接，则向 A 发送连接确认报文，SYN=1，ACK=1，确认号为 x+1，同时也选择一个初始的序号 y。</li>
-<li>A 收到 B 的连接确认报文后，还要向 B 发出确认，确认号为 y+1，序号为 x+1。</li>
-<li>B 收到 A 的确认后，连接建立。</li>
-</ul>
-<p><strong>三次握手的原因</strong></p>
-<ul>
-<li>第三次握手是为了防止失效的连接请求到达服务器，让服务器错误打开连接。</li>
-<li>客户端发送的连接请求如果在网络中滞留，那么就会隔很长一段时间才能收到服务器端发回的连接确认。客户端等待一个超时重传时间之后，就会重新请求连接。但是这个滞留的连接请求最后还是会到达服务器，如果不进行三次握手，那么服务器就会打开两个连接。如果有第三次握手，客户端会忽略服务器之后发送的对滞留连接请求的连接确认，不进行第三次握手，因此就不会再次打开连接。</li>
-</ul>
-<h3 id="TCP-的四次挥手"><a href="#TCP-的四次挥手" class="headerlink" title="TCP 的四次挥手"></a>TCP 的四次挥手</h3><p>以下描述不讨论序号和确认号，因为序号和确认号的规则比较简单。并且不讨论 ACK，因为 ACK 在连接建立之后都为 1。</p>
-<ul>
-<li>A 发送连接释放报文，FIN=1。</li>
-<li>B 收到之后发出确认，此时 TCP 属于半关闭状态，B 能向 A 发送数据但是 A 不能向 B 发送数据。</li>
-<li>当 B 不再需要连接时，发送连接释放报文，FIN=1。</li>
-<li>A 收到后发出确认，进入 TIME-WAIT 状态，等待 2 MSL（最大报文存活时间）后释放连接。</li>
-<li>B 收到 A 的确认后释放连接。</li>
-</ul>
-<p><strong>四次挥手的原因</strong></p>
-<p>客户端发送了 FIN 连接释放报文之后，服务器收到了这个报文，就进入了 CLOSE-WAIT 状态。这个状态是为了让服务器端发送还未传送完毕的数据，传送完毕之后，服务器会发送 FIN 连接释放报文。</p>
-<p><strong>TIME_WAIT</strong></p>
-<p>客户端接收到服务器端的 FIN 报文后进入此状态，此时并不是直接进入 CLOSED 状态，还需要等待一个时间计时器设置的时间 2MSL。这么做有两个理由：</p>
-<ul>
-<li>确保最后一个确认报文能够到达。如果 B 没收到 A 发送来的确认报文，那么就会重新发送连接释放请求报文，A 等待一段时间就是为了处理这种情况的发生。</li>
-<li>等待一段时间是为了让本连接持续时间内所产生的所有报文都从网络中消失，使得下一个新的连接不会出现旧的连接请求报文。</li>
-</ul>
-<h3 id="TCP-协议如何保证可靠传输"><a href="#TCP-协议如何保证可靠传输" class="headerlink" title="TCP 协议如何保证可靠传输"></a>TCP 协议如何保证可靠传输</h3><ol>
-<li>应用数据被分割成 TCP 认为最适合发送的数据块。</li>
-<li>TCP 给发送的每一个包进行编号，接收方对数据包进行排序，把有序数据传送给应用层。</li>
-<li><strong>校验和：</strong> TCP 将保持它首部和数据的检验和。这是一个端到端的检验和，目的是检测数据在传输过程中的任何变化。如果收到段的检验和有差错，TCP 将丢弃这个报文段和不确认收到此报文段。</li>
-<li>TCP 的接收端会丢弃重复的数据。</li>
-<li><strong>流量控制：</strong> TCP 连接的每一方都有固定大小的缓冲空间，TCP的接收端只允许发送端发送接收端缓冲区能接纳的数据。当接收方来不及处理发送方的数据，能提示发送方降低发送的速率，防止包丢失。TCP 使用的流量控制协议是可变大小的滑动窗口协议。 （TCP 利用滑动窗口实现流量控制）</li>
-<li><strong>拥塞控制：</strong> 当网络拥塞时，减少数据的发送。</li>
-<li><strong>ARQ协议：</strong> 也是为了实现可靠传输的，它的基本原理就是每发完一个分组就停止发送，等待对方确认。在收到确认后再发下一个分组。</li>
-<li><strong>超时重传：</strong> 当 TCP 发出一个段后，它启动一个定时器，等待目的端确认收到这个报文段。如果不能及时收到一个确认，将重发这个报文段。</li>
-</ol>
-<h3 id="ARQ协议"><a href="#ARQ协议" class="headerlink" title="ARQ协议"></a>ARQ协议</h3><p><strong>自动重传请求</strong>（Automatic Repeat-reQuest，ARQ）是OSI模型中数据链路层和传输层的错误纠正协议之一。它通过使用确认和超时这两个机制，在不可靠服务的基础上实现可靠的信息传输。如果发送方在发送后一段时间之内没有收到确认帧，它通常会重新发送。ARQ包括停止等待ARQ协议和连续ARQ协议。</p>
-<h4 id="停止等待ARQ协议"><a href="#停止等待ARQ协议" class="headerlink" title="停止等待ARQ协议"></a>停止等待ARQ协议</h4><ul>
-<li>停止等待协议是为了实现可靠传输的，它的基本原理就是每发完一个分组就停止发送，等待对方确认（回复ACK）。如果过了一段时间（超时时间后），还是没有收到 ACK 确认，说明没有发送成功，需要重新发送，直到收到确认后再发下一个分组；</li>
-<li>在停止等待协议中，若接收方收到重复分组，就丢弃该分组，但同时还要发送确认；</li>
-</ul>
-<p><strong>优点：</strong> 简单</p>
-<p><strong>缺点：</strong> 信道利用率低，等待时间长</p>
-<p><strong>无差错情况:</strong></p>
-<p>发送方发送分组,接收方在规定时间内收到,并且回复确认.发送方再次发送。</p>
-<p><strong>出现差错情况（超时重传）:</strong></p>
-<p>停止等待协议中超时重传是指只要超过一段时间仍然没有收到确认，就重传前面发送过的分组（认为刚才发送过的分组丢失了）。因此每发送完一个分组需要设置一个超时计时器，其重传时间应比数据在分组传输的平均往返时间更长一些。这种自动重传方式常称为 <strong>自动重传请求 ARQ</strong> 。另外在停止等待协议中若收到重复分组，就丢弃该分组，但同时还要发送确认。<strong>连续 ARQ 协议</strong> 可提高信道利用率。发送维持一个发送窗口，凡位于发送窗口内的分组可连续发送出去，而不需要等待对方确认。接收方一般采用累积确认，对按序到达的最后一个分组发送确认，表明到这个分组位置的所有分组都已经正确收到了。</p>
-<p><strong>确认丢失和确认迟到</strong></p>
-<ul>
-<li><strong>确认丢失</strong> ：确认消息在传输过程丢失。当A发送M1消息，B收到后，B向A发送了一个M1确认消息，但却在传输过程中丢失。而A并不知道，在超时计时过后，A重传M1消息，B再次收到该消息后采取以下两点措施：1. 丢弃这个重复的M1消息，不向上层交付。 2. 向A发送确认消息。（不会认为已经发送过了，就不再发送。A能重传，就证明B的确认消息丢失）。</li>
-<li><strong>确认迟到</strong> ：确认消息在传输过程中迟到。A发送M1消息，B收到并发送确认。在超时时间内没有收到确认消息，A重传M1消息，B仍然收到并继续发送确认消息（B收到了2份M1）。此时A收到了B第二次发送的确认消息。接着发送其他数据。过了一会，A收到了B第一次发送的对M1的确认消息（A也收到了2份确认消息）。处理如下：1. A收到重复的确认后，直接丢弃。2. B收到重复的M1后，也直接丢弃重复的M1。</li>
-</ul>
-<h3 id="连续ARQ协议"><a href="#连续ARQ协议" class="headerlink" title="连续ARQ协议"></a>连续ARQ协议</h3><p>连续 ARQ 协议可提高信道利用率。发送方维持一个发送窗口，凡位于发送窗口内的分组可以连续发送出去，而不需要等待对方确认。接收方一般采用累计确认，对按序到达的最后一个分组发送确认，表明到这个分组为止的所有分组都已经正确收到了。</p>
-<p><strong>优点：</strong> 信道利用率高，容易实现，即使确认丢失，也不必重传。</p>
-<p><strong>缺点：</strong> 不能向发送方反映出接收方已经正确收到的所有分组的信息。 比如：发送方发送了 5条 消息，中间第三条丢失（3号），这时接收方只能对前两个发送确认。发送方无法知道后三个分组的下落，而只好把后三个全部重传一次。这也叫 Go-Back-N（回退 N），表示需要退回来重传已经发送过的 N 个消息。</p>
-<h3 id="滑动窗口和流量控制"><a href="#滑动窗口和流量控制" class="headerlink" title="滑动窗口和流量控制"></a>滑动窗口和流量控制</h3><p><strong>TCP 利用滑动窗口实现流量控制。流量控制是为了控制发送方发送速率，保证接收方来得及接收。</strong> 窗口是缓存的一部分，用来暂时存放字节流。发送方和接收方各有一个窗口，接收方通过 TCP 报文段中的窗口字段告诉发送方自己的窗口大小，发送方根据这个值和其它信息设置自己的窗口大小。</p>
-<p>发送窗口内的字节都允许被发送，接收窗口内的字节都允许被接收。如果发送窗口左部的字节已经发送并且收到了确认，那么就将发送窗口向右滑动一定距离，直到左部第一个字节不是已发送并且已确认的状态；接收窗口的滑动类似，接收窗口左部字节已经发送确认并交付主机，就向右滑动接收窗口。接收窗口只会对窗口内最后一个按序到达的字节进行确认，发送方得到一个字节的确认之后，就知道这个字节之前的所有字节都已经被接收。</p>
-<h3 id="拥塞控制"><a href="#拥塞控制" class="headerlink" title="拥塞控制"></a>拥塞控制</h3><p>如果网络出现拥塞，分组将会丢失，此时发送方会继续重传，从而导致网络拥塞程度更高。因此当出现拥塞时，应当控制发送方的速率。这一点和流量控制很像，但是出发点不同。流量控制是为了让接收方能来得及接收，而拥塞控制是为了降低整个网络的拥塞程度。</p>
-<p>TCP 主要通过四个算法来进行拥塞控制：慢开始、拥塞避免、快重传、快恢复。</p>
-<p>发送方需要维护一个叫做拥塞窗口（cwnd）的状态变量，注意拥塞窗口与发送方窗口的区别：拥塞窗口只是一个状态变量，实际决定发送方能发送多少数据的是发送方窗口。</p>
-<p>为了便于讨论，做如下假设：</p>
-<ul>
-<li>接收方有足够大的接收缓存，因此不会发生流量控制；</li>
-<li>虽然 TCP 的窗口基于字节，但是这里设窗口的大小单位为报文段。</li>
-</ul>
-<h4 id="慢开始与拥塞避免"><a href="#慢开始与拥塞避免" class="headerlink" title="慢开始与拥塞避免"></a>慢开始与拥塞避免</h4><p>发送的最初执行慢开始，令 cwnd = 1，发送方只能发送 1 个报文段；当收到确认后，将 cwnd 加倍，因此之后发送方能够发送的报文段数量为：2、4、8 …</p>
-<p>注意到慢开始每个轮次都将 cwnd 加倍，这样会让 cwnd 增长速度非常快，从而使得发送方发送的速度增长速度过快，网络拥塞的可能性也就更高。设置一个慢开始门限 ssthresh，当 cwnd &gt;= ssthresh 时，进入拥塞避免，每个轮次只将 cwnd 加 1。</p>
-<p>如果出现了超时，则令 ssthresh = cwnd / 2，然后重新执行慢开始。</p>
-<h4 id="快重传与快恢复"><a href="#快重传与快恢复" class="headerlink" title="快重传与快恢复"></a>快重传与快恢复</h4><p>在接收方，要求每次接收到报文段都应该对最后一个已收到的有序报文段进行确认。例如已经接收到 M1 和 M2，此时收到 M4，应当发送对 M2 的确认。</p>
-<p>在发送方，如果收到三个重复确认，那么可以知道下一个报文段丢失，此时执行快重传，立即重传下一个报文段。例如收到三个 M2，则 M3 丢失，立即重传 M3。</p>
-<p>在这种情况下，只是丢失个别报文段，而不是网络拥塞。因此执行快恢复，令 ssthresh = cwnd / 2 ，cwnd = ssthresh，注意到此时直接进入拥塞避免。</p>
-<p>慢开始和快恢复的快慢指的是 cwnd 的设定值，而不是 cwnd 的增长速率。慢开始 cwnd 设定为 1，而快恢复 cwnd 设定为 ssthresh。</p>
-<h2 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h2><h3 id="Web-页面请求过程"><a href="#Web-页面请求过程" class="headerlink" title="Web 页面请求过程"></a>Web 页面请求过程</h3><p>总体来说分为以下几个过程:</p>
-<ol>
-<li>DNS解析</li>
-<li>TCP连接</li>
-<li>发送HTTP请求</li>
-<li>服务器处理请求并返回HTTP报文</li>
-<li>浏览器解析渲染页面</li>
-<li>连接结束</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/others/计算机网络比较重要的概念/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -719,8 +415,7 @@
 
       
         
-          
-            <h2 id="分层"><a href="#分层" class="headerlink" title="分层"></a>分层</h2><h3 id="OSI模型有哪几层？"><a href="#OSI模型有哪几层？" class="headerlink" title="OSI模型有哪几层？"></a>OSI模型有哪几层？</h3><ol>
+          <h2 id="分层"><a href="#分层" class="headerlink" title="分层"></a>分层</h2><h3 id="OSI模型有哪几层？"><a href="#OSI模型有哪几层？" class="headerlink" title="OSI模型有哪几层？"></a>OSI模型有哪几层？</h3><ol>
 <li>应用层（数据）：<strong>定义了应用进程间的通信和交互的规则，通过应用进程间的交互来完成特定网络应用。</strong></li>
 <li>表示层（数据）：<strong>用于应用层数据的编码和转换功能，确保一个系统的应用层发送的数据能被另一个系统的应用层识别。</strong></li>
 <li>会话层（数据）：<strong>负责建立、管理和终止表示层实体之间的通信会话。</strong></li>
@@ -729,150 +424,171 @@
 <li>数据链路层（帧）：<strong>将比特组合成字节，再将字节组合成帧，使用MAC地址访问介质，并进行差错检测。</strong></li>
 <li>物理层（比特流）：<strong>实现相邻计算机节点之间比特流的透明传送，尽可能屏蔽掉具体传输介质和物理设备的差异。</strong></li>
 </ol>
-<h3 id="每一层使用的是什么设备？"><a href="#每一层使用的是什么设备？" class="headerlink" title="每一层使用的是什么设备？"></a>每一层使用的是什么设备？</h3><ol>
-<li>网关：应用层、传输层</li>
-<li>路由器：网络层</li>
-<li>交换机：数据链路层、网络层</li>
-<li>网桥：数据链路层</li>
-<li>集线器：物理层</li>
-<li>中继器：物理层</li>
-</ol>
-<h2 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h2><h3 id="地址解析协议-ARP"><a href="#地址解析协议-ARP" class="headerlink" title="地址解析协议 ARP"></a>地址解析协议 ARP</h3><p>网络层实现主机之间的通信，而链路层实现具体每段链路之间的通信。因此在通信过程中，IP 数据报的源地址和目的地址始终不变，而 MAC 地址随着链路的改变而改变。</p>
-<p>ARP 实现由 IP 地址得到 MAC 地址。每个主机都有一个 ARP 高速缓存，里面有本局域网上的各主机和路由器的 IP 地址到 MAC 地址的映射表。</p>
-<p>如果主机 A 知道主机 B 的 IP 地址，但是 ARP 高速缓存中没有该 IP 地址到 MAC 地址的映射，此时主机 A 通过广播的方式发送 ARP 请求分组，主机 B 收到该请求后会发送 ARP 响应分组给主机 A 告知其 MAC 地址，随后主机 A 向其高速缓存中写入主机 B 的 IP 地址到 MAC 地址的映射。</p>
-<h3 id="网际控制报文协议-ICMP"><a href="#网际控制报文协议-ICMP" class="headerlink" title="网际控制报文协议 ICMP"></a>网际控制报文协议 ICMP</h3><p>ICMP 是为了更有效地转发 IP 数据报和提高交付成功的机会。它封装在 IP 数据报中，但是不属于高层协议。</p>
-<p>ICMP 报文分为差错报告报文和询问报文。</p>
-<h4 id="Ping"><a href="#Ping" class="headerlink" title="Ping"></a>Ping</h4><p>Ping 是 ICMP 的一个重要应用，主要用来测试两台主机之间的连通性。</p>
-<p>Ping 的原理是通过向目的主机发送 <code>ICMP Echo</code> 请求报文，目的主机收到之后会发送 Echo 回答报文。Ping 会根据时间和成功响应的次数估算出数据包往返时间以及丢包率。</p>
-<h4 id="Traceroute"><a href="#Traceroute" class="headerlink" title="Traceroute"></a>Traceroute</h4><p>Traceroute 是 ICMP 的另一个应用，用来跟踪一个分组从源点到终点的路径。</p>
-<p>Traceroute 发送的 IP 数据报封装的是无法交付的 UDP 用户数据报，并由目的主机发送终点不可达差错报告报文。</p>
-<ul>
-<li>源主机向目的主机发送一连串的 IP 数据报。第一个数据报 P1 的生存时间 TTL 设置为 1，当 P1 到达路径上的第一个路由器 R1 时，R1 收下它并把 TTL 减 1，此时 TTL 等于 0，R1 就把 P1 丢弃，并向源主机发送一个 ICMP 时间超过差错报告报文；</li>
-<li>源主机接着发送第二个数据报 P2，并把 TTL 设置为 2。P2 先到达 R1，R1 收下后把 TTL 减 1 再转发给 R2，R2 收下后也把 TTL 减 1，由于此时 TTL 等于 0，R2 就丢弃 P2，并向源主机发送一个 ICMP 时间超过差错报文。</li>
-<li>不断执行这样的步骤，直到最后一个数据报刚刚到达目的主机，主机不转发数据报，也不把 TTL 值减 1。但是因为数据报封装的是无法交付的 UDP，因此目的主机要向源主机发送 ICMP 终点不可达差错报告报文。</li>
-<li>之后源主机知道了到达目的主机所经过的路由器 IP 地址以及到达每个路由器的往返时间。</li>
-</ul>
-<h3 id="路由选择协议"><a href="#路由选择协议" class="headerlink" title="路由选择协议"></a>路由选择协议</h3><p>路由选择协议都是自适应的，能随着网络通信量和拓扑结构的变化而自适应地进行调整。</p>
-<p>互联网可以划分为许多较小的自治系统 AS，一个 AS 可以使用一种和别的 AS 不同的路由选择协议。</p>
-<p>可以把路由选择协议划分为两大类：</p>
-<ul>
-<li>自治系统内部的路由选择：RIP 和 OSPF</li>
-<li>自治系统间的路由选择：BGP</li>
-</ul>
-<h4 id="内部网关协议-RIP"><a href="#内部网关协议-RIP" class="headerlink" title="内部网关协议 RIP"></a>内部网关协议 RIP</h4><p>RIP 是一种基于距离向量的路由选择协议。距离是指跳数，直接相连的路由器跳数为 1。跳数最多为 15，超过 15 表示不可达。</p>
-<p>RIP 按固定的时间间隔仅和相邻路由器交换自己的路由表，经过若干次交换之后，所有路由器最终会知道到达本自治系统中任何一个网络的最短距离和下一跳路由器地址。</p>
-<p>RIP 协议实现简单，开销小。但是 RIP 能使用的最大距离为 15，限制了网络的规模。并且当网络出现故障时，要经过比较长的时间才能将此消息传送到所有路由器。</p>
-<h4 id="内部网关协议-OSPF"><a href="#内部网关协议-OSPF" class="headerlink" title="内部网关协议 OSPF"></a>内部网关协议 OSPF</h4><p>开放最短路径优先 OSPF，是为了克服 RIP 的缺点而开发出来的。</p>
-<p>开放表示 OSPF 不受某一家厂商控制，而是公开发表的；最短路径优先表示使用了 Dijkstra 提出的最短路径算法 SPF。</p>
-<p>OSPF 具有以下特点：</p>
-<ul>
-<li>向本自治系统中的所有路由器发送信息，这种方法是洪泛法。</li>
-<li>发送的信息就是与相邻路由器的链路状态，链路状态包括与哪些路由器相连以及链路的度量，度量用费用、距离、时延、带宽等来表示。</li>
-<li>只有当链路状态发生变化时，路由器才会发送信息。</li>
-</ul>
-<p>所有路由器都具有全网的拓扑结构图，并且是一致的。相比于 RIP，OSPF 的更新过程收敛的很快。</p>
-<h4 id="外部网关协议-BGP"><a href="#外部网关协议-BGP" class="headerlink" title="外部网关协议 BGP"></a>外部网关协议 BGP</h4><p>AS 之间的路由选择很困难，主要是由于：</p>
-<ul>
-<li>互联网规模很大；</li>
-<li>各个 AS 内部使用不同的路由选择协议，无法准确定义路径的度量；</li>
-<li>AS 之间的路由选择必须考虑有关的策略，比如有些 AS 不愿意让其它 AS 经过。</li>
-</ul>
-<p>BGP 只能寻找一条比较好的路由，而不是最佳路由。</p>
-<p>每个 AS 都必须配置 BGP 发言人，通过在两个相邻 BGP 发言人之间建立 TCP 连接来交换路由信息。</p>
-<h2 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h2><h3 id="UDP-和-TCP-的特点"><a href="#UDP-和-TCP-的特点" class="headerlink" title="UDP 和 TCP 的特点"></a>UDP 和 TCP 的特点</h3><ul>
-<li><p>UDP是无连接的，尽最大可能交付，没有拥塞控制，面向报文（对于应用程序传下来的报文不合并也不拆分，只是添加 UDP 首部），支持一对一、一对多、多对一和多对多的交互通信。</p>
-<p>虽然 UDP 不提供可靠交付，但在某些情况下 UDP 确是一种最有效的工作方式，比如： QQ 语音、 QQ 视频 、直播等等</p>
-</li>
-<li><p>TCP是面向连接的，提供可靠交付，有流量控制，拥塞控制，提供全双工通信，面向字节流（把应用层传下来的报文看成字节流，把字节流组织成大小不等的数据块），每一条 TCP 连接只能是点对点的（一对一）。</p>
-<p>TCP的可靠体现在TCP在传递数据之前，会有三次握手来建立连接，而且在数据传递时，有确认、窗口、重传、拥塞控制机制，在数据传完后，还会断开连接用来节约系统资源。这不仅使协议数据单元的首部增大很多，还要占用许多处理机资源。TCP 一般用于文件传输、发送和接收邮件、远程登录等场景。</p>
-</li>
-</ul>
-<h3 id="TCP-三次握手"><a href="#TCP-三次握手" class="headerlink" title="TCP 三次握手"></a>TCP 三次握手</h3><p>假设 A 为客户端，B 为服务器端。</p>
-<ul>
-<li>首先 B 处于 LISTEN（监听）状态，等待客户的连接请求。</li>
-<li>A 向 B 发送连接请求报文，SYN=1，ACK=0，选择一个初始的序号 x。</li>
-<li>B 收到连接请求报文，如果同意建立连接，则向 A 发送连接确认报文，SYN=1，ACK=1，确认号为 x+1，同时也选择一个初始的序号 y。</li>
-<li>A 收到 B 的连接确认报文后，还要向 B 发出确认，确认号为 y+1，序号为 x+1。</li>
-<li>B 收到 A 的确认后，连接建立。</li>
-</ul>
-<p><strong>三次握手的原因</strong></p>
-<ul>
-<li>第三次握手是为了防止失效的连接请求到达服务器，让服务器错误打开连接。</li>
-<li>客户端发送的连接请求如果在网络中滞留，那么就会隔很长一段时间才能收到服务器端发回的连接确认。客户端等待一个超时重传时间之后，就会重新请求连接。但是这个滞留的连接请求最后还是会到达服务器，如果不进行三次握手，那么服务器就会打开两个连接。如果有第三次握手，客户端会忽略服务器之后发送的对滞留连接请求的连接确认，不进行第三次握手，因此就不会再次打开连接。</li>
-</ul>
-<h3 id="TCP-的四次挥手"><a href="#TCP-的四次挥手" class="headerlink" title="TCP 的四次挥手"></a>TCP 的四次挥手</h3><p>以下描述不讨论序号和确认号，因为序号和确认号的规则比较简单。并且不讨论 ACK，因为 ACK 在连接建立之后都为 1。</p>
-<ul>
-<li>A 发送连接释放报文，FIN=1。</li>
-<li>B 收到之后发出确认，此时 TCP 属于半关闭状态，B 能向 A 发送数据但是 A 不能向 B 发送数据。</li>
-<li>当 B 不再需要连接时，发送连接释放报文，FIN=1。</li>
-<li>A 收到后发出确认，进入 TIME-WAIT 状态，等待 2 MSL（最大报文存活时间）后释放连接。</li>
-<li>B 收到 A 的确认后释放连接。</li>
-</ul>
-<p><strong>四次挥手的原因</strong></p>
-<p>客户端发送了 FIN 连接释放报文之后，服务器收到了这个报文，就进入了 CLOSE-WAIT 状态。这个状态是为了让服务器端发送还未传送完毕的数据，传送完毕之后，服务器会发送 FIN 连接释放报文。</p>
-<p><strong>TIME_WAIT</strong></p>
-<p>客户端接收到服务器端的 FIN 报文后进入此状态，此时并不是直接进入 CLOSED 状态，还需要等待一个时间计时器设置的时间 2MSL。这么做有两个理由：</p>
-<ul>
-<li>确保最后一个确认报文能够到达。如果 B 没收到 A 发送来的确认报文，那么就会重新发送连接释放请求报文，A 等待一段时间就是为了处理这种情况的发生。</li>
-<li>等待一段时间是为了让本连接持续时间内所产生的所有报文都从网络中消失，使得下一个新的连接不会出现旧的连接请求报文。</li>
-</ul>
-<h3 id="TCP-协议如何保证可靠传输"><a href="#TCP-协议如何保证可靠传输" class="headerlink" title="TCP 协议如何保证可靠传输"></a>TCP 协议如何保证可靠传输</h3><ol>
-<li>应用数据被分割成 TCP 认为最适合发送的数据块。</li>
-<li>TCP 给发送的每一个包进行编号，接收方对数据包进行排序，把有序数据传送给应用层。</li>
-<li><strong>校验和：</strong> TCP 将保持它首部和数据的检验和。这是一个端到端的检验和，目的是检测数据在传输过程中的任何变化。如果收到段的检验和有差错，TCP 将丢弃这个报文段和不确认收到此报文段。</li>
-<li>TCP 的接收端会丢弃重复的数据。</li>
-<li><strong>流量控制：</strong> TCP 连接的每一方都有固定大小的缓冲空间，TCP的接收端只允许发送端发送接收端缓冲区能接纳的数据。当接收方来不及处理发送方的数据，能提示发送方降低发送的速率，防止包丢失。TCP 使用的流量控制协议是可变大小的滑动窗口协议。 （TCP 利用滑动窗口实现流量控制）</li>
-<li><strong>拥塞控制：</strong> 当网络拥塞时，减少数据的发送。</li>
-<li><strong>ARQ协议：</strong> 也是为了实现可靠传输的，它的基本原理就是每发完一个分组就停止发送，等待对方确认。在收到确认后再发下一个分组。</li>
-<li><strong>超时重传：</strong> 当 TCP 发出一个段后，它启动一个定时器，等待目的端确认收到这个报文段。如果不能及时收到一个确认，将重发这个报文段。</li>
-</ol>
-<h3 id="ARQ协议"><a href="#ARQ协议" class="headerlink" title="ARQ协议"></a>ARQ协议</h3><p><strong>自动重传请求</strong>（Automatic Repeat-reQuest，ARQ）是OSI模型中数据链路层和传输层的错误纠正协议之一。它通过使用确认和超时这两个机制，在不可靠服务的基础上实现可靠的信息传输。如果发送方在发送后一段时间之内没有收到确认帧，它通常会重新发送。ARQ包括停止等待ARQ协议和连续ARQ协议。</p>
-<h4 id="停止等待ARQ协议"><a href="#停止等待ARQ协议" class="headerlink" title="停止等待ARQ协议"></a>停止等待ARQ协议</h4><ul>
-<li>停止等待协议是为了实现可靠传输的，它的基本原理就是每发完一个分组就停止发送，等待对方确认（回复ACK）。如果过了一段时间（超时时间后），还是没有收到 ACK 确认，说明没有发送成功，需要重新发送，直到收到确认后再发下一个分组；</li>
-<li>在停止等待协议中，若接收方收到重复分组，就丢弃该分组，但同时还要发送确认；</li>
-</ul>
-<p><strong>优点：</strong> 简单</p>
-<p><strong>缺点：</strong> 信道利用率低，等待时间长</p>
-<p><strong>无差错情况:</strong></p>
-<p>发送方发送分组,接收方在规定时间内收到,并且回复确认.发送方再次发送。</p>
-<p><strong>出现差错情况（超时重传）:</strong></p>
-<p>停止等待协议中超时重传是指只要超过一段时间仍然没有收到确认，就重传前面发送过的分组（认为刚才发送过的分组丢失了）。因此每发送完一个分组需要设置一个超时计时器，其重传时间应比数据在分组传输的平均往返时间更长一些。这种自动重传方式常称为 <strong>自动重传请求 ARQ</strong> 。另外在停止等待协议中若收到重复分组，就丢弃该分组，但同时还要发送确认。<strong>连续 ARQ 协议</strong> 可提高信道利用率。发送维持一个发送窗口，凡位于发送窗口内的分组可连续发送出去，而不需要等待对方确认。接收方一般采用累积确认，对按序到达的最后一个分组发送确认，表明到这个分组位置的所有分组都已经正确收到了。</p>
-<p><strong>确认丢失和确认迟到</strong></p>
-<ul>
-<li><strong>确认丢失</strong> ：确认消息在传输过程丢失。当A发送M1消息，B收到后，B向A发送了一个M1确认消息，但却在传输过程中丢失。而A并不知道，在超时计时过后，A重传M1消息，B再次收到该消息后采取以下两点措施：1. 丢弃这个重复的M1消息，不向上层交付。 2. 向A发送确认消息。（不会认为已经发送过了，就不再发送。A能重传，就证明B的确认消息丢失）。</li>
-<li><strong>确认迟到</strong> ：确认消息在传输过程中迟到。A发送M1消息，B收到并发送确认。在超时时间内没有收到确认消息，A重传M1消息，B仍然收到并继续发送确认消息（B收到了2份M1）。此时A收到了B第二次发送的确认消息。接着发送其他数据。过了一会，A收到了B第一次发送的对M1的确认消息（A也收到了2份确认消息）。处理如下：1. A收到重复的确认后，直接丢弃。2. B收到重复的M1后，也直接丢弃重复的M1。</li>
-</ul>
-<h3 id="连续ARQ协议"><a href="#连续ARQ协议" class="headerlink" title="连续ARQ协议"></a>连续ARQ协议</h3><p>连续 ARQ 协议可提高信道利用率。发送方维持一个发送窗口，凡位于发送窗口内的分组可以连续发送出去，而不需要等待对方确认。接收方一般采用累计确认，对按序到达的最后一个分组发送确认，表明到这个分组为止的所有分组都已经正确收到了。</p>
-<p><strong>优点：</strong> 信道利用率高，容易实现，即使确认丢失，也不必重传。</p>
-<p><strong>缺点：</strong> 不能向发送方反映出接收方已经正确收到的所有分组的信息。 比如：发送方发送了 5条 消息，中间第三条丢失（3号），这时接收方只能对前两个发送确认。发送方无法知道后三个分组的下落，而只好把后三个全部重传一次。这也叫 Go-Back-N（回退 N），表示需要退回来重传已经发送过的 N 个消息。</p>
-<h3 id="滑动窗口和流量控制"><a href="#滑动窗口和流量控制" class="headerlink" title="滑动窗口和流量控制"></a>滑动窗口和流量控制</h3><p><strong>TCP 利用滑动窗口实现流量控制。流量控制是为了控制发送方发送速率，保证接收方来得及接收。</strong> 窗口是缓存的一部分，用来暂时存放字节流。发送方和接收方各有一个窗口，接收方通过 TCP 报文段中的窗口字段告诉发送方自己的窗口大小，发送方根据这个值和其它信息设置自己的窗口大小。</p>
-<p>发送窗口内的字节都允许被发送，接收窗口内的字节都允许被接收。如果发送窗口左部的字节已经发送并且收到了确认，那么就将发送窗口向右滑动一定距离，直到左部第一个字节不是已发送并且已确认的状态；接收窗口的滑动类似，接收窗口左部字节已经发送确认并交付主机，就向右滑动接收窗口。接收窗口只会对窗口内最后一个按序到达的字节进行确认，发送方得到一个字节的确认之后，就知道这个字节之前的所有字节都已经被接收。</p>
-<h3 id="拥塞控制"><a href="#拥塞控制" class="headerlink" title="拥塞控制"></a>拥塞控制</h3><p>如果网络出现拥塞，分组将会丢失，此时发送方会继续重传，从而导致网络拥塞程度更高。因此当出现拥塞时，应当控制发送方的速率。这一点和流量控制很像，但是出发点不同。流量控制是为了让接收方能来得及接收，而拥塞控制是为了降低整个网络的拥塞程度。</p>
-<p>TCP 主要通过四个算法来进行拥塞控制：慢开始、拥塞避免、快重传、快恢复。</p>
-<p>发送方需要维护一个叫做拥塞窗口（cwnd）的状态变量，注意拥塞窗口与发送方窗口的区别：拥塞窗口只是一个状态变量，实际决定发送方能发送多少数据的是发送方窗口。</p>
-<p>为了便于讨论，做如下假设：</p>
-<ul>
-<li>接收方有足够大的接收缓存，因此不会发生流量控制；</li>
-<li>虽然 TCP 的窗口基于字节，但是这里设窗口的大小单位为报文段。</li>
-</ul>
-<h4 id="慢开始与拥塞避免"><a href="#慢开始与拥塞避免" class="headerlink" title="慢开始与拥塞避免"></a>慢开始与拥塞避免</h4><p>发送的最初执行慢开始，令 cwnd = 1，发送方只能发送 1 个报文段；当收到确认后，将 cwnd 加倍，因此之后发送方能够发送的报文段数量为：2、4、8 …</p>
-<p>注意到慢开始每个轮次都将 cwnd 加倍，这样会让 cwnd 增长速度非常快，从而使得发送方发送的速度增长速度过快，网络拥塞的可能性也就更高。设置一个慢开始门限 ssthresh，当 cwnd &gt;= ssthresh 时，进入拥塞避免，每个轮次只将 cwnd 加 1。</p>
-<p>如果出现了超时，则令 ssthresh = cwnd / 2，然后重新执行慢开始。</p>
-<h4 id="快重传与快恢复"><a href="#快重传与快恢复" class="headerlink" title="快重传与快恢复"></a>快重传与快恢复</h4><p>在接收方，要求每次接收到报文段都应该对最后一个已收到的有序报文段进行确认。例如已经接收到 M1 和 M2，此时收到 M4，应当发送对 M2 的确认。</p>
-<p>在发送方，如果收到三个重复确认，那么可以知道下一个报文段丢失，此时执行快重传，立即重传下一个报文段。例如收到三个 M2，则 M3 丢失，立即重传 M3。</p>
-<p>在这种情况下，只是丢失个别报文段，而不是网络拥塞。因此执行快恢复，令 ssthresh = cwnd / 2 ，cwnd = ssthresh，注意到此时直接进入拥塞避免。</p>
-<p>慢开始和快恢复的快慢指的是 cwnd 的设定值，而不是 cwnd 的增长速率。慢开始 cwnd 设定为 1，而快恢复 cwnd 设定为 ssthresh。</p>
-<h2 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h2><h3 id="Web-页面请求过程"><a href="#Web-页面请求过程" class="headerlink" title="Web 页面请求过程"></a>Web 页面请求过程</h3><p>总体来说分为以下几个过程:</p>
-<ol>
-<li>DNS解析</li>
-<li>TCP连接</li>
-<li>发送HTTP请求</li>
-<li>服务器处理请求并返回HTTP报文</li>
-<li>浏览器解析渲染页面</li>
-<li>连接结束</li>
-</ol>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/07/others/计算机网络比较重要的概念/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/others/数据结构C语言/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="崔永华（Andy）">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="崔永华的个人网站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/others/数据结构C语言/" itemprop="url">
+                  C语言-数据结构-排序汇总（代码可直接运行）
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-23T15:24:20+08:00">
+                2017-07-23
+              </time>
+            
+
+            
+
+            
+          </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/其它/" itemprop="url" rel="index">
+                    <span itemprop="name">其它</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/其它/数据结构-C语言/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构(C语言)</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h4 id="一-冒泡排序"><a href="#一-冒泡排序" class="headerlink" title="一. 冒泡排序"></a>一. 冒泡排序</h4><p>冒泡排序（英语：Bubble Sort）是一种简单的排序算法。它重复地走访过要排序的数列，一次比较两个元素，如果他们的顺序（如从大到小、首字母从A到Z）错误就把他们交换过来。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/07/others/数据结构C语言/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1331,36 +1047,18 @@
 
       
         
-          
-            <p>没有安装操作系统的计算机，通常被称为：裸机</p>
+          <p>没有安装操作系统的计算机，通常被称为：裸机</p>
 <ul>
 <li>如果想在 裸机 上运行自己所编写的程序，就必须用机器语言书写程序</li>
 <li>如果计算机上安装了操作系统，就可以在操作系统上安装支持的高级语言环境，用高级语言开发程序</li>
 </ul>
-<h4 id="操作系统的作用"><a href="#操作系统的作用" class="headerlink" title="操作系统的作用"></a>操作系统的作用</h4><ul>
-<li>是现代计算机系统中 最基本和最重要 的系统软件</li>
-<li>是 配置在计算机硬件上的第一层软件，是对硬件系统的首次扩展</li>
-<li>主要作用是管理好硬件设备，并为用户和应用程序提供一个简单的接口，以便于使用</li>
-<li>而其他的诸如编译程序、数据库管理系统，以及大量的应用软件，都直接依赖于操作系统的支持</li>
-</ul>
-<h4 id="不同应用领域的主流操作系统"><a href="#不同应用领域的主流操作系统" class="headerlink" title="不同应用领域的主流操作系统"></a>不同应用领域的主流操作系统</h4><ul>
-<li>桌面操作系统</li>
-<li>服务器操作系统</li>
-<li>嵌入式操作系统</li>
-<li>移动设备操作系统</li>
-</ul>
-<p>1、桌面操作系统<br>Windows 系列：用户群体大<br>macOS：适合于开发人员<br>Linux：应用软件少</p>
-<p>2、服务器操作系统<br>Linux：安全、稳定、免费；占有率高<br>Windows Server：付费；占有率低</p>
-<p>3、嵌入式操作系统<br>Linux</p>
-<p>4、移动设备操作系统：iOS，Android（基于 Linux）</p>
-<h4 id="虚拟机"><a href="#虚拟机" class="headerlink" title="虚拟机"></a>虚拟机</h4><p>虚拟机（Virtual Machine）指通过软件模拟的具有完整硬件系统功能的、运行在一个完全隔离环境中的完整计算机系统</p>
-<ul>
-<li>虚拟系统通过生成现有操作系统的全新虚拟镜像，具有真实操作系统完全一样的功能</li>
-<li>进入虚拟系统后，所有操作都是在这个全新的独立的虚拟系统里面进行，可以独立安装运行软件，保存数据，拥有自己的独立桌面，不会对真正的系统产生任何影响</li>
-<li>而且能够在现有系统与虚拟镜像之间灵活切换的一类操作系统</li>
-</ul>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/06/linux/20170607_操作系统介绍/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1511,8 +1209,7 @@
 
       
         
-          
-            <h4 id="必备网站收藏"><a href="#必备网站收藏" class="headerlink" title="必备网站收藏"></a>必备网站收藏</h4><ol>
+          <h4 id="必备网站收藏"><a href="#必备网站收藏" class="headerlink" title="必备网站收藏"></a>必备网站收藏</h4><ol>
 <li><p><a href="https://visualgo.net/en" target="_blank" rel="noopener">https://visualgo.net/en</a>    可视化学习网站</p>
 </li>
 <li><p><a href="https://algs4.cs.princeton.edu/home/" target="_blank" rel="noopener">https://algs4.cs.princeton.edu/home/</a>   算法官网</p>
@@ -1520,32 +1217,13 @@
 <li><p><a href="https://www.zhihu.com/question/21628833" target="_blank" rel="noopener">https://www.zhihu.com/question/21628833</a>  知乎贴</p>
 </li>
 </ol>
-<h4 id="学习进阶之路"><a href="#学习进阶之路" class="headerlink" title="学习进阶之路"></a>学习进阶之路</h4><p><a href="https://blog.csdn.net/cui_yonghua/article/details/95797763" target="_blank" rel="noopener">00 数据结构和算法——深度好文：学习数据结构的经验</a></p>
-<p><a href="https://blog.csdn.net/cui_yonghua/article/details/95798817" target="_blank" rel="noopener">01 数据结构和算法——概述和总结</a></p>
-<p><a href="https://blog.csdn.net/cui_yonghua/article/details/95897933" target="_blank" rel="noopener">02 数据结构和算法——数组</a></p>
-<p><a href="https://blog.csdn.net/cui_yonghua/article/details/95898351" target="_blank" rel="noopener">03 数据结构和算法——线性表</a></p>
-<p><a href="https://blog.csdn.net/cui_yonghua/article/details/95938411" target="_blank" rel="noopener">04 数据结构和算法——栈</a></p>
-<p><a href="https://blog.csdn.net/cui_yonghua/article/details/95938439" target="_blank" rel="noopener">05 数据结构和算法——队列</a></p>
-<p><a href="https://blog.csdn.net/cui_yonghua/article/details/95938645" target="_blank" rel="noopener">06 数据结构和算法——链表</a></p>
-<p><a href="https://blog.csdn.net/cui_yonghua/article/details/95939052" target="_blank" rel="noopener">07 数据结构和算法——散列表（哈希表）</a></p>
-<p><a href="https://blog.csdn.net/cui_yonghua/article/details/95939661" target="_blank" rel="noopener">08 数据结构和算法——堆</a></p>
-<p><a href="https://blog.csdn.net/cui_yonghua/article/details/95944100" target="_blank" rel="noopener">09 数据结构和算法——树和二叉树
-</a></p>
-<p><a href="https://blog.csdn.net/cui_yonghua/article/details/95957729" target="_blank" rel="noopener">10 数据结构和算法——字典树（这是一种高效的树形结构，但值得单独说明）</a></p>
-<p><a href="https://blog.csdn.net/cui_yonghua/article/details/95958710" target="_blank" rel="noopener">11 数据结构和算法——红黑树</a></p>
-<p><a href="https://blog.csdn.net/cui_yonghua/article/details/95960809" target="_blank" rel="noopener">12 数据结构和算法——哈夫曼树（Huffman Tree）</a></p>
-<p><a href="https://blog.csdn.net/cui_yonghua/article/details/95961119" target="_blank" rel="noopener">13 数据结构和算法——B树，B+树，B*树，R树的总结</a></p>
-<p><a href="https://blog.csdn.net/cui_yonghua/article/details/95961980" target="_blank" rel="noopener">14 数据结构和算法——图</a></p>
-<p><a href="https://blog.csdn.net/cui_yonghua/article/details/95963216" target="_blank" rel="noopener">15 数据结构和算法——基本算法思想及代码实现（穷举，递推，递归，分治，概率）</a></p>
-<p><a href="https://blog.csdn.net/cui_yonghua/article/details/95964805" target="_blank" rel="noopener">16 数据结构和算法——排序算法总结及代码实现（冒泡，选择，插入，Shell，快速，堆，归并）</a></p>
-<p><a href="https://blog.csdn.net/cui_yonghua/article/details/95966678" target="_blank" rel="noopener">17 数据结构和算法——查找算法总结及代码实现（顺序，折半，二分查找等）</a></p>
-<h4 id="速记导图"><a href="#速记导图" class="headerlink" title="速记导图"></a>速记导图</h4><p><strong>图1：</strong><br><img src="https://img-blog.csdnimg.cn/2019071318124839.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N1aV95b25naHVh,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<p><strong>图2:</strong></p>
-<p>数据结构：是指相互之间存在一种或多种特定关系的数据元素的集合用计算机存储、组织数据的方式。数据结构分别为逻辑结构、（存储）物理结构和数据的运算三个部分。<br><img src="https://img-blog.csdnimg.cn/20190713181009168.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N1aV95b25naHVh,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<p><strong>图3：</strong><br><img src="https://img-blog.csdnimg.cn/20190713221153186.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N1aV95b25naHVh,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<p><strong>图4：</strong><br><img src="https://img-blog.csdnimg.cn/20190713221519350.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N1aV95b25naHVh,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/java/java数据结构和算法/20170504_java数据结构和算法/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1696,240 +1374,14 @@
 
       
         
-          
-            <h4 id="1-包装类型"><a href="#1-包装类型" class="headerlink" title="1. 包装类型"></a>1. 包装类型</h4><p>把int变为Integer的赋值写法，称为自动装箱（Auto Boxing），反过来，把Integer变为int的赋值写法，称为自动拆箱（Auto Unboxing）。</p>
-<p>包装类型的比较必须使用equals()。比如对两个Integer实例进行比较：绝对不能用==比较，因为Integer是引用类型，必须使用equals()比较：</p>
-<p>Java核心库提供的包装类型可以把基本类型包装为class；<br>自动装箱和自动拆箱都是在编译期完成的（JDK&gt;=1.5）；<br>装箱和拆箱会影响执行效率，且拆箱时可能发生NullPointerException；<br>整数和浮点数的包装类型都继承自Number；<br>包装类型提供了大量实用方法。</p>
-<p>进制转换：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 最常用的静态方法parseInt()可以把字符串解析成一个整数</span></span><br><span class="line">        <span class="keyword">int</span> x1 = Integer.parseInt(<span class="string">"100"</span>); <span class="comment">// 100</span></span><br><span class="line">        <span class="keyword">int</span> x2 = Integer.parseInt(<span class="string">"100"</span>, <span class="number">16</span>); <span class="comment">// 256,因为按16进制解析</span></span><br><span class="line"></span><br><span class="line">        System.out.println(Integer.toString(<span class="number">100</span>)); <span class="comment">// "100",表示为10进制</span></span><br><span class="line">        System.out.println(Integer.toString(<span class="number">100</span>, <span class="number">36</span>)); <span class="comment">// "2s",表示为36进制</span></span><br><span class="line">        System.out.println(Integer.toHexString(<span class="number">100</span>)); <span class="comment">// "64",表示为16进制</span></span><br><span class="line">        System.out.println(Integer.toOctalString(<span class="number">100</span>)); <span class="comment">// "144",表示为8进制</span></span><br><span class="line">        System.out.println(Integer.toBinaryString(<span class="number">100</span>)); <span class="comment">// "1100100",表示为2进制</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h4 id="2-JavaBean"><a href="#2-JavaBean" class="headerlink" title="2. JavaBean"></a>2. JavaBean</h4><p>JavaBean是一种符合命名规范的class，它通过getter和setter来定义属性。</p>
-<ul>
-<li>作用：JavaBean主要用来传递数据，即把一组数据组合成一个JavaBean便于传输。此外，JavaBean可以方便地被IDE工具分析，生成读写属性的代码，主要用在图形界面的可视化设计中。</li>
-<li>可以利用IDE快速生成getter和setter；使用Introspector.getBeanInfo()可以获取属性列表。<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.company;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.beans.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception  </span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 要枚举一个JavaBean的所有属性，可以直接使用Java核心库提供的Introspector</span></span><br><span class="line">        BeanInfo info = Introspector.getBeanInfo(Person.class);</span><br><span class="line">        <span class="keyword">for</span> (PropertyDescriptor pd : info.getPropertyDescriptors()) &#123;</span><br><span class="line">            System.out.println(pd.getName());</span><br><span class="line">            System.out.println(<span class="string">"  "</span> + pd.getReadMethod());</span><br><span class="line">            System.out.println(<span class="string">"  "</span> + pd.getWriteMethod());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h4 id="3-记录类"><a href="#3-记录类" class="headerlink" title="3. 记录类"></a>3. 记录类</h4><p>从Java 14开始，提供新的record关键字，可以非常方便地定义Data Class：</p>
-<ul>
-<li>使用record定义的是不变类；</li>
-<li>可以编写Compact Constructor对参数进行验证； </li>
-<li>可以定义静态方法。</li>
-</ul>
-<p>代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Point p = <span class="keyword">new</span> Point(<span class="number">123</span>, <span class="number">456</span>);</span><br><span class="line">        System.out.println(p.x());</span><br><span class="line">        System.out.println(p.y());</span><br><span class="line">        System.out.println(p);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> record <span class="title">Point</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure></p>
-<h4 id="4-BigInteger"><a href="#4-BigInteger" class="headerlink" title="4. BigInteger"></a>4. BigInteger</h4><p>BigInteger用于表示任意大小的整数，BigInteger和Integer、Long一样，也是不可变类，并且也继承自Number类。因为Number定义了转换为基本类型的几个方法：</p>
-<ul>
-<li>转换为byte：byteValue()</li>
-<li>转换为short：shortValue()</li>
-<li>转换为int：intValue()</li>
-<li>转换为long：longValue()</li>
-<li>转换为float：floatValue()</li>
-<li>转换为double：doubleValue()</li>
-</ul>
-<p>将BigInteger转换成基本类型时可使用longValueExact()等方法保证结果准确。<br>对BigInteger做运算的时候，只能使用实例方法，例如，加法运算：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.math.BigInteger;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        BigInteger i1 = <span class="keyword">new</span> BigInteger(<span class="string">"1234567890"</span>);</span><br><span class="line">        BigInteger i2 = <span class="keyword">new</span> BigInteger(<span class="string">"12345678901234567890"</span>);</span><br><span class="line">        BigInteger sum = i1.add(i2); <span class="comment">// 12345678902469135780</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h4 id="5-BigDecimal"><a href="#5-BigDecimal" class="headerlink" title="5. BigDecimal"></a>5. BigDecimal</h4><p>和BigInteger类似，BigDecimal可以表示一个任意大小且精度完全准确的浮点数,常用于财务计算。</p>
-<p>比较BigDecimal的值是否相等，必须使用compareTo()而不能使用equals()。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.math.BigDecimal;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        BigDecimal d1 = <span class="keyword">new</span> BigDecimal(<span class="string">"123.456"</span>);</span><br><span class="line">        BigDecimal d2 = <span class="keyword">new</span> BigDecimal(<span class="string">"123.45600"</span>);</span><br><span class="line">        System.out.println(d1.equals(d2)); <span class="comment">// false,因为scale不同</span></span><br><span class="line">        System.out.println(d1.equals(d2.stripTrailingZeros())); <span class="comment">// true,因为d2去除尾部0后scale变为2</span></span><br><span class="line">        System.out.println(d1.compareTo(d2)); <span class="comment">// 0</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h4 id="6-Math"><a href="#6-Math" class="headerlink" title="6. Math"></a>6. Math</h4><p>Math类就是用来进行数学计算的，它提供了大量的静态方法来便于我们实现数学计算。</p>
-<p>StrictMath保证所有平台计算结果都是完全相同的，而Math会尽量针对平台优化计算速度，所以，绝大多数情况下，使用Math就足够了。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.company;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 求绝对值：</span></span><br><span class="line">        Math.abs(-<span class="number">100</span>); <span class="comment">// 100</span></span><br><span class="line">        Math.abs(-<span class="number">7.8</span>); <span class="comment">// 7.8</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//取最大或最小值：</span></span><br><span class="line">        Math.max(<span class="number">100</span>, <span class="number">99</span>); <span class="comment">// 100</span></span><br><span class="line">        Math.min(<span class="number">1.2</span>, <span class="number">2.3</span>); <span class="comment">// 1.2</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 计算x的y次方：</span></span><br><span class="line">        Math.pow(<span class="number">2</span>, <span class="number">10</span>); <span class="comment">// 2的10次方=1024</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 计算√x（根号x）：</span></span><br><span class="line">        Math.sqrt(<span class="number">2</span>); <span class="comment">// 1.414...</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//计算e的x次方：</span></span><br><span class="line">        Math.exp(<span class="number">2</span>); <span class="comment">// 7.389...</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 计算以e为底的对数：</span></span><br><span class="line">        Math.log(<span class="number">4</span>); <span class="comment">// 1.386...</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 计算以10为底的对数：</span></span><br><span class="line">        Math.log10(<span class="number">100</span>); <span class="comment">// 2</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//三角函数：</span></span><br><span class="line">        Math.sin(<span class="number">3.14</span>); <span class="comment">// 0.00159...</span></span><br><span class="line">        Math.cos(<span class="number">3.14</span>); <span class="comment">// -0.9999...</span></span><br><span class="line">        Math.tan(<span class="number">3.14</span>); <span class="comment">// -0.0015...</span></span><br><span class="line">        Math.asin(<span class="number">1.0</span>); <span class="comment">// 1.57079...</span></span><br><span class="line">        Math.acos(<span class="number">1.0</span>); <span class="comment">// 0.0</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// Math还提供了几个数学常量：</span></span><br><span class="line">        <span class="keyword">double</span> pi = Math.PI; <span class="comment">// 3.14159...</span></span><br><span class="line">        <span class="keyword">double</span> e = Math.E; <span class="comment">// 2.7182818...</span></span><br><span class="line">        Math.sin(Math.PI / <span class="number">6</span>); <span class="comment">// sin(π/6) = 0.5</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 生成一个随机数x，x的范围是0 &lt;= x &lt; 1：</span></span><br><span class="line">        <span class="comment">// Math.random()实际上内部调用了Random类，所以它也是伪随机数，只是我们无法指定种子</span></span><br><span class="line">         Math.random(); <span class="comment">// 0.53907... 每次都不一样</span></span><br><span class="line">        <span class="comment">// 如果我们要生成一个区间在[MIN, MAX)的随机数，可以借助Math.random()实现</span></span><br><span class="line">        <span class="keyword">double</span> x = Math.random(); <span class="comment">// x的范围是[0,1)</span></span><br><span class="line">        <span class="keyword">double</span> min = <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">double</span> max = <span class="number">50</span>;</span><br><span class="line">        <span class="keyword">double</span> y = x * (max - min) + min; <span class="comment">// y的范围是[10,50)</span></span><br><span class="line">        <span class="keyword">long</span> n = (<span class="keyword">long</span>) y; <span class="comment">// n的范围是[10,50)的整数</span></span><br><span class="line">        System.out.println(y);</span><br><span class="line">        System.out.println(n);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="7-Random和SecureRandom"><a href="#7-Random和SecureRandom" class="headerlink" title="7. Random和SecureRandom"></a>7. Random和SecureRandom</h4><p>Random用来创建伪随机数。所谓伪随机数，是指只要给定一个初始的种子，产生的随机数序列是完全一样的。<br>要生成一个随机数，可以使用nextInt()、nextLong()、nextFloat()、nextDouble()<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Random r = <span class="keyword">new</span> Random();</span><br><span class="line">r.nextInt(); <span class="comment">// 2071575453,每次都不一样</span></span><br><span class="line">r.nextInt(<span class="number">10</span>); <span class="comment">// 5,生成一个[0,10)之间的int</span></span><br><span class="line">r.nextLong(); <span class="comment">// 8811649292570369305,每次都不一样</span></span><br><span class="line">r.nextFloat(); <span class="comment">// 0.54335...生成一个[0,1)之间的float</span></span><br><span class="line">r.nextDouble(); <span class="comment">// 0.3716...生成一个[0,1)之间的double</span></span><br></pre></td></tr></table></figure></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Random;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        Random r = <span class="keyword">new</span> Random(<span class="number">12345</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">            System.out.println(r.nextInt(<span class="number">100</span>));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 51, 80, 41, 28, 55...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>SecureRandom：生成安全的随机数。<br>SecureRandom的安全性是通过操作系统提供的安全的随机种子来生成随机数。这个种子是通过CPU的热噪声、读写磁盘的字节、网络流量等各种随机事件产生的“熵”。<br>在密码学中，安全的随机数非常重要。如果使用不安全的伪随机数，所有加密体系都将被攻破。因此，时刻牢记必须使用SecureRandom来产生安全的随机数。</p>
-<p>实际使用的时候，可以优先获取高强度的安全随机数生成器，如果没有提供，再使用普通等级的安全随机数生成器：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.security.SecureRandom;</span><br><span class="line"><span class="keyword">import</span> java.security.NoSuchAlgorithmException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SecureRandom sr = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            sr = SecureRandom.getInstanceStrong(); <span class="comment">// 获取高强度安全随机数生成器</span></span><br><span class="line">        &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e) &#123;</span><br><span class="line">            sr = <span class="keyword">new</span> SecureRandom(); <span class="comment">// 获取普通的安全随机数生成器</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">byte</span>[] buffer = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">16</span>];</span><br><span class="line">        sr.nextBytes(buffer); <span class="comment">// 用安全随机数填充buffer</span></span><br><span class="line">        System.out.println(Arrays.toString(buffer));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/java/java基础/2017425_字符串string类的/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="崔永华（Andy）">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="崔永华的个人网站">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/04/java/java基础/2017425_字符串string类的/" itemprop="url">
-                  java字符串String类
-                </a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-24T01:30:00+08:00">
-                2017-04-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/java基础/" itemprop="url" rel="index">
-                    <span itemprop="name">java基础</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="String类：不可变的字符序列"><a href="#String类：不可变的字符序列" class="headerlink" title="String类：不可变的字符序列"></a>String类：不可变的字符序列</h4><p>常用方法：</p>
-<blockquote>
-<p>int length():获取字符串的长度，其实也就是字符个数<br>char charAt(int index):获取指定索引处的字符<br>int indexOf(String str):获取str在字符串对象中第一次出现的索引<br>String substring(int start,int end):从start开始，到end结束截取字符串<br>boolean equals(Object obj):比较字符串的内容是否相同<br>boolean equalsIgnoreCase(String str):比较字符串的内容是否相同,忽略大小写<br>boolean startsWith(String str):判断字符串对象是否以指定的str开头<br>boolean endsWith(String str):判断字符串对象是否以指定的str结尾<br>char[] toCharArray():把字符串转换为字符数组<br>String toLowerCase():把字符串转换为小写字符串<br>String toUpperCase():把字符串转换为大写字符串<br>String trim():去除字符串两端空格<br>String[] split(String str):按照指定符号分割字符串</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringMethodDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//创建字符串对象</span></span><br><span class="line">        String s = <span class="string">"helloworld"</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//int length():获取字符串的长度，其实也就是字符个数</span></span><br><span class="line">        System.out.println(s.length());<span class="comment">//结果为：10</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//char charAt(int index):获取指定索引处的字符</span></span><br><span class="line">        System.out.println(s.charAt(<span class="number">0</span>));<span class="comment">//结果为：h</span></span><br><span class="line">        System.out.println(s.charAt(<span class="number">1</span>));<span class="comment">//结果为：e</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//int indexOf(String str):获取str在字符串对象中第一次出现的索引</span></span><br><span class="line">        System.out.println(s.indexOf(<span class="string">"l"</span>));<span class="comment">//结果为：2</span></span><br><span class="line">        System.out.println(s.indexOf(<span class="string">"owo"</span>));<span class="comment">//结果为：4</span></span><br><span class="line">        System.out.println(s.indexOf(<span class="string">"ak"</span>));<span class="comment">//结果为：-1</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//String substring(int start):从start开始截取字符串</span></span><br><span class="line">        System.out.println(s.substring(<span class="number">0</span>));<span class="comment">//结果为：helloworld</span></span><br><span class="line">        System.out.println(s.substring(<span class="number">5</span>));<span class="comment">//结果为：world</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//String substring(int start,int end):从start开始，到end结束截取字符串</span></span><br><span class="line">        System.out.println(s.substring(<span class="number">0</span>, s.length()));<span class="comment">//结果为：helloworld</span></span><br><span class="line">        System.out.println(s.substring(<span class="number">3</span>,<span class="number">8</span>));<span class="comment">//结果为：lowor</span></span><br><span class="line"></span><br><span class="line">        String s3 = <span class="string">"hello"</span>;</span><br><span class="line">        String s4 = <span class="string">"hello"</span>;</span><br><span class="line">        String s5 = <span class="string">"Hello"</span>;</span><br><span class="line">        <span class="comment">//boolean equals(Object obj):比较字符串的内容是否相同</span></span><br><span class="line">        System.out.println(s3.equals(s4));<span class="comment">//结果为：true</span></span><br><span class="line">        <span class="comment">//boolean equalsIgnoreCase(String str):比较字符串的内容是否相同,忽略大小写</span></span><br><span class="line">        System.out.println(s3.equalsIgnoreCase(s5));<span class="comment">//结果为：true</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">//创建字符串对象</span></span><br><span class="line">        String s6 = <span class="string">"abcde"</span>;</span><br><span class="line">        <span class="comment">//char[] toCharArray():把字符串转换为字符数组</span></span><br><span class="line">        <span class="keyword">char</span>[] chs = s6.toCharArray();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> x=<span class="number">0</span>; x&lt;chs.length; x++) &#123;</span><br><span class="line">            System.out.println(chs[x]);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">          <span class="comment">//String[] split(String str):按照指定符号分割字符串</span></span><br><span class="line">        String s4 = <span class="string">"aa,bb,cc"</span>;</span><br><span class="line">        String[] strArray = s4.split(<span class="string">","</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> x=<span class="number">0</span>; x&lt;strArray.length; x++) &#123;</span><br><span class="line">            System.out.println(strArray[x]);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>从键盘输入一串字符,统计一个字符串大小写字母字符，数字字符出现的次数。(不考虑其他字符)</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringMethodDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">        Scanner sc = <span class="keyword">new</span> Scanner(System.in);<span class="comment">//键盘录入一个字符串数据</span></span><br><span class="line">        System.out.println(<span class="string">"请输入一个字符串数据："</span>);</span><br><span class="line">        String s = sc.nextLine();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//定义三个统计变量，初始化值都是0</span></span><br><span class="line">        <span class="keyword">int</span> bigCount = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> smallCount = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> numberCount = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//遍历字符串，得到每一个字符</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> x=<span class="number">0</span>; x&lt;s.length(); x++) &#123;</span><br><span class="line">            <span class="keyword">char</span> ch = s.charAt(x);</span><br><span class="line">            <span class="comment">//拿字符进行判断</span></span><br><span class="line">            <span class="keyword">if</span>(ch&gt;=<span class="string">'A'</span> &amp;&amp; ch&lt;=<span class="string">'Z'</span>) &#123;</span><br><span class="line">                bigCount++;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(ch&gt;=<span class="string">'a'</span> &amp;&amp; ch&lt;=<span class="string">'z'</span>) &#123;</span><br><span class="line">                smallCount++;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(ch&gt;=<span class="string">'0'</span> &amp;&amp; ch&lt;=<span class="string">'9'</span>) &#123;</span><br><span class="line">                numberCount++;</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                System.out.println(<span class="string">"该字符"</span>+ch+<span class="string">"非法"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//输出结果</span></span><br><span class="line">        System.out.println(<span class="string">"您输入的大写字符有："</span>+bigCount+<span class="string">"个"</span>);</span><br><span class="line">        System.out.println(<span class="string">"您输入的小写字符有："</span>+smallCount+<span class="string">"个"</span>);</span><br><span class="line">        System.out.println(<span class="string">"您输入的数字字符有："</span>+numberCount+<span class="string">"个"</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>String类与基本数据类型、包装类；与字符数组、字节数组之间的转换</strong></p>
-<pre><code>* 1.字符串 与基本数据类型、包装类之间转换
-* ①字符串 ---&gt;基本数据类型、包装类:调用相应的包装类的parseXxx(String str);
-* ①基本数据类型、包装类---&gt;字符串:调用字符串的重载的valueOf()方法
-* 
-* 2.字符串与字节数组间的转换
-* ①字符串----&gt;字节数组:调用字符串的getBytes()
-* ②字节数组----&gt;字符串：调用字符串的构造器
-* 
-* 3.字符串与字符数组间的转换
-* ①字符串----&gt;字符数组：调用字符串的toCharArray();
-* ②字符数组----&gt;字符串:调用字符串的构造器
-* 
-* 4.String与StringBuffer的转换
-* ①String ---&gt;StringBuffer：使用StringBuffer的构造器：new StringBuffer(String str);
-* ②StringBuffer-----&gt;String:使用StringBuffer的toString()方法    
-</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//将数字型的字符串 转化为数字</span></span><br><span class="line">        String s1 = <span class="string">"123456"</span>;</span><br><span class="line">        System.out.println(Integer.parseInt(s1));</span><br><span class="line">        String s2 = <span class="string">"45.87"</span>;</span><br><span class="line">        System.out.println(Double.parseDouble(s2));</span><br><span class="line"></span><br><span class="line">        <span class="comment">//将数字转化为字符串</span></span><br><span class="line">        <span class="keyword">int</span> n1 = <span class="number">234812</span>;</span><br><span class="line">        System.out.println(Integer.toString(n1));</span><br><span class="line">        <span class="keyword">double</span> n2 = <span class="number">23.45</span>;</span><br><span class="line">        System.out.println(Double.toString(n2));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>   StringBuffer类：可变的字符序列<br>   StringBuilder类：可变的字符序列，jdk5.0新加入的，效率更高，线程不安全。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringMethodDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//创建一个字符串缓冲区对象。用于存储数据。</span></span><br><span class="line">        StringBuffer sb = <span class="keyword">new</span> StringBuffer();</span><br><span class="line">        sb.append(<span class="string">"haha"</span>); <span class="comment">//添加字符串 此时sb=haha</span></span><br><span class="line">        sb.insert(<span class="number">2</span>, <span class="string">"it"</span>);<span class="comment">//在指定位置插入 此时sb=haitha</span></span><br><span class="line">        sb.delete(<span class="number">1</span>, <span class="number">4</span>);<span class="comment">//删除  此时sb=hha</span></span><br><span class="line">        sb.replace(<span class="number">1</span>, <span class="number">4</span>, <span class="string">"cast"</span>);<span class="comment">//替换指定范围内的内容 此时sb=hcast</span></span><br><span class="line">        String str = sb.toString();<span class="comment">// 此时sb=hcast</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>设置字符串的格式</strong>：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringMethodDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//格式字符串以百分符号（%）打头，后面跟一个或多个标志。</span></span><br><span class="line">        <span class="comment">// 格式字符串“%,d”显示十迚制数，并将每3 位用逗号分隔。</span></span><br><span class="line">        <span class="comment">//格式字符串“%n”显示换行符。</span></span><br><span class="line">        <span class="keyword">int</span> accountBalance = <span class="number">5005</span>;</span><br><span class="line">        System.out.format(<span class="string">"Balance: $%,d%n"</span>, accountBalance);<span class="comment">//输出：Balance: $5,005</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//输出Π的小数点后11位</span></span><br><span class="line">        <span class="keyword">double</span> pi1 = Math.PI;</span><br><span class="line">        System.out.format(<span class="string">"%.11f%n"</span>, pi1);<span class="comment">//输出：3.14159265359</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>其它：</p>
-<p>奖金定义成长整型： 要精确到小数点后多少位，用</p>
-<pre><code>&gt; DecimalFormat df = new DecimalFormat(&quot;#0.0000&quot;);
-</code></pre><p><img src="https://img-blog.csdnimg.cn/20190710155404404.png" alt="在这里插入图片描述"></p>
-<h4 id="1-String"><a href="#1-String" class="headerlink" title="1. String"></a>1. String</h4><p>Java字符串String是不可变对象；<br>字符串操作不改变原字符串内容，而是返回新字符串；<br>Java使用Unicode编码表示String和char；<br>转换编码就是将String和byte[]转换，需要指定编码；<br>转换为byte[]时，始终优先考虑UTF-8编码。</p>
-<p>比较字符串的内容是否相同。必须使用equals()方法而不能用==。<br>要忽略大小写比较，使用equalsIgnoreCase()方法。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 定义</span></span><br><span class="line">        String s = <span class="string">"Hello!"</span>;</span><br><span class="line">        String sa = <span class="keyword">new</span> String(<span class="keyword">new</span> <span class="keyword">char</span>[] &#123;<span class="string">'H'</span>, <span class="string">'e'</span>, <span class="string">'l'</span>, <span class="string">'l'</span>, <span class="string">'o'</span>, <span class="string">'!'</span>&#125;);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 两个字符串比较，必须总是使用equals()方法。</span></span><br><span class="line">        String s1 = <span class="string">"hello"</span>;</span><br><span class="line">        String s2 = <span class="string">"HELLO"</span>.toLowerCase();</span><br><span class="line">        System.out.println(s1 == s2);</span><br><span class="line">        System.out.println(s1.equals(s2));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 是否包含子串:</span></span><br><span class="line">        System.out.println(<span class="string">"是否包含子串："</span> + s1.contains(<span class="string">"ll"</span>)); <span class="comment">// true</span></span><br><span class="line">        <span class="comment">// 搜索子串</span></span><br><span class="line">        System.out.println(s1.indexOf(<span class="string">'l'</span>)); <span class="comment">// 2</span></span><br><span class="line">        System.out.println(s1.lastIndexOf(<span class="string">'l'</span>)); <span class="comment">// 3</span></span><br><span class="line">        System.out.println(s1.startsWith(<span class="string">"he"</span>)); <span class="comment">// true</span></span><br><span class="line">        System.out.println(s1.endsWith(<span class="string">"lo"</span>)); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 提取子串的例子：</span></span><br><span class="line">        System.out.println(<span class="string">"Hello"</span>.substring(<span class="number">2</span>)); <span class="comment">// "llo"</span></span><br><span class="line">        System.out.println(<span class="string">"Hello"</span>.substring(<span class="number">2</span>, <span class="number">4</span>)); <span class="comment">//"ll"</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 去除首尾空白字符</span></span><br><span class="line">        System.out.println(<span class="string">"  \tHello\r\n "</span>.trim()); <span class="comment">// "Hello"</span></span><br><span class="line">        System.out.println(<span class="string">""</span>.isEmpty());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 替换子串</span></span><br><span class="line">        String replaceSub = <span class="string">"hello"</span>;</span><br><span class="line">        String rep = replaceSub.replace(<span class="string">'l'</span>, <span class="string">'w'</span>); <span class="comment">// "hewwo"，所有字符'l'被替换为'w'</span></span><br><span class="line">        System.out.println(rep);</span><br><span class="line">        replaceSub.replace(<span class="string">"ll"</span>, <span class="string">"~~"</span>); <span class="comment">// "he~~o"，所有子串"ll"被替换为"~~"</span></span><br><span class="line">        <span class="comment">// 另一种是通过正则表达式替</span></span><br><span class="line">        String s3 = <span class="string">"A,,B;C ,D"</span>;</span><br><span class="line">        s3.replaceAll(<span class="string">"[\\,\\;\\s]+"</span>, <span class="string">","</span>); <span class="comment">// "A,B,C,D"</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 分割字符串</span></span><br><span class="line">        String s4 = <span class="string">"A,B,C,D"</span>;</span><br><span class="line">        String[] ss = s4.split(<span class="string">"\\,"</span>); <span class="comment">// &#123;"A", "B", "C", "D"&#125;</span></span><br><span class="line">        System.out.println(ss[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 拼接字符串</span></span><br><span class="line">        String[] arr = &#123;<span class="string">"A"</span>, <span class="string">"B"</span>, <span class="string">"C"</span>&#125;;</span><br><span class="line">        String s5 = String.join(<span class="string">"***"</span>, arr); <span class="comment">// "A***B***C"</span></span><br><span class="line">        System.out.println(s5);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">//类型转换</span></span><br><span class="line">        <span class="comment">// 把任意基本类型或引用类型转换为字符串</span></span><br><span class="line">        String.valueOf(<span class="number">123</span>); <span class="comment">// "123"</span></span><br><span class="line">        <span class="comment">// 把字符串转换为其他类型，就需要根据情况</span></span><br><span class="line">        <span class="keyword">int</span> n1 = Integer.parseInt(<span class="string">"123"</span>); <span class="comment">// 123</span></span><br><span class="line">        <span class="keyword">boolean</span> b1 = Boolean.parseBoolean(<span class="string">"true"</span>); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// String和char[]类型可以互相转换</span></span><br><span class="line">        <span class="keyword">char</span>[] cs = <span class="string">"Hello"</span>.toCharArray(); <span class="comment">// String -&gt; char[]</span></span><br><span class="line">        String s6 = <span class="keyword">new</span> String(cs); <span class="comment">// char[] -&gt; String</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="字符串的不同形式表示"><a href="#字符串的不同形式表示" class="headerlink" title="字符串的不同形式表示"></a>字符串的不同形式表示</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.text.*;</span><br><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = <span class="number">123400</span>;</span><br><span class="line">        <span class="comment">// 123400</span></span><br><span class="line">        System.out.println(n);</span><br><span class="line">        <span class="comment">// 以16进制打印n为:1e208</span></span><br><span class="line">        System.out.println(Integer.toHexString(n));</span><br><span class="line">        <span class="comment">// 以价格的方式打印n为:$123,400.00</span></span><br><span class="line">        System.out.println(NumberFormat.getCurrencyInstance(Locale.US).format(n));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="2-StringBuilder"><a href="#2-StringBuilder" class="headerlink" title="2. StringBuilder"></a>2. StringBuilder</h4><p>StringBuilder是可变对象，用来高效拼接字符串；<br>StringBuilder可以支持链式操作，实现链式操作的关键是返回实例本身；<br>StringBuffer是StringBuilder的线程安全版本，现在很少使用。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        StringBuilder sb = <span class="keyword">new</span> StringBuilder(<span class="number">1024</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">            sb.append(<span class="string">','</span>);</span><br><span class="line">            sb.append(i);</span><br><span class="line">        &#125;</span><br><span class="line">        String s = sb.toString();</span><br><span class="line">        System.out.println(s);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        StringBuilder sb1 = <span class="keyword">new</span> StringBuilder(<span class="number">1024</span>);</span><br><span class="line">        sb1.append(<span class="string">"Mr "</span>)</span><br><span class="line">                .append(<span class="string">"Bob"</span>)</span><br><span class="line">                .append(<span class="string">"!"</span>)</span><br><span class="line">                .insert(<span class="number">0</span>, <span class="string">"Hello, "</span>);</span><br><span class="line">        System.out.println(sb1.toString());</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="StringJoiner"><a href="#StringJoiner" class="headerlink" title="StringJoiner"></a>StringJoiner</h4><p>用指定分隔符拼接字符串数组时，使用StringJoiner或者String.join()更方便；<br>用StringJoiner拼接字符串时，还可以额外附加一个“开头”和“结尾”。</p>
-<p>很多时候，我们拼接的字符串像这样：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String[] names = &#123;<span class="string">"Bob"</span>, <span class="string">"Alice"</span>, <span class="string">"Grace"</span>&#125;;</span><br><span class="line">        StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        sb.append(<span class="string">"Hello "</span>);</span><br><span class="line">        <span class="keyword">for</span> (String name : names) &#123;</span><br><span class="line">            sb.append(name).append(<span class="string">", "</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 注意去掉最后的", ":</span></span><br><span class="line">        sb.delete(sb.length() - <span class="number">2</span>, sb.length());</span><br><span class="line">        sb.append(<span class="string">"!"</span>);</span><br><span class="line">        System.out.println(sb.toString());</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>类似用分隔符拼接数组的需求很常见，所以Java标准库还提供了一个StringJoiner来干这个事：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.StringJoiner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String[] names = &#123;<span class="string">"Bob"</span>, <span class="string">"Alice"</span>, <span class="string">"Grace"</span>&#125;;</span><br><span class="line">        StringJoiner sj = <span class="keyword">new</span> StringJoiner(<span class="string">", "</span>, <span class="string">"Hello "</span>, <span class="string">"!"</span>);</span><br><span class="line">        <span class="keyword">for</span> (String name : names) &#123;</span><br><span class="line">            sj.add(name);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(sj.toString());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 不需要指定“开头”和“结尾”的时候，用String.join()更方便：</span></span><br><span class="line">        String[] names1 = &#123;<span class="string">"Bob"</span>, <span class="string">"Alice"</span>, <span class="string">"Grace"</span>&#125;;</span><br><span class="line">        String s = String.join(<span class="string">", "</span>, names1);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-          
+          <h4 id="1-包装类型"><a href="#1-包装类型" class="headerlink" title="1. 包装类型"></a>1. 包装类型</h4><p>把int变为Integer的赋值写法，称为自动装箱（Auto Boxing），反过来，把Integer变为int的赋值写法，称为自动拆箱（Auto Unboxing）。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/java/java基础/2017427_java核心类/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2080,52 +1532,178 @@
 
       
         
-          
-            <h4 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h4><p><strong>数组</strong>：一次性定义多个 相同数据类型的变量。</p>
+          <h4 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h4><p><strong>数组</strong>：一次性定义多个 相同数据类型的变量。</p>
 <ul>
 <li>特点:长度固定，内存中必定连续，便于寻址，查询效率高</li>
 </ul>
-<p><strong>1).数组的初始化</strong></p>
-<pre><code>//静态初始化：在声明并初始化数组与给数组相应的元素赋值操作同时进行。
-int[] scores1 = new int[]{72,90,59};
-//动态初始化：在声明并初始化数组与给数组相应的元素赋值操作分开进行。
-int scores2[] = new int[3];
-scores2[0] = 72;
-scores2[1] = 90;
-scores2[2] = 59;
-</code></pre><p>注：不管是动态还是静态初始化数组，一定在创建的时候，就指明了数组的长度！</p>
-<p><strong>2).如何引用数组元素</strong>：通过数组的下角标的方式。下角标从0开始，到n-1结束。其中n为数组的长度。</p>
-<p><strong>3).数组的长度</strong>：通过数组的属性length来调用。<br>System.out.println(scores2.length);//3</p>
-<p><strong>4).如何遍历数组</strong><br>for(int i = 0;i &lt; scores1.length;i++){<br>    System.out.println(scores1[i]);<br>}</p>
-<p><strong>5).关于数组元素的默认初始化值</strong></p>
-<ol>
-<li>byte short int long 而言：0</li>
-<li>float double 而言：0.0</li>
-<li>char而言：空格</li>
-<li>boolean而言：false</li>
-<li>引用类型变量而言:null</li>
-</ol>
-<p><strong>6). Arrays类：</strong><br>Arrays类一般用来操作数组(比如排序和搜索)的各种方法。如果指定数组引用为null，则访问此类中的方法都会抛出空指针异常NullPointerException。比较常见的方法有：</p>
-<ul>
-<li>sort方法，用来对指定数组中的元素进行排序（元素值从小到大进行排序）;</li>
-</ul>
-<blockquote>
-<p>int[] arr = {1,5,9,3,7};<br>Arrays.sort( arr );</p>
-</blockquote>
-<ul>
-<li>toString方法，用来返回指定数组元素内容的字符串形式</li>
-</ul>
-<blockquote>
-<p>int[] arr = {1,5,9,3,7};<br>String str = Arrays.toString(arr); //str的值为[1, 3, 5, 7, 9]</p>
-</blockquote>
-<ul>
-<li>binarySearch方法，在指定数组中，查找给定元素值出现的位置。若没有查询到，返回位置为-1。要求该数组必须是个有序的数组。</li>
-</ul>
-<blockquote>
-<p>int[] arr = {1,3,4,5,6};<br>int index = Arrays.binarySearch(arr, 4); //index的值为2<br>int index2= Arrasy.binarySearch(arr, 2); //index2的值为-1</p>
-</blockquote>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/java/java基础/2017424_数组和string类/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/java/java基础/2017425_字符串string类的/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="崔永华（Andy）">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="崔永华的个人网站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/java/java基础/2017425_字符串string类的/" itemprop="url">
+                  java字符串String类
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-24T01:30:00+08:00">
+                2017-04-24
+              </time>
+            
+
+            
+
+            
+          </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/java基础/" itemprop="url" rel="index">
+                    <span itemprop="name">java基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h4 id="String类：不可变的字符序列"><a href="#String类：不可变的字符序列" class="headerlink" title="String类：不可变的字符序列"></a>String类：不可变的字符序列</h4><p>常用方法：</p>
+<blockquote>
+<p>int length():获取字符串的长度，其实也就是字符个数<br>char charAt(int index):获取指定索引处的字符</p>
+</blockquote>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/java/java基础/2017425_字符串string类的/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2276,66 +1854,14 @@ scores2[2] = 59;
 
       
         
-          
-            <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// ++n表示先加1再引用n，n++表示先引用n再加1</span></span><br><span class="line">        <span class="keyword">int</span> n = <span class="number">3300</span>;</span><br><span class="line">        n++; <span class="comment">// 3301, 相当于 n = n + 1;</span></span><br><span class="line">        n--; <span class="comment">// 3300, 相当于 n = n - 1;</span></span><br><span class="line">        <span class="keyword">int</span> y = <span class="number">100</span> + (++n); <span class="comment">// 不要这么写</span></span><br><span class="line">        System.out.println(y);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>移位运算：左移实际上就是不断地×2，右移实际上就是不断地÷2。</p>
-<p>浮点数运算：浮点数运算和整数运算相比，只能进行加减乘除这些数值计算，不能做位运算和移位运算。</p>
-<p>布尔运算：对于布尔类型boolean，永远只有true和false两个值。布尔运算是一种关系运算，包括以下几类：比较运算符：&gt;，&gt;=，&lt;，&lt;=，==，!=；与运算 &amp;&amp;；或运算 ||；非运算 !</p>
-<p>溢出:整数运算在除数为0时会报错，而浮点数运算在除数为0时，不会报错，但会返回几个特殊值：NaN表示Not a Number； Infinity表示无穷大； -Infinity表示负无穷大。</p>
-<p>三元运算符：Java还提供一个三元运算符b ? x : y，它根据第一个布尔表达式的结果，分别返回后续两个表达式之一的计算结果。（三元运算b ? x : y后面的类型必须相同，三元运算也是“短路运算”，只计算x或y。）</p>
-<p>转义字符：（因为\是转义字符，所以，两个\表示一个\字符），常见的转义字符包括：</p>
-<ul>
-<li>\” 表示字符”</li>
-<li>\’ 表示字符’</li>
-<li>\ 表示字符\</li>
-<li>\n 表示换行符</li>
-<li>\r 表示回车符</li>
-<li>\t 表示Tab</li>
-<li>\u#### 表示一个Unicode编码的字符</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.company;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 转义字符</span></span><br><span class="line">        String zhuanyi = <span class="string">"ABC\n\u4e2d\u6587"</span>; <span class="comment">// 包含6个字符: A, B, C, 换行符, 中, 文</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 字符串拼接</span></span><br><span class="line">        String s1 = <span class="string">"Hello"</span>;</span><br><span class="line">        String s2 = <span class="string">"world"</span>;</span><br><span class="line">        String s = s1 + <span class="string">" "</span> + s2 + <span class="string">"!"</span>;</span><br><span class="line">        System.out.println(s);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 字符串的不可变是指字符串内容不可变。但是引用类型可以变</span></span><br><span class="line">        String s3 = <span class="string">"hello"</span>;</span><br><span class="line">        String t = s3;</span><br><span class="line">        s3 = <span class="string">"world"</span>;</span><br><span class="line">        System.out.println(t); <span class="comment">// t是"hello"</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 引用类型的变量可以指向一个空值null，它表示不存在，即该变量不指向任何对象</span></span><br><span class="line">        String s4 = <span class="keyword">null</span>; <span class="comment">// s1是null</span></span><br><span class="line">        String s5; <span class="comment">// 没有赋初值值，s2也是null</span></span><br><span class="line">        String s6 = s4; <span class="comment">// s3也是null</span></span><br><span class="line">        String s7 = <span class="string">""</span>; <span class="comment">// s4指向空字符串，不是null</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Java的格式化功能提供了多种占位符，可以把各种数据类型“格式化”成指定的字符串：</p>
-<ul>
-<li>%d    格式化输出整数</li>
-<li>%x    格式化输出十六进制整数</li>
-<li>%f    格式化输出浮点数</li>
-<li>%e    格式化输出科学计数法表示的浮点数</li>
-<li>%s    格式化字符串</li>
-</ul>
-<p>占位符和输入案例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 占位符本身还可以有更详细的格式化参数。下面的例子把一个整数格式化成十六进制，并用0补足8位</span></span><br><span class="line">        <span class="keyword">int</span> n = <span class="number">12345000</span>;</span><br><span class="line">        System.out.printf(<span class="string">"n=%d, hex=%08x"</span>, n, n); <span class="comment">// 注意，两个%占位符必须传入两个数</span></span><br><span class="line"></span><br><span class="line">        Scanner scanner = <span class="keyword">new</span> Scanner(System.in); <span class="comment">// 创建Scanner对象</span></span><br><span class="line">        System.out.print(<span class="string">"Input your name: "</span>); <span class="comment">// 打印提示</span></span><br><span class="line">        String name = scanner.nextLine(); <span class="comment">// 读取一行输入并获取字符串</span></span><br><span class="line">        System.out.print(<span class="string">"Input your age: "</span>); <span class="comment">// 打印提示</span></span><br><span class="line">        <span class="keyword">int</span> age = scanner.nextInt(); <span class="comment">// 读取一行输入并获取整数</span></span><br><span class="line">        System.out.printf(<span class="string">"Hi, %s, you are %d\n"</span>, name, age); <span class="comment">// 格式化输出</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>switch:</p>
-<ul>
-<li>switch语句可以做多重选择，然后执行匹配的case语句后续代码；</li>
-<li>switch的计算结果必须是整型、字符串或枚举类型；</li>
-<li>注意千万不要漏写break，建议打开fall-through警告；</li>
-<li>总是写上default，建议打开missing default警告；</li>
-<li>从Java 14开始，switch语句正式升级为表达式，不再需要break，并且允许使用yield返回值。</li>
-</ul>
-<p>while:</p>
-<ul>
-<li>while循环先判断循环条件是否满足，再执行循环语句；</li>
-<li>while循环可能一次都不执行；</li>
-<li>编写循环时要注意循环条件，并避免死循环。</li>
-</ul>
-<p>do while:</p>
-<ul>
-<li>do while循环先执行循环，再判断条件；</li>
-<li>do while循环会至少执行一次。</li>
-</ul>
-<p>for:</p>
-<ul>
-<li>for循环通过计数器可以实现复杂循环；</li>
-<li>for each循环可以直接遍历数组的每个元素，但无法获取索引；</li>
-<li>最佳实践：计数器变量定义在for循环内部，循环体内部不修改计数器；</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.company;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span>[] ns = &#123; <span class="number">1</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">16</span>, <span class="number">25</span> &#125;;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;ns.length; i++) &#123;</span><br><span class="line">            System.out.println(ns[i]);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 使用for each遍历</span></span><br><span class="line">        <span class="comment">// for each循环的变量n不再是计数器，而是直接对应到数组的每个元素</span></span><br><span class="line">        <span class="comment">// for each循环无法指定遍历顺序，也无法获取数组的索引。</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> n : ns) &#123;</span><br><span class="line">            System.out.println(n);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>break和contonie</p>
-<ul>
-<li>break语句可以跳出当前最近的一层循环，通常配合if，在满足条件时提前结束整个循环；</li>
-<li>continue语句可以提前结束本次循环，continue语句通常配合if，在满足条件时提前结束本次循环。</li>
-</ul>
-
-          
+          <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// ++n表示先加1再引用n，n++表示先引用n再加1</span></span><br><span class="line">        <span class="keyword">int</span> n = <span class="number">3300</span>;</span><br><span class="line">        n++; <span class="comment">// 3301, 相当于 n = n + 1;</span></span><br><span class="line">        n--; <span class="comment">// 3300, 相当于 n = n - 1;</span></span><br><span class="line">        <span class="keyword">int</span> y = <span class="number">100</span> + (++n); <span class="comment">// 不要这么写</span></span><br><span class="line">        System.out.println(y);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/java/java基础/2017423_运算和流程控制/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2437,7 +1963,7 @@ scores2[2] = 59;
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

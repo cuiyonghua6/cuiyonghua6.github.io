@@ -90,18 +90,18 @@
 
 
 
-<meta name="description" content="数据备份1、使用pgAdmin 4 备份数据库 2、使用pg_dump工具备份数据库 【例14.1】备份test数据库中的tb_emp表和tb_emp2表，输入语句如下：1pg_dump -U postgres -t tb_emp -t tb_emp2 -f C:\abc\test_backup2 test 3、使用pg_dumpall工具备份整个服务器的数据 【例14.2】使用pg_dumpal">
+<meta name="description" content="数据备份1、使用pgAdmin 4 备份数据库">
 <meta name="keywords" content="数据库,PostgreSQL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PostgreSQL：十四. 数据备份与还原">
 <meta property="og:url" content="http://yoursite.com/2019/08/database/PostgreSql/20190822_备份还原/index.html">
 <meta property="og:site_name" content="崔永华的个人网站">
-<meta property="og:description" content="数据备份1、使用pgAdmin 4 备份数据库 2、使用pg_dump工具备份数据库 【例14.1】备份test数据库中的tb_emp表和tb_emp2表，输入语句如下：1pg_dump -U postgres -t tb_emp -t tb_emp2 -f C:\abc\test_backup2 test 3、使用pg_dumpall工具备份整个服务器的数据 【例14.2】使用pg_dumpal">
+<meta property="og:description" content="数据备份1、使用pgAdmin 4 备份数据库">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-10-15T12:27:05.892Z">
+<meta property="og:updated_time" content="2020-10-17T03:18:33.752Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PostgreSQL：十四. 数据备份与还原">
-<meta name="twitter:description" content="数据备份1、使用pgAdmin 4 备份数据库 2、使用pg_dump工具备份数据库 【例14.1】备份test数据库中的tb_emp表和tb_emp2表，输入语句如下：1pg_dump -U postgres -t tb_emp -t tb_emp2 -f C:\abc\test_backup2 test 3、使用pg_dumpall工具备份整个服务器的数据 【例14.2】使用pg_dumpal">
+<meta name="twitter:description" content="数据备份1、使用pgAdmin 4 备份数据库">
 
 
 
@@ -416,8 +416,7 @@
       
 
       
-        <h4 id="数据备份"><a href="#数据备份" class="headerlink" title="数据备份"></a>数据备份</h4><p>1、使用pgAdmin 4 备份数据库</p>
-<p>2、使用pg_dump工具备份数据库</p>
+        <h4 id="数据备份"><a href="#数据备份" class="headerlink" title="数据备份"></a>数据备份</h4><p>1、使用pgAdmin 4 备份数据库<br><a id="more"></a><br>2、使用pg_dump工具备份数据库</p>
 <p>【例14.1】备份test数据库中的tb_emp表和tb_emp2表，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pg_dump -U postgres -t tb_emp -t tb_emp2 -f C:\abc\test_backup2 test</span><br></pre></td></tr></table></figure></p>
 <p>3、使用pg_dumpall工具备份整个服务器的数据</p>
 <p>【例14.2】使用pg_dumpall备份所有的数据库，其操作和pg_dump类似，这里不再重述，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pg_dumpall -U postgres -f C:\abc\dball_backup</span><br></pre></td></tr></table></figure></p>
@@ -607,7 +606,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

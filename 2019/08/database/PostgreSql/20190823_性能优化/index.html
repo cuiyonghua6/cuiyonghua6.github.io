@@ -98,7 +98,7 @@
 <meta property="og:site_name" content="崔永华的个人网站">
 <meta property="og:description" content="优化简介： PostgreSQL优化一方面是找出系统的瓶颈，提高PostgreSQL数据库整体的性能； 另一方面，需要合理的结构设计和参数调整，以提高用户操作响应的速度； 同时还要尽可能的节省系统资源，以便系统可以提供更大负荷的服务。  PostgreSQL数据库优化是多方面的，原则是减少系统的瓶颈，减少资源的占用，增加系统的反应速度。例如：  通过优化文件系统，提高磁盘IO的读写速度； 通过优化">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-10-15T12:28:37.192Z">
+<meta property="og:updated_time" content="2020-10-17T03:18:51.943Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PostgreSQL：十五. 性能优化">
 <meta name="twitter:description" content="优化简介： PostgreSQL优化一方面是找出系统的瓶颈，提高PostgreSQL数据库整体的性能； 另一方面，需要合理的结构设计和参数调整，以提高用户操作响应的速度； 同时还要尽可能的节省系统资源，以便系统可以提供更大负荷的服务。  PostgreSQL数据库优化是多方面的，原则是减少系统的瓶颈，减少资源的占用，增加系统的反应速度。例如：  通过优化文件系统，提高磁盘IO的读写速度； 通过优化">
@@ -427,6 +427,7 @@
 <li>通过优化操作系统调度策略，提高PostgreSQL的在高负荷情况下负载能力；</li>
 <li>优化表结构、索引、查询语句等使查询响应更快。</li>
 </ul>
+<a id="more"></a>
 <h4 id="优化查询"><a href="#优化查询" class="headerlink" title="优化查询"></a>优化查询</h4><p>1、分析查询语句EXPLAIN</p>
 <p>【例15.1】使用EXPLAIN语句来分析一个查询语句，执行如下语句：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">EXPLAIN</span> <span class="keyword">ANALYZE</span> <span class="keyword">SELECT</span> * <span class="keyword">FROM</span> fruits;</span><br></pre></td></tr></table></figure></p>
 <p>2、索引对查询速度的影响</p>
@@ -638,7 +639,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

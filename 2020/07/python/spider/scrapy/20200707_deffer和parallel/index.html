@@ -90,18 +90,18 @@
 
 
 
-<meta name="description" content="deferscrapy的核心的代码大量用到deffer对象，还有一些并行的东西。 这里简单去学习下deffer和并行的方法知识 。 twisted.interet.defer 这个官方的api就是下面的网址了。http://twistedmatrix.com/documents/current/api/twisted.internet.defer.html我们可以看到这个defer是twisted">
+<meta name="description" content="deferscrapy的核心的代码大量用到deffer对象，还有一些并行的东西。 这里简单去学习下deffer和并行的方法知识 。">
 <meta name="keywords" content="python,爬虫,scrapy">
 <meta property="og:type" content="article">
 <meta property="og:title" content="scrapy源码6：deffer和parallel的源码分析">
 <meta property="og:url" content="http://yoursite.com/2020/07/python/spider/scrapy/20200707_deffer和parallel/index.html">
 <meta property="og:site_name" content="崔永华的个人网站">
-<meta property="og:description" content="deferscrapy的核心的代码大量用到deffer对象，还有一些并行的东西。 这里简单去学习下deffer和并行的方法知识 。 twisted.interet.defer 这个官方的api就是下面的网址了。http://twistedmatrix.com/documents/current/api/twisted.internet.defer.html我们可以看到这个defer是twisted">
+<meta property="og:description" content="deferscrapy的核心的代码大量用到deffer对象，还有一些并行的东西。 这里简单去学习下deffer和并行的方法知识 。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-10-13T11:58:46.459Z">
+<meta property="og:updated_time" content="2020-10-17T03:32:00.445Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="scrapy源码6：deffer和parallel的源码分析">
-<meta name="twitter:description" content="deferscrapy的核心的代码大量用到deffer对象，还有一些并行的东西。 这里简单去学习下deffer和并行的方法知识 。 twisted.interet.defer 这个官方的api就是下面的网址了。http://twistedmatrix.com/documents/current/api/twisted.internet.defer.html我们可以看到这个defer是twisted">
+<meta name="twitter:description" content="deferscrapy的核心的代码大量用到deffer对象，还有一些并行的东西。 这里简单去学习下deffer和并行的方法知识 。">
 
 
 
@@ -416,8 +416,7 @@
       
 
       
-        <h4 id="defer"><a href="#defer" class="headerlink" title="defer"></a>defer</h4><p>scrapy的核心的代码大量用到deffer对象，还有一些并行的东西。 这里简单去学习下deffer和并行的方法知识 。</p>
-<p>twisted.interet.defer 这个官方的api就是下面的网址了。<br><a href="http://twistedmatrix.com/documents/current/api/twisted.internet.defer.html" target="_blank" rel="noopener">http://twistedmatrix.com/documents/current/api/twisted.internet.defer.html</a><br>我们可以看到这个defer是twisted提供的internet方法的包</p>
+        <h4 id="defer"><a href="#defer" class="headerlink" title="defer"></a>defer</h4><p>scrapy的核心的代码大量用到deffer对象，还有一些并行的东西。 这里简单去学习下deffer和并行的方法知识 。<br><a id="more"></a><br>twisted.interet.defer 这个官方的api就是下面的网址了。<br><a href="http://twistedmatrix.com/documents/current/api/twisted.internet.defer.html" target="_blank" rel="noopener">http://twistedmatrix.com/documents/current/api/twisted.internet.defer.html</a><br>我们可以看到这个defer是twisted提供的internet方法的包</p>
 <h4 id="twisted"><a href="#twisted" class="headerlink" title="twisted"></a>twisted</h4><p>先了解下twisted是个什么。<br>Twisted: The Framework Of Your Internet. 说明twisted是一个网络框架。<br><a href="http://twistedmatrix.com/documents/current/api/twisted.html" target="_blank" rel="noopener">http://twistedmatrix.com/documents/current/api/twisted.html</a> 这个官方api说的很精简啊， </p>
 <p>我们还是看看wiki上怎么说的: Twisted is an event-driven network programming framework written in Python and licensed under the MIT<br>License.<br>Twisted projects variously support TCP, UDP, SSL/TLS, IP multicast, Unix domain sockets, a large number of protocols (including HTTP, XMPP, NNTP, IMAP, SSH, IRC, FTP, and others), and much more. Twisted is based on the event-driven programming paradigm, which means that users of Twisted write short callbacks which are called by the framework.<br>大概意思如下：<br>Twisted是一个以Python编写的事件驱动的网络编程框架，并根据MIT许可证进行许可。<br>twisted的项目各种支持TCP，UDP，SSL / TLS，IP组播，Unix域套接字，大量协议<br>（包括HTTP，XMPP，NNTP，IMAP，SSH，IRC，FTP等）等等。<br>Twisted是基于事件驱动的编程范例，这意味着Twisted的用户写入框架调用的简短回调。</p>
 <p>知道twisted了， 还是应该了解下twisted的异步处理。<br>网址如下: <a href="http://blog.csdn.net/fxjtoday/article/details/6396932" target="_blank" rel="noopener">http://blog.csdn.net/fxjtoday/article/details/6396932</a><br>这个人的博客写的不错。 <a href="http://blog.csdn.net/fangjian1204/article/details/42084273" target="_blank" rel="noopener">http://blog.csdn.net/fangjian1204/article/details/42084273</a></p>
@@ -598,7 +597,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

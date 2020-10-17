@@ -90,18 +90,18 @@
 
 
 
-<meta name="description" content="创建数据库【例3.1】创建一个数据库名称为sample_db，数据库的属性参数采用默认的设置。1CREATE DATABASE sample_db; 修改数据库属性【例3.2】修改test数据库的名字和拥有者，输入语句如下：12ALTER DATABASE mytest RENAME TO mytest1;ALTER DATABASE mytest1 OWNER TO postgres1; 删除数">
+<meta name="description" content="创建数据库【例3.1】创建一个数据库名称为sample_db，数据库的属性参数采用默认的设置。1CREATE DATABASE sample_db; 修改数据库属性【例3.2】修改test数据库的名字和拥有者，输入语句如下：12ALTER DATABASE mytest RENAME TO mytest1;ALTER DATABASE mytest1 OWNER TO postgres1;">
 <meta name="keywords" content="数据库,PostgreSQL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PostgreSQL：三. 数据库的基本操作">
 <meta property="og:url" content="http://yoursite.com/2019/08/database/PostgreSql/20190808_数据库的基本操作/index.html">
 <meta property="og:site_name" content="崔永华的个人网站">
-<meta property="og:description" content="创建数据库【例3.1】创建一个数据库名称为sample_db，数据库的属性参数采用默认的设置。1CREATE DATABASE sample_db; 修改数据库属性【例3.2】修改test数据库的名字和拥有者，输入语句如下：12ALTER DATABASE mytest RENAME TO mytest1;ALTER DATABASE mytest1 OWNER TO postgres1; 删除数">
+<meta property="og:description" content="创建数据库【例3.1】创建一个数据库名称为sample_db，数据库的属性参数采用默认的设置。1CREATE DATABASE sample_db; 修改数据库属性【例3.2】修改test数据库的名字和拥有者，输入语句如下：12ALTER DATABASE mytest RENAME TO mytest1;ALTER DATABASE mytest1 OWNER TO postgres1;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-10-15T09:56:29.109Z">
+<meta property="og:updated_time" content="2020-10-17T03:16:13.257Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PostgreSQL：三. 数据库的基本操作">
-<meta name="twitter:description" content="创建数据库【例3.1】创建一个数据库名称为sample_db，数据库的属性参数采用默认的设置。1CREATE DATABASE sample_db; 修改数据库属性【例3.2】修改test数据库的名字和拥有者，输入语句如下：12ALTER DATABASE mytest RENAME TO mytest1;ALTER DATABASE mytest1 OWNER TO postgres1; 删除数">
+<meta name="twitter:description" content="创建数据库【例3.1】创建一个数据库名称为sample_db，数据库的属性参数采用默认的设置。1CREATE DATABASE sample_db; 修改数据库属性【例3.2】修改test数据库的名字和拥有者，输入语句如下：12ALTER DATABASE mytest RENAME TO mytest1;ALTER DATABASE mytest1 OWNER TO postgres1;">
 
 
 
@@ -418,6 +418,7 @@
       
         <h4 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h4><p>【例3.1】创建一个数据库名称为sample_db，数据库的属性参数采用默认的设置。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">DATABASE</span> sample_db;</span><br></pre></td></tr></table></figure></p>
 <h4 id="修改数据库属性"><a href="#修改数据库属性" class="headerlink" title="修改数据库属性"></a>修改数据库属性</h4><p>【例3.2】修改test数据库的名字和拥有者，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">DATABASE</span> mytest <span class="keyword">RENAME</span> <span class="keyword">TO</span> mytest1;</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">DATABASE</span> mytest1 OWNER <span class="keyword">TO</span> postgres1;</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <h4 id="删除数据库"><a href="#删除数据库" class="headerlink" title="删除数据库"></a>删除数据库</h4><p>【例3.3】删除mytest1数据库，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">DATABASE</span> mytest1;</span><br></pre></td></tr></table></figure></p>
 <h4 id="综合案例-数据库的创建和删除"><a href="#综合案例-数据库的创建和删除" class="headerlink" title="综合案例-数据库的创建和删除"></a>综合案例-数据库的创建和删除</h4><p> 数据库的基本操作流程：<br>步骤1：登录数据库。<br>启动pgAdmin 4，输入密码连接服务器。<br>步骤2：创建数据库zoo，执行过程如下。<br>CREATE DATABASE zoo;<br>命令执行后，刷新数据库，即可看到新创建的数据库zoo，表明语句成功执行。<br>步骤3：选择当前数据库为zoo，右击并在弹出的快捷菜单中选择【属性】菜单命令，即可在打开的对话框中查看数据库的属性。<br>步骤4：修改数据库的连接最大值为10，输入以下SQL语句。<br>ALTER DATABASE zoo WITH CONNECTION LIMIT = 10;<br>步骤5：SQL语句执行后，选择当前数据库为zoo，右击并在弹出的快捷菜单中选择【属性】菜单命令，在打开的对话框中选择【定义】选项卡，即可看到连接限制数被修改为10。<br>步骤6：删除数据库zoo，执行SQL语句如下。<br>DROP DATABASE zoo;<br>语句执行完毕，将数据库zoo从系统中删除。</p>
 <h4 id="常见问题及解答"><a href="#常见问题及解答" class="headerlink" title="常见问题及解答"></a>常见问题及解答</h4>
@@ -591,7 +592,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

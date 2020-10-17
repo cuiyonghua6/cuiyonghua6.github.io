@@ -90,22 +90,22 @@
 
 
 
-<meta name="description" content="1. 向原数据增加内容原表为： 执行sql语句： 12# 在name字段下数据的前面加上 ‘我的’ 字段update person_info set name = concat(&apos;我的&apos;, name) 增加之后的结果为： 2. 修改原数据的内容语法：replace(object,search,replace) ， 把object中出现search的全部替换为replace 执行的sql: 12#">
+<meta name="description" content="1. 向原数据增加内容原表为： 执行sql语句：">
 <meta name="keywords" content="数据库,MySQL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL中增加，更新或删除 数据库中原数据的内容">
 <meta property="og:url" content="http://yoursite.com/2019/09/database/PostgreSql/20190927_mysql更改数据/index.html">
 <meta property="og:site_name" content="崔永华的个人网站">
-<meta property="og:description" content="1. 向原数据增加内容原表为： 执行sql语句： 12# 在name字段下数据的前面加上 ‘我的’ 字段update person_info set name = concat(&apos;我的&apos;, name) 增加之后的结果为： 2. 修改原数据的内容语法：replace(object,search,replace) ， 把object中出现search的全部替换为replace 执行的sql: 12#">
+<meta property="og:description" content="1. 向原数据增加内容原表为： 执行sql语句：">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190927194903520.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N1aV95b25naHVh,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190927200408938.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N1aV95b25naHVh,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190927200935992.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N1aV95b25naHVh,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190927201239730.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N1aV95b25naHVh,size_16,color_FFFFFF,t_70">
-<meta property="og:updated_time" content="2020-10-15T09:39:24.167Z">
+<meta property="og:updated_time" content="2020-10-17T03:19:29.996Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL中增加，更新或删除 数据库中原数据的内容">
-<meta name="twitter:description" content="1. 向原数据增加内容原表为： 执行sql语句： 12# 在name字段下数据的前面加上 ‘我的’ 字段update person_info set name = concat(&apos;我的&apos;, name) 增加之后的结果为： 2. 修改原数据的内容语法：replace(object,search,replace) ， 把object中出现search的全部替换为replace 执行的sql: 12#">
+<meta name="twitter:description" content="1. 向原数据增加内容原表为： 执行sql语句：">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190927194903520.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N1aV95b25naHVh,size_16,color_FFFFFF,t_70">
 
 
@@ -422,8 +422,7 @@
 
       
         <h5 id="1-向原数据增加内容"><a href="#1-向原数据增加内容" class="headerlink" title="1. 向原数据增加内容"></a>1. 向原数据增加内容</h5><p>原表为：<br><img src="https://img-blog.csdnimg.cn/20190927194903520.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N1aV95b25naHVh,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<p>执行sql语句：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在name字段下数据的前面加上 ‘我的’ 字段</span></span><br><span class="line"><span class="keyword">update</span> person_info <span class="keyword">set</span> <span class="keyword">name</span> = <span class="keyword">concat</span>(<span class="string">'我的'</span>, <span class="keyword">name</span>)</span><br></pre></td></tr></table></figure>
+<p>执行sql语句：<br><a id="more"></a><br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在name字段下数据的前面加上 ‘我的’ 字段</span></span><br><span class="line"><span class="keyword">update</span> person_info <span class="keyword">set</span> <span class="keyword">name</span> = <span class="keyword">concat</span>(<span class="string">'我的'</span>, <span class="keyword">name</span>)</span><br></pre></td></tr></table></figure></p>
 <p>增加之后的结果为：<br><img src="https://img-blog.csdnimg.cn/20190927200408938.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N1aV95b25naHVh,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <h5 id="2-修改原数据的内容"><a href="#2-修改原数据的内容" class="headerlink" title="2. 修改原数据的内容"></a>2. 修改原数据的内容</h5><p>语法：replace(object,search,replace) ， 把object中出现search的全部替换为replace</p>
 <p>执行的sql:</p>
@@ -605,7 +604,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

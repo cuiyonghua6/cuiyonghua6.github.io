@@ -90,18 +90,18 @@
 
 
 
-<meta name="description" content="创建数据表下面的案例是如何添加主键约束，外键约束，唯一约束，非空约束，默认约束等； 1.使用主键约束：有单字段主键，多字段联合主键；【例1】定义数据表tb_emp1，假设表中间没有主键id，为了唯一确定一个员工，可以把name、deptId联合起来做为主键，SQL语句如下：1234567CREATE TABLE tb_emp1 (name VARCHAR(25),deptId INT,salary">
+<meta name="description" content="创建数据表下面的案例是如何添加主键约束，外键约束，唯一约束，非空约束，默认约束等；">
 <meta name="keywords" content="数据库,PostgreSQL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PostgreSQL介绍">
 <meta property="og:url" content="http://yoursite.com/2019/08/database/PostgreSql/20190809_数据表的基本操作/index.html">
 <meta property="og:site_name" content="崔永华的个人网站">
-<meta property="og:description" content="创建数据表下面的案例是如何添加主键约束，外键约束，唯一约束，非空约束，默认约束等； 1.使用主键约束：有单字段主键，多字段联合主键；【例1】定义数据表tb_emp1，假设表中间没有主键id，为了唯一确定一个员工，可以把name、deptId联合起来做为主键，SQL语句如下：1234567CREATE TABLE tb_emp1 (name VARCHAR(25),deptId INT,salary">
+<meta property="og:description" content="创建数据表下面的案例是如何添加主键约束，外键约束，唯一约束，非空约束，默认约束等；">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-10-15T09:59:07.839Z">
+<meta property="og:updated_time" content="2020-10-17T03:16:21.504Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PostgreSQL介绍">
-<meta name="twitter:description" content="创建数据表下面的案例是如何添加主键约束，外键约束，唯一约束，非空约束，默认约束等； 1.使用主键约束：有单字段主键，多字段联合主键；【例1】定义数据表tb_emp1，假设表中间没有主键id，为了唯一确定一个员工，可以把name、deptId联合起来做为主键，SQL语句如下：1234567CREATE TABLE tb_emp1 (name VARCHAR(25),deptId INT,salary">
+<meta name="twitter:description" content="创建数据表下面的案例是如何添加主键约束，外键约束，唯一约束，非空约束，默认约束等；">
 
 
 
@@ -417,6 +417,7 @@
 
       
         <h4 id="创建数据表"><a href="#创建数据表" class="headerlink" title="创建数据表"></a>创建数据表</h4><p>下面的案例是如何添加主键约束，外键约束，唯一约束，非空约束，默认约束等；</p>
+<a id="more"></a>
 <p>1.使用主键约束：有单字段主键，多字段联合主键；<br>【例1】定义数据表tb_emp1，假设表中间没有主键id，为了唯一确定一个员工，可以把name、deptId联合起来做为主键，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tb_emp1</span><br><span class="line"> (</span><br><span class="line"><span class="keyword">name</span> <span class="built_in">VARCHAR</span>(<span class="number">25</span>),</span><br><span class="line">deptId <span class="built_in">INT</span>,</span><br><span class="line">salary <span class="built_in">FLOAT</span>,</span><br><span class="line">PRIMARY <span class="keyword">KEY</span>(<span class="keyword">name</span>,deptId)</span><br><span class="line">);</span><br></pre></td></tr></table></figure></p>
 <p>2.使用外键约束：<br>【例2】创建一个部门表tb_dept1，名称不能为空，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tb_dept2</span><br><span class="line">(</span><br><span class="line"><span class="keyword">id</span>       <span class="built_in">int</span> PRIMARY <span class="keyword">KEY</span>,</span><br><span class="line"><span class="keyword">name</span>    <span class="built_in">VARCHAR</span>(<span class="number">22</span>)  <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">location  <span class="built_in">VARCHAR</span>(<span class="number">50</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure></p>
 <p>定义数据表tb_emp2，让它的键deptId作为外键关联到tb_dept2的主键id，SQL语句为：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> tb_emp2 </span><br><span class="line">(</span><br><span class="line"><span class="keyword">id</span>      <span class="built_in">INT</span> PRIMARY <span class="keyword">KEY</span>,</span><br><span class="line"><span class="keyword">name</span>   <span class="built_in">VARCHAR</span>(<span class="number">25</span>),</span><br><span class="line">deptId  <span class="built_in">INT</span>, </span><br><span class="line">salary   <span class="built_in">FLOAT</span>,</span><br><span class="line"><span class="keyword">CONSTRAINT</span> fk_emp_dept2 <span class="keyword">FOREIGN</span> <span class="keyword">KEY</span>(deptId) <span class="keyword">REFERENCES</span> tb_dept1(<span class="keyword">id</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure></p>
@@ -497,8 +498,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/07/python/spider/百度图片爬虫/" rel="next" title="爬取百度图片并把图片存到本地">
-                <i class="fa fa-chevron-left"></i> 爬取百度图片并把图片存到本地
+              <a href="/2019/08/database/PostgreSql/20190806_postgresql介绍/" rel="next" title="PostgreSQL介绍">
+                <i class="fa fa-chevron-left"></i> PostgreSQL介绍
               </a>
             
           </div>
@@ -507,8 +508,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/08/database/PostgreSql/20190806_postgresql介绍/" rel="prev" title="PostgreSQL介绍">
-                PostgreSQL介绍 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/08/database/PostgreSql/20190807_安装和配置/" rel="prev" title="PostgreSQL：二. PostgreSQL 11 的安装与配置">
+                PostgreSQL：二. PostgreSQL 11 的安装与配置 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -624,7 +625,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

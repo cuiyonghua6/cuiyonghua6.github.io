@@ -90,18 +90,18 @@
 
 
 
-<meta name="description" content="数据库基础数据库（DataBase，DB）是一个长期存储在计算机内的、有组织的、有共享的、统一管理的数据集合。它是一个按数据结构来存储和管理数据的计算机软件系统。即数据库包含两层含义：保管数据的“仓库”以及数据管理的方法和技术。 数据库的特点包括：  实现数据共享，减少数据冗余 采用特定的数据类型； 具有较高的数据独立性； 具有统一的数据控制功能。  表：在关系数据库中，数据库表是一系列二维数组的">
+<meta name="description" content="数据库基础数据库（DataBase，DB）是一个长期存储在计算机内的、有组织的、有共享的、统一管理的数据集合。它是一个按数据结构来存储和管理数据的计算机软件系统。即数据库包含两层含义：保管数据的“仓库”以及数据管理的方法和技术。 数据库的特点包括：  实现数据共享，减少数据冗余 采用特定的数据类型； 具有较高的数据独立性； 具有统一的数据控制功能。">
 <meta name="keywords" content="数据库,PostgreSQL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PostgreSQL介绍">
 <meta property="og:url" content="http://yoursite.com/2019/08/database/PostgreSql/20190806_postgresql介绍/index.html">
 <meta property="og:site_name" content="崔永华的个人网站">
-<meta property="og:description" content="数据库基础数据库（DataBase，DB）是一个长期存储在计算机内的、有组织的、有共享的、统一管理的数据集合。它是一个按数据结构来存储和管理数据的计算机软件系统。即数据库包含两层含义：保管数据的“仓库”以及数据管理的方法和技术。 数据库的特点包括：  实现数据共享，减少数据冗余 采用特定的数据类型； 具有较高的数据独立性； 具有统一的数据控制功能。  表：在关系数据库中，数据库表是一系列二维数组的">
+<meta property="og:description" content="数据库基础数据库（DataBase，DB）是一个长期存储在计算机内的、有组织的、有共享的、统一管理的数据集合。它是一个按数据结构来存储和管理数据的计算机软件系统。即数据库包含两层含义：保管数据的“仓库”以及数据管理的方法和技术。 数据库的特点包括：  实现数据共享，减少数据冗余 采用特定的数据类型； 具有较高的数据独立性； 具有统一的数据控制功能。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-10-10T08:07:01.377Z">
+<meta property="og:updated_time" content="2020-10-17T03:15:52.628Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PostgreSQL介绍">
-<meta name="twitter:description" content="数据库基础数据库（DataBase，DB）是一个长期存储在计算机内的、有组织的、有共享的、统一管理的数据集合。它是一个按数据结构来存储和管理数据的计算机软件系统。即数据库包含两层含义：保管数据的“仓库”以及数据管理的方法和技术。 数据库的特点包括：  实现数据共享，减少数据冗余 采用特定的数据类型； 具有较高的数据独立性； 具有统一的数据控制功能。  表：在关系数据库中，数据库表是一系列二维数组的">
+<meta name="twitter:description" content="数据库基础数据库（DataBase，DB）是一个长期存储在计算机内的、有组织的、有共享的、统一管理的数据集合。它是一个按数据结构来存储和管理数据的计算机软件系统。即数据库包含两层含义：保管数据的“仓库”以及数据管理的方法和技术。 数据库的特点包括：  实现数据共享，减少数据冗余 采用特定的数据类型； 具有较高的数据独立性； 具有统一的数据控制功能。">
 
 
 
@@ -424,6 +424,7 @@
 <li>具有较高的数据独立性；</li>
 <li>具有统一的数据控制功能。</li>
 </ul>
+<a id="more"></a>
 <p>表：在关系数据库中，数据库表是一系列二维数组的集合，用来存储数据和操作数据的逻辑结构。它由纵向的列和横向的行组成，行被称为记录，是组织数据的单位；列被称为字段，每一列表示记录的一个属性，都有相应的描述信息，如数据类型、数据宽度等。</p>
 <p>数据类型：决定了数据在计算机中的存储格式，代表不同的信息类型。常用的数据类型有：整数数据类型，浮点数数据类型，精确小数类型，二进制数据类型，日期/时间数据类型，字符串数据类型。</p>
 <p>主键（PRIMARY KEY）又称主码，用于唯一地标识表中得每一条记录。可以定义表中的一列或多列为主键，主键列上没有两行相同的值，也不能为空值。假如，下表给每一个作者分配一个“编号”，该编号作为表数据表的主键，如果出现相同的值，将提示错误，系统不能确定查询的究竟是哪一条记录；如果把作者的“姓名”作为主键，则不能出现重复的名字，这与现实不相符合，因此“姓名”字段不适合做为主键。</p>
@@ -499,8 +500,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/08/database/PostgreSql/20190809_数据表的基本操作/" rel="next" title="PostgreSQL介绍">
-                <i class="fa fa-chevron-left"></i> PostgreSQL介绍
+              <a href="/2019/07/python/spider/百度图片爬虫/" rel="next" title="爬取百度图片并把图片存到本地">
+                <i class="fa fa-chevron-left"></i> 爬取百度图片并把图片存到本地
               </a>
             
           </div>
@@ -509,8 +510,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/08/database/PostgreSql/20190807_安装和配置/" rel="prev" title="PostgreSQL：二. PostgreSQL 11 的安装与配置">
-                PostgreSQL：二. PostgreSQL 11 的安装与配置 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/08/database/PostgreSql/20190809_数据表的基本操作/" rel="prev" title="PostgreSQL介绍">
+                PostgreSQL介绍 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -626,7 +627,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

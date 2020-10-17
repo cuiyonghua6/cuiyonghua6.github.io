@@ -98,7 +98,7 @@
 <meta property="og:site_name" content="崔永华的个人网站">
 <meta property="og:description" content="PostgreSQL提供了多种数据完整性的保证机制，如约束、触发器、约束和锁管理等。 事务管理简介事务是PostgreSQL中的基本工作单元，是用户定义的一个数据库操作序列，这些操作要么全做要么全不做，是一个不可分割的工作单位。 事务的属性：  原子性（Atomic）:事务必须是原子工作单元；对其数据修改，要么全执行，要么全不执行。 一致性（Consistent）:事务在完成时，必须使所有的数据都">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-10-15T12:23:48.969Z">
+<meta property="og:updated_time" content="2020-10-17T03:18:15.364Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PostgreSQL：十二. 事务处理">
 <meta name="twitter:description" content="PostgreSQL提供了多种数据完整性的保证机制，如约束、触发器、约束和锁管理等。 事务管理简介事务是PostgreSQL中的基本工作单元，是用户定义的一个数据库操作序列，这些操作要么全做要么全不做，是一个不可分割的工作单位。 事务的属性：  原子性（Atomic）:事务必须是原子工作单元；对其数据修改，要么全执行，要么全不执行。 一致性（Consistent）:事务在完成时，必须使所有的数据都">
@@ -423,7 +423,8 @@
 <li>原子性（Atomic）:事务必须是原子工作单元；对其数据修改，要么全执行，要么全不执行。</li>
 <li>一致性（Consistent）:事务在完成时，必须使所有的数据都保持一致状态。</li>
 <li>隔离性（Isolated）:由并发事务所做的修改必须与任何其他并发事务所做的修改隔离。</li>
-<li>持久性（Durable）:事务完成之后，它对系统的影响是持久性的。</li>
+<li>持久性（Durable）:事务完成之后，它对系统的影响是持久性的。<a id="more"></a>
+</li>
 </ol>
 <p>【例12.1】向person表插入3条学生记录，此时发现是不应该插入的，进行回滚操作。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">BEGIN</span>;</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> person <span class="keyword">VALUES</span>(<span class="number">1003</span>,<span class="string">'路飞'</span>,<span class="number">80</span>,<span class="string">'10456354'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> person <span class="keyword">VALUES</span>(<span class="number">1004</span>,<span class="string">'张露'</span>,<span class="number">85</span>,<span class="string">'56423424'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> person <span class="keyword">VALUES</span>(<span class="number">1005</span>,<span class="string">'魏波'</span>,<span class="number">70</span>, <span class="string">'41242774'</span>);</span><br><span class="line"><span class="keyword">ROLLBACK</span> <span class="keyword">TRANSACTION</span>;</span><br><span class="line"><span class="keyword">COMMIT</span>;</span><br></pre></td></tr></table></figure></p>
 <p>可以看到执行事务前后表中内容没有变化，这是因为事务撤销了对表的插入操作。</p>
@@ -681,7 +682,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

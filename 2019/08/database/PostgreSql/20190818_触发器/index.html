@@ -90,18 +90,18 @@
 
 
 
-<meta name="description" content="什么是触发器和触发器函数触发器：一个触发器是一种声明，告诉数据库应该在执行特定的操作时执行特定的函数。 触发器函数：是指一个没有参数并且返回trigger类型的函数。 创建触发器【例11.1】创建一个触发器，使得每次该表有新数据insert时，其中的一个时间字段uptime自动变更为当前时间。首先创建一个用于测试的数据表，SQL语句如下：1CREATE TABLE timedb (uid INTE">
+<meta name="description" content="什么是触发器和触发器函数触发器：一个触发器是一种声明，告诉数据库应该在执行特定的操作时执行特定的函数。 触发器函数：是指一个没有参数并且返回trigger类型的函数。">
 <meta name="keywords" content="数据库,PostgreSQL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PostgreSQL：十一. 触发器">
 <meta property="og:url" content="http://yoursite.com/2019/08/database/PostgreSql/20190818_触发器/index.html">
 <meta property="og:site_name" content="崔永华的个人网站">
-<meta property="og:description" content="什么是触发器和触发器函数触发器：一个触发器是一种声明，告诉数据库应该在执行特定的操作时执行特定的函数。 触发器函数：是指一个没有参数并且返回trigger类型的函数。 创建触发器【例11.1】创建一个触发器，使得每次该表有新数据insert时，其中的一个时间字段uptime自动变更为当前时间。首先创建一个用于测试的数据表，SQL语句如下：1CREATE TABLE timedb (uid INTE">
+<meta property="og:description" content="什么是触发器和触发器函数触发器：一个触发器是一种声明，告诉数据库应该在执行特定的操作时执行特定的函数。 触发器函数：是指一个没有参数并且返回trigger类型的函数。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-10-15T12:21:39.577Z">
+<meta property="og:updated_time" content="2020-10-17T03:18:04.928Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PostgreSQL：十一. 触发器">
-<meta name="twitter:description" content="什么是触发器和触发器函数触发器：一个触发器是一种声明，告诉数据库应该在执行特定的操作时执行特定的函数。 触发器函数：是指一个没有参数并且返回trigger类型的函数。 创建触发器【例11.1】创建一个触发器，使得每次该表有新数据insert时，其中的一个时间字段uptime自动变更为当前时间。首先创建一个用于测试的数据表，SQL语句如下：1CREATE TABLE timedb (uid INTE">
+<meta name="twitter:description" content="什么是触发器和触发器函数触发器：一个触发器是一种声明，告诉数据库应该在执行特定的操作时执行特定的函数。 触发器函数：是指一个没有参数并且返回trigger类型的函数。">
 
 
 
@@ -417,7 +417,7 @@
 
       
         <h4 id="什么是触发器和触发器函数"><a href="#什么是触发器和触发器函数" class="headerlink" title="什么是触发器和触发器函数"></a>什么是触发器和触发器函数</h4><p>触发器：一个触发器是一种声明，告诉数据库应该在执行特定的操作时执行特定的函数。</p>
-<p>触发器函数：是指一个没有参数并且返回trigger类型的函数。</p>
+<p>触发器函数：是指一个没有参数并且返回trigger类型的函数。<br><a id="more"></a></p>
 <h4 id="创建触发器"><a href="#创建触发器" class="headerlink" title="创建触发器"></a>创建触发器</h4><p>【例11.1】创建一个触发器，使得每次该表有新数据insert时，其中的一个时间字段uptime自动变更为当前时间。<br>首先创建一个用于测试的数据表，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> timedb (uid <span class="built_in">INTEGER</span>,gid <span class="built_in">INTEGER</span>,uptime <span class="built_in">timestamp</span> <span class="keyword">with</span> <span class="built_in">time</span> zone);</span><br></pre></td></tr></table></figure></p>
 <p>创建一个自定义触发器函数，此函数的主要是为了更新当前时间。创建的SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span>  <span class="keyword">FUNCTION</span> func_timedb() <span class="keyword">RETURNS</span> <span class="keyword">trigger</span> <span class="keyword">AS</span> $func_timedb$ </span><br><span class="line">    <span class="keyword">BEGIN</span></span><br><span class="line">        <span class="keyword">If</span> (TG_OP = <span class="string">'UPDATE'</span>) <span class="keyword">THEN</span></span><br><span class="line">            <span class="keyword">If</span> NEW.uptime = OLD.uptime <span class="keyword">Then</span></span><br><span class="line">                <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">            <span class="keyword">END</span> <span class="keyword">IF</span>;</span><br><span class="line">        <span class="keyword">END</span> <span class="keyword">IF</span>;</span><br><span class="line">        <span class="keyword">update</span> timedb <span class="keyword">set</span> uptime = <span class="keyword">NOW</span>() <span class="keyword">where</span> uid = NEW.uid <span class="keyword">and</span> gid = NEW.gid;</span><br><span class="line">        return null;</span><br><span class="line">    <span class="keyword">END</span>;</span><br><span class="line">$func_timedb$ LANGUAGE plpgsql;</span><br></pre></td></tr></table></figure></p>
 <p>创建触发器，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TRIGGER</span> timedb _updateTime <span class="keyword">AFTER</span> <span class="keyword">INSERT</span> <span class="keyword">ON</span> timedb</span><br><span class="line">    <span class="keyword">FOR</span> <span class="keyword">EACH</span> <span class="keyword">ROW</span> <span class="keyword">EXECUTE</span> <span class="keyword">PROCEDURE</span> func_timedb ();</span><br></pre></td></tr></table></figure></p>
@@ -600,7 +600,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

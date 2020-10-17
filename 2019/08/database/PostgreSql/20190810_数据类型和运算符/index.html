@@ -90,18 +90,18 @@
 
 
 
-<meta name="description" content="PostgreSQL支持多种数据类型，主要有整数类型、浮点数类型、任意精度数值、日期/时间类型、字符串类型、二进制类型、布尔类型和数组类型等。 PostgreSQL数据类型介绍1、数值类型：整数类型、浮点数类型、任意精度类型 1.整数类型整数类型包括：SMALLINT、INT(INTEGER)、BIGINT三种，三者在取值空间和存储范围上有所不同，不同的存储空间也决定了不同的查询效率。应根据实际需">
+<meta name="description" content="PostgreSQL支持多种数据类型，主要有整数类型、浮点数类型、任意精度数值、日期/时间类型、字符串类型、二进制类型、布尔类型和数组类型等。 PostgreSQL数据类型介绍">
 <meta name="keywords" content="数据库,PostgreSQL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PostgreSQL：五. 数据类型和运算符">
 <meta property="og:url" content="http://yoursite.com/2019/08/database/PostgreSql/20190810_数据类型和运算符/index.html">
 <meta property="og:site_name" content="崔永华的个人网站">
-<meta property="og:description" content="PostgreSQL支持多种数据类型，主要有整数类型、浮点数类型、任意精度数值、日期/时间类型、字符串类型、二进制类型、布尔类型和数组类型等。 PostgreSQL数据类型介绍1、数值类型：整数类型、浮点数类型、任意精度类型 1.整数类型整数类型包括：SMALLINT、INT(INTEGER)、BIGINT三种，三者在取值空间和存储范围上有所不同，不同的存储空间也决定了不同的查询效率。应根据实际需">
+<meta property="og:description" content="PostgreSQL支持多种数据类型，主要有整数类型、浮点数类型、任意精度数值、日期/时间类型、字符串类型、二进制类型、布尔类型和数组类型等。 PostgreSQL数据类型介绍">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-10-15T12:06:58.415Z">
+<meta property="og:updated_time" content="2020-10-17T03:16:33.569Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PostgreSQL：五. 数据类型和运算符">
-<meta name="twitter:description" content="PostgreSQL支持多种数据类型，主要有整数类型、浮点数类型、任意精度数值、日期/时间类型、字符串类型、二进制类型、布尔类型和数组类型等。 PostgreSQL数据类型介绍1、数值类型：整数类型、浮点数类型、任意精度类型 1.整数类型整数类型包括：SMALLINT、INT(INTEGER)、BIGINT三种，三者在取值空间和存储范围上有所不同，不同的存储空间也决定了不同的查询效率。应根据实际需">
+<meta name="twitter:description" content="PostgreSQL支持多种数据类型，主要有整数类型、浮点数类型、任意精度数值、日期/时间类型、字符串类型、二进制类型、布尔类型和数组类型等。 PostgreSQL数据类型介绍">
 
 
 
@@ -417,7 +417,8 @@
 
       
         <p>PostgreSQL支持多种数据类型，主要有整数类型、浮点数类型、任意精度数值、日期/时间类型、字符串类型、二进制类型、布尔类型和数组类型等。</p>
-<h4 id="PostgreSQL数据类型介绍"><a href="#PostgreSQL数据类型介绍" class="headerlink" title="PostgreSQL数据类型介绍"></a>PostgreSQL数据类型介绍</h4><p>1、数值类型：整数类型、浮点数类型、任意精度类型</p>
+<h4 id="PostgreSQL数据类型介绍"><a href="#PostgreSQL数据类型介绍" class="headerlink" title="PostgreSQL数据类型介绍"></a>PostgreSQL数据类型介绍</h4><a id="more"></a>
+<p>1、数值类型：整数类型、浮点数类型、任意精度类型</p>
 <p>1.整数类型<br>整数类型包括：SMALLINT、INT(INTEGER)、BIGINT三种，三者在取值空间和存储范围上有所不同，不同的存储空间也决定了不同的查询效率。应根据实际需要选择最适合的类型，以在查询效率和存储空间上有所平衡。</p>
 <p>2.浮点数类型<br>实际工作中很多地方需要用到带小数的数值，PostgreSQL使用浮点数来表示小数。浮点数类型有两种：REAL和DOUBLE PRECISION。PostgreSQL也支持使用标准的SQL语法，即：float和float(p)来声明非精确的数值类型，p表示可接受的精度。REAL类型对应float(1)~float(24)，DOUBLE PRECISION对应float(25)~float(53)，未声明精度时将被当作DOUBLE PRECISION处理。</p>
 <p>3.任意精度类型<br>NUMERIC表示任意精度类型，PostgreSQL中任意精度类型可存储最多1000位精度的数字并且准确地进行计算，非常适合用于货币金额和其它要求计算准确的数据，但是，NUMERIC类型的运算速度要比整数类型或者浮点数类型要慢很多。使用格式为：NUMERIC(M,N)。其中，M称为精度，表示总位数；N称为标度，表示小数位。M和N决定了NUMERIC的取值范围，当用户数据的精度超出指定精度时，会进行四舍五入处理。</p>
@@ -915,7 +916,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

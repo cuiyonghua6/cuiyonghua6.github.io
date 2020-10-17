@@ -415,28 +415,17 @@
 
       
         
-          
-            <h4 id="类名要求："><a href="#类名要求：" class="headerlink" title="类名要求："></a>类名要求：</h4><ul>
+          <h4 id="类名要求："><a href="#类名要求：" class="headerlink" title="类名要求："></a>类名要求：</h4><ul>
 <li>类名必须以英文字母开头，后接字母，数字和下划线的组合</li>
 <li>习惯以大写字母开头</li>
 </ul>
-<h4 id="常量："><a href="#常量：" class="headerlink" title="常量："></a>常量：</h4><ul>
-<li>定义变量的时候，如果加上final修饰符，这个变量就变成了常量：</li>
-<li>常量在定义时进行初始化后就不可再次赋值，再次赋值会导致编译错误。</li>
-<li>常量名通常全部大写。</li>
-</ul>
-<p>在Java中，数据类型分为两种：基本类型的变量和引用类型的变量（所有class和interface类型，引用类型可以赋值为null，表示空，但基本类型不能赋值为null）。</p>
-<p>基本数据类型是CPU可以直接进行运算的类型。Java定义了以下几种基本数据类型：</p>
-<ul>
-<li>整数类型：byte(1字节)，short(2字节)，int(4字节)，long(8字节)</li>
-<li>浮点数类型：float(4字节)，double(8字节)</li>
-<li>字符类型：char(2字节)</li>
-<li>布尔类型：boolean(Java语言对布尔类型的存储并没有做规定，因为理论上存储布尔类型只需要1 bit，但是通常JVM内部会把boolean表示为4字节整数。)</li>
-</ul>
-<p>Java定义的这些基本数据类型有什么区别呢？要了解这些区别，我们就必须简单了解一下计算机内存的基本结构。<br>计算机内存的最小存储单元是字节（byte），一个字节就是一个8位二进制数，即8个bit。它的二进制表示范围从00000000~11111111，换算成十进制是0~255，换算成十六进制是00~ff。内存单元从0开始编号，称为内存地址。每个内存单元可以看作一间房间，内存地址就是门牌号。一个字节是1byte，1024字节是1K，1024K是1M，1024M是1G，1024G是1T。</p>
-<h4 id="变量的定义示例代码："><a href="#变量的定义示例代码：" class="headerlink" title="变量的定义示例代码："></a>变量的定义示例代码：</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.company;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 定义整型</span></span><br><span class="line">        <span class="comment">// 特别注意：同一个数的不同进制的表示是完全相同的，例如15=0xf＝0b1111。</span></span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">2147483647</span>;</span><br><span class="line">        <span class="keyword">int</span> i2 = -<span class="number">2147483648</span>;</span><br><span class="line">        <span class="keyword">int</span> i3 = <span class="number">2_000_000_000</span>; <span class="comment">// 加下划线更容易识别</span></span><br><span class="line">        <span class="keyword">int</span> i4 = <span class="number">0xff0000</span>; <span class="comment">// 十六进制表示的16711680</span></span><br><span class="line">        <span class="keyword">int</span> i5 = <span class="number">0b1000000000</span>; <span class="comment">// 二进制表示的512</span></span><br><span class="line">        <span class="keyword">long</span> l = <span class="number">9000000000000000000L</span>; <span class="comment">// long型的结尾需要加L</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 定义浮点型</span></span><br><span class="line">        <span class="comment">// 浮点数可表示的范围非常大，float类型可最大表示3.4x1038，而double类型可最大表示1.79x10308。</span></span><br><span class="line">        <span class="keyword">float</span> f1 = <span class="number">3.14f</span>; <span class="comment">// 对于float类型，需要加上f后缀。</span></span><br><span class="line">        <span class="keyword">float</span> f2 = <span class="number">3.14e38f</span>; <span class="comment">// 科学计数法表示的3.14x10^38</span></span><br><span class="line">        <span class="keyword">double</span> d = <span class="number">1.79e308</span>;</span><br><span class="line">        <span class="keyword">double</span> d2 = -<span class="number">1.79e308</span>;</span><br><span class="line">        <span class="keyword">double</span> d3 = <span class="number">4.9e-324</span>; <span class="comment">// 科学计数法表示的4.9x10^-324</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 定义boolean型</span></span><br><span class="line">        <span class="keyword">boolean</span> b1 = <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">boolean</span> b2 = <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">boolean</span> isGreater = <span class="number">5</span> &gt; <span class="number">3</span>; <span class="comment">// 计算结果为true</span></span><br><span class="line">        <span class="keyword">int</span> age = <span class="number">12</span>;</span><br><span class="line">        <span class="keyword">boolean</span> isAdult = age &gt;= <span class="number">18</span>; <span class="comment">// 计算结果为false</span></span><br><span class="line">        <span class="keyword">boolean</span> isTeenager = age &gt;<span class="number">6</span> &amp;&amp; age &lt;<span class="number">18</span>; <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 字符类型char表示一个字符。Java的char类型除了可表示标准的ASCII外，还可以表示一个Unicode字符</span></span><br><span class="line">        <span class="comment">// 注意char类型使用单引号'，且仅有一个字符，要和双引号"的字符串类型区分开</span></span><br><span class="line">        <span class="keyword">char</span> a = <span class="string">'A'</span>;</span><br><span class="line">        <span class="keyword">char</span> zh = <span class="string">'中'</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 常量</span></span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">double</span> PI = <span class="number">3.14</span>; <span class="comment">// PI是一个常量</span></span><br><span class="line">        <span class="keyword">double</span> r = <span class="number">5.0</span>;</span><br><span class="line">        <span class="keyword">double</span> area = PI * r * r;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/java/java基础/2017422_变量和数据类型/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -587,86 +576,17 @@
 
       
         
-          
-            <h4 id="java介绍"><a href="#java介绍" class="headerlink" title="java介绍"></a>java介绍</h4><p>Java最早是由SUN公司（已被Oracle收购）的詹姆斯·高斯林（高司令，人称Java之父）在上个世纪90年代初开发的一种编程语言。<br>java的运行机制：Java是将代码编译成一种“字节码”，它类似于抽象的CPU指令，然后，针对不同平台编写虚拟机，不同平台的虚拟机负责加载字节码并执行，这样就实现了“一次编写，到处运行”的效果。</p>
-<p>从互联网到企业平台，Java是应用最广泛的编程语言，原因在于：</p>
-<ul>
-<li>Java是基于JVM虚拟机的跨平台语言，一次编写，到处运行；</li>
-<li>Java程序易于编写，而且有内置垃圾收集，不必考虑内存管理；</li>
-<li>Java虚拟机拥有工业级的稳定性和高度优化的性能，且经过了长时期的考验；</li>
-<li>Java拥有最广泛的开源社区支持，各种高质量组件随时可用。</li>
-</ul>
-<p>Java语言常年霸占着三大市场：</p>
-<ul>
-<li>互联网和企业应用，这是Java EE的长期优势和市场地位；</li>
-<li>大数据平台，主要有Hadoop、Spark、Flink等，他们都是Java或Scala（一种运行于JVM的编程语言）开发的；</li>
-<li>Android移动平台。</li>
-</ul>
-<p>这意味着Java拥有最广泛的就业市场。随着Java的发展，SUN给Java又分出了三个不同版本：</p>
-<ul>
-<li>Java ME：Micro Edition，一个针对嵌入式设备的“瘦身版”，Java SE的标准库无法在Java ME上使用；</li>
-<li>Java SE：Standard Edition， 标准版，包含标准的JVM和标准库；</li>
-<li>Java EE：Enterprise Edition，在Java SE的基础上加上了大量的API和库，以便方便开发Web应用、数据库、消息服务等。我们熟悉的Spring等框架都是Java EE开源生态系统的一部分。</li>
-</ul>
-<p>因此我们推荐的Java学习路线图如下：</p>
-<ol>
-<li>首先要学习Java SE，掌握Java语言本身、Java核心开发技术以及Java标准库的使用；</li>
-<li>如果继续学习Java EE，那么Spring框架、数据库开发、分布式架构就是需要学习的；</li>
-<li>如果要学习大数据开发，那么Hadoop、Spark、Flink这些大数据平台就是需要学习的，他们都基于Java或Scala开发；</li>
-<li>如果想要学习移动开发，那么就深入Android平台，掌握Android App开发。</li>
-</ol>
-<p>无论怎么选择，Java SE的核心技术是基础，这个教程的目的就是让你完全精通Java SE！</p>
-<p>java名词解释：</p>
-<ul>
-<li>JDK：Java Development Kit：JDK除了包含JRE，还提供了编译器、调试器等开发工具。</li>
-<li>JRE：Java Runtime Environment：运行Java字节码的虚拟机。（包括JVM + Runtime library）</li>
-<li>JSR规范：Java Specification Request：为了保证Java语言的规范性，SUN公司搞了一个JSR规范，凡是想给Java平台加一个功能，比如说访问数据库的功能，大家要先创建一个JSR规范，定义好接口，这样，各个数据库厂商都按照规范写出Java驱动程序，开发者就不用担心自己写的数据库代码在MySQL上能跑，却不能跑在PostgreSQL上。</li>
-<li>JCP组织：Java Community Process：JSR是一系列的规范，从JVM的内存模型到Web程序接口，全部都标准化了。而负责审核JSR的组织就是JCP。</li>
-</ul>
-<h4 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h4><p>首先到官网下载jdk：<a href="https://www.oracle.com/java/technologies/javase-jdk14-downloads.html" target="_blank" rel="noopener">https://www.oracle.com/java/technologies/javase-jdk14-downloads.html</a>，然后安装；<br>安装完JDK后，需要设置一个JAVA_HOME的环境变量，它指向JDK的安装目录。在Windows下，它是安装目录，类似：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Program Files\Java\jdk-14</span><br></pre></td></tr></table></figure></p>
-<p>然后，把JAVA_HOME的bin目录附加到系统环境变量PATH上。在Windows下，它长这样：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Path=%JAVA_HOME%\bin;&lt;现有的其他路径&gt;</span><br></pre></td></tr></table></figure>
-<p>在Mac下，它在~/.bash_profile或~/.zprofile里，它是：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=`/usr/libexec/java_home -v 14`</span><br><span class="line">export PATH=$JAVA_HOME/bin:$PATH</span><br></pre></td></tr></table></figure>
-<p>把JAVA_HOME的bin目录添加到PATH中是为了在任意文件夹下都可以运行java。打开命令提示符窗口，输入命令java -version，可以看到java的版本，则jdk安装正常。<br>细心的童鞋还可以在JAVA_HOME的bin目录下找到很多可执行文件：</p>
-<ul>
-<li>java：这个可执行程序其实就是JVM，运行Java程序，就是启动JVM，然后让JVM执行指定的编译后的代码；</li>
-<li>javac：这是Java的编译器，它用于把Java源码文件（以.java后缀结尾）编译为Java字节码文件（以.class后缀结尾）；</li>
-<li>jar：用于把一组.class文件打包成一个.jar文件，便于发布；</li>
-<li>javadoc：用于从Java源码中自动提取注释并生成文档；</li>
-<li>jdb：Java调试器，用于开发阶段的运行调试。</li>
-</ul>
-<p>java程序的运行：<br>一个Java源码只能定义一个public类型的class，并且class名称和文件名要完全一致；</p>
-<p>使用javac可以将.java源码编译成.class字节码（使用命令：javac Hello.java）；</p>
-<p>使用java可以运行一个已编译的Java程序，参数是类名（使用命令：java Hello）。</p>
-<h4 id="java编译原理"><a href="#java编译原理" class="headerlink" title="java编译原理"></a>java编译原理</h4><p>作用是把java程序编写的类和接口编译成字节代码的class文件<br>而java命令程序则是一个解释器，它的作用是把编译后生成的class文件解释成机器能够识别的机器码，并最终由运行环境中的Runtime对代码进行运行，真正实现我们想要机器完成的工作。从截图的帮助文档中我们看到它要执行的是类，是一个和class文件名字完全相同（大小写也要一样）的类 </p>
-<p>java 命令的作用就是Java虚拟机的作用，虚拟机的功能如下：</p>
-<ul>
-<li>通过 ClassLoader 寻找和装载 class 文件</li>
-<li>解释字节码成为指令并执行，提供 class 文件的运行环境</li>
-<li>进行运行期间垃圾回收</li>
-<li>提供与硬件交互的平台</li>
-</ul>
-<h4 id="使用IDE"><a href="#使用IDE" class="headerlink" title="使用IDE"></a>使用IDE</h4><p>IDE是集成开发环境：Integrated Development Environment的缩写。<br>使用IDE的好处在于按，可以把编写代码、组织项目、编译、运行、调试等放到一个环境中运行，能极大地提高开发效率。IDE提升开发效率主要靠以下几点：</p>
-<ul>
-<li>编辑器的自动提示，可以大大提高敲代码的速度；</li>
-<li>代码修改后可以自动重新编译，并直接运行；</li>
-<li>可以方便地进行断点调试。</li>
-</ul>
-<p>目前，流行的用于Java开发的IDE有：</p>
-<ol>
-<li><p>Eclipse：Eclipse是由IBM开发并捐赠给开源社区的一个IDE，也是目前应用最广泛的IDE。Eclipse的特点是它本身是Java开发的，并且基于插件结构，即使是对Java开发的支持也是通过插件JDT实现的。<br>除了用于Java开发，Eclipse配合插件也可以作为C/C++开发环境、PHP开发环境、Rust开发环境等。</p>
-</li>
-<li><p>IntelliJ Idea：IntelliJ Idea是由JetBrains公司开发的一个功能强大的IDE，分为免费版和商用付费版。JetBrains公司的IDE平台也是基于IDE平台+语言插件的模式，支持Python开发环境、Ruby开发环境、PHP开发环境等，这些开发环境也分为免费版和付费版。</p>
-</li>
-<li><p>NetBeans：NetBeans是最早由SUN开发的开源IDE，由于使用人数较少，目前已不再流行。</p>
-</li>
-</ol>
-
-          
+          <h4 id="java介绍"><a href="#java介绍" class="headerlink" title="java介绍"></a>java介绍</h4><p>Java最早是由SUN公司（已被Oracle收购）的詹姆斯·高斯林（高司令，人称Java之父）在上个世纪90年代初开发的一种编程语言。<br>java的运行机制：Java是将代码编译成一种“字节码”，它类似于抽象的CPU指令，然后，针对不同平台编写虚拟机，不同平台的虚拟机负责加载字节码并执行，这样就实现了“一次编写，到处运行”的效果。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/java/java基础/2017421_java基础/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
-    </div>
+    </p></div>
 
     <div>
       
@@ -912,7 +832,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

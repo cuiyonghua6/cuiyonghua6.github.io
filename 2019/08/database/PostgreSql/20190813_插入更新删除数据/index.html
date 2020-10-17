@@ -98,7 +98,7 @@
 <meta property="og:site_name" content="崔永华的个人网站">
 <meta property="og:description" content="插入数据1、为表的所有字段插入数据 执行插入操作之前，使用SELECT语句查看表中的数据：12345678CREATE TABLE person(id INT NOT NULL,name CHAR(40) NOT NULL DEFAULT &apos;&apos;,age INT NOT NULL DEFAULT 0,info CHAR(50) NULL,PRIMARY KEY (id));SELECT * FROM">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-10-15T12:12:06.468Z">
+<meta property="og:updated_time" content="2020-10-17T03:16:52.282Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PostgreSQL：七. 插入，更新与删除数据">
 <meta name="twitter:description" content="插入数据1、为表的所有字段插入数据 执行插入操作之前，使用SELECT语句查看表中的数据：12345678CREATE TABLE person(id INT NOT NULL,name CHAR(40) NOT NULL DEFAULT &apos;&apos;,age INT NOT NULL DEFAULT 0,info CHAR(50) NULL,PRIMARY KEY (id));SELECT * FROM">
@@ -418,6 +418,7 @@
       
         <h4 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h4><p>1、为表的所有字段插入数据</p>
 <p>执行插入操作之前，使用SELECT语句查看表中的数据：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> person(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">INT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="keyword">name</span> <span class="built_in">CHAR</span>(<span class="number">40</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">''</span>,</span><br><span class="line">age <span class="built_in">INT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>,</span><br><span class="line">info <span class="built_in">CHAR</span>(<span class="number">50</span>) <span class="literal">NULL</span>,</span><br><span class="line">PRIMARY <span class="keyword">KEY</span> (<span class="keyword">id</span>)</span><br><span class="line">);</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> person;</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <p>【例7.1】在person表中，插入一条新记录，id值为1，name值为Green，age值为21，info值为lawyer，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> person (<span class="keyword">id</span> ,<span class="keyword">name</span>, age , info) </span><br><span class="line"><span class="keyword">VALUES</span> (<span class="number">1</span>,<span class="string">'Green'</span>, <span class="number">21</span>, <span class="string">'Lawyer'</span>);</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> person;</span><br></pre></td></tr></table></figure></p>
 <p>语句执行完毕，查看执行结果：</p>
 <p>【例7.2】在person表中，插入一条新记录，id值为2，name值为Suse，age值为22，info值为dancer，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> person (age ,<span class="keyword">name</span>, <span class="keyword">id</span> , info)</span><br><span class="line">      <span class="keyword">VALUES</span> (<span class="number">22</span>, <span class="string">'Suse'</span>, <span class="number">2</span>, <span class="string">'dancer'</span>);</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> person;</span><br></pre></td></tr></table></figure></p>
@@ -608,7 +609,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
