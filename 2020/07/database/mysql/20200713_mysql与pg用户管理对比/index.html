@@ -1,0 +1,1066 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="数据库,PostgreSQL,MySQL,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="原表为： 执行sql语句：">
+<meta name="keywords" content="数据库,PostgreSQL,MySQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL用户管理与PostgreSQL用户管理的对比">
+<meta property="og:url" content="http://yoursite.com/2020/07/database/mysql/20200713_mysql与pg用户管理对比/index.html">
+<meta property="og:site_name" content="崔永华的个人网站">
+<meta property="og:description" content="原表为： 执行sql语句：">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190927194903520.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N1aV95b25naHVh,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2020-10-19T03:58:08.154Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL用户管理与PostgreSQL用户管理的对比">
+<meta name="twitter:description" content="原表为： 执行sql语句：">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190927194903520.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N1aV95b25naHVh,size_16,color_FFFFFF,t_70">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/07/database/mysql/20200713_mysql与pg用户管理对比/">
+
+
+
+
+
+  <title> MySQL用户管理与PostgreSQL用户管理的对比 | 崔永华的个人网站 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">崔永华的个人网站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/database/mysql/20200713_mysql与pg用户管理对比/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="崔永华（Andy）">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="崔永华的个人网站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                MySQL用户管理与PostgreSQL用户管理的对比
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-13T15:24:20+08:00">
+                2020-07-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据库/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据库/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">被围观
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>原表为：<br><img src="https://img-blog.csdnimg.cn/20190927194903520.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N1aV95b25naHVh,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>执行sql语句：<br><a id="more"></a></p>
+<h3 id="一-MySQL用户管理"><a href="#一-MySQL用户管理" class="headerlink" title="一. MySQL用户管理"></a>一. MySQL用户管理</h3><p>【例1.1】使用root用户登录到本地mysql服务器的test库中<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -p -hlocalhost test</span><br></pre></td></tr></table></figure></p>
+<p>【例1.2】使用root用户登录到本地mysql服务器的test库中，执行一条查询语句<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -p -hlocalhost test -e "DESC person;"</span><br></pre></td></tr></table></figure></p>
+<p>【例1.3】使用CREATE USER创建一个用户，用户名是jeffrey，密码是mypass，主机名是localhost<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="string">'jeffrey'</span>@<span class="string">'localhost'</span> <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="string">'mypass'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>【例1.4】使用GRANT语句创建一个新的用户testUser，密码为testpwd。用户 testUser对所有的数据有查询和更新权限，并授于对所有数据表的SELECT和UPDATE权限<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GRANT</span> <span class="keyword">SELECT</span>,<span class="keyword">UPDATE</span>  <span class="keyword">ON</span> *.* <span class="keyword">TO</span> <span class="string">'testUser'</span>@<span class="string">'localhost'</span> <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="string">'testpwd'</span>;    <span class="comment">/*创建账户并授予权限*/</span></span><br><span class="line"><span class="keyword">SELECT</span> Host,<span class="keyword">User</span>,Select_priv,Update_priv, <span class="keyword">FROM</span> mysql.user <span class="keyword">where</span> <span class="keyword">user</span>=<span class="string">'testUser'</span>;  <span class="comment">/*查看账户权限信息*/</span></span><br></pre></td></tr></table></figure></p>
+<p>【例1.5】使用INSERT创建一个新账户，其用户名称为customer1，主机名称为localhost，密码为customer1：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="keyword">user</span> (Host,<span class="keyword">User</span>,<span class="keyword">Password</span>) <span class="keyword">VALUES</span>(<span class="string">'localhost'</span>,<span class="string">'customer1'</span>,<span class="keyword">PASSWORD</span>(<span class="string">'customer1'</span>));</span><br></pre></td></tr></table></figure></p>
+<p>【例1.6】使用DROP USER删除用户‘jeffrey‘@’localhost’<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">USER</span> <span class="string">'jeffrey'</span>@<span class="string">'localhost'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>【例1.7】使用DELETE删除用户‘customer1‘@’localhost’<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> mysql.user <span class="keyword">WHERE</span> host=<span class="string">'localhost'</span> <span class="keyword">and</span> <span class="keyword">user</span>=<span class="string">'customer1'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>【例1.8】使用mysqladmin将root用户的密码修改为“rootpwd”<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqladmin -u root -p password "123456"</span><br></pre></td></tr></table></figure></p>
+<p>【例1.9】使用UPDATE语句将root用户的密码修改为“rootpwd2”：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> mysql.user <span class="keyword">set</span> <span class="keyword">Password</span>=<span class="keyword">password</span>(<span class="string">"rootpwd2"</span>)</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">User</span>=<span class="string">"root"</span> <span class="keyword">and</span> Host=<span class="string">"localhost"</span>;</span><br></pre></td></tr></table></figure></p>
+<p>【例1.10】使用SET语句将root用户的密码修改为“rootpwd3”：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> <span class="keyword">PASSWORD</span>=<span class="keyword">password</span>(<span class="string">"rootpwd3"</span>);</span><br></pre></td></tr></table></figure></p>
+<p>【例1.11】使用SET语句将testUser用户的密码修改为“newpwd”：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> <span class="keyword">PASSWORD</span> <span class="keyword">FOR</span> <span class="string">'testUser'</span>@<span class="string">'localhost'</span>=<span class="keyword">password</span>(<span class="string">"newpwd"</span>);</span><br></pre></td></tr></table></figure></p>
+<p>【例1.12】使用UPDATE语句将testUser用户的密码修改为“newpwd2”：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span>   mysql.user <span class="keyword">set</span> <span class="keyword">Password</span>=<span class="keyword">PASSWORD</span>(<span class="string">"newpwd2"</span>)</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">User</span>=<span class="string">"testUser"</span> <span class="keyword">and</span> Host=<span class="string">"localhost"</span>;</span><br></pre></td></tr></table></figure></p>
+<p>【例1.13】使用GRANT语句将testUser用户的密码修改为“newpwd3”：<br>sql</p>
+<p>【例1.14】testUser用户使用SET语句将自身的密码修改为“newpwd4”：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> <span class="keyword">PASSWORD</span> = <span class="keyword">PASSWORD</span>(<span class="string">"newpwd4"</span>);</span><br></pre></td></tr></table></figure></p>
+<p>【例1.15】使用GRANT语句创建一个新的用户grantUser，密码为“grantpwd”。用户grantUser对所有的数据有查询、插入权限，并授于GRANT权限。GRANT语句及其执行结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MySQL&gt; GRANT SELECT,INSERT ON *.* TO &apos;grantUser&apos;@&apos;localhost&apos;  IDENTIFIED BY &apos;grantpwd&apos; WITH GRANT OPTION;</span><br><span class="line">Query OK, 0 rows affected (0.03 sec)</span><br></pre></td></tr></table></figure></p>
+<p>结果显示执行成功，使用SELECT语句查询用户testUser2的权限：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">MySQL&gt; SELECT Host,User,Select_priv,Insert_priv, Grant_priv FROM mysql.user where user=&apos;grantUser&apos;;</span><br><span class="line">+-----------+------------+-------------+--------------+-------------+</span><br><span class="line">| Host    | User    | Select_priv | Insert_priv | Grant_priv |</span><br><span class="line">+-----------+------------+-------------+--------------+--------------+</span><br><span class="line">| localhost | testUser2 | Y        | Y        | Y        |</span><br><span class="line">+-----------+------------+-------------+--------------+--------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+<p>【例1.16】使用REVOKE语句取消用户testUser的更新权限。REVOKE语句及其执行结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MySQL&gt; REVOKE UPDATE ON *.* FROM &apos;testUser&apos;@&apos;localhost&apos;;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+<p>执行结果显示执行成功，使用SELECT语句查询用户test的权限：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MySQL&gt; SELECT Host,User,Select_priv,Update_priv,Grant_priv FROM MySQL.user where user=&apos;testUser&apos;;</span><br></pre></td></tr></table></figure></p>
+<p>【例1.17】使用SHOW GRANTS语句查询用户testUser的权限信息。SHOW GRANTS语句及其执行结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MySQL&gt; SHOW GRANTS FOR &apos;testUser&apos;@&apos;localhost&apos;;</span><br></pre></td></tr></table></figure></p>
+<ol start="2">
+<li>案例操作过程<br>打开MySQL客户端工具，输入登录命令，登录MySQL。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\&gt;mysql -u root -p</span><br><span class="line">Enter password: **</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>输入正确密码，按回车，出现欢迎信息表示登录成功。<br>  选择mysql数据库为当前数据库。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MySQL&gt; use mysql;</span><br><span class="line">Database changed</span><br></pre></td></tr></table></figure></p>
+<p>出现Database changed信息表明切换数据库成功。<br>  创建新账户，用户名称为newAdmin，密码为pw1，允许其从本地主机访问MySQL。<br>使用GRANT语句创建新账户，创建过程如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">MySQL&gt; GRANT SELECT, UPDATE(id, name, age)</span><br><span class="line">    -&gt; ON test_db.person_old</span><br><span class="line">    -&gt; TO &apos;newAdmin&apos;@&apos;localhost&apos; IDENTIFIED BY &apos;pw1&apos;</span><br><span class="line">    -&gt; WITH MAX_CONNECTIONS_PER_HOUR 30;</span><br><span class="line"></span><br><span class="line">SELECT host, user, select_priv, update_priv FROM user WHERE user=&apos;newAdmin&apos;;</span><br><span class="line"></span><br><span class="line">SELECT host, db, user, table_name, table_priv, column_priv </span><br><span class="line">FROM tables_priv WHERE user=&apos;newAdmin&apos;;</span><br><span class="line"></span><br><span class="line">SELECT host, db, user, table_name, column_name, column_priv </span><br><span class="line">FROM columns_priv WHERE user=&apos;newAdmin&apos;;</span><br></pre></td></tr></table></figure></p>
+<p>3条SQL语句的查询结果分别如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">MySQL&gt; SELECT host, user, select_priv, update_priv FROM user WHERE user=&apos;newAdmin&apos;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">MySQL&gt; SELECT host, db, user, table_name, table_priv, column_priv</span><br><span class="line">    -&gt; FROM tables_priv WHERE user=&apos;newAdmin&apos;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">MySQL&gt; SELECT host, db, user, table_name, column_name, column_priv</span><br><span class="line">    -&gt; FROM columns_priv WHERE user=&apos;newAdmin&apos;;</span><br></pre></td></tr></table></figure></p>
+<p>  使用SHOW GRANTS语句查看newAdmin的权限信息。<br>查看newAdmin账户的权限信息，输入语句如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW GRANTS FOR &apos;newAdmin&apos;@&apos;localhost&apos;;</span><br></pre></td></tr></table></figure></p>
+<p>  使用newAdmin用户登录MySQL。<br>退出当前登录，使用EXIT命令，语句如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MySQL&gt; exit</span><br><span class="line">Bye</span><br></pre></td></tr></table></figure></p>
+<p>使用newAdmin账户登录MySQL，语句如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\&gt;MySQL -u newAdmin -p</span><br><span class="line">Enter password: ***</span><br></pre></td></tr></table></figure></p>
+<p>输入密码正确后，出现“mysql&gt;”提示符，登录成功。<br>  使用newAdmin用户查看test_db数据库中person_dd表中的数据。<br>newAdmin用户被授予test数据库中person表中3个字段上的查询权限，因此可以执行SELECT语句查看这几个字段的值，执行过程如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MySQL&gt; SELECT * FROM test_db.person_dd LIMIT 5;</span><br></pre></td></tr></table></figure></p>
+<p>  使用newAdmin用户向person_dd表中插入一条新记录，查看语句执行结果。<br>插入新记录，输入语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> test_db.person_old(<span class="keyword">name</span>, age,info) <span class="keyword">VALUES</span>(<span class="string">'gaga'</span>, <span class="number">30</span>);</span><br></pre></td></tr></table></figure></p>
+<p>执行结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR 1142 (42000): INSERT command denied to user &apos;newAdmin&apos;@&apos;localhost&apos; for table &apos;person&apos;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到，语句不能执行，错误信息表明newAdmin用户不能对person表进行插入操作。因此，用户不可以执行没有被授权的操作语句。<br>  退出当前登录，使用root用户重新登录，收回newAdmin账户的权限。<br>输入退出命令：exit<br>重新以root用户登录MySQL，并选择mysql数据库为当前数据库。<br>输入语句收回newAdmin账户的权限，执行过程如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">REVOKE SELECT, UPDATE ON test.person FROM &apos;newAdmin&apos;@&apos;localhost&apos;;</span><br></pre></td></tr></table></figure></p>
+<p>执行结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MySQL&gt; REVOKE SELECT, UPDATE ON test.person FROM &apos;newAdmin&apos;@&apos;localhost&apos;;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+<p>  删除newAdmin的账户信息。<br>删除指定账户，可以使用DROP USER语句，输入如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP USER &apos;newAdmin&apos;@&apos;localhost&apos;;</span><br></pre></td></tr></table></figure></p>
+<h3 id="二-PostgreSQL用户管理"><a href="#二-PostgreSQL用户管理" class="headerlink" title="二. PostgreSQL用户管理"></a>二. PostgreSQL用户管理</h3><h4 id="组角色管理"><a href="#组角色管理" class="headerlink" title="组角色管理"></a>组角色管理</h4><p>【例2.1】创建一个名称为post2的角色，SQL代码如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">ROLE</span> post2;</span><br></pre></td></tr></table></figure></p>
+<p>【例2.2】查看系统中的角色，SQL代码如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> rolname <span class="keyword">FROM</span> pg_roles;</span><br></pre></td></tr></table></figure></p>
+<p>【例2.3】修改角色post1的名称为post3。SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">ROLE</span> post1 <span class="keyword">RENAME</span> <span class="keyword">TO</span> post3;</span><br></pre></td></tr></table></figure></p>
+<p>【例2.4】删除角色post3。SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">ROLE</span> post3;</span><br></pre></td></tr></table></figure></p>
+<h4 id="角色的各种权限"><a href="#角色的各种权限" class="headerlink" title="角色的各种权限"></a>角色的各种权限</h4><p>1、登录</p>
+<p>【例2.5】创建角色post4，此角色具有登录权限。SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">ROLE</span> post4 LOGIN;</span><br></pre></td></tr></table></figure></p>
+<p>2超级用户</p>
+<p>【例2.6】创建角色post5，此角色具有超级用户权限。SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">ROLE</span> post5 SUPERUSER;</span><br></pre></td></tr></table></figure></p>
+<p>3、创建数据库</p>
+<p>【例2.7】创建角色post6，此角色具有创建数据库权限。SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">ROLE</span> post6 CREATEDB;</span><br></pre></td></tr></table></figure></p>
+<p>4、 创建角色<br>角色要想创建角色，必须明确给出该权限（除了超级用户以外）。一旦角色具有CREATEROLE权限，即可更改和删除其他角色，还可以给其它角色赋予或者撤销成员关系。当然，如果想对超级用户进行操作，仅有此权限还不够，必须拥有SUPERUSER权限。<br>创建具有创建角色权限的角色，SQL语法如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">ROLE</span> <span class="keyword">name</span> CREATEROLE;</span><br></pre></td></tr></table></figure></p>
+<p>【例2.8】创建角色post7，此角色具有创建数据库权限。SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">ROLE</span> post7 CREATEROLE;</span><br></pre></td></tr></table></figure></p>
+<p>5、口令<br>在客户认证方法要求与数据库建立连接时，需要口令权限。常见的认证方法包括password、md5和crypt。<br>创建具有口令权限的角色，SQL语法如下：<br>CREATE ROLE name 口令认证方法  具体口令<br>【例2.9】创建角色post8，此角色具有口令权限。SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">ROLE</span> post8 <span class="keyword">PASSWORD</span> <span class="string">'123456'</span>;</span><br></pre></td></tr></table></figure></p>
+<h4 id="账户管理"><a href="#账户管理" class="headerlink" title="账户管理"></a>账户管理</h4><p>1、创建用户</p>
+<p>【例2.10】创建用户名称为postgre02，并具有创建数据库和创建角色的权限，同时登陆密码为“123456789”。SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> postgre02 <span class="keyword">PASSWORD</span> <span class="string">'123456789'</span> </span><br><span class="line">CREATEDB CREATEROLE  ;</span><br></pre></td></tr></table></figure></p>
+<p>2、删除用户</p>
+<p>【例2.11】使用DROP USER删除账户“postgre02”，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">USER</span> postgre02;</span><br></pre></td></tr></table></figure></p>
+<p>3、修改用户密码</p>
+<p>【例2.12】将账户“postgre01”的密码修改为“123123”，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">USER</span> postgre01 <span class="keyword">PASSWORD</span> <span class="string">'123123'</span>;</span><br></pre></td></tr></table></figure></p>
+<h4 id="组角色和用户角色管理"><a href="#组角色和用户角色管理" class="headerlink" title="组角色和用户角色管理"></a>组角色和用户角色管理</h4><p>1、对组角色授权</p>
+<p>【例2.13】给“post1”角色添加创建数据表和创建角色的权限，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">ROLE</span> post1  CREATEDB CREATEROLE;</span><br></pre></td></tr></table></figure></p>
+<p>2、对用户授权</p>
+<p>【例2.14】给“postgre01”用户添加创建数据表和创建角色的权限，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">USER</span> postgre01  CREATEDB CREATEROLE;</span><br></pre></td></tr></table></figure></p>
+<p>3、收回组角色权限</p>
+<p>【例2.15】将“post1”角色的创建数据表和创建角色权限收回，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">ROLE</span> post1  NOCREATEDB NOCREATEROLE;</span><br></pre></td></tr></table></figure></p>
+<p>4、收回用户权限</p>
+<p>【例2.16】将“postgre01”用户的创建数据表和创建角色权限收回，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">USER</span> postgre01 NOCREATEDB NOCREATEROLE;</span><br></pre></td></tr></table></figure></p>
+<h4 id="数据库权限管理"><a href="#数据库权限管理" class="headerlink" title="数据库权限管理"></a>数据库权限管理</h4><p>1、修改数据库的拥有者</p>
+<p>【例2.17】将“mytest”数据库的所有者修改为post1。SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">DATABASE</span> mytest OWNER <span class="keyword">TO</span> post2;</span><br></pre></td></tr></table></figure></p>
+<p>2、增加用户的数据表权限</p>
+<p>【例2.18】其中ppo1是一个现有的数据表，postgres是一个现有的用户，允许postgres更新ppo1数据表，用下面的命令更新表的权限：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GRANT</span> <span class="keyword">UPDATE</span> <span class="keyword">ON</span> ppo1 <span class="keyword">TO</span> postgres;</span><br></pre></td></tr></table></figure></p>
+<p>如果将上面的语句修改为：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GRANT</span> <span class="keyword">UPDATE</span> <span class="keyword">ON</span> ppo1 <span class="keyword">TO</span> <span class="keyword">PUBLIC</span>;</span><br></pre></td></tr></table></figure></p>
+<p>则表示将数据表ppo1的更新权限赋予系统中的所有角色。<br>如果将上面的语句修改为：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GRANT</span> <span class="keyword">ALL</span> <span class="keyword">ON</span> ppo1 <span class="keyword">TO</span> postgres;</span><br></pre></td></tr></table></figure></p>
+<p>则表示把适用于该对象的所有权限都赋予用户postgres。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据库/" rel="tag"># 数据库</a>
+          
+            <a href="/tags/PostgreSQL/" rel="tag"># PostgreSQL</a>
+          
+            <a href="/tags/MySQL/" rel="tag"># MySQL</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/07/python/spider/scrapy/20200713_ webclient/" rel="next" title="scrapy源码11 - webclient">
+                <i class="fa fa-chevron-left"></i> scrapy源码11 - webclient
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/07/python/spider/scrapy/20200715_ ajaxcrawl/" rel="prev" title="scrapy源码12 - ajaxcrawl">
+                scrapy源码12 - ajaxcrawl <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="崔永华（Andy）">
+          <p class="site-author-name" itemprop="name">崔永华（Andy）</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">113</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/cuiyonghua6" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://blog.csdn.net/cui_yonghua" target="_blank" title="CSDN">
+                  
+                    <i class="fa fa-fw fa-bandcamp"></i>
+                  
+                  CSDN
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/cuiyonghua" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/cuiyonghua" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一-MySQL用户管理"><span class="nav-number">1.</span> <span class="nav-text">一. MySQL用户管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二-PostgreSQL用户管理"><span class="nav-number">2.</span> <span class="nav-text">二. PostgreSQL用户管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#组角色管理"><span class="nav-number">2.1.</span> <span class="nav-text">组角色管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#角色的各种权限"><span class="nav-number">2.2.</span> <span class="nav-text">角色的各种权限</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#账户管理"><span class="nav-number">2.3.</span> <span class="nav-text">账户管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#组角色和用户角色管理"><span class="nav-number">2.4.</span> <span class="nav-text">组角色和用户角色管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据库权限管理"><span class="nav-number">2.5.</span> <span class="nav-text">数据库权限管理</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">崔永华（Andy）</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

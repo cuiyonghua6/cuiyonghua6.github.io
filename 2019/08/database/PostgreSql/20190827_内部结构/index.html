@@ -1,0 +1,1100 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="数据库,PostgreSQL,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="PostgreSQL的内部概述1、查询经过的路径  建立连接 分析器阶段 重写系统 规划器/优化器 执行器阶段">
+<meta name="keywords" content="数据库,PostgreSQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PostgreSQL：十八. 内部结构">
+<meta property="og:url" content="http://yoursite.com/2019/08/database/PostgreSql/20190827_内部结构/index.html">
+<meta property="og:site_name" content="崔永华的个人网站">
+<meta property="og:description" content="PostgreSQL的内部概述1、查询经过的路径  建立连接 分析器阶段 重写系统 规划器/优化器 执行器阶段">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-10-19T03:51:23.233Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PostgreSQL：十八. 内部结构">
+<meta name="twitter:description" content="PostgreSQL的内部概述1、查询经过的路径  建立连接 分析器阶段 重写系统 规划器/优化器 执行器阶段">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/08/database/PostgreSql/20190827_内部结构/">
+
+
+
+
+
+  <title> PostgreSQL：十八. 内部结构 | 崔永华的个人网站 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">崔永华的个人网站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/database/PostgreSql/20190827_内部结构/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="崔永华（Andy）">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="崔永华的个人网站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                PostgreSQL：十八. 内部结构
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-27T15:24:20+08:00">
+                2019-08-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据库/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据库/PostgreSQL/" itemprop="url" rel="index">
+                    <span itemprop="name">PostgreSQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">被围观
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="PostgreSQL的内部概述"><a href="#PostgreSQL的内部概述" class="headerlink" title="PostgreSQL的内部概述"></a>PostgreSQL的内部概述</h4><p>1、查询经过的路径</p>
+<ol>
+<li>建立连接</li>
+<li>分析器阶段</li>
+<li>重写系统</li>
+<li>规划器/优化器</li>
+<li>执行器阶段</li>
+</ol>
+<a id="more"></a>
+<p>2、如何建立连接</p>
+<p>PostgreSQL是用一个简单的“每用户一进程”的client/server模型来实现的。在这种模式里，一个客户端进程只与一个服务器进程连接，由于不知道具体要建立多少个连接，所以不得不利用一个主进程在每次连接请求时都派生出一个新的服务器进程来，这个主进程叫做postgres，它监听着一个特定的TCP/IP端口等待进来的连接。<br>主进程每当检测到一个连接请求时，postgres进程派生出一个新的服务器进程。服务器进程之间使用信号灯和共享内存进行通讯，以确保在并发的数据访问过程中的数据完整性。客户端进程可以是任何理解PostgreSQL协议的程序。<br>应用程序一旦与PostgreSQL服务器建立起来连接，客户端进程就可以向后端（服务器）进程发送查询了。查询是通过纯文本传输的，也就是说在前端（客户端）不做任何分析处理。服务器分析查询，创建执行规划，执行该规划并且通过已经建立起来的连接把检索出来的数据行返回给客户端。</p>
+<p>3、分析器阶段</p>
+<ol>
+<li>分析器<br>分析器必须检查查询字符串的语法。如果语法正确，则创建一个分析树并将其返回，否则，将返回一个错误。实现分析器和词法器使用了著名的Unix工具yacc和lex。</li>
+<li>转换处理<br>分析器阶段只使用与SQL语法结构相关的固定规则来创建分析树。由于分析器不会查找任何系统表，因此它不可能理解请求查询的详细含义。在分析器技术之后，转换处理分析器传过来的分析树，再做进一步的处理，即：解析哪些查询中引用了哪个表、哪个函数、哪个操作符，最后再生成表示这个信息的数据结构，该数据结构就是查询树。</li>
+</ol>
+<p>4、PostgreSQL规则系统</p>
+<p>第一个能用的规则系统采用行级别的处理，是在执行器的深层实现的。每次访问一条独立的行时都要调用规则系统，这个规则在1995年被删除了。<br>第二个规则系统从技术角度来说叫查询重写。重写系统是一个存在于分析器阶段和规划器/优化器之间的一个模块，目前，这个技术仍然存在。</p>
+<p>5、规划器/优化器</p>
+<ol>
+<li>规划器/优化器概述<br>规划器/优化器的任务是创建一个优化了的执行规划。如果可能，查询优化器将检查每个可能的执行规划，最终选择运行最快的执行计划。</li>
+<li>生成可能的规划<br>规划器/优化器通过为扫描查询里出现的每个关系生成规划，可能的规划是由每个关系上由哪些可用的索引决定的。对一个关系总是可以进行一次顺序查找，所以总是会创建只使用顺序查找的规划。假设一个关系上定义着一个索引（例如B-tree索引），并且一条查询包含约束 relation.attribute OPR constant。如果relation.attribute碰巧匹配B-tree索引的关键字，那么将会创建另一个使用B-tree索引扫描该关系的规划。如果还有别的索引，而且查询里面的约束又和那个索引的关键字匹配，则还会生成更多的规划。</li>
+</ol>
+<p>6、执行器</p>
+<p>执行器接受规划器/优化器传过来的查询规划然后递归地处理它，抽取所需要的行集合。它实际上是一个需求拉动地流水线机制。每次调用一个规划节点的时候，它都必须给出更多的一个行，或者汇报它已经完成行的传递。<br>执行器机制用于计算四种基本SQL查询类型，分别是SELECT、INSERT、UPDATE和DELETE。</p>
+<h4 id="PostgreSQL的内部系统表"><a href="#PostgreSQL的内部系统表" class="headerlink" title="PostgreSQL的内部系统表"></a>PostgreSQL的内部系统表</h4><p>1、数据表</p>
+<p>大多数数据表都是在数据库创建的过程中从模版数据库中拷贝过来的，这些表与数据库是相关的。</p>
+<ol>
+<li>pg_aggregate<br>pg_aggregate表用于存储与聚集函数有关的信息。聚集函数是对一个数值集进行操作的函数，它返回从这些值中计算出的一个数值，一般情况下，数值集通常是指每个匹配查询条件的行中的一个字段。</li>
+<li>pg_am<br>pg_am存储有关索引访问方法的信息，系统支持的每种索引访问方法都有一行。</li>
+<li>pg_amop<br>pg_amop表存储有关和索引访问方法操作符类关联的信息。如果一个操作符是一个操作符类中的成员，那么在这个表中会占据一行。</li>
+</ol>
+<p>2、系统视图</p>
+<ol>
+<li>pg_available_extensions<br>pg_available_extensions视图列出了可用于安装的扩展，该视图是只读的。</li>
+<li>pg_cursors<br>pg_cursors列出了当前可用的游标。</li>
+<li>pg_locks<br>pg_locks提供有关在数据库服务器中由打开的事务持有的锁的信息。pg_locks对每个活跃的可锁定对象、请求的锁模式、以及相关的事务保存一行。</li>
+</ol>
+<h4 id="PostgreSQL的内部前端-后端协议"><a href="#PostgreSQL的内部前端-后端协议" class="headerlink" title="PostgreSQL的内部前端/后端协议"></a>PostgreSQL的内部前端/后端协议</h4><p>1、概述</p>
+<p>PostgreSQL为了可以有效地为多个客户端提供服务，服务器为每个客户端派生一个新的“后端”进程。在检测到连接请求后，马上创建一个新的子进程。不过，这些是对协议透明的。对于协议而言，术语“后端”和“服务器”是可以互换的；“前端”和“客户机”也是可以互换的。</p>
+<p>2、消息流</p>
+<p>在PostgreSQL内部，所有通讯都是通过一个消息流进行的。消息的第一个字节标识消息类型，后面的四个字节声明消息剩下部分的长度，这个长度包括长度域自  身，但不包括消息类型字节。剩下的消息内容由消息类型决定。因连接状态的不同，存在几种不同的子协议：启动、查询、函数调用、COPY、结束。还有用于通知响应和命令取消的特殊信息，这些特殊信息可能在启动阶段过后的任何时间产生。</p>
+<p>3、消息数据类型</p>
+<ol>
+<li>Intn(i)<br>一个网络字节顺序的n位整数。如果声明了i，它将会出现确切的值，否则这个数值就是一个变量。</li>
+<li>Intn[k]<br>一个k个n位整数元素的数组，每个都是以网络字节顺序存储的。数组长度k是由消息前面的字段来判断的。<br>3.String(s)<br>一个以零结尾的字符串。</li>
+<li>Byten(c)<br>精确的n字节。如果声明了c那么它是确切的数值。</li>
+</ol>
+<p>4、错误和通知消息字段</p>
+<p>S：表示严重性。<br>C：表示代码。<br>M：表示消息。<br>D：表示细节。<br>H：表示提示。<br>P：表示位置。<br>Q：表示内部查询。<br>W：表示哪里。<br>F：表示文件。<br>L：表示行。<br>R：表示过程。</p>
+<h4 id="PostgreSQL的编码约定"><a href="#PostgreSQL的编码约定" class="headerlink" title="PostgreSQL的编码约定"></a>PostgreSQL的编码约定</h4><p>1、格式</p>
+<p>代码格式使用每个制表符4列的空白，也就是说制表符不被展开为空白。每个逻辑缩进层次都是更多的一个制表符，布局规则遵循BSD传统。<br>src/tools目录包含了适用于Emacs的示范配置文件，文本浏览工具more和less可以用下面命令调用。<br>more -x4<br>less -x4</p>
+<p>2、报告服务器里的错误</p>
+<p>在服务器代码里生成的错误、警告以及日志信息都应该用ereport来创建。每条消息都有两个必须的要素：一个严重级别（范围从DEBUG到PANIC）和一个主要消息文本。除此之外还有可选的元素，最常见的就是一个遵循SQL标准的错误标识码。<br>ereport本身只是一个壳函数，它的存在主要是为了便于让消息生成看起来像C代码里的函数调用。ereport直接接受的唯一参数是严重级别。主消息文本和任何附加消息元素都是通过在ereport里调用辅助函数生成的。</p>
+<p>3、错误消息风格指南</p>
+<ol>
+<li>主信息简短</li>
+<li>格式</li>
+<li>引号</li>
+<li>使用引号</li>
+<li>语法和标点</li>
+<li>大写字符与小写字符比较</li>
+<li>避免被动语气</li>
+<li>现代时与过去时的比较</li>
+<li>对象类型</li>
+<li>方括弧</li>
+<li>组装错误信息</li>
+<li>错误的原因<br>消息应该总是说明为什么发生错误。</li>
+<li>函数名<br>不要在错误信息里包含报告过程的名字。</li>
+<li>尽量避免的字眼<br>尽量避免的字眼包括不能、坏的、 非法、未知等。</li>
+<li>正确地拼写<br>用单词的全拼。避免对单词进行缩写。</li>
+<li>本地化<br>错误信息文本是需要翻译成其它语言的，因此，语句应该本地化。</li>
+</ol>
+<h4 id="基因查询优化器"><a href="#基因查询优化器" class="headerlink" title="基因查询优化器"></a>基因查询优化器</h4><p>1、作为复杂优化问题的查询处理</p>
+<p>在所有关系型操作符里，最难处理和优化的是连接。一个查询需要回答的可选规划的数目将随着该查询包含的连接的个数呈指数增长。<br>目前PostgreSQL优化器的实现在候选策略空间里执行一个近似穷举搜索。这个算法最早是在IBM System R database数据库中引入的，它生成一个近乎最优的连接顺序，但是如果查询中的连接增长得很大，它可能会消耗大量的时间和内存空间。这样就使普通的PostgreSQL查询优化器不适合那种连接了大量表的查询。</p>
+<p>2、基因算法</p>
+<p>基因算法（GA）是一种启发式的优化法，它是通过不确定的随机搜索进行操作。优化问题的集合被认为是个体组成的种群，一个个体对它的环境的适应程度由它的适应性表示。<br>一个个体在搜索空间里的参照物用染色体表示，该染色体实际上是一套字符串。一个基因是染色体的一个片段，基因是被优化的单个参数的编码。一个基因的典型的编码可以是二进制或整数。</p>
+<p>3、PostgreSQL里的基因查询优化（GEQO）</p>
+<p>GEQO模块是试图解决类似漫游推销员问题(TSP)的查询优化问题。可能的查询规划被当作整数字符串进行编码。每个字符串代表查询里面一个关系到下一个关系的连接的顺序。</p>
+<h4 id="索引访问方法接口定义"><a href="#索引访问方法接口定义" class="headerlink" title="索引访问方法接口定义"></a>索引访问方法接口定义</h4><p>1、索引的系统表记录</p>
+<p>每个索引访问方法都在系统表 pg_am 里面用一行来描述。一个 pg_am 行的主要内容是引用 pg_proc 里面的记录，用来标识索引访问方法提供的索引访问函数。<br>要想有真正用处，一个索引访问方法还必须有一个或多个操作符类，定义在 pg_opclass, pg_amop, pg_amproc 里面。这些记录允许规划器判断哪些查询的条件可以适用于用这个索引访问方法创建的索引。</p>
+<p>2、索引访问方法函数</p>
+<p>索引访问方法必须提供的索引构造和维护函数有：<br>IndexBuildResult <em><br>ambuild (Relation heapRelation,<br>         Relation indexRelation,<br>         IndexInfo </em>indexInfo);</p>
+<p>3、索引扫描</p>
+<p>在一个索引扫描里，索引访问方法负责拿到匹配扫描键字的所有行。访问方法不会卷入从索引的父表中实际抓取这些行的动作中，也不会判断他们是否通过了扫描的时间条件测试或者是其它条件。<br>一个扫描键字是如同 index_key operator constant 的 WHERE 子句的内部表现形式，这里的索引键字是索引中的一个字段，而操作符是和该索引字段相关联的操作符类的一个成员。一个索引扫描拥有零个或者多个扫描键字。</p>
+<p>4、索引唯一性检查</p>
+<p>PostgreSQL 使用唯一索引来强制SQL唯一约束，唯一索引实际上是不允许多条记录有相同键值的的索引。支持这个特性的访问方法要设置pg_am.amcanunique为真。目前，只有b-tree支持它。<br>因为MVCC，必须允许重复的条目物理上存在于索引之中：该条目可能指向某个逻辑行的后面的版本。实际想强制的行为  是，任何MVCC都不能包含两条相同的索引键字。</p>
+<p>5、索引开销估计函数</p>
+<p>系统给amcostestimate函数一个WHERE子句的列表，这个WHERE 子句列表是系统认为可以被索引使用的东西。它必须返回访问该索引的开销估计值以及WHERE 子句的选择性。<br>对于简单的场合，开销估计器的所有工作几乎都可以通过调用优化器里面的标准过程完成；amcostestimate 函数的目的是允许索引访问方法提供和索引类型相关的知识，这样也许可以改进标准的开销估计。</p>
+<h4 id="GiST索引"><a href="#GiST索引" class="headerlink" title="GiST索引"></a>GiST索引</h4><p>1、GiST简介</p>
+<p>GiST的意思是通用的搜索树(Generalized Search Tree)。它是一种平衡树结构的访问方法，在系统中起一个基础的模版，然后可以使用它实现任意索引模式。B-trees和许多其它的索引模式都可以用GiST实现。<br>GiST的一个优点是它允许一种自定义的数据类型和合适的访问方法一起开发，并且是由该数据类型范畴里的专家，而不是数据库专家开发。</p>
+<p>2、GiST的可扩展性</p>
+<p>通常，实现一种新的索引访问方法意味着大量的艰苦工作。必须理解数据库的内部工作机制，比如锁的机制和预写日志。GiST接口有一个高层的抽像，只要求访问方法的实现者实现被访问的数据类型的语意。GiST层本身会处理并发，日志和搜索树结构的任务。<br>不要把这个扩展性和其它标准搜索树的扩展性混淆在一起，比如它们所能处理的数据等方面。<br>简单说，GiST组合了扩展性和通用性，以及代码复用和一个干净的界面。</p>
+<p>3、实现方法</p>
+<p>consistent。这个方法给出一个在树的数据页上的谓词p和一个用户查询q，如果对于一个给定的数据项，p和q 都很明确地不能为真，那么这个方法将返回假。<br>union 。这个方法合并树中的信息。给出一个条目的集合，这个函数生成一个新的谓词，这个谓词对所有这些条目都为真。<br>compress。这个方法将数据项转换成一个适合于在一个索引页里面物理存储的格式。<br>decompress。这个方法是compress方法的反方法。把一个数据项的索引表现形式转换成可以由数据库操作的格式。<br>penalty 。这个方法返回一个表示将新条目插入树中特定分支需要的”开销”的数值。项将会按照树中最小 penalty 的路径插下去。<br>picksplit。如果需要分裂一个页面的时候，这个函数决定页面中哪些条目保存呆旧页面里，而哪些移动到新页面里。<br>same。如果两个条目相同，返回真，否则返回假。</p>
+<h4 id="数据库的物理存储"><a href="#数据库的物理存储" class="headerlink" title="数据库的物理存储"></a>数据库的物理存储</h4><p>1、数据库文件布局</p>
+<p>数据库集群所需要的所有数据都存储在集群的数据目录里，通常用环境变量PGDATA来引用。不同服务器管理的多个集群，可以在同一台机器上共存。<br>PGDATA目录包含几个子目录以及一些控制文件。除了这些必要的东西之外，集群的配置文件postgresql、conf、   pg_hba、conf、pg_ident、conf通常也都存储在这里。</p>
+<p>2、TOAST</p>
+<p>由于PostgreSQL的页面大小是固定的，通常是8Kb，并且不允许行跨越多个页面，因此不可能直接存储非常大的字段值。为了突破这个限制，大的字段值被压缩或被打碎成多个物理行。这些事情对用户都是透明的，只是在后端代码上有一些小的影响，这就是TOAST。<br>只有一部分数据类型支持TOAST。要支持TOAST，数据类型必须有变长(varlena)表现形式。TOAST并不约束剩下的表现形式。所有支持TOAST的数据类型之C级别的函数都必须仔细处理TOAST的输入值。</p>
+<p>3、数据库分页文件</p>
+<p>序列和TOAST的格式与普通表一样。<br>项指的是存储在一个页面里的独立数据值。在一个表里，一个项是一个行；在一个索引里，一个项是一条索引记录。<br>每个表和索引都以固定尺寸(通常是 8K ，但也可以在编译时选择其它尺寸)的页面数组存储。在表里，所有页面逻辑都相同，所以一个特定的项(行)可以存储在任何页面里。在索引里，第一个页面通常保留为元页面，保存着控制信息，并且依索引访问方法的不同，在索引里可能有不同类型的页面。</p>
+<h4 id="BKI后端接口"><a href="#BKI后端接口" class="headerlink" title="BKI后端接口"></a>BKI后端接口</h4><p>1、BKI文件格式</p>
+<p>BKI输入是由一系列命令组成的。命令是由一些记号组成的，具体情况则由命令语法决定。记号通常是用空白分隔的，但是如果没有歧义的话可以不要。没有什么特殊的命令分隔符。通常会把一条新的命令放在新的一行上以保持清晰。记号可以是某些关键字，特殊字符（圆括弧，逗号等），数字，或者双引号字符串。注意，所有命令都是区分大小写的。</p>
+<p>2、BKI命令</p>
+<p>（1） create [bootstrap] [shared_relation] [without_oids] tablename tableoid (name1 = type1 [, name2 = type2, …])<br>（2） open tablename<br>（3） close [tablename]<br>（4） insert [OID = oid_value] ( value1 value2 … )<br>（5）declare [unique] index indexname indexoid on tablename using amname ( opclass1 name1 [, …] )<br>（6）declare toast toasttableoid toastindexoid on tablename<br>（7）build indices </p>
+<p>3、系统初始化的BKI文件结构</p>
+<p>⑴ create bootstrap其中一个关键表。<br>⑵ insert数据，这些数据至少描述这些关键表本身。<br>⑶ close。<br>⑷ 重复创建和填充其它关键表。<br>⑸ create（不带 bootstrap）一个非关键表。<br>⑹ open。<br>⑺ insert 需要的数据。<br>⑻ close。<br>⑼ 重复创建其它非关键表。<br>⑽ 定义索引。<br>⑾ build indices。</p>
+<p>4、例子</p>
+<p>下面的命令集将创建名为 test_table 的表，该表有两个类型分别为int4和text的字段cola和colb，然后向该表插入两行。<br>create test_table 420 (cola = int4, colb = text)<br>open test_table<br>insert OID=421 ( 1 “value1” )<br>insert OID=422 ( 2 <em>null</em> )<br>close test_table</p>
+<h4 id="常见问题及解答"><a href="#常见问题及解答" class="headerlink" title="常见问题及解答"></a>常见问题及解答</h4>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据库/" rel="tag"># 数据库</a>
+          
+            <a href="/tags/PostgreSQL/" rel="tag"># PostgreSQL</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/database/PostgreSql/20190825_配置与监控/" rel="next" title="PostgreSQL：十七. 服务器配置与数据库监控">
+                <i class="fa fa-chevron-left"></i> PostgreSQL：十七. 服务器配置与数据库监控
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/09/my-post5/" rel="prev" title="【应用算法】信息流-推荐系统的去重策略">
+                【应用算法】信息流-推荐系统的去重策略 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="崔永华（Andy）">
+          <p class="site-author-name" itemprop="name">崔永华（Andy）</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">113</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/cuiyonghua6" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://blog.csdn.net/cui_yonghua" target="_blank" title="CSDN">
+                  
+                    <i class="fa fa-fw fa-bandcamp"></i>
+                  
+                  CSDN
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/cuiyonghua" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/cuiyonghua" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#PostgreSQL的内部概述"><span class="nav-number">1.</span> <span class="nav-text">PostgreSQL的内部概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PostgreSQL的内部系统表"><span class="nav-number">2.</span> <span class="nav-text">PostgreSQL的内部系统表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PostgreSQL的内部前端-后端协议"><span class="nav-number">3.</span> <span class="nav-text">PostgreSQL的内部前端/后端协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PostgreSQL的编码约定"><span class="nav-number">4.</span> <span class="nav-text">PostgreSQL的编码约定</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基因查询优化器"><span class="nav-number">5.</span> <span class="nav-text">基因查询优化器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#索引访问方法接口定义"><span class="nav-number">6.</span> <span class="nav-text">索引访问方法接口定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GiST索引"><span class="nav-number">7.</span> <span class="nav-text">GiST索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据库的物理存储"><span class="nav-number">8.</span> <span class="nav-text">数据库的物理存储</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BKI后端接口"><span class="nav-number">9.</span> <span class="nav-text">BKI后端接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常见问题及解答"><span class="nav-number">10.</span> <span class="nav-text">常见问题及解答</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">崔永华（Andy）</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

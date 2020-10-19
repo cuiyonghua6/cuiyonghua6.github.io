@@ -1,0 +1,1033 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="数据库,PostgreSQL,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="常见的数据同步解决方案 共享磁盘故障转移 文件系统复制 事务日志 基于语句的复制 异步复制 同步复制">
+<meta name="keywords" content="数据库,PostgreSQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PostgreSQL：十六. 高可用、负载均衡和数据复制">
+<meta property="og:url" content="http://yoursite.com/2019/08/database/PostgreSql/20190824_高可用/index.html">
+<meta property="og:site_name" content="崔永华的个人网站">
+<meta property="og:description" content="常见的数据同步解决方案 共享磁盘故障转移 文件系统复制 事务日志 基于语句的复制 异步复制 同步复制">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-10-19T03:46:13.892Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PostgreSQL：十六. 高可用、负载均衡和数据复制">
+<meta name="twitter:description" content="常见的数据同步解决方案 共享磁盘故障转移 文件系统复制 事务日志 基于语句的复制 异步复制 同步复制">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/08/database/PostgreSql/20190824_高可用/">
+
+
+
+
+
+  <title> PostgreSQL：十六. 高可用、负载均衡和数据复制 | 崔永华的个人网站 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">崔永华的个人网站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/database/PostgreSql/20190824_高可用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="崔永华（Andy）">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="崔永华的个人网站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                PostgreSQL：十六. 高可用、负载均衡和数据复制
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-24T15:24:20+08:00">
+                2019-08-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据库/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据库/PostgreSQL/" itemprop="url" rel="index">
+                    <span itemprop="name">PostgreSQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">被围观
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="常见的数据同步解决方案"><a href="#常见的数据同步解决方案" class="headerlink" title="常见的数据同步解决方案"></a>常见的数据同步解决方案</h4><ol>
+<li>共享磁盘故障转移</li>
+<li>文件系统复制</li>
+<li>事务日志</li>
+<li>基于语句的复制</li>
+<li>异步复制</li>
+<li>同步复制</li>
+</ol>
+<a id="more"></a>
+<h4 id="日志传送备用服务器"><a href="#日志传送备用服务器" class="headerlink" title="日志传送备用服务器"></a>日志传送备用服务器</h4><p>1、日志传送概述</p>
+<p>使用日志传送，有以下几点好处。</p>
+<ol>
+<li>无需昂贵的软件或硬件即可实现冗余故障转移系统。</li>
+<li>备用服务器可以用于其它用途。而不必长期闲置。例如，当辅助数据库因处理进入的日志文件而处于不可访问状态时，可以在备用服务器上运行另一个独立数据库。</li>
+<li>一旦设置好，配置成本相对低廉并且易于维护。</li>
+<li>有非常可靠的方法用于提供数据库的冗余副本。</li>
+<li>实现和维护配置的成本相对低廉。</li>
+<li>支持本地位置和远程灾难恢复方案。</li>
+</ol>
+<p>预写式日志（WAL）是一种实现事务日志的标准方法。通过在备用服务器上的restore_command，可以使两个服务器协同工作。它只是等候主服务器的下一个可用WAL文件。restore_command在备份服务器的recovery.conf 文件中指定。普通的恢复过程需要来自WAL归档的文件，如果无法获取则报告错误。对于备份过程来说，下一个可用WAL 件通常不能马上获取，所以必须耐心等待直到它出现。通过书写代码可以实现等待并判断下一个WAL文件是否可用的目的。同时必须有触发失效切换的机制，它应当中断restore_command，跳出循环并向备份服务器返回一个”文件未找到”的错误。这将导致备份服务器结束恢复过程并取代已失效的主服务器。</p>
+<p>2、设置备用服务器</p>
+<p>第一步：安装主服务器和备份服务器并尽可能保持完全相同，包括完全相同的数据库副本和 PostgreSQL版本。<br>第二步：设置从主服务器连续归档WAL到备份服务器上的某个目录。确保主服务器上的 archive_command和 archive_timeout设置恰当。<br>第三步：为主服务器做一个基础备份，然后在备份服务器上还原这个备份。<br>第四步：在备份服务器上依照 WAL 归档启动恢复过程，注意在 recovery.conf 中使用正确的 restore_command 设置。</p>
+<h4 id="数据流的复制"><a href="#数据流的复制" class="headerlink" title="数据流的复制"></a>数据流的复制</h4><p>1、流复制概述</p>
+<p>流复制是异步的，所以在数据同步中，会有一个小的延迟。这个延迟远小于基于文件日志传送，通常1秒内足够与负载保持均衡。流复制有以下几个优点。</p>
+<ol>
+<li>流复制对于数据库性能的影响更小。</li>
+<li>流复制相对于其他复制相比，所需的硬件成本较小。</li>
+<li>流复制更加灵活，支持异构数据库对象的同步。</li>
+</ol>
+<p>要使用流复制，建立一个基于文件的日志传送备服务器。需要注意以下设置。</p>
+<ol>
+<li>将一个基于文件的日志传送备服务器转为流复制备服务器，在recovery.conf文件中设置primary_conninfo 指向主服务器。在主服务器上设置listen_addresses和身份验证选项（设置文件pg_hba.conf），因此备用服务器可以连接到在主服务器的replication数据库。</li>
+<li>在系统上支持保持活动的的套接字选项，设置tcp_keepalives_idle，tcp_keepalives_interval和tcp_keepalives_count帮助主机及时发现断开的连接。</li>
+<li>设置备用服务器的最大并发连接数。</li>
+<li>当启动了备服务器并且正确设置了primary_conninfo，该备服务器在回放所有可用的WAL文件后，将连接到主服务器。如果成功建立了该连接，将在备服务器中看到WAL接收进程，并且在主服务器相应的一个WAL发送进程。</li>
+</ol>
+<p>2、身份验证</p>
+<p>设置复制的访问权限是很重要的，只有受信任的用户可以读取WAL流，因为很容易从中提取权限信息。备用服务器必须验证作为主服务器的超级用户。所以需要在主服务器上创建一个有SUPERUSER和LOGIN权限的角色</p>
+<h4 id="数据的同步复制"><a href="#数据的同步复制" class="headerlink" title="数据的同步复制"></a>数据的同步复制</h4><p>1、同步复制概述</p>
+<p>同步复制可以保证所有的数据交易被转移到一个同步的备用服务器中。在同步复制时，每次提交事务时将等待，直到收到确认提交已被写入到磁盘中，然后在主服务器和备用服务器上记录事务日志。<br>同步复制技术的应用，可以保证主服务器不在线或者崩溃的情况下，任何已提交事务的数据都不会丢失。对于同步复制来  说，事务在返回前需要被写到两个服务器的磁盘上，因此会在响应时间上带来很大的损失。为了缓解这种情况，PostgreSQL除了像其它数据库系统一样提供同步复制功能   外，还额外提供一个可以基于每一次事务提交而做出同步或异步复制的控制功能。这将使应用开发者通过把一些不可丢失的关键数据（比如财务交易）和那些响应时间上要求高的不太关键的数据区分开，来优化系统的性能。</p>
+<p>2、同步复制应用案例</p>
+<p>步骤1：在主和从服务器上创建replicaton角色为repl：<br>shell&gt;psql<br>ode=#CREATE ROLE repl REPLICATION LOGIN PASSWORD ‘123456’<br>步骤2：在主和从服务器上创建语言plpgsql：<br>node=# use node;<br>node=# create language plpgsql;<br>步骤3：在备用服务器上修改pg_hba.conf配置：<br>host     replication     replication_role   192.168.1.15/32 md5<br>步骤4：在主服务器上备份数据库：<br>pg_dump node &gt; node_20121120.dmp<br>步骤5：在备用服务器恢复数据库node ：<br>postgres=#create database node;<br>postgres=#\q<br>shell&gt;psql node &lt; node_20121120.dmp ;<br>步骤6：在备用服务器的数据库/export/script目录下创建一个脚本replication.<br>步骤7：启动脚本：<br>./replication start<br>步骤8：在主服务器的数据库上空表public.hxf中添加一条记录：<br>insert into hxf(uid,uname) select 1,’tianyi’;<br>步骤9：在主服务器的数据库查询：<br>node=# select <em> from hxf;<br> uid |    uname<br>—–+————-<br>   1 | tianyi<br>(1 row)<br>步骤10：在备用服务器的数据库中查询：<br>node=# select </em> from hxf;<br> uid |    uname<br>—–+————-<br>   1 | tianyi<br>(1 row)</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据库/" rel="tag"># 数据库</a>
+          
+            <a href="/tags/PostgreSQL/" rel="tag"># PostgreSQL</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/database/PostgreSql/20190823_性能优化/" rel="next" title="PostgreSQL：十五. 性能优化">
+                <i class="fa fa-chevron-left"></i> PostgreSQL：十五. 性能优化
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/database/PostgreSql/20190825_配置与监控/" rel="prev" title="PostgreSQL：十七. 服务器配置与数据库监控">
+                PostgreSQL：十七. 服务器配置与数据库监控 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="崔永华（Andy）">
+          <p class="site-author-name" itemprop="name">崔永华（Andy）</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">113</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/cuiyonghua6" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://blog.csdn.net/cui_yonghua" target="_blank" title="CSDN">
+                  
+                    <i class="fa fa-fw fa-bandcamp"></i>
+                  
+                  CSDN
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/cuiyonghua" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/cuiyonghua" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#常见的数据同步解决方案"><span class="nav-number">1.</span> <span class="nav-text">常见的数据同步解决方案</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#日志传送备用服务器"><span class="nav-number">2.</span> <span class="nav-text">日志传送备用服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据流的复制"><span class="nav-number">3.</span> <span class="nav-text">数据流的复制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据的同步复制"><span class="nav-number">4.</span> <span class="nav-text">数据的同步复制</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">崔永华（Andy）</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
