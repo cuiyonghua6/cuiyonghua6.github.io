@@ -1,0 +1,1018 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="python,爬虫,反爬,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="js的加密没特别多的办法，常见的就三种， MD5加密、Base64加密和sha1加密">
+<meta name="keywords" content="python,爬虫,反爬">
+<meta property="og:type" content="article">
+<meta property="og:title" content="三种加密方式 sha1加密、MD5加密、Base64加密 (附H5源码和js源码)">
+<meta property="og:url" content="http://yoursite.com/2020/09/python/spider/20200929_三种加密方式/index.html">
+<meta property="og:site_name" content="崔永华的个人网站">
+<meta property="og:description" content="js的加密没特别多的办法，常见的就三种， MD5加密、Base64加密和sha1加密">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-10-28T03:39:02.851Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="三种加密方式 sha1加密、MD5加密、Base64加密 (附H5源码和js源码)">
+<meta name="twitter:description" content="js的加密没特别多的办法，常见的就三种， MD5加密、Base64加密和sha1加密">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/09/python/spider/20200929_三种加密方式/">
+
+
+
+
+
+  <title> 三种加密方式 sha1加密、MD5加密、Base64加密 (附H5源码和js源码) | 崔永华的个人网站 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">崔永华的个人网站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/python/spider/20200929_三种加密方式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="崔永华（Andy）">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="崔永华的个人网站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                三种加密方式 sha1加密、MD5加密、Base64加密 (附H5源码和js源码)
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-29T10:30:00+08:00">
+                2020-09-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/爬虫/" itemprop="url" rel="index">
+                    <span itemprop="name">爬虫</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">被围观
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>js的加密没特别多的办法，常见的就三种， MD5加密、Base64加密和sha1加密<br><a id="more"></a></p>
+<h3 id="一-sha1加密"><a href="#一-sha1加密" class="headerlink" title="一. sha1加密"></a>一. sha1加密</h3><ol>
+<li>H5源码：</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span>shal加密<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/jquery.min.js"</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/shal.js"</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"password"</span> <span class="attr">name</span>=<span class="string">""</span> <span class="attr">id</span>=<span class="string">"md5"</span> <span class="attr">value</span>=<span class="string">""</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">name</span>=<span class="string">""</span> <span class="attr">id</span>=<span class="string">""</span> <span class="attr">value</span>=<span class="string">"hex_sha1加密"</span> ο<span class="attr">nclick</span>=<span class="string">"testshal(1)"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">name</span>=<span class="string">""</span> <span class="attr">id</span>=<span class="string">""</span> <span class="attr">value</span>=<span class="string">"b64_sha1加密"</span> ο<span class="attr">nclick</span>=<span class="string">"testshal(2)"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">name</span>=<span class="string">""</span> <span class="attr">id</span>=<span class="string">""</span> <span class="attr">value</span>=<span class="string">"str_sha1加密"</span> ο<span class="attr">nclick</span>=<span class="string">"testshal(3)"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span></span><br><span class="line">        function testshal(e)&#123;</span><br><span class="line">        var password = $("#md5").val();</span><br><span class="line">        console.log("没有加密之前的是："+password);</span><br><span class="line">            if(e == 1)&#123;</span><br><span class="line">                var shalpassword = hex_sha1(password);</span><br><span class="line">                console.log("hex_sha1方式加密后是："+shalpassword);</span><br><span class="line">            &#125;</span><br><span class="line">            else if(e == 2)&#123;</span><br><span class="line">                var shalpassword = b64_sha1(password);</span><br><span class="line">                console.log("b64_sha1方式加密后是："+shalpassword);</span><br><span class="line">            &#125;</span><br><span class="line">            else if(e == 3)&#123;</span><br><span class="line">                var shalpassword = str_sha1(password);</span><br><span class="line">                console.log("str_sha1方式加密后是："+shalpassword);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>js源码：</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> hexcase = <span class="number">0</span>; <span class="comment">/* 十六进制输出格式。0 -小写；1 -大写 */</span>  </span><br><span class="line"><span class="keyword">var</span> b64pad = <span class="string">""</span>; <span class="comment">/* base- 64填充字符。“=”表示严格的RFC合规性 */</span>  </span><br><span class="line"><span class="keyword">var</span> chrsz = <span class="number">8</span>; <span class="comment">/* 每个输入字符的位数。8 - ASCII；16 -统一码 */</span>  </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">hex_sha1</span>(<span class="params">s</span>) </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> binb2hex(core_sha1(str2binb(s), s.length * chrsz));  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">b64_sha1</span>(<span class="params">s</span>) </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> binb2b64(core_sha1(str2binb(s), s.length * chrsz));  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">str_sha1</span>(<span class="params">s</span>) </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> binb2str(core_sha1(str2binb(s), s.length * chrsz));  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">hex_hmac_sha1</span>(<span class="params">key, data</span>) </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> binb2hex(core_hmac_sha1(key, data));  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">b64_hmac_sha1</span>(<span class="params">key, data</span>) </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> binb2b64(core_hmac_sha1(key, data));  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">str_hmac_sha1</span>(<span class="params">key, data</span>) </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> binb2str(core_hmac_sha1(key, data));  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sha1_vm_test</span>(<span class="params"></span>) </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> hex_sha1(<span class="string">"abc"</span>) == <span class="string">"a9993e364706816aba3e25717850c26c9cd0d89d"</span>;  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">core_sha1</span>(<span class="params">x, len</span>) </span>&#123;  </span><br><span class="line">    x[len &gt;&gt; <span class="number">5</span>] |= <span class="number">0x80</span> &lt;&lt; (<span class="number">24</span> - len % <span class="number">32</span>);  </span><br><span class="line">    x[((len + <span class="number">64</span> &gt;&gt; <span class="number">9</span>) &lt;&lt; <span class="number">4</span>) + <span class="number">15</span>] = len;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">var</span> w = <span class="built_in">Array</span>(<span class="number">80</span>);  </span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">1732584193</span>;  </span><br><span class="line">    <span class="keyword">var</span> b = <span class="number">-271733879</span>;  </span><br><span class="line">    <span class="keyword">var</span> c = <span class="number">-1732584194</span>;  </span><br><span class="line">    <span class="keyword">var</span> d = <span class="number">271733878</span>;  </span><br><span class="line">    <span class="keyword">var</span> e = <span class="number">-1009589776</span>;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; x.length; i += <span class="number">16</span>) &#123;  </span><br><span class="line">        <span class="keyword">var</span> olda = a;  </span><br><span class="line">        <span class="keyword">var</span> oldb = b;  </span><br><span class="line">        <span class="keyword">var</span> oldc = c;  </span><br><span class="line">        <span class="keyword">var</span> oldd = d;  </span><br><span class="line">        <span class="keyword">var</span> olde = e;  </span><br><span class="line">  </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; <span class="number">80</span>; j++) &#123;  </span><br><span class="line">            <span class="keyword">if</span> (j &lt; <span class="number">16</span>) w[j] = x[i + j];  </span><br><span class="line">            <span class="keyword">else</span> w[j] = rol(w[j - <span class="number">3</span>] ^ w[j - <span class="number">8</span>] ^ w[j - <span class="number">14</span>] ^ w[j - <span class="number">16</span>], <span class="number">1</span>);  </span><br><span class="line">            <span class="keyword">var</span> t = safe_add(safe_add(rol(a, <span class="number">5</span>), sha1_ft(j, b, c, d)), safe_add(safe_add(e, w[j]), sha1_kt(j)));  </span><br><span class="line">            e = d;  </span><br><span class="line">            d = c;  </span><br><span class="line">            c = rol(b, <span class="number">30</span>);  </span><br><span class="line">            b = a;  </span><br><span class="line">            a = t;  </span><br><span class="line">        &#125;  </span><br><span class="line">  </span><br><span class="line">        a = safe_add(a, olda);  </span><br><span class="line">        b = safe_add(b, oldb);  </span><br><span class="line">        c = safe_add(c, oldc);  </span><br><span class="line">        d = safe_add(d, oldd);  </span><br><span class="line">        e = safe_add(e, olde);  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Array</span>(a, b, c, d, e);  </span><br><span class="line">  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sha1_ft</span>(<span class="params">t, b, c, d</span>) </span>&#123;  </span><br><span class="line">    <span class="keyword">if</span> (t &lt; <span class="number">20</span>) <span class="keyword">return</span> (b &amp; c) | ((~b) &amp; d);  </span><br><span class="line">    <span class="keyword">if</span> (t &lt; <span class="number">40</span>) <span class="keyword">return</span> b ^ c ^ d;  </span><br><span class="line">    <span class="keyword">if</span> (t &lt; <span class="number">60</span>) <span class="keyword">return</span> (b &amp; c) | (b &amp; d) | (c &amp; d);  </span><br><span class="line">    <span class="keyword">return</span> b ^ c ^ d;  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sha1_kt</span>(<span class="params">t</span>) </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> (t &lt; <span class="number">20</span>) ? <span class="number">1518500249</span> : (t &lt; <span class="number">40</span>) ? <span class="number">1859775393</span> : (t &lt; <span class="number">60</span>) ? <span class="number">-1894007588</span> : <span class="number">-899497514</span>;  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">core_hmac_sha1</span>(<span class="params">key, data</span>) </span>&#123;  </span><br><span class="line">    <span class="keyword">var</span> bkey = str2binb(key);  </span><br><span class="line">    <span class="keyword">if</span> (bkey.length &gt; <span class="number">16</span>) bkey = core_sha1(bkey, key.length * chrsz);  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">var</span> ipad = <span class="built_in">Array</span>(<span class="number">16</span>),  </span><br><span class="line">        opad = <span class="built_in">Array</span>(<span class="number">16</span>);  </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">16</span>; i++) &#123;  </span><br><span class="line">        ipad[i] = bkey[i] ^ <span class="number">0x36363636</span>;  </span><br><span class="line">        opad[i] = bkey[i] ^ <span class="number">0x5C5C5C5C</span>;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">var</span> hash = core_sha1(ipad.concat(str2binb(data)), <span class="number">512</span> + data.length * chrsz);  </span><br><span class="line">    <span class="keyword">return</span> core_sha1(opad.concat(hash), <span class="number">512</span> + <span class="number">160</span>);  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">safe_add</span>(<span class="params">x, y</span>) </span>&#123;  </span><br><span class="line">    <span class="keyword">var</span> lsw = (x &amp; <span class="number">0xFFFF</span>) + (y &amp; <span class="number">0xFFFF</span>);  </span><br><span class="line">    <span class="keyword">var</span> msw = (x &gt;&gt; <span class="number">16</span>) + (y &gt;&gt; <span class="number">16</span>) + (lsw &gt;&gt; <span class="number">16</span>);  </span><br><span class="line">    <span class="keyword">return</span> (msw &lt;&lt; <span class="number">16</span>) | (lsw &amp; <span class="number">0xFFFF</span>);  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">rol</span>(<span class="params">num, cnt</span>) </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> (num &lt;&lt; cnt) | (num &gt;&gt;&gt; (<span class="number">32</span> - cnt));  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">str2binb</span>(<span class="params">str</span>) </span>&#123;  </span><br><span class="line">    <span class="keyword">var</span> bin = <span class="built_in">Array</span>();  </span><br><span class="line">    <span class="keyword">var</span> mask = (<span class="number">1</span> &lt;&lt; chrsz) - <span class="number">1</span>;  </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; str.length * chrsz; i += chrsz)  </span><br><span class="line">    bin[i &gt;&gt; <span class="number">5</span>] |= (str.charCodeAt(i / chrsz) &amp; mask) &lt;&lt; (<span class="number">24</span> - i % <span class="number">32</span>);  </span><br><span class="line">    <span class="keyword">return</span> bin;  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">binb2str</span>(<span class="params">bin</span>) </span>&#123;  </span><br><span class="line">    <span class="keyword">var</span> str = <span class="string">""</span>;  </span><br><span class="line">    <span class="keyword">var</span> mask = (<span class="number">1</span> &lt;&lt; chrsz) - <span class="number">1</span>;  </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; bin.length * <span class="number">32</span>; i += chrsz)  </span><br><span class="line">    str += <span class="built_in">String</span>.fromCharCode((bin[i &gt;&gt; <span class="number">5</span>] &gt;&gt;&gt; (<span class="number">24</span> - i % <span class="number">32</span>)) &amp; mask);  </span><br><span class="line">    <span class="keyword">return</span> str;  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">binb2hex</span>(<span class="params">binarray</span>) </span>&#123;  </span><br><span class="line">    <span class="keyword">var</span> hex_tab = hexcase ? <span class="string">"0123456789ABCDEF"</span> : <span class="string">"0123456789abcdef"</span>;  </span><br><span class="line">    <span class="keyword">var</span> str = <span class="string">""</span>;  </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; binarray.length * <span class="number">4</span>; i++) &#123;  </span><br><span class="line">        str += hex_tab.charAt((binarray[i &gt;&gt; <span class="number">2</span>] &gt;&gt; ((<span class="number">3</span> - i % <span class="number">4</span>) * <span class="number">8</span> + <span class="number">4</span>)) &amp; <span class="number">0xF</span>) + hex_tab.charAt((binarray[i &gt;&gt; <span class="number">2</span>] &gt;&gt; ((<span class="number">3</span> - i % <span class="number">4</span>) * <span class="number">8</span>)) &amp; <span class="number">0xF</span>);  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">return</span> str;  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">binb2b64</span>(<span class="params">binarray</span>) </span>&#123;  </span><br><span class="line">    <span class="keyword">var</span> tab = <span class="string">"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"</span>;  </span><br><span class="line">    <span class="keyword">var</span> str = <span class="string">""</span>;  </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; binarray.length * <span class="number">4</span>; i += <span class="number">3</span>) &#123;  </span><br><span class="line">        <span class="keyword">var</span> triplet = (((binarray[i &gt;&gt; <span class="number">2</span>] &gt;&gt; <span class="number">8</span> * (<span class="number">3</span> - i % <span class="number">4</span>)) &amp; <span class="number">0xFF</span>) &lt;&lt; <span class="number">16</span>) | (((binarray[i + <span class="number">1</span> &gt;&gt; <span class="number">2</span>] &gt;&gt; <span class="number">8</span> * (<span class="number">3</span> - (i + <span class="number">1</span>) % <span class="number">4</span>)) &amp; <span class="number">0xFF</span>) &lt;&lt; <span class="number">8</span>) | ((binarray[i + <span class="number">2</span> &gt;&gt; <span class="number">2</span>] &gt;&gt; <span class="number">8</span> * (<span class="number">3</span> - (i + <span class="number">2</span>) % <span class="number">4</span>)) &amp; <span class="number">0xFF</span>);  </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; <span class="number">4</span>; j++) &#123;  </span><br><span class="line">            <span class="keyword">if</span> (i * <span class="number">8</span> + j * <span class="number">6</span> &gt; binarray.length * <span class="number">32</span>) str += b64pad;  </span><br><span class="line">            <span class="keyword">else</span> str += tab.charAt((triplet &gt;&gt; <span class="number">6</span> * (<span class="number">3</span> - j)) &amp; <span class="number">0x3F</span>);  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">return</span> str;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="二-MD5加密"><a href="#二-MD5加密" class="headerlink" title="二. MD5加密"></a>二. MD5加密</h3><ol>
+<li><p>H5源码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span>md5加密<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/jquery.min.js"</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/md5.js"</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"password"</span> <span class="attr">name</span>=<span class="string">""</span> <span class="attr">id</span>=<span class="string">"md5"</span> <span class="attr">value</span>=<span class="string">""</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">name</span>=<span class="string">""</span> <span class="attr">id</span>=<span class="string">""</span> <span class="attr">value</span>=<span class="string">"MD5加密"</span> ο<span class="attr">nclick</span>=<span class="string">"testmd5()"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="keyword">function</span> <span class="title">testmd5</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> password = $(<span class="string">"#md5"</span>).val();</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> md5password = $.md5(password);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">"没有加密之前的是："</span>+password);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">"加密以后是："</span>+md5password);</span></span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>js源码</p>
+</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params">$</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> rotateLeft = <span class="function"><span class="keyword">function</span>(<span class="params">lValue, iShiftBits</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> (lValue &lt;&lt; iShiftBits) | (lValue &gt;&gt;&gt; (<span class="number">32</span> - iShiftBits));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> addUnsigned = <span class="function"><span class="keyword">function</span>(<span class="params">lX, lY</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> lX4, lY4, lX8, lY8, lResult;</span><br><span class="line">            lX8 = (lX &amp; <span class="number">0x80000000</span>);</span><br><span class="line">            lY8 = (lY &amp; <span class="number">0x80000000</span>);</span><br><span class="line">            lX4 = (lX &amp; <span class="number">0x40000000</span>);</span><br><span class="line">            lY4 = (lY &amp; <span class="number">0x40000000</span>);</span><br><span class="line">            lResult = (lX &amp; <span class="number">0x3FFFFFFF</span>) + (lY &amp; <span class="number">0x3FFFFFFF</span>);</span><br><span class="line">            <span class="keyword">if</span> (lX4 &amp; lY4) <span class="keyword">return</span> (lResult ^ <span class="number">0x80000000</span> ^ lX8 ^ lY8);</span><br><span class="line">            <span class="keyword">if</span> (lX4 | lY4) &#123;</span><br><span class="line">                <span class="keyword">if</span> (lResult &amp; <span class="number">0x40000000</span>) <span class="keyword">return</span> (lResult ^ <span class="number">0xC0000000</span> ^ lX8 ^ lY8);</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">return</span> (lResult ^ <span class="number">0x40000000</span> ^ lX8 ^ lY8);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> (lResult ^ lX8 ^ lY8);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> F = <span class="function"><span class="keyword">function</span>(<span class="params">x, y, z</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> (x &amp; y) | ((~ x) &amp; z);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> G = <span class="function"><span class="keyword">function</span>(<span class="params">x, y, z</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> (x &amp; z) | (y &amp; (~ z));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> H = <span class="function"><span class="keyword">function</span>(<span class="params">x, y, z</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> (x ^ y ^ z);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> I = <span class="function"><span class="keyword">function</span>(<span class="params">x, y, z</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> (y ^ (x | (~ z)));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> FF = <span class="function"><span class="keyword">function</span>(<span class="params">a, b, c, d, x, s, ac</span>) </span>&#123;</span><br><span class="line">            a = addUnsigned(a, addUnsigned(addUnsigned(F(b, c, d), x), ac));</span><br><span class="line">            <span class="keyword">return</span> addUnsigned(rotateLeft(a, s), b);</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">var</span> GG = <span class="function"><span class="keyword">function</span>(<span class="params">a, b, c, d, x, s, ac</span>) </span>&#123;</span><br><span class="line">            a = addUnsigned(a, addUnsigned(addUnsigned(G(b, c, d), x), ac));</span><br><span class="line">            <span class="keyword">return</span> addUnsigned(rotateLeft(a, s), b);</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">var</span> HH = <span class="function"><span class="keyword">function</span>(<span class="params">a, b, c, d, x, s, ac</span>) </span>&#123;</span><br><span class="line">            a = addUnsigned(a, addUnsigned(addUnsigned(H(b, c, d), x), ac));</span><br><span class="line">            <span class="keyword">return</span> addUnsigned(rotateLeft(a, s), b);</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">var</span> II = <span class="function"><span class="keyword">function</span>(<span class="params">a, b, c, d, x, s, ac</span>) </span>&#123;</span><br><span class="line">            a = addUnsigned(a, addUnsigned(addUnsigned(I(b, c, d), x), ac));</span><br><span class="line">            <span class="keyword">return</span> addUnsigned(rotateLeft(a, s), b);</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">var</span> convertToWordArray = <span class="function"><span class="keyword">function</span>(<span class="params">string</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> lWordCount;</span><br><span class="line">            <span class="keyword">var</span> lMessageLength = string.length;</span><br><span class="line">            <span class="keyword">var</span> lNumberOfWordsTempOne = lMessageLength + <span class="number">8</span>;</span><br><span class="line">            <span class="keyword">var</span> lNumberOfWordsTempTwo = (lNumberOfWordsTempOne - (lNumberOfWordsTempOne % <span class="number">64</span>)) / <span class="number">64</span>;</span><br><span class="line">            <span class="keyword">var</span> lNumberOfWords = (lNumberOfWordsTempTwo + <span class="number">1</span>) * <span class="number">16</span>;</span><br><span class="line">            <span class="keyword">var</span> lWordArray = <span class="built_in">Array</span>(lNumberOfWords - <span class="number">1</span>);</span><br><span class="line">            <span class="keyword">var</span> lBytePosition = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">var</span> lByteCount = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">while</span> (lByteCount &lt; lMessageLength) &#123;</span><br><span class="line">                lWordCount = (lByteCount - (lByteCount % <span class="number">4</span>)) / <span class="number">4</span>;</span><br><span class="line">                lBytePosition = (lByteCount % <span class="number">4</span>) * <span class="number">8</span>;</span><br><span class="line">                lWordArray[lWordCount] = (lWordArray[lWordCount] | (string.charCodeAt(lByteCount) &lt;&lt; lBytePosition));</span><br><span class="line">                lByteCount++;</span><br><span class="line">            &#125;</span><br><span class="line">            lWordCount = (lByteCount - (lByteCount % <span class="number">4</span>)) / <span class="number">4</span>;</span><br><span class="line">            lBytePosition = (lByteCount % <span class="number">4</span>) * <span class="number">8</span>;</span><br><span class="line">            lWordArray[lWordCount] = lWordArray[lWordCount] | (<span class="number">0x80</span> &lt;&lt; lBytePosition);</span><br><span class="line">            lWordArray[lNumberOfWords - <span class="number">2</span>] = lMessageLength &lt;&lt; <span class="number">3</span>;</span><br><span class="line">            lWordArray[lNumberOfWords - <span class="number">1</span>] = lMessageLength &gt;&gt;&gt; <span class="number">29</span>;</span><br><span class="line">            <span class="keyword">return</span> lWordArray;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">var</span> wordToHex = <span class="function"><span class="keyword">function</span>(<span class="params">lValue</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> WordToHexValue = <span class="string">""</span>, WordToHexValueTemp = <span class="string">""</span>, lByte, lCount;</span><br><span class="line">            <span class="keyword">for</span> (lCount = <span class="number">0</span>; lCount &lt;= <span class="number">3</span>; lCount++) &#123;</span><br><span class="line">                lByte = (lValue &gt;&gt;&gt; (lCount * <span class="number">8</span>)) &amp; <span class="number">255</span>;</span><br><span class="line">                WordToHexValueTemp = <span class="string">"0"</span> + lByte.toString(<span class="number">16</span>);</span><br><span class="line">                WordToHexValue = WordToHexValue + WordToHexValueTemp.substr(WordToHexValueTemp.length - <span class="number">2</span>, <span class="number">2</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> WordToHexValue;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">var</span> uTF8Encode = <span class="function"><span class="keyword">function</span>(<span class="params">string</span>) </span>&#123;</span><br><span class="line">            string = string.replace(<span class="regexp">/\x0d\x0a/g</span>, <span class="string">"\x0a"</span>);</span><br><span class="line">            <span class="keyword">var</span> output = <span class="string">""</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> n = <span class="number">0</span>; n &lt; string.length; n++) &#123;</span><br><span class="line">                <span class="keyword">var</span> c = string.charCodeAt(n);</span><br><span class="line">                <span class="keyword">if</span> (c &lt; <span class="number">128</span>) &#123;</span><br><span class="line">                    output += <span class="built_in">String</span>.fromCharCode(c);</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> ((c &gt; <span class="number">127</span>) &amp;&amp; (c &lt; <span class="number">2048</span>)) &#123;</span><br><span class="line">                    output += <span class="built_in">String</span>.fromCharCode((c &gt;&gt; <span class="number">6</span>) | <span class="number">192</span>);</span><br><span class="line">                    output += <span class="built_in">String</span>.fromCharCode((c &amp; <span class="number">63</span>) | <span class="number">128</span>);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    output += <span class="built_in">String</span>.fromCharCode((c &gt;&gt; <span class="number">12</span>) | <span class="number">224</span>);</span><br><span class="line">                    output += <span class="built_in">String</span>.fromCharCode(((c &gt;&gt; <span class="number">6</span>) &amp; <span class="number">63</span>) | <span class="number">128</span>);</span><br><span class="line">                    output += <span class="built_in">String</span>.fromCharCode((c &amp; <span class="number">63</span>) | <span class="number">128</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> output;</span><br><span class="line">        &#125;;</span><br><span class="line">        $.extend(&#123;</span><br><span class="line">            md5: <span class="function"><span class="keyword">function</span>(<span class="params">string</span>) </span>&#123;</span><br><span class="line">                <span class="keyword">var</span> x = <span class="built_in">Array</span>();</span><br><span class="line">                <span class="keyword">var</span> k, AA, BB, CC, DD, a, b, c, d;</span><br><span class="line">                <span class="keyword">var</span> S11=<span class="number">7</span>, S12=<span class="number">12</span>, S13=<span class="number">17</span>, S14=<span class="number">22</span>;</span><br><span class="line">                <span class="keyword">var</span> S21=<span class="number">5</span>, S22=<span class="number">9</span> , S23=<span class="number">14</span>, S24=<span class="number">20</span>;</span><br><span class="line">                <span class="keyword">var</span> S31=<span class="number">4</span>, S32=<span class="number">11</span>, S33=<span class="number">16</span>, S34=<span class="number">23</span>;</span><br><span class="line">                <span class="keyword">var</span> S41=<span class="number">6</span>, S42=<span class="number">10</span>, S43=<span class="number">15</span>, S44=<span class="number">21</span>;</span><br><span class="line">                string = uTF8Encode(string);</span><br><span class="line">                x = convertToWordArray(string);</span><br><span class="line">                a = <span class="number">0x67452301</span>; b = <span class="number">0xEFCDAB89</span>; c = <span class="number">0x98BADCFE</span>; d = <span class="number">0x10325476</span>;</span><br><span class="line">                <span class="keyword">for</span> (k = <span class="number">0</span>; k &lt; x.length; k += <span class="number">16</span>) &#123;</span><br><span class="line">                    AA = a; BB = b; CC = c; DD = d;</span><br><span class="line">                    a = FF(a, b, c, d, x[k+<span class="number">0</span>],  S11, <span class="number">0xD76AA478</span>);</span><br><span class="line">                    d = FF(d, a, b, c, x[k+<span class="number">1</span>],  S12, <span class="number">0xE8C7B756</span>);</span><br><span class="line">                    c = FF(c, d, a, b, x[k+<span class="number">2</span>],  S13, <span class="number">0x242070DB</span>);</span><br><span class="line">                    b = FF(b, c, d, a, x[k+<span class="number">3</span>],  S14, <span class="number">0xC1BDCEEE</span>);</span><br><span class="line">                    a = FF(a, b, c, d, x[k+<span class="number">4</span>],  S11, <span class="number">0xF57C0FAF</span>);</span><br><span class="line">                    d = FF(d, a, b, c, x[k+<span class="number">5</span>],  S12, <span class="number">0x4787C62A</span>);</span><br><span class="line">                    c = FF(c, d, a, b, x[k+<span class="number">6</span>],  S13, <span class="number">0xA8304613</span>);</span><br><span class="line">                    b = FF(b, c, d, a, x[k+<span class="number">7</span>],  S14, <span class="number">0xFD469501</span>);</span><br><span class="line">                    a = FF(a, b, c, d, x[k+<span class="number">8</span>],  S11, <span class="number">0x698098D8</span>);</span><br><span class="line">                    d = FF(d, a, b, c, x[k+<span class="number">9</span>],  S12, <span class="number">0x8B44F7AF</span>);</span><br><span class="line">                    c = FF(c, d, a, b, x[k+<span class="number">10</span>], S13, <span class="number">0xFFFF5BB1</span>);</span><br><span class="line">                    b = FF(b, c, d, a, x[k+<span class="number">11</span>], S14, <span class="number">0x895CD7BE</span>);</span><br><span class="line">                    a = FF(a, b, c, d, x[k+<span class="number">12</span>], S11, <span class="number">0x6B901122</span>);</span><br><span class="line">                    d = FF(d, a, b, c, x[k+<span class="number">13</span>], S12, <span class="number">0xFD987193</span>);</span><br><span class="line">                    c = FF(c, d, a, b, x[k+<span class="number">14</span>], S13, <span class="number">0xA679438E</span>);</span><br><span class="line">                    b = FF(b, c, d, a, x[k+<span class="number">15</span>], S14, <span class="number">0x49B40821</span>);</span><br><span class="line">                    a = GG(a, b, c, d, x[k+<span class="number">1</span>],  S21, <span class="number">0xF61E2562</span>);</span><br><span class="line">                    d = GG(d, a, b, c, x[k+<span class="number">6</span>],  S22, <span class="number">0xC040B340</span>);</span><br><span class="line">                    c = GG(c, d, a, b, x[k+<span class="number">11</span>], S23, <span class="number">0x265E5A51</span>);</span><br><span class="line">                    b = GG(b, c, d, a, x[k+<span class="number">0</span>],  S24, <span class="number">0xE9B6C7AA</span>);</span><br><span class="line">                    a = GG(a, b, c, d, x[k+<span class="number">5</span>],  S21, <span class="number">0xD62F105D</span>);</span><br><span class="line">                    d = GG(d, a, b, c, x[k+<span class="number">10</span>], S22, <span class="number">0x2441453</span>);</span><br><span class="line">                    c = GG(c, d, a, b, x[k+<span class="number">15</span>], S23, <span class="number">0xD8A1E681</span>);</span><br><span class="line">                    b = GG(b, c, d, a, x[k+<span class="number">4</span>],  S24, <span class="number">0xE7D3FBC8</span>);</span><br><span class="line">                    a = GG(a, b, c, d, x[k+<span class="number">9</span>],  S21, <span class="number">0x21E1CDE6</span>);</span><br><span class="line">                    d = GG(d, a, b, c, x[k+<span class="number">14</span>], S22, <span class="number">0xC33707D6</span>);</span><br><span class="line">                    c = GG(c, d, a, b, x[k+<span class="number">3</span>],  S23, <span class="number">0xF4D50D87</span>);</span><br><span class="line">                    b = GG(b, c, d, a, x[k+<span class="number">8</span>],  S24, <span class="number">0x455A14ED</span>);</span><br><span class="line">                    a = GG(a, b, c, d, x[k+<span class="number">13</span>], S21, <span class="number">0xA9E3E905</span>);</span><br><span class="line">                    d = GG(d, a, b, c, x[k+<span class="number">2</span>],  S22, <span class="number">0xFCEFA3F8</span>);</span><br><span class="line">                    c = GG(c, d, a, b, x[k+<span class="number">7</span>],  S23, <span class="number">0x676F02D9</span>);</span><br><span class="line">                    b = GG(b, c, d, a, x[k+<span class="number">12</span>], S24, <span class="number">0x8D2A4C8A</span>);</span><br><span class="line">                    a = HH(a, b, c, d, x[k+<span class="number">5</span>],  S31, <span class="number">0xFFFA3942</span>);</span><br><span class="line">                    d = HH(d, a, b, c, x[k+<span class="number">8</span>],  S32, <span class="number">0x8771F681</span>);</span><br><span class="line">                    c = HH(c, d, a, b, x[k+<span class="number">11</span>], S33, <span class="number">0x6D9D6122</span>);</span><br><span class="line">                    b = HH(b, c, d, a, x[k+<span class="number">14</span>], S34, <span class="number">0xFDE5380C</span>);</span><br><span class="line">                    a = HH(a, b, c, d, x[k+<span class="number">1</span>],  S31, <span class="number">0xA4BEEA44</span>);</span><br><span class="line">                    d = HH(d, a, b, c, x[k+<span class="number">4</span>],  S32, <span class="number">0x4BDECFA9</span>);</span><br><span class="line">                    c = HH(c, d, a, b, x[k+<span class="number">7</span>],  S33, <span class="number">0xF6BB4B60</span>);</span><br><span class="line">                    b = HH(b, c, d, a, x[k+<span class="number">10</span>], S34, <span class="number">0xBEBFBC70</span>);</span><br><span class="line">                    a = HH(a, b, c, d, x[k+<span class="number">13</span>], S31, <span class="number">0x289B7EC6</span>);</span><br><span class="line">                    d = HH(d, a, b, c, x[k+<span class="number">0</span>],  S32, <span class="number">0xEAA127FA</span>);</span><br><span class="line">                    c = HH(c, d, a, b, x[k+<span class="number">3</span>],  S33, <span class="number">0xD4EF3085</span>);</span><br><span class="line">                    b = HH(b, c, d, a, x[k+<span class="number">6</span>],  S34, <span class="number">0x4881D05</span>);</span><br><span class="line">                    a = HH(a, b, c, d, x[k+<span class="number">9</span>],  S31, <span class="number">0xD9D4D039</span>);</span><br><span class="line">                    d = HH(d, a, b, c, x[k+<span class="number">12</span>], S32, <span class="number">0xE6DB99E5</span>);</span><br><span class="line">                    c = HH(c, d, a, b, x[k+<span class="number">15</span>], S33, <span class="number">0x1FA27CF8</span>);</span><br><span class="line">                    b = HH(b, c, d, a, x[k+<span class="number">2</span>],  S34, <span class="number">0xC4AC5665</span>);</span><br><span class="line">                    a = II(a, b, c, d, x[k+<span class="number">0</span>],  S41, <span class="number">0xF4292244</span>);</span><br><span class="line">                    d = II(d, a, b, c, x[k+<span class="number">7</span>],  S42, <span class="number">0x432AFF97</span>);</span><br><span class="line">                    c = II(c, d, a, b, x[k+<span class="number">14</span>], S43, <span class="number">0xAB9423A7</span>);</span><br><span class="line">                    b = II(b, c, d, a, x[k+<span class="number">5</span>],  S44, <span class="number">0xFC93A039</span>);</span><br><span class="line">                    a = II(a, b, c, d, x[k+<span class="number">12</span>], S41, <span class="number">0x655B59C3</span>);</span><br><span class="line">                    d = II(d, a, b, c, x[k+<span class="number">3</span>],  S42, <span class="number">0x8F0CCC92</span>);</span><br><span class="line">                    c = II(c, d, a, b, x[k+<span class="number">10</span>], S43, <span class="number">0xFFEFF47D</span>);</span><br><span class="line">                    b = II(b, c, d, a, x[k+<span class="number">1</span>],  S44, <span class="number">0x85845DD1</span>);</span><br><span class="line">                    a = II(a, b, c, d, x[k+<span class="number">8</span>],  S41, <span class="number">0x6FA87E4F</span>);</span><br><span class="line">                    d = II(d, a, b, c, x[k+<span class="number">15</span>], S42, <span class="number">0xFE2CE6E0</span>);</span><br><span class="line">                    c = II(c, d, a, b, x[k+<span class="number">6</span>],  S43, <span class="number">0xA3014314</span>);</span><br><span class="line">                    b = II(b, c, d, a, x[k+<span class="number">13</span>], S44, <span class="number">0x4E0811A1</span>);</span><br><span class="line">                    a = II(a, b, c, d, x[k+<span class="number">4</span>],  S41, <span class="number">0xF7537E82</span>);</span><br><span class="line">                    d = II(d, a, b, c, x[k+<span class="number">11</span>], S42, <span class="number">0xBD3AF235</span>);</span><br><span class="line">                    c = II(c, d, a, b, x[k+<span class="number">2</span>],  S43, <span class="number">0x2AD7D2BB</span>);</span><br><span class="line">                    b = II(b, c, d, a, x[k+<span class="number">9</span>],  S44, <span class="number">0xEB86D391</span>);</span><br><span class="line">                    a = addUnsigned(a, AA);</span><br><span class="line">                    b = addUnsigned(b, BB);</span><br><span class="line">                    c = addUnsigned(c, CC);</span><br><span class="line">                    d = addUnsigned(d, DD);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">var</span> tempValue = wordToHex(a) + wordToHex(b) + wordToHex(c) + wordToHex(d);</span><br><span class="line">                <span class="keyword">return</span> tempValue.toLowerCase();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;)(jQuery);</span><br></pre></td></tr></table></figure>
+<h3 id="三-Base64加密"><a href="#三-Base64加密" class="headerlink" title="三. Base64加密"></a>三. Base64加密</h3><ol>
+<li>H5源码</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span>base64加密<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/jquery.min.js"</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"password"</span> <span class="attr">name</span>=<span class="string">""</span> <span class="attr">id</span>=<span class="string">"basepass"</span> <span class="attr">value</span>=<span class="string">""</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">name</span>=<span class="string">""</span> <span class="attr">id</span>=<span class="string">""</span> <span class="attr">value</span>=<span class="string">"base加密"</span>  ο<span class="attr">nclick</span>=<span class="string">"basefunc(1)"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">name</span>=<span class="string">""</span> <span class="attr">id</span>=<span class="string">""</span> <span class="attr">value</span>=<span class="string">"base解密"</span> ο<span class="attr">nclick</span>=<span class="string">"basefunc(2)"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/funcbase64.js"</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="keyword">function</span> <span class="title">basefunc</span>(<span class="params">e</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> password = $(<span class="string">"#basepass"</span>).val();</span></span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> base = <span class="keyword">new</span> Base64();</span></span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> encypass = base.encode(password);</span></span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> decryptpass = base.decode(encypass);</span></span><br><span class="line"><span class="javascript">            <span class="keyword">if</span>(e == <span class="number">1</span>)&#123;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(<span class="string">"加密之前的密码是："</span>+password);</span></span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(<span class="string">"加密之后的结果是："</span>+encypass);</span></span><br><span class="line">            &#125;</span><br><span class="line"><span class="javascript">            <span class="keyword">else</span> <span class="keyword">if</span>(e == <span class="number">2</span>)&#123;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(<span class="string">"解密之前的结果是："</span>+encypass);</span></span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(<span class="string">"解密之后的结果是："</span>+decryptpass);</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>js源码</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Base64</span>(<span class="params"></span>) </span>&#123;  </span><br><span class="line">   </span><br><span class="line">    <span class="comment">// private property  </span></span><br><span class="line">    _keyStr = <span class="string">"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="</span>;  </span><br><span class="line">   </span><br><span class="line">    <span class="comment">// public method for encoding  </span></span><br><span class="line">    <span class="keyword">this</span>.encode = <span class="function"><span class="keyword">function</span> (<span class="params">input</span>) </span>&#123;  </span><br><span class="line">        <span class="keyword">var</span> output = <span class="string">""</span>;  </span><br><span class="line">        <span class="keyword">var</span> chr1, chr2, chr3, enc1, enc2, enc3, enc4;  </span><br><span class="line">        <span class="keyword">var</span> i = <span class="number">0</span>;  </span><br><span class="line">        input = _utf8_encode(input);  </span><br><span class="line">        <span class="keyword">while</span> (i &lt; input.length) &#123;  </span><br><span class="line">            chr1 = input.charCodeAt(i++);  </span><br><span class="line">            chr2 = input.charCodeAt(i++);  </span><br><span class="line">            chr3 = input.charCodeAt(i++);  </span><br><span class="line">            enc1 = chr1 &gt;&gt; <span class="number">2</span>;  </span><br><span class="line">            enc2 = ((chr1 &amp; <span class="number">3</span>) &lt;&lt; <span class="number">4</span>) | (chr2 &gt;&gt; <span class="number">4</span>);  </span><br><span class="line">            enc3 = ((chr2 &amp; <span class="number">15</span>) &lt;&lt; <span class="number">2</span>) | (chr3 &gt;&gt; <span class="number">6</span>);  </span><br><span class="line">            enc4 = chr3 &amp; <span class="number">63</span>;  </span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">isNaN</span>(chr2)) &#123;  </span><br><span class="line">                enc3 = enc4 = <span class="number">64</span>;  </span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">isNaN</span>(chr3)) &#123;  </span><br><span class="line">                enc4 = <span class="number">64</span>;  </span><br><span class="line">            &#125;  </span><br><span class="line">            output = output +  </span><br><span class="line">            _keyStr.charAt(enc1) + _keyStr.charAt(enc2) +  </span><br><span class="line">            _keyStr.charAt(enc3) + _keyStr.charAt(enc4);  </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="keyword">return</span> output;  </span><br><span class="line">    &#125;  </span><br><span class="line">   </span><br><span class="line">    <span class="comment">// public method for decoding  </span></span><br><span class="line">    <span class="keyword">this</span>.decode = <span class="function"><span class="keyword">function</span> (<span class="params">input</span>) </span>&#123;  </span><br><span class="line">        <span class="keyword">var</span> output = <span class="string">""</span>;  </span><br><span class="line">        <span class="keyword">var</span> chr1, chr2, chr3;  </span><br><span class="line">        <span class="keyword">var</span> enc1, enc2, enc3, enc4;  </span><br><span class="line">        <span class="keyword">var</span> i = <span class="number">0</span>;  </span><br><span class="line">        input = input.replace(<span class="regexp">/[^A-Za-z0-9\+\/\=]/g</span>, <span class="string">""</span>);  </span><br><span class="line">        <span class="keyword">while</span> (i &lt; input.length) &#123;  </span><br><span class="line">            enc1 = _keyStr.indexOf(input.charAt(i++));  </span><br><span class="line">            enc2 = _keyStr.indexOf(input.charAt(i++));  </span><br><span class="line">            enc3 = _keyStr.indexOf(input.charAt(i++));  </span><br><span class="line">            enc4 = _keyStr.indexOf(input.charAt(i++));  </span><br><span class="line">            chr1 = (enc1 &lt;&lt; <span class="number">2</span>) | (enc2 &gt;&gt; <span class="number">4</span>);  </span><br><span class="line">            chr2 = ((enc2 &amp; <span class="number">15</span>) &lt;&lt; <span class="number">4</span>) | (enc3 &gt;&gt; <span class="number">2</span>);  </span><br><span class="line">            chr3 = ((enc3 &amp; <span class="number">3</span>) &lt;&lt; <span class="number">6</span>) | enc4;  </span><br><span class="line">            output = output + <span class="built_in">String</span>.fromCharCode(chr1);  </span><br><span class="line">            <span class="keyword">if</span> (enc3 != <span class="number">64</span>) &#123;  </span><br><span class="line">                output = output + <span class="built_in">String</span>.fromCharCode(chr2);  </span><br><span class="line">            &#125;  </span><br><span class="line">            <span class="keyword">if</span> (enc4 != <span class="number">64</span>) &#123;  </span><br><span class="line">                output = output + <span class="built_in">String</span>.fromCharCode(chr3);  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;  </span><br><span class="line">        output = _utf8_decode(output);  </span><br><span class="line">        <span class="keyword">return</span> output;  </span><br><span class="line">    &#125;  </span><br><span class="line">   </span><br><span class="line">    <span class="comment">// private method for UTF-8 encoding  </span></span><br><span class="line">    _utf8_encode = <span class="function"><span class="keyword">function</span> (<span class="params">string</span>) </span>&#123;  </span><br><span class="line">        string = string.replace(<span class="regexp">/\r\n/g</span>,<span class="string">"\n"</span>);  </span><br><span class="line">        <span class="keyword">var</span> utftext = <span class="string">""</span>;  </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> n = <span class="number">0</span>; n &lt; string.length; n++) &#123;  </span><br><span class="line">            <span class="keyword">var</span> c = string.charCodeAt(n);  </span><br><span class="line">            <span class="keyword">if</span> (c &lt; <span class="number">128</span>) &#123;  </span><br><span class="line">                utftext += <span class="built_in">String</span>.fromCharCode(c);  </span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span>((c &gt; <span class="number">127</span>) &amp;&amp; (c &lt; <span class="number">2048</span>)) &#123;  </span><br><span class="line">                utftext += <span class="built_in">String</span>.fromCharCode((c &gt;&gt; <span class="number">6</span>) | <span class="number">192</span>);  </span><br><span class="line">                utftext += <span class="built_in">String</span>.fromCharCode((c &amp; <span class="number">63</span>) | <span class="number">128</span>);  </span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;  </span><br><span class="line">                utftext += <span class="built_in">String</span>.fromCharCode((c &gt;&gt; <span class="number">12</span>) | <span class="number">224</span>);  </span><br><span class="line">                utftext += <span class="built_in">String</span>.fromCharCode(((c &gt;&gt; <span class="number">6</span>) &amp; <span class="number">63</span>) | <span class="number">128</span>);  </span><br><span class="line">                utftext += <span class="built_in">String</span>.fromCharCode((c &amp; <span class="number">63</span>) | <span class="number">128</span>);  </span><br><span class="line">            &#125;  </span><br><span class="line">   </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="keyword">return</span> utftext;  </span><br><span class="line">    &#125;  </span><br><span class="line">   </span><br><span class="line">    <span class="comment">// private method for UTF-8 decoding  </span></span><br><span class="line">    _utf8_decode = <span class="function"><span class="keyword">function</span> (<span class="params">utftext</span>) </span>&#123;  </span><br><span class="line">        <span class="keyword">var</span> string = <span class="string">""</span>;  </span><br><span class="line">        <span class="keyword">var</span> i = <span class="number">0</span>;  </span><br><span class="line">        <span class="keyword">var</span> c = c1 = c2 = <span class="number">0</span>;  </span><br><span class="line">        <span class="keyword">while</span> ( i &lt; utftext.length ) &#123;  </span><br><span class="line">            c = utftext.charCodeAt(i);  </span><br><span class="line">            <span class="keyword">if</span> (c &lt; <span class="number">128</span>) &#123;  </span><br><span class="line">                string += <span class="built_in">String</span>.fromCharCode(c);  </span><br><span class="line">                i++;  </span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span>((c &gt; <span class="number">191</span>) &amp;&amp; (c &lt; <span class="number">224</span>)) &#123;  </span><br><span class="line">                c2 = utftext.charCodeAt(i+<span class="number">1</span>);  </span><br><span class="line">                string += <span class="built_in">String</span>.fromCharCode(((c &amp; <span class="number">31</span>) &lt;&lt; <span class="number">6</span>) | (c2 &amp; <span class="number">63</span>));  </span><br><span class="line">                i += <span class="number">2</span>;  </span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;  </span><br><span class="line">                c2 = utftext.charCodeAt(i+<span class="number">1</span>);  </span><br><span class="line">                c3 = utftext.charCodeAt(i+<span class="number">2</span>);  </span><br><span class="line">                string += <span class="built_in">String</span>.fromCharCode(((c &amp; <span class="number">15</span>) &lt;&lt; <span class="number">12</span>) | ((c2 &amp; <span class="number">63</span>) &lt;&lt; <span class="number">6</span>) | (c3 &amp; <span class="number">63</span>));  </span><br><span class="line">                i += <span class="number">3</span>;  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="keyword">return</span> string;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/爬虫/" rel="tag"># 爬虫</a>
+          
+            <a href="/tags/反爬/" rel="tag"># 反爬</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/07/python/spider/scrapy/20200715_ ajaxcrawl/" rel="next" title="scrapy源码12 - ajaxcrawl">
+                <i class="fa fa-chevron-left"></i> scrapy源码12 - ajaxcrawl
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/10/java/其他/20201001_java8新特性/" rel="prev" title="Java8新特性总结">
+                Java8新特性总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="崔永华（Andy）">
+          <p class="site-author-name" itemprop="name">崔永华（Andy）</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">44</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/cuiyonghua6" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://blog.csdn.net/cui_yonghua" target="_blank" title="CSDN">
+                  
+                    <i class="fa fa-fw fa-bandcamp"></i>
+                  
+                  CSDN
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/cuiyonghua" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/cuiyonghua" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一-sha1加密"><span class="nav-number">1.</span> <span class="nav-text">一. sha1加密</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二-MD5加密"><span class="nav-number">2.</span> <span class="nav-text">二. MD5加密</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三-Base64加密"><span class="nav-number">3.</span> <span class="nav-text">三. Base64加密</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">崔永华（Andy）</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
