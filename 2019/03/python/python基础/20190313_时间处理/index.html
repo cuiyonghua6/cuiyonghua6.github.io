@@ -104,7 +104,7 @@
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190723101936807.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N1aV95b25naHVh,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190723102153414.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N1aV95b25naHVh,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190723102254741.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N1aV95b25naHVh,size_16,color_FFFFFF,t_70">
-<meta property="og:updated_time" content="2020-10-28T11:53:34.370Z">
+<meta property="og:updated_time" content="2020-11-30T08:27:54.333Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python时间处理">
 <meta name="twitter:description" content="PyInstaller使用（简单）">
@@ -452,6 +452,8 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">timeStamp = <span class="number">1556502800</span></span><br><span class="line">timeArray = time.localtime(timeStamp)</span><br><span class="line">otherStyleTime = time.strftime(<span class="string">"%Y-%m-%d %H:%M:%S"</span>, timeArray)</span><br><span class="line">print(otherStyleTime)</span><br></pre></td></tr></table></figure>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line">timeStamp = <span class="number">1557802800</span></span><br><span class="line">dateArray = datetime.datetime.utcfromtimestamp(timeStamp)</span><br><span class="line">otherStyleTime = dateArray.strftime(<span class="string">"%Y-%m-%d %H:%M:%S"</span>)</span><br><span class="line">print(otherStyleTime)</span><br></pre></td></tr></table></figure>
 <h4 id="时间转换"><a href="#时间转换" class="headerlink" title="时间转换"></a>时间转换</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime, timedelta</span><br><span class="line">aa = <span class="string">'2020-10-28T01:14:42.000Z'</span></span><br><span class="line"><span class="comment"># aa= '2018-08-06T10:00:00.000Z'</span></span><br><span class="line">date_ = datetime.strptime(aa, <span class="string">"%Y-%m-%dT%H:%M:%S.%fZ"</span>)</span><br><span class="line"><span class="comment">#local_time = 2018-08-06 18:00:00</span></span><br><span class="line">local_time = date_ + timedelta(hours=<span class="number">8</span>)</span><br><span class="line">print(local_time)  <span class="comment"># 输出: 2020-10-28 09:14:42</span></span><br></pre></td></tr></table></figure>
+<h4 id="gmt时间"><a href="#gmt时间" class="headerlink" title="gmt时间"></a>gmt时间</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line">print(time.strftime(<span class="string">"%Y-%m-%d %X"</span>,time.localtime()))</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line">GMT_FORMAT = <span class="string">'%a %b %d %Y %H:%M:%S GMT 0800 (中国标准时间)'</span></span><br><span class="line"></span><br><span class="line">print(datetime.utcnow().strftime(GMT_FORMAT))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Thu Nov 12 2020 09:50:44 GMT 0800 (中国标准时间)</span></span><br><span class="line"><span class="comment"># Thu Nov 12 2020 17:41:41 GMT 0800 (中国标准时间)</span></span><br><span class="line"><span class="comment"># Fri Nov 13 2020 15:31:53 GMT 0800 (中国标准时间)</span></span><br></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -598,7 +600,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">125</span>
+                <span class="site-state-item-count">127</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -609,7 +611,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">40</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -620,7 +622,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-count">46</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -693,7 +695,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#PyInstaller使用（简单）"><span class="nav-number">1.</span> <span class="nav-text">PyInstaller使用（简单）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#datetime"><span class="nav-number">1.0.1.</span> <span class="nav-text">datetime</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#练习"><span class="nav-number">1.0.2.</span> <span class="nav-text">练习</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#时间转换"><span class="nav-number">1.0.3.</span> <span class="nav-text">时间转换</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#PyInstaller使用（简单）"><span class="nav-number">1.</span> <span class="nav-text">PyInstaller使用（简单）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#datetime"><span class="nav-number">1.0.1.</span> <span class="nav-text">datetime</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#练习"><span class="nav-number">1.0.2.</span> <span class="nav-text">练习</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#时间转换"><span class="nav-number">1.0.3.</span> <span class="nav-text">时间转换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gmt时间"><span class="nav-number">1.0.4.</span> <span class="nav-text">gmt时间</span></a></li></ol></li></ol></div>
             
 
           </div>
