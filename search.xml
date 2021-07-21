@@ -131,8 +131,8 @@
       </categories>
       <tags>
         <tag>数据库</tag>
-        <tag>MySQL</tag>
         <tag>PostgreSQL</tag>
+        <tag>MySQL</tag>
       </tags>
   </entry>
   <entry>
@@ -415,8 +415,8 @@
       </categories>
       <tags>
         <tag>数据库</tag>
-        <tag>MySQL</tag>
         <tag>PostgreSQL</tag>
+        <tag>MySQL</tag>
       </tags>
   </entry>
   <entry>
@@ -767,19 +767,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[解释器模式详解 (没有附java语言源码)]]></title>
-    <url>%2F2019%2F06%2Fjava%2Fjava%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%2F20190624_%E8%A7%A3%E9%87%8A%E5%99%A8%2F</url>
-    <content type="text"><![CDATA[解释器模式（Interpreter Pattern）： 定义一个语言，定义它的文法的一种表示，并定义一个解释器，该解释器使用该表示来解释语言中的句子。（Given a language, define are presentation for its grammar along with an interpreter that uses there presentation to interpret sentences in the language.） 介绍： 是一种不常用的设计模式； 用于描述如何构成一个简单的语言解释器，主要用于使用面向对象语言开发的编译器和解释器设计； 当我们需要开发一种新的语言时，可以考虑使用解释器模式； 尽量不要使用解释器模式，后期维护会有很大麻烦。在项目中，可以使用Jruby，Groovy、java的js引擎来替代解释器的作用，弥补java语言的不足。 开发中常见的场景： EL表达式式的处理； 正则表达式解释器； SQL语法的解释器； 数学表达式解析器，如现成的工具包:Math Expression String Parser、Expression4J等。 如果想了解更多设计模式，可点击：设计模式概述 以及 23种设计模式的介绍]]></content>
-      <categories>
-        <category>Java</category>
-        <category>java设计模式</category>
-      </categories>
-      <tags>
-        <tag>java</tag>
-        <tag>java设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[状态模式详解 (附java语言源码)]]></title>
     <url>%2F2019%2F06%2Fjava%2Fjava%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%2F20190624_%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F%2F</url>
     <content type="text"><![CDATA[状态模式（State Pattern）: 允许一个对象在其内部状态改变时改变它的行为。对象看起来似乎修改了它所属的类。(Allow an object to alter its behavior when its internal state changes. The object will appear to change its class.) 核心：用于解决系统中 复杂对象的状态转换 以及不同状态下行为 的封装问题 现实场景： 电梯的运行：维修、正常、自动关门、自动开门、向上运行、向下运行、消防状态； 红绿灯：红灯、黄灯、绿灯； 企业或政府系统：公文的审批状态； 报销单据审批状态； 假条审批； 网上购物时，订单的状态下单：已付款，已发货，送货中，已收货。 开发中常见的场景： 银行系统中账号状态的管理； OA系统中公文状态的管理； 酒店系统中，房间状态的管理； 线程对象各状态之间的切换 案例场景：在酒店系统中，房间的状态变化：已预订，已入住，空闲。（当遇到这种需要频繁的修改状态时，考虑状态模式） 该过程用状态模式实现，大致有以下4步： 步骤1：定义State抽象状态类，定义一个接口以封装与Context的一个特定状态相关的行为。 123public interface State &#123; void handle();&#125; 步骤2：定义Context环境类，维护一个ConcreteState子类的实例，这个实例定义当前的状态。 1234567891011121314/** * Context类 : 房间对象 * 如果是银行系统，这个Context类就是账号。根据金额不同，切换不同的状态！ */public class HomeContext &#123; private State state; public void setState(State s)&#123; System.out.println("修改状态！"); state = s; state.handle(); &#125;&#125; 步骤3：定义ConcreteState具体状态类，每一个类封装了一个状态对应的行为 1.已预订状态12345678910/** * 已预订状态 */public class BookedState implements State &#123; @Override public void handle() &#123; System.out.println("房间已预订！别人不能定！"); &#125;&#125; 2.已入住状态12345678910/** * 已入住状态 */public class CheckedInState implements State &#123; @Override public void handle() &#123; System.out.println("房间已入住！请勿打扰！"); &#125;&#125; 3.空闲状态12345678910/** * 空闲状态 */public class FreeState implements State &#123; @Override public void handle() &#123; System.out.println("房间空闲！！！没人住！"); &#125;&#125; 步骤4：测试 12345678public class Client &#123; public static void main(String[] args) &#123; HomeContext ctx = new HomeContext(); ctx.setState(new FreeState()); ctx.setState(new BookedState()); &#125;&#125; 执行结果如下图所示： 如果想了解更多设计模式，可点击：设计模式概述 以及 23种设计模式的介绍]]></content>
@@ -796,6 +783,19 @@
     <title><![CDATA[访问者模式详解 (没有附java语言源码)]]></title>
     <url>%2F2019%2F06%2Fjava%2Fjava%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%2F20190624_%E8%AE%BF%E9%97%AE%E8%80%85%2F</url>
     <content type="text"><![CDATA[访问者模式（Visitor Pattern）: 表示一个作用于某对象结构中的各元素的操作。它使你可以在不改变各元素类别的前提下定义作用于这些元素的新操作。(Represent an operation to be performedon the elements of an object structure. Visitor lets you define a new operation without changing the classes of the elements on which it operates.) 模式动机：对于存储在一个集合中的对象，他们可能具有不同的类型(即使有一个公共的接口)，对于该集合中的对象，可以接受一类称为访问者的对象来访问，不同的访问者其访问方式也有所不同。 开发中的场景 : (应用范围非常窄，了解即可)： XML文档解析器设计; 编译器的设计; 复杂集合对象的处理 如果想了解更多设计模式，可点击：设计模式概述 以及 23种设计模式的介绍]]></content>
+      <categories>
+        <category>Java</category>
+        <category>java设计模式</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>java设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[解释器模式详解 (没有附java语言源码)]]></title>
+    <url>%2F2019%2F06%2Fjava%2Fjava%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%2F20190624_%E8%A7%A3%E9%87%8A%E5%99%A8%2F</url>
+    <content type="text"><![CDATA[解释器模式（Interpreter Pattern）： 定义一个语言，定义它的文法的一种表示，并定义一个解释器，该解释器使用该表示来解释语言中的句子。（Given a language, define are presentation for its grammar along with an interpreter that uses there presentation to interpret sentences in the language.） 介绍： 是一种不常用的设计模式； 用于描述如何构成一个简单的语言解释器，主要用于使用面向对象语言开发的编译器和解释器设计； 当我们需要开发一种新的语言时，可以考虑使用解释器模式； 尽量不要使用解释器模式，后期维护会有很大麻烦。在项目中，可以使用Jruby，Groovy、java的js引擎来替代解释器的作用，弥补java语言的不足。 开发中常见的场景： EL表达式式的处理； 正则表达式解释器； SQL语法的解释器； 数学表达式解析器，如现成的工具包:Math Expression String Parser、Expression4J等。 如果想了解更多设计模式，可点击：设计模式概述 以及 23种设计模式的介绍]]></content>
       <categories>
         <category>Java</category>
         <category>java设计模式</category>
