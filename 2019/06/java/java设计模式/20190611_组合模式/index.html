@@ -1,423 +1,1763 @@
-<!doctype html>
-
-
-
-  
-
-
-<html class="theme-next pisces use-motion" lang="zh-Hans">
+<!DOCTYPE html>
+<html>
 <head><meta name="generator" content="Hexo 3.9.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
-
-
-
-
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
-
-
-  <meta name="keywords" content="java,java设计模式,">
-
-
-
-
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
-
-
-
-
-
-
-<meta name="description" content="组合模式（Composite Pattern）：  将对象组合成树形结构以表示“部分-整体”的层次结构。Composite 使得客户对单个对象和复合对象的使用具有一致性。（Compose object into tree structures torepresent part-whole hierarchy. Composite lets clients treat individual obje">
-<meta name="keywords" content="java,java设计模式">
-<meta property="og:type" content="article">
-<meta property="og:title" content="组合模式详解 (附java语言源码)">
-<meta property="og:url" content="http://yoursite.com/2019/06/java/java设计模式/20190611_组合模式/index.html">
+  <meta charset="utf-8">
+  <title>组合模式详解 (附java语言源码) | 崔永华的个人网站</title>
+  <meta name="keywords" content=" java , java设计模式 ">
+  <meta name="description" content="组合模式详解 (附java语言源码) | 崔永华的个人网站">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta property="og:type" content="website">
+<meta property="og:title" content="分类">
+<meta property="og:url" content="http://yoursite.com/categories/index.html">
 <meta property="og:site_name" content="崔永华的个人网站">
-<meta property="og:description" content="组合模式（Composite Pattern）：  将对象组合成树形结构以表示“部分-整体”的层次结构。Composite 使得客户对单个对象和复合对象的使用具有一致性。（Compose object into tree structures torepresent part-whole hierarchy. Composite lets clients treat individual obje">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20190611134932743.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N1aV95b25naHVh,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20190611150417947.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N1aV95b25naHVh,size_16,color_FFFFFF,t_70">
-<meta property="og:updated_time" content="2020-10-19T12:10:18.358Z">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-07-04T03:30:52.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="组合模式详解 (附java语言源码)">
-<meta name="twitter:description" content="组合模式（Composite Pattern）：  将对象组合成树形结构以表示“部分-整体”的层次结构。Composite 使得客户对单个对象和复合对象的使用具有一致性。（Compose object into tree structures torepresent part-whole hierarchy. Composite lets clients treat individual obje">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190611134932743.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N1aV95b25naHVh,size_16,color_FFFFFF,t_70">
+<meta name="twitter:title" content="分类">
 
 
+<link rel="icon" href="/img/avatar.jpg">
 
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Pisces',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
-    fancybox: true,
-    motion: true,
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-dark.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0"></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
 </script>
 
-
-
-  <link rel="canonical" href="http://yoursite.com/2019/06/java/java设计模式/20190611_组合模式/">
-
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
 
 
 
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js"></script>
 
-  <title> 组合模式详解 (附java语言源码) | 崔永华的个人网站 </title>
+<script src="/js/iconfont.js?v=1.1.0"></script>
+
 </head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail ">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">崔永华的个人网站</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-      
-        <h1 class="site-subtitle" itemprop="description"></h1>
-      
-  </div>
-
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
-            
-            分类
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
-            
-            关于
-          </a>
-        </li>
-      
-
-      
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
-            
-            搜索
-          </a>
-        </li>
-      
-    </ul>
-  
-
-  
-    <div class="site-search">
-      
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
-    <div class="local-search-input-wrapper">
-      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
-    </div>
-  </div>
-  <div id="local-search-result"></div>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="undefined">
+  <input class="theme_blog_path" value>
+  <input id="theme_shortcut" value="true">
+  <input id="theme_highlight_on" value="true">
+  <input id="theme_code_copy" value="true">
 </div>
 
 
 
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="/img/avatar.jpg"/>
+</a>
+<div class="author">
+    <span>崔永华</span>
+</div>
+
+<div class="icon">
+    
+        
+            <a title="csdn"
+               href="https://cuiyonghua.blog.csdn.net/"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-csdn"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="github"
+               href="https://github.com/cuiyonghua6"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-github"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="facebook"
+               href="https://www.facebook.com/faker.tops"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-facebook"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="instagram"
+               href="https://www.facebook.com/faker.tops"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-instagram"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="reddit"
+               href="https://www.reddit.com/user/yelog/"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-reddit"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="weibo"
+               href="http://weibo.com/u/2307534817"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-weibo"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="jianshu"
+               href="https://www.jianshu.com/u/ff56736de7cf"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-jianshu"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="zhihu"
+               href="https://www.zhihu.com/people/jaytp/activities"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-zhihu"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="oschina"
+               href="https://my.oschina.net/yelog"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-oschina"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="email"
+               href="mailto:cui_yonghua6@163.com"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-email"></use>
+                    </svg>
+                
+            </a>
+        
+    
+</div>
+
+
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="全部文章">全部文章
+            
+                <small>(115)</small>
+            
+        </div>
+    </li>
+    
+        
+            
+                <li>
+                    <div data-rel="数据库">
+                        <i class="fold iconfont icon-right"></i>
+                        
+                        数据库
+                        <small>(26)</small>
+                        
+                    </div>
+                    
+                        <ul class="sub hide">
+                            
+                                <li>
+                                    <div data-rel="数据库<--->MySQL">
+                                        <i class="fold iconfont icon-right"></i>
+                                        
+                                        MySQL
+                                        
+                                            <small>(6
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                        <ul class="sub hide">
+                                            
+                                                <li>
+                                                    <div data-rel="数据库<--->MySQLPostgreSQL">
+                                                        
+                                                        PostgreSQL
+                                                        
+                                                            <small>(1)</small>
+                                                        
+                                                    </div>
+                                                </li>
+                                            
+                                        </ul>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="数据库<--->PostgreSQL">
+                                        
+                                        PostgreSQL
+                                        
+                                            <small>(20
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+                <li>
+                    <div data-rel="Java">
+                        <i class="fold iconfont icon-right"></i>
+                        
+                        Java
+                        <small>(36)</small>
+                        
+                    </div>
+                    
+                        <ul class="sub hide">
+                            
+                                <li>
+                                    <div data-rel="Java<--->java基础">
+                                        
+                                        java基础
+                                        
+                                            <small>(6
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="Java<--->java数据结构和算法">
+                                        
+                                        java数据结构和算法
+                                        
+                                            <small>(2
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="Java<--->java案例">
+                                        
+                                        java案例
+                                        
+                                            <small>(1
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="Java<--->java设计模式">
+                                        
+                                        java设计模式
+                                        
+                                            <small>(25
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="Java<--->新特性">
+                                        
+                                        新特性
+                                        
+                                            <small>(2
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+                <li>
+                    <div data-rel="python">
+                        <i class="fold iconfont icon-right"></i>
+                        
+                        python
+                        <small>(51)</small>
+                        
+                    </div>
+                    
+                        <ul class="sub hide">
+                            
+                                <li>
+                                    <div data-rel="python<--->fastapi">
+                                        
+                                        fastapi
+                                        
+                                            <small>(1
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="python<--->flask">
+                                        
+                                        flask
+                                        
+                                            <small>(1
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="python<--->python基础">
+                                        
+                                        python基础
+                                        
+                                            <small>(27
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="python<--->python案例">
+                                        
+                                        python案例
+                                        
+                                            <small>(1
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="python<--->爬虫">
+                                        <i class="fold iconfont icon-right"></i>
+                                        
+                                        爬虫
+                                        
+                                            <small>(20
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                        <ul class="sub hide">
+                                            
+                                                <li>
+                                                    <div data-rel="python<--->爬虫pyppeteer">
+                                                        
+                                                        pyppeteer
+                                                        
+                                                            <small>(2)</small>
+                                                        
+                                                    </div>
+                                                </li>
+                                            
+                                                <li>
+                                                    <div data-rel="python<--->爬虫scrapy">
+                                                        
+                                                        scrapy
+                                                        
+                                                            <small>(12)</small>
+                                                        
+                                                    </div>
+                                                </li>
+                                            
+                                                <li>
+                                                    <div data-rel="python<--->爬虫selenium">
+                                                        
+                                                        selenium
+                                                        
+                                                            <small>(2)</small>
+                                                        
+                                                    </div>
+                                                </li>
+                                            
+                                        </ul>
+                                    
+                                </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+                <li>
+                    <div data-rel="编程语言">
+                        
+                        编程语言
+                        <small>(1)</small>
+                        
+                    </div>
+                    
+                </li>
+            
+        
+    
+        
+            
+                <li>
+                    <div data-rel="自然语言处理">
+                        <i class="fold iconfont icon-right"></i>
+                        
+                        自然语言处理
+                        <small>(1)</small>
+                        
+                    </div>
+                    
+                        <ul class="sub hide">
+                            
+                                <li>
+                                    <div data-rel="自然语言处理<--->nllp">
+                                        <i class="fold iconfont icon-right"></i>
+                                        
+                                        nllp
+                                        
+                                            <small>(1
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                        <ul class="sub hide">
+                                            
+                                                <li>
+                                                    <div data-rel="自然语言处理<--->nllpsjlf">
+                                                        
+                                                        sjlf
+                                                        
+                                                            <small>(1)</small>
+                                                        
+                                                    </div>
+                                                </li>
+                                            
+                                        </ul>
+                                    
+                                </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+            
+            
     </div>
-  
-</nav>
+    <div>
+        
+            <a class="about  hasFriend  site_url"
+               
+               href="/about">关于</a>
+        
+        <a style="width: 50%"
+                
+                                           class="friends">友链</a>
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="115">
 
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
 
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        友情链接
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
             
+            <li><a target="_blank" href="http://yelog.org/">叶落阁</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">全部文章</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">大纲</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
 
-  <div id="posts" class="posts-expand">
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>fastapi</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>flask</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Hadoop</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>java</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>java基础</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>java打印图形</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>java数据结构和算法</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>java新特性</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>java案例</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>java设计模式</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>MySQL</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>PostgreSQL</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>pyppeteer</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>python</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>python3</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>python基础</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>python案例</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>scrapy</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>selenium</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>代码雨</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>反爬</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>大数据</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>数据库</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>爬虫</a>
+            </li>
+        
+    </div>
+
+</div>
+
     
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/java/java设计模式/20190611_组合模式/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="崔永华（Andy）">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="崔永华的个人网站">
-    </span>
-
-    
-      <header class="post-header">
-
+    <nav id="title-list-nav">
         
+        <a  class="全部文章 python python案例 "
+           href="/2020/12/python/my_application/20201202_将excel中的内容存入mysql/"
+           data-tag="python,python案例"
+           data-author="" >
+            <span class="post-title" title="将excel中的内容存入mysql">将excel中的内容存入mysql</span>
+            <span class="post-date" title="2020-12-02 15:24:20">2020/12/02</span>
+        </a>
         
-          <h2 class="post-title" itemprop="name headline">
-            
-            
-              
-                组合模式详解 (附java语言源码)
-              
-            
-          </h2>
+        <a  class="全部文章 python "
+           href="/2020/10/python/my_application/20201015_代码雨/"
+           data-tag="python,python案例,代码雨"
+           data-author="" >
+            <span class="post-title" title="用python实现代码雨（电影黑客帝国里的效果，代码可直接运行）">用python实现代码雨（电影黑客帝国里的效果，代码可直接运行）</span>
+            <span class="post-date" title="2020-10-15 15:24:20">2020/10/15</span>
+        </a>
         
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-11T01:30:00+08:00">
-                2019-06-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/java设计模式/" itemprop="url" rel="index">
-                    <span itemprop="name">java设计模式</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-            <span class="post-meta-divider">|</span>
-            <span class="page-pv">被围观
-            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
-            </span>
-          
-
-          
-
-          
+        <a  class="全部文章 Java 新特性 "
+           href="/2020/10/java/其他/20201002_java9到14新特性/"
+           data-tag="java,java新特性"
+           data-author="" >
+            <span class="post-title" title="JDK9到14的重要新特性">JDK9到14的重要新特性</span>
+            <span class="post-date" title="2020-10-02 23:19:19">2020/10/02</span>
+        </a>
+        
+        <a  class="全部文章 Java 新特性 "
+           href="/2020/10/java/其他/20201001_java8新特性/"
+           data-tag="java,java新特性"
+           data-author="" >
+            <span class="post-title" title="Java8新特性总结">Java8新特性总结</span>
+            <span class="post-date" title="2020-10-01 23:19:19">2020/10/01</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 "
+           href="/2020/09/python/spider/20200929_三种加密方式/"
+           data-tag="python,爬虫,反爬"
+           data-author="" >
+            <span class="post-title" title="三种加密方式 sha1加密、MD5加密、Base64加密 (附H5源码和js源码)">三种加密方式 sha1加密、MD5加密、Base64加密 (附H5源码和js源码)</span>
+            <span class="post-date" title="2020-09-29 10:30:00">2020/09/29</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 scrapy "
+           href="/2020/07/python/spider/scrapy/20200715_ ajaxcrawl/"
+           data-tag="python,爬虫,scrapy"
+           data-author="" >
+            <span class="post-title" title="scrapy源码12 - ajaxcrawl">scrapy源码12 - ajaxcrawl</span>
+            <span class="post-date" title="2020-07-15 10:35:00">2020/07/15</span>
+        </a>
+        
+        <a  class="全部文章 数据库 MySQL "
+           href="/2020/07/database/mysql/20200713_mysql与pg用户管理对比/"
+           data-tag="数据库,PostgreSQL,MySQL"
+           data-author="" >
+            <span class="post-title" title="MySQL用户管理与PostgreSQL用户管理的对比">MySQL用户管理与PostgreSQL用户管理的对比</span>
+            <span class="post-date" title="2020-07-13 15:24:20">2020/07/13</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 scrapy "
+           href="/2020/07/python/spider/scrapy/20200713_ webclient/"
+           data-tag="python,爬虫,scrapy"
+           data-author="" >
+            <span class="post-title" title="scrapy源码11 - webclient">scrapy源码11 - webclient</span>
+            <span class="post-date" title="2020-07-13 10:35:00">2020/07/13</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 scrapy "
+           href="/2020/07/python/spider/scrapy/20200712_tls/"
+           data-tag="python,爬虫,scrapy"
+           data-author="" >
+            <span class="post-title" title="scrapy源码10 - tls">scrapy源码10 - tls</span>
+            <span class="post-date" title="2020-07-12 10:35:00">2020/07/12</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 scrapy "
+           href="/2020/07/python/spider/scrapy/20200711_ downloadermiddleware/"
+           data-tag="python,爬虫,scrapy"
+           data-author="" >
+            <span class="post-title" title="scrapy源码9 - downloadermiddleware">scrapy源码9 - downloadermiddleware</span>
+            <span class="post-date" title="2020-07-11 10:35:00">2020/07/11</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 scrapy "
+           href="/2020/07/python/spider/scrapy/20200709_ contextfactory/"
+           data-tag="python,爬虫,scrapy"
+           data-author="" >
+            <span class="post-title" title="scrapy源码8 - contextfactory">scrapy源码8 - contextfactory</span>
+            <span class="post-date" title="2020-07-09 10:35:00">2020/07/09</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 scrapy "
+           href="/2020/07/python/spider/scrapy/20200708_downloader/"
+           data-tag="python,爬虫,scrapy"
+           data-author="" >
+            <span class="post-title" title="scrapy源码7：downloader的源码分析">scrapy源码7：downloader的源码分析</span>
+            <span class="post-date" title="2020-07-08 10:35:00">2020/07/08</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 scrapy "
+           href="/2020/07/python/spider/scrapy/20200707_deffer和parallel/"
+           data-tag="python,爬虫,scrapy"
+           data-author="" >
+            <span class="post-title" title="scrapy源码6：deffer和parallel的源码分析">scrapy源码6：deffer和parallel的源码分析</span>
+            <span class="post-date" title="2020-07-07 10:35:00">2020/07/07</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 pyppeteer "
+           href="/2020/07/python/spider/pyppeteer/02_各种案例/"
+           data-tag="python,pyppeteer"
+           data-author="" >
+            <span class="post-title" title="pyppeteer的各种案例">pyppeteer的各种案例</span>
+            <span class="post-date" title="2020-07-06 10:30:00">2020/07/06</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 scrapy "
+           href="/2020/07/python/spider/scrapy/20200705_ middleware/"
+           data-tag="python,爬虫,scrapy"
+           data-author="" >
+            <span class="post-title" title="scrapy源码5：middleware的源码分析">scrapy源码5：middleware的源码分析</span>
+            <span class="post-date" title="2020-07-05 10:35:00">2020/07/05</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 scrapy "
+           href="/2020/07/python/spider/scrapy/20200704_ spidermw/"
+           data-tag="python,爬虫,scrapy"
+           data-author="" >
+            <span class="post-title" title="scrapy源码4：spidermw的源码分析">scrapy源码4：spidermw的源码分析</span>
+            <span class="post-date" title="2020-07-04 10:35:00">2020/07/04</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 scrapy "
+           href="/2020/07/python/spider/scrapy/20200703_ scraper/"
+           data-tag="python,爬虫,scrapy"
+           data-author="" >
+            <span class="post-title" title="scrapy源码3：scraper的源码分析">scrapy源码3：scraper的源码分析</span>
+            <span class="post-date" title="2020-07-03 10:35:00">2020/07/03</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 scrapy "
+           href="/2020/07/python/spider/scrapy/20200701_scheduler/"
+           data-tag="python,爬虫,scrapy"
+           data-author="" >
+            <span class="post-title" title="scrapy源码2：scheduler的源码分析">scrapy源码2：scheduler的源码分析</span>
+            <span class="post-date" title="2020-07-01 10:35:00">2020/07/01</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 scrapy "
+           href="/2020/06/python/spider/scrapy/20200630_engine/"
+           data-tag="python,爬虫,scrapy"
+           data-author="" >
+            <span class="post-title" title="scrapy源码1：engine的源码分析">scrapy源码1：engine的源码分析</span>
+            <span class="post-date" title="2020-06-30 10:35:00">2020/06/30</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 pyppeteer "
+           href="/2020/06/python/spider/pyppeteer/01_介绍及环境/"
+           data-tag="python,pyppeteer"
+           data-author="" >
+            <span class="post-title" title="pyppeteer的环境搭建，常见参数及2个案例">pyppeteer的环境搭建，常见参数及2个案例</span>
+            <span class="post-date" title="2020-06-28 10:30:00">2020/06/28</span>
+        </a>
+        
+        <a  class="全部文章 编程语言 "
+           href="/2020/06/database/my-post2/"
+           data-tag="大数据,Hadoop"
+           data-author="" >
+            <span class="post-title" title="python...">python...</span>
+            <span class="post-date" title="2020-06-23 15:24:20">2020/06/23</span>
+        </a>
+        
+        <a  class="全部文章 数据库 MySQL "
+           href="/2020/06/database/mysql/20200609_mysql报错1366/"
+           data-tag="数据库,MySQL"
+           data-author="" >
+            <span class="post-title" title="mysql报错：1366, Incorrect string value:for colum 的解决办法">mysql报错：1366, Incorrect string value:for colum 的解决办法</span>
+            <span class="post-date" title="2020-06-09 15:24:20">2020/06/09</span>
+        </a>
+        
+        <a  class="全部文章 python fastapi "
+           href="/2020/04/python/web/flask,tornado,fastapi的比较/"
+           data-tag="python3,fastapi"
+           data-author="" >
+            <span class="post-title" title="flask,tornado,fastapi 的比较">flask,tornado,fastapi 的比较</span>
+            <span class="post-date" title="2020-04-23 15:24:20">2020/04/23</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/12/database/PostgreSql/20191220_对pg中json数据进行增删改/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="向PostgreSQL中json中加入某个字段 或者更新某个字段的SQL语句">向PostgreSQL中json中加入某个字段 或者更新某个字段的SQL语句</span>
+            <span class="post-date" title="2019-12-20 15:24:20">2019/12/20</span>
+        </a>
+        
+        <a  class="全部文章 数据库 MySQL "
+           href="/2019/11/database/es/20191101_es介绍及pyhton操作es/"
+           data-tag="数据库,MySQL"
+           data-author="" >
+            <span class="post-title" title="Elasticsearch的介绍 以及使用python操作es详细步骤">Elasticsearch的介绍 以及使用python操作es详细步骤</span>
+            <span class="post-date" title="2019-11-01 15:24:20">2019/11/01</span>
+        </a>
+        
+        <a  class="全部文章 数据库 MySQL PostgreSQL "
+           href="/2019/10/database/PostgreSql/20191008_更改数据/"
+           data-tag="数据库,PostgreSQL,MySQL"
+           data-author="" >
+            <span class="post-title" title="对数据库中的数据 进行增删改查用到的SQL语句">对数据库中的数据 进行增删改查用到的SQL语句</span>
+            <span class="post-date" title="2019-10-08 15:24:20">2019/10/08</span>
+        </a>
+        
+        <a  class="全部文章 数据库 MySQL "
+           href="/2019/09/database/mysql/20190927_mysql更改数据/"
+           data-tag="数据库,MySQL"
+           data-author="" >
+            <span class="post-title" title="MySQL中增加，更新或删除 数据库中原数据的内容">MySQL中增加，更新或删除 数据库中原数据的内容</span>
+            <span class="post-date" title="2019-09-27 15:24:20">2019/09/27</span>
+        </a>
+        
+        <a  class="全部文章 数据库 MySQL "
+           href="/2019/09/database/mysql/20190921_每5分钟mysql的插入量/"
+           data-tag="数据库,MySQL"
+           data-author="" >
+            <span class="post-title" title="统计每5分钟，MySQL数据库中数据的插入量">统计每5分钟，MySQL数据库中数据的插入量</span>
+            <span class="post-date" title="2019-09-21 15:24:20">2019/09/21</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/09/database/PostgreSql/20190909_查看pg内存/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="查询PostgreSQL占多大内存">查询PostgreSQL占多大内存</span>
+            <span class="post-date" title="2019-09-09 15:24:20">2019/09/09</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190827_内部结构/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：十八. 内部结构">PostgreSQL：十八. 内部结构</span>
+            <span class="post-date" title="2019-08-27 15:24:20">2019/08/27</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190825_配置与监控/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：十七. 服务器配置与数据库监控">PostgreSQL：十七. 服务器配置与数据库监控</span>
+            <span class="post-date" title="2019-08-25 15:24:20">2019/08/25</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190824_高可用/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：十六. 高可用、负载均衡和数据复制">PostgreSQL：十六. 高可用、负载均衡和数据复制</span>
+            <span class="post-date" title="2019-08-24 15:24:20">2019/08/24</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190823_性能优化/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：十五. 性能优化">PostgreSQL：十五. 性能优化</span>
+            <span class="post-date" title="2019-08-23 15:24:20">2019/08/23</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190822_备份还原/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：十四. 数据备份与还原">PostgreSQL：十四. 数据备份与还原</span>
+            <span class="post-date" title="2019-08-22 15:24:20">2019/08/22</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190821_用户管理/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：十三. PostgreSQL的用户管理">PostgreSQL：十三. PostgreSQL的用户管理</span>
+            <span class="post-date" title="2019-08-21 15:24:20">2019/08/21</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190819_事务处理/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：十二. 事务处理">PostgreSQL：十二. 事务处理</span>
+            <span class="post-date" title="2019-08-19 15:24:20">2019/08/19</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190818_触发器/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：十一. 触发器">PostgreSQL：十一. 触发器</span>
+            <span class="post-date" title="2019-08-18 15:24:20">2019/08/18</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190817_视图/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL 十. 视图">PostgreSQL 十. 视图</span>
+            <span class="post-date" title="2019-08-17 15:24:20">2019/08/17</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190816_索引/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL 九. 索引">PostgreSQL 九. 索引</span>
+            <span class="post-date" title="2019-08-16 15:24:20">2019/08/16</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190815_查询语句/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL 八. 查询语句">PostgreSQL 八. 查询语句</span>
+            <span class="post-date" title="2019-08-15 15:24:20">2019/08/15</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190813_插入更新删除数据/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：七. 插入，更新与删除数据">PostgreSQL：七. 插入，更新与删除数据</span>
+            <span class="post-date" title="2019-08-13 15:24:20">2019/08/13</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190811_函数/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：六. PostgreSQL函数">PostgreSQL：六. PostgreSQL函数</span>
+            <span class="post-date" title="2019-08-11 15:24:20">2019/08/11</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190810_数据类型和运算符/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：五. 数据类型和运算符">PostgreSQL：五. 数据类型和运算符</span>
+            <span class="post-date" title="2019-08-10 15:24:20">2019/08/10</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190808_数据库的基本操作/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：三. 数据库的基本操作">PostgreSQL：三. 数据库的基本操作</span>
+            <span class="post-date" title="2019-08-08 15:24:20">2019/08/08</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190807_安装和配置/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：二. PostgreSQL 11 的安装与配置">PostgreSQL：二. PostgreSQL 11 的安装与配置</span>
+            <span class="post-date" title="2019-08-07 15:24:20">2019/08/07</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190806_postgresql介绍/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL介绍">PostgreSQL介绍</span>
+            <span class="post-date" title="2019-08-06 15:24:20">2019/08/06</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190809_数据表的基本操作/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL介绍">PostgreSQL介绍</span>
+            <span class="post-date" title="2019-08-06 15:24:20">2019/08/06</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 "
+           href="/2019/07/python/spider/百度图片爬虫/"
+           data-tag="python"
+           data-author="" >
+            <span class="post-title" title="爬取百度图片并把图片存到本地">爬取百度图片并把图片存到本地</span>
+            <span class="post-date" title="2019-07-04 10:35:00">2019/07/04</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 "
+           href="/2019/07/python/spider/有毒段子爬虫/"
+           data-tag="python"
+           data-author="" >
+            <span class="post-title" title="爬取心灵毒鸡汤、你好污啊 网站数据并存入本地txt文件">爬取心灵毒鸡汤、你好污啊 网站数据并存入本地txt文件</span>
+            <span class="post-date" title="2019-07-03 10:30:00">2019/07/03</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/06/java/java设计模式/20190629_6大设计原则/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="设计模式之6大设计原则详解">设计模式之6大设计原则详解</span>
+            <span class="post-date" title="2019-06-29 01:30:00">2019/06/29</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/06/java/java设计模式/20190624_状态模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="状态模式详解 (附java语言源码)">状态模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-06-24 01:30:00">2019/06/24</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/06/java/java设计模式/20190624_解释器/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="解释器模式详解 (没有附java语言源码)">解释器模式详解 (没有附java语言源码)</span>
+            <span class="post-date" title="2019-06-24 01:30:00">2019/06/24</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/06/java/java设计模式/20190624_访问者/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="访问者模式详解 (没有附java语言源码)">访问者模式详解 (没有附java语言源码)</span>
+            <span class="post-date" title="2019-06-24 01:30:00">2019/06/24</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/06/java/java设计模式/20190624_责任链/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="责任链模式详解 (附java语言源码)">责任链模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-06-24 01:30:00">2019/06/24</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/06/java/java设计模式/20190620_备忘录/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="备忘录模式详解 (附java语言源码)">备忘录模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-06-20 01:30:00">2019/06/20</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/06/java/java设计模式/20190619_中介者/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="中介者模式详解 (附java语言源码)">中介者模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-06-19 01:30:00">2019/06/19</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/06/java/java设计模式/20190618_迭代器/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="迭代器模式详解 (附java语言源码)">迭代器模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-06-18 01:30:00">2019/06/18</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/06/java/java设计模式/20190617_命令模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="命令模式详解 (附java语言源码)">命令模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-06-17 01:30:00">2019/06/17</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/06/java/java设计模式/20190614_模板方法/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="模板方法模式详解 (附java语言源码)">模板方法模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-06-14 01:30:00">2019/06/14</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 selenium "
+           href="/2019/06/python/spider/selenium/20190613_突破屏蔽/"
+           data-tag="python,爬虫,selenium"
+           data-author="" >
+            <span class="post-title" title="如何突破网站对selenium的屏蔽">如何突破网站对selenium的屏蔽</span>
+            <span class="post-date" title="2019-06-13 10:35:00">2019/06/13</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/06/java/java设计模式/20190613_享元模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="享元模式详解 (附java语言源码)">享元模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-06-13 01:30:00">2019/06/13</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/06/java/java设计模式/20190613_外观模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="外观模式详解 (附java语言源码)">外观模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-06-13 01:30:00">2019/06/13</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 selenium "
+           href="/2019/06/python/spider/selenium/20190612_隐式和显示等待/"
+           data-tag="python,爬虫,selenium"
+           data-author="" >
+            <span class="post-title" title="Selenium显示等待和隐式等待的区别">Selenium显示等待和隐式等待的区别</span>
+            <span class="post-date" title="2019-06-12 10:35:00">2019/06/12</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/06/java/java设计模式/20190611_桥接模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="桥接模式详解 (附java语言源码)">桥接模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-06-11 01:30:00">2019/06/11</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/06/java/java设计模式/20190611_组合模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="组合模式详解 (附java语言源码)">组合模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-06-11 01:30:00">2019/06/11</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/06/java/java设计模式/20190605_适配器/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="适配器模式详解 (附java语言源码)">适配器模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-06-05 01:30:00">2019/06/05</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/06/java/java设计模式/20190604_原型模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="原型模式详解 (附java语言源码)">原型模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-06-04 01:30:00">2019/06/04</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/06/java/java设计模式/20190603_代理模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="代理模式详解 (附java语言源码)">代理模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-06-03 01:30:00">2019/06/03</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/05/java/java设计模式/20190531_工厂模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="工厂模式详解 (附java语言源码)">工厂模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-05-31 01:30:00">2019/05/31</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/05/java/java设计模式/20190531_抽象工厂/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="抽象工厂模式详解 (附java语言源码)">抽象工厂模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-05-31 01:30:00">2019/05/31</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/05/java/java设计模式/20190530_装饰模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="装饰模式详解 (附java语言源码)">装饰模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-05-30 01:30:00">2019/05/30</span>
+        </a>
+        
+        <a  class="全部文章 自然语言处理 nllp sjlf "
+           href="/2019/05/ziranyuayn/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="建造者模式详解 (附java语言源码)">建造者模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-05-29 01:30:00">2019/05/29</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/05/java/java设计模式/20190529_建造者/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="建造者模式详解 (附java语言源码)">建造者模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-05-29 01:30:00">2019/05/29</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/05/java/java设计模式/20190528_观察者/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="观察者模式详解 (附java语言源码)">观察者模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-05-28 01:30:00">2019/05/28</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/05/java/java设计模式/20190527_策略模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="策略模式详解（用java语言实现策略模式）">策略模式详解（用java语言实现策略模式）</span>
+            <span class="post-date" title="2019-05-27 01:30:00">2019/05/27</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 "
+           href="/2019/05/python/spider/有用代码/20190526_定时任务/"
+           data-tag="python,爬虫"
+           data-author="" >
+            <span class="post-title" title="爬虫定时任务汇总">爬虫定时任务汇总</span>
+            <span class="post-date" title="2019-05-26 10:35:00">2019/05/26</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/05/java/java设计模式/20190524_单例模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="单例模式详解（附常见的7种单例模式源码）">单例模式详解（附常见的7种单例模式源码）</span>
+            <span class="post-date" title="2019-05-24 01:30:00">2019/05/24</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/05/java/java设计模式/20190524_汇总/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="java设计模式汇总">java设计模式汇总</span>
+            <span class="post-date" title="2019-05-24 01:30:00">2019/05/24</span>
+        </a>
+        
+        <a  class="全部文章 python flask "
+           href="/2019/04/python/flask/20190420_案例_登录/"
+           data-tag="python,flask"
+           data-author="" >
+            <span class="post-title" title="flask案例_登录和遍历操作">flask案例_登录和遍历操作</span>
+            <span class="post-date" title="2019-04-20 10:35:00">2019/04/20</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/03/python/python基础/20190313_时间处理/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python时间处理">python时间处理</span>
+            <span class="post-date" title="2019-03-13 15:24:20">2019/03/13</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/03/python/python基础/20190311_打包/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python打包">python打包</span>
+            <span class="post-date" title="2019-03-11 15:24:20">2019/03/11</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/03/python/python基础/20190310_发布模块/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python发布模块">python发布模块</span>
+            <span class="post-date" title="2019-03-10 15:24:20">2019/03/10</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/03/python/python基础/20190307_python编码规范/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python编码规范">python编码规范</span>
+            <span class="post-date" title="2019-03-08 15:24:20">2019/03/08</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/03/python/python基础/20190306_python虚拟环境/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python虚拟环境">python虚拟环境</span>
+            <span class="post-date" title="2019-03-06 15:24:20">2019/03/06</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/03/python/python基础/20190305_图形界面/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python图形界面">python图形界面</span>
+            <span class="post-date" title="2019-03-05 15:24:20">2019/03/05</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/03/python/python基础/20190304_操作excel/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python操作excel">python操作excel</span>
+            <span class="post-date" title="2019-03-04 15:24:20">2019/03/04</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/03/python/python基础/20190303_sqlchemy的使用/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="sqlalchemy的使用">sqlalchemy的使用</span>
+            <span class="post-date" title="2019-03-03 15:24:20">2019/03/03</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/03/python/python基础/20190302_sqlalchemy的一些概念/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="sqlalchemy的一些概念">sqlalchemy的一些概念</span>
+            <span class="post-date" title="2019-03-02 15:24:20">2019/03/02</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/03/python/python基础/20190301_访问数据库/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python访问数据库">python访问数据库</span>
+            <span class="post-date" title="2019-03-01 15:24:20">2019/03/01</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190228_网络编程/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python网络编程">python网络编程</span>
+            <span class="post-date" title="2019-02-28 15:24:20">2019/02/28</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190226_文件操作/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python文件操作">python文件操作</span>
+            <span class="post-date" title="2019-02-26 15:24:20">2019/02/26</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190225_进程和线程/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python进程和线程">python进程和线程</span>
+            <span class="post-date" title="2019-02-25 15:24:20">2019/02/25</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190223_python正则表达式/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python正则表达式">python正则表达式</span>
+            <span class="post-date" title="2019-02-23 15:24:20">2019/02/23</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190222_时间处理汇总/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python时间处理汇总">python时间处理汇总</span>
+            <span class="post-date" title="2019-02-22 15:24:20">2019/02/22</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190221_模块和包以及各种库/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python模块和包以及各种库">python模块和包以及各种库</span>
+            <span class="post-date" title="2019-02-21 15:24:20">2019/02/21</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190220_面向对象编程/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python面向对象编程">python面向对象编程</span>
+            <span class="post-date" title="2019-02-20 15:24:20">2019/02/20</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190219_错误,测试和调试/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python错误，测试和调试">python错误，测试和调试</span>
+            <span class="post-date" title="2019-02-19 15:24:20">2019/02/19</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190218_函数式编程/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python函数式编程">python函数式编程</span>
+            <span class="post-date" title="2019-02-18 15:24:20">2019/02/18</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190217_函数及其高级特性/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python函数及其高级特性">python函数及其高级特性</span>
+            <span class="post-date" title="2019-02-17 15:24:20">2019/02/17</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190216_控制语句/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python控制语句">python控制语句</span>
+            <span class="post-date" title="2019-02-16 15:24:20">2019/02/16</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190215_序列（列表，元组，字典，集合）/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python序列（列表，元组，字典，集合）">python序列（列表，元组，字典，集合）</span>
+            <span class="post-date" title="2019-02-15 15:24:20">2019/02/15</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190214_python字符串和编码/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python字符串和编码">python字符串和编码</span>
+            <span class="post-date" title="2019-02-14 15:24:20">2019/02/14</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190213_python关键字和内置函数/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python关键字和内置函数">python关键字和内置函数</span>
+            <span class="post-date" title="2019-02-13 15:24:20">2019/02/13</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190212_python变量和数据类型/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python变量和数据类型">python变量和数据类型</span>
+            <span class="post-date" title="2019-02-12 15:24:20">2019/02/12</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190212_python标识符和运算符/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python标识符和运算符">python标识符和运算符</span>
+            <span class="post-date" title="2019-02-12 15:24:20">2019/02/12</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190211_python简介/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python简介">python简介</span>
+            <span class="post-date" title="2019-02-11 15:24:20">2019/02/11</span>
+        </a>
+        
+        <a  class="全部文章 Java java案例 "
+           href="/2017/05/java/java案例/20170517_java打印图形/"
+           data-tag="java,java案例,java打印图形"
+           data-author="" >
+            <span class="post-title" title="用java实现打印各种图形总结 (包括长方形 三角形 菱形 平行四边形等)">用java实现打印各种图形总结 (包括长方形 三角形 菱形 平行四边形等)</span>
+            <span class="post-date" title="2017-05-17 23:19:19">2017/05/17</span>
+        </a>
+        
+        <a  class="全部文章 Java java数据结构和算法 "
+           href="/2017/05/java/java数据结构和算法/20170505_概述/"
+           data-tag="java,java数据结构和算法"
+           data-author="" >
+            <span class="post-title" title="01 数据结构和算法——概述和总结">01 数据结构和算法——概述和总结</span>
+            <span class="post-date" title="2017-05-05 01:30:00">2017/05/05</span>
+        </a>
+        
+        <a  class="全部文章 Java java数据结构和算法 "
+           href="/2017/05/java/java数据结构和算法/20170504_java数据结构和算法/"
+           data-tag="java,java数据结构和算法"
+           data-author="" >
+            <span class="post-title" title="java数据结构和算法">java数据结构和算法</span>
+            <span class="post-date" title="2017-05-04 01:30:00">2017/05/04</span>
+        </a>
+        
+        <a  class="全部文章 Java java基础 "
+           href="/2017/04/java/java基础/2017427_java核心类/"
+           data-tag="java"
+           data-author="" >
+            <span class="post-title" title="java基础">java基础</span>
+            <span class="post-date" title="2017-04-27 01:30:00">2017/04/27</span>
+        </a>
+        
+        <a  class="全部文章 Java java基础 "
+           href="/2017/04/java/java基础/2017424_数组和string类/"
+           data-tag="java,java基础"
+           data-author="" >
+            <span class="post-title" title="java数组">java数组</span>
+            <span class="post-date" title="2017-04-24 01:30:00">2017/04/24</span>
+        </a>
+        
+        <a  class="全部文章 Java java基础 "
+           href="/2017/04/java/java基础/2017425_字符串string类的/"
+           data-tag="java,java基础"
+           data-author="" >
+            <span class="post-title" title="java字符串String类">java字符串String类</span>
+            <span class="post-date" title="2017-04-24 01:30:00">2017/04/24</span>
+        </a>
+        
+        <a  class="全部文章 Java java基础 "
+           href="/2017/04/java/java基础/2017423_运算和流程控制/"
+           data-tag="java,java基础"
+           data-author="" >
+            <span class="post-title" title="java运算和流程控制">java运算和流程控制</span>
+            <span class="post-date" title="2017-04-23 01:30:00">2017/04/23</span>
+        </a>
+        
+        <a  class="全部文章 Java java基础 "
+           href="/2017/04/java/java基础/2017422_变量和数据类型/"
+           data-tag="java,java基础"
+           data-author="" >
+            <span class="post-title" title="java变量和数据类型">java变量和数据类型</span>
+            <span class="post-date" title="2017-04-22 01:30:00">2017/04/22</span>
+        </a>
+        
+        <a  class="全部文章 Java java基础 "
+           href="/2017/04/java/java基础/2017421_java基础/"
+           data-tag="java"
+           data-author="" >
+            <span class="post-title" title="java基础">java基础</span>
+            <span class="post-date" title="2017-04-21 01:30:00">2017/04/21</span>
+        </a>
+        
+        <div id="no-item-tips">
 
         </div>
-      </header>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-java/java设计模式/20190611_组合模式" class="article article-type-post" itemscope itemprop="blogPost">
     
-
-
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
+        <h1 class="article-title">组合模式详解 (附java语言源码)</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="Java">Java</a> > 
+            
+            <a  data-rel="Java&lt;---&gt;java设计模式">java设计模式</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color5">java</a>
+            
+            <a class="color4">java设计模式</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            发布时间 : <time class="date" title='最后更新: 2020-10-19 20:10:18'>2019-06-11 01:30</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
       
         <p><strong>组合模式（Composite Pattern）</strong>：</p>
 <blockquote>
@@ -452,560 +1792,308 @@
 <li>compsite(子容器构建)：它在组合模式中表示容器节点对象，容器结点是子节点，可以是子容器，也可以是叶子构建，它提供一个集合来存储子节点。它有容器特征，可以包含子节点</li>
 </ol>
 <p><strong>案例</strong>：使用组合模式，模拟杀毒软件，该软件能够对某个文件夹杀毒，也可以指定对某些文件杀毒。该过程大致可分为4步，代码如下：<br>步骤1：定义AbstractFile : 抽象文件类，充当抽象构建。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * AbstractFile: 抽象文件类，充当抽象构建。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractFiles</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(AbstractFiles af)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">(AbstractFiles af)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> AbstractFiles <span class="title">get</span><span class="params">(<span class="keyword">int</span>  i)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">killVirus</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="java">/**
+ * AbstractFile: 抽象文件类，充当抽象构建。
+ */
+public abstract class AbstractFiles {
+    public abstract void add(AbstractFiles af);
+    public abstract void remove(AbstractFiles af);
+    public abstract AbstractFiles get(int  i);
+    public abstract void killVirus();
+}
+</code></pre>
 <p>步骤2：定义叶子节点：文件类型，在此只写了图片文件。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 图片文件,继承自AbstractFiles</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ImageFile</span> <span class="keyword">extends</span> <span class="title">AbstractFiles</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ImageFile</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(AbstractFiles af)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"不支持该方法"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">(AbstractFiles af)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"不支持该方法"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> AbstractFiles <span class="title">get</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"不支持该方法"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">killVirus</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"开始进行--"</span>+name+<span class="string">"--文件杀毒"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="java">/**
+ * 图片文件,继承自AbstractFiles
+ */
+public class ImageFile extends AbstractFiles {
+
+    private String name;
+
+    public ImageFile(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public void add(AbstractFiles af) {
+        System.out.println(&quot;不支持该方法&quot;);
+    }
+
+    @Override
+    public void remove(AbstractFiles af) {
+        System.out.println(&quot;不支持该方法&quot;);
+    }
+
+    @Override
+    public AbstractFiles get(int i) {
+        System.out.println(&quot;不支持该方法&quot;);
+        return null;
+    }
+
+    @Override
+    public void killVirus() {
+        System.out.println(&quot;开始进行--&quot;+name+&quot;--文件杀毒&quot;);
+    }
+}
+
+</code></pre>
 <p>步骤3：文件夹类型</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 文件夹类型 ，继承自AbstractFiles</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Folder</span> <span class="keyword">extends</span> <span class="title">AbstractFiles</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//文件夹类，所有的都可以用</span></span><br><span class="line">    <span class="keyword">private</span> ArrayList&lt;AbstractFiles&gt; list = <span class="keyword">new</span> ArrayList&lt;AbstractFiles&gt;();</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Folder</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name=name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(AbstractFiles af)</span> </span>&#123;</span><br><span class="line">        list.add(af);</span><br><span class="line">        System.out.println(<span class="string">"添加文件成功！"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">(AbstractFiles af)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(list.remove(af)) &#123;</span><br><span class="line">            System.out.println(<span class="string">"删除成功"</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            System.out.println(<span class="string">"删除失败"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> AbstractFiles <span class="title">get</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> list.get(i);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">killVirus</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"对文件夹 "</span>+name+<span class="string">" 进行杀毒"</span>);</span><br><span class="line">        <span class="comment">//递归调用</span></span><br><span class="line">        <span class="keyword">for</span>(Object o:list) &#123;</span><br><span class="line">            ((AbstractFiles) o).killVirus();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="java">import java.util.ArrayList;
+
+/**
+ * 文件夹类型 ，继承自AbstractFiles
+ */
+public class Folder extends AbstractFiles {
+
+    //文件夹类，所有的都可以用
+    private ArrayList&lt;AbstractFiles&gt; list = new ArrayList&lt;AbstractFiles&gt;();
+    private String name;
+    public Folder(String name) {
+        this.name=name;
+    }
+
+    @Override
+    public void add(AbstractFiles af) {
+        list.add(af);
+        System.out.println(&quot;添加文件成功！&quot;);
+    }
+
+    @Override
+    public void remove(AbstractFiles af) {
+        if(list.remove(af)) {
+            System.out.println(&quot;删除成功&quot;);
+        }else{
+            System.out.println(&quot;删除失败&quot;);
+        }
+    }
+
+    @Override
+    public AbstractFiles get(int i) {
+        return list.get(i);
+    }
+
+    @Override
+    public void killVirus() {
+        System.out.println(&quot;对文件夹 &quot;+name+&quot; 进行杀毒&quot;);
+        //递归调用
+        for(Object o:list) {
+            ((AbstractFiles) o).killVirus();
+        }
+    }
+}
+</code></pre>
 <p>步骤4：测试</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 测试</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//创建一个文件类型</span></span><br><span class="line">        AbstractFiles f1 = <span class="keyword">new</span> Folder(<span class="string">"主文件夹"</span>);</span><br><span class="line">        <span class="comment">//创建文件</span></span><br><span class="line">        AbstractFiles file1= <span class="keyword">new</span> ImageFile(<span class="string">"美妙月亮。png"</span>);</span><br><span class="line">        AbstractFiles file2= <span class="keyword">new</span> ImageFile(<span class="string">"大海.jpg"</span>);</span><br><span class="line">        AbstractFiles file3= <span class="keyword">new</span> ImageFile(<span class="string">"沙漠杨树.gif"</span>);</span><br><span class="line">        f1.add(file1);</span><br><span class="line">        f1.add(file2);</span><br><span class="line">        f1.add(file3);</span><br><span class="line">        <span class="comment">//file1.killVirus();</span></span><br><span class="line">        f1.killVirus();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="java">/**
+ * 测试
+ */
+public class Client {
+    public static void main(String[] args) {
+        //创建一个文件类型
+        AbstractFiles f1 = new Folder(&quot;主文件夹&quot;);
+        //创建文件
+        AbstractFiles file1= new ImageFile(&quot;美妙月亮。png&quot;);
+        AbstractFiles file2= new ImageFile(&quot;大海.jpg&quot;);
+        AbstractFiles file3= new ImageFile(&quot;沙漠杨树.gif&quot;);
+        f1.add(file1);
+        f1.add(file2);
+        f1.add(file3);
+        //file1.killVirus();
+        f1.killVirus();
+
+    }
+}
+</code></pre>
 <p>测试结果如下图所示：<br><img src="https://img-blog.csdnimg.cn/20190611150417947.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N1aV95b25naHVh,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <p>如果想了解更多设计模式，可点击：<a href="https://blog.csdn.net/cui_yonghua/article/details/90512943" target="_blank" rel="noopener">设计模式概述 以及 23种设计模式的介绍</a></p>
 
       
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 320479069@qq.com </span>
     </div>
+</article>
 
-    <div>
-      
-        
 
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/java/" rel="tag"># java</a>
-          
-            <a href="/tags/java设计模式/" rel="tag"># java设计模式</a>
-          
-        </div>
-      
-
-      
-        
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2019/06/java/java设计模式/20190611_桥接模式/" rel="next" title="桥接模式详解 (附java语言源码)">
-                <i class="fa fa-chevron-left"></i> 桥接模式详解 (附java语言源码)
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/06/python/spider/selenium/20190612_隐式和显示等待/" rel="prev" title="Selenium显示等待和隐式等待的区别">
-                Selenium显示等待和隐式等待的区别 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </article>
+<p>
+    <a  class="dashang" onclick="dashangToggle()">赏</a>
+</p>
 
 
 
-    <div class="post-spread">
-      
-        <!-- JiaThis Button BEGIN -->
-<div class="jiathis_style">
-  <a class="jiathis_button_tsina"></a>
-  <a class="jiathis_button_tqq"></a>
-  <a class="jiathis_button_weixin"></a>
-  <a class="jiathis_button_cqq"></a>
-  <a class="jiathis_button_douban"></a>
-  <a class="jiathis_button_renren"></a>
-  <a class="jiathis_button_qzone"></a>
-  <a class="jiathis_button_kaixin001"></a>
-  <a class="jiathis_button_copy"></a>
-  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
-  <a class="jiathis_counter_style"></a>
-</div>
-<script type="text/javascript">
-  var jiathis_config={
-    hideMore:false
-  }
-</script>
-<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
-<!-- JiaThis Button END -->
-
-      
-    </div>
-  </div>
 
 
-          </div>
-          
-
-
-          
-  <div class="comments" id="comments">
-    
-  </div>
-
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-
-      
-
-      <section class="site-overview sidebar-panel sidebar-panel-active">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="崔永华（Andy）">
-          <p class="site-author-name" itemprop="name">崔永华（Andy）</p>
-           
-              <p class="site-description motion-element" itemprop="description"></p>
-           
-        </div>
-        <nav class="site-state motion-element">
-
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">129</span>
-                <span class="site-state-item-name">日志</span>
-              </a>
-            </div>
-          
-
-          
-            
-            
-            <div class="site-state-item site-state-categories">
-              <a href="/categories/index.html">
-                <span class="site-state-item-count">44</span>
-                <span class="site-state-item-name">分类</span>
-              </a>
-            </div>
-          
-
-          
-            
-            
-            <div class="site-state-item site-state-tags">
-              <a href="/tags/index.html">
-                <span class="site-state-item-count">50</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-
-        <div class="links-of-author motion-element">
-          
-            
-              <span class="links-of-author-item">
-                <a href="https://github.com/cuiyonghua6" target="_blank" title="GitHub">
-                  
-                    <i class="fa fa-fw fa-github"></i>
-                  
-                  GitHub
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="https://blog.csdn.net/cui_yonghua" target="_blank" title="CSDN">
-                  
-                    <i class="fa fa-fw fa-bandcamp"></i>
-                  
-                  CSDN
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="https://www.zhihu.com/people/cuiyonghua" target="_blank" title="知乎">
-                  
-                    <i class="fa fa-fw fa-globe"></i>
-                  
-                  知乎
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="https://weibo.com/cuiyonghua" target="_blank" title="Weibo">
-                  
-                    <i class="fa fa-fw fa-weibo"></i>
-                  
-                  Weibo
-                </a>
-              </span>
-            
-          
-        </div>
-
-        
-        
-
-        
-        
-
-        
-
-
-      </section>
-
-      
-
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2021</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">崔永华（Andy）</span>
-</div>
-
-
-<div class="powered-by">
-  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
-</div>
-
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Pisces
-  </a>
-</div>
-
-
-        
-<div class="busuanzi-count">
-  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-  
-
-  
-    <span class="site-pv">
-      本站总访问量
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-      次
-    </span>
-  
-</div>
-
-
-        
-      </div>
-    </footer>
 
     
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
 
-  </div>
 
-  
 
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
 
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2016-2021 CuiYonghua
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+<div class="hide_box" onclick="dashangToggle()"></div>
+<div class="shang_box">
+    <a class="shang_close"  onclick="dashangToggle()">×</a>
+    <div class="shang_tit">
+        <p>喜欢就点赞,疼爱就打赏</p>
+    </div>
+    <div class="shang_payimg">
+        <div class="pay_img">
+            <img src="/img/alipay.jpg" class="alipay" title="扫码支持">
+            <img src="/img/weixin.jpg" class="weixin" title="扫码支持">
+        </div>
+    </div>
+    <div class="shang_payselect">
+        <span><label><input type="radio" name="pay" checked value="alipay">支付宝</label></span><span><label><input type="radio" name="pay" value="weixin">微信</label></span>
+    </div>
+</div>
 
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-  
-
-  <script type="text/javascript">
-    // Popup Window;
-    var isfetched = false;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length == 0) {
-      search_path = "search.xml";
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
-
-    function proceedsearch() {
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
-        .css('overflow', 'hidden');
-      $('.popup').toggle();
-    }
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-      $.ajax({
-        url: path,
-        dataType: "xml",
-        async: true,
-        success: function( xmlResponse ) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = $( "entry", xmlResponse ).map(function() {
-            return {
-              title: $( "title", this ).text(),
-              content: $("content",this).text(),
-              url: $( "url" , this).text()
-            };
-          }).get();
-          var $input = document.getElementById(search_id);
-          var $resultContent = document.getElementById(content_id);
-          $input.addEventListener('input', function(){
-            var matchcounts = 0;
-            var str='<ul class=\"search-result-list\">';
-            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
-            $resultContent.innerHTML = "";
-            if (this.value.trim().length > 1) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var content_index = [];
-                var data_title = data.title.trim().toLowerCase();
-                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
-                var data_url = decodeURIComponent(data.url);
-                var index_title = -1;
-                var index_content = -1;
-                var first_occur = -1;
-                // only match artiles with not empty titles and contents
-                if(data_title != '') {
-                  keywords.forEach(function(keyword, i) {
-                    index_title = data_title.indexOf(keyword);
-                    index_content = data_content.indexOf(keyword);
-                    if( index_title >= 0 || index_content >= 0 ){
-                      isMatch = true;
-                      if (i == 0) {
-                        first_occur = index_content;
-                      }
-                    }
-
-                  });
-                }
-                // show search results
-                if (isMatch) {
-                  matchcounts += 1;
-                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
-                  var content = data.content.trim().replace(/<[^>]+>/g,"");
-                  if (first_occur >= 0) {
-                    // cut out 100 characters
-                    var start = first_occur - 20;
-                    var end = first_occur + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if(start == 0){
-                      end = 50;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    var match_content = content.substring(start, end);
-                    // highlight all keywords
-                    keywords.forEach(function(keyword){
-                      var regS = new RegExp(keyword, "gi");
-                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
-                    });
-
-                    str += "<p class=\"search-result\">" + match_content +"...</p>"
-                  }
-                  str += "</li>";
-                }
-              })};
-            str += "</ul>";
-            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
-            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
-            $resultContent.innerHTML = str;
-          });
-          proceedsearch();
-        }
-      });}
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched == false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(function(e){
-      $('.popup').hide();
-      $(".local-search-pop-overlay").remove();
-      $('body').css('overflow', '');
-    });
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-  </script>
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-
-  
 
 </body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+        $("input[name=pay]").on("click", function () {
+            if($("input[name=pay]:checked").val()=="weixin"){
+                $(".shang_box .shang_payimg .pay_img").addClass("weixin_img");
+            } else {
+                $(".shang_box .shang_payimg .pay_img").removeClass("weixin_img");
+            }
+        })
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+    function dashangToggle() {
+        $(".shang_box").fadeToggle();
+        $(".hide_box").fadeToggle();
+    }
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+
+
+
+
+
 </html>

@@ -1,527 +1,2163 @@
-<!doctype html>
-
-
-
-  
-
-
-<html class="theme-next pisces use-motion" lang="zh-Hans">
+<!DOCTYPE html>
+<html>
 <head><meta name="generator" content="Hexo 3.9.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
-
-
-
-
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
-
-
-  <meta name="keywords" content="数据库,PostgreSQL,">
-
-
-
-
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
-
-
-
-
-
-
-<meta name="description" content="查询语句首先定义数据表，12345678CREATE TABLE fruits(f_id    char(10)      NOT NULL,s_id    INT            NOT NULL,f_name  char(255)     NOT NULL,f_price decimal(8,2)  NOT NULL,PRIMARY KEY(f_id) );">
-<meta name="keywords" content="数据库,PostgreSQL">
-<meta property="og:type" content="article">
-<meta property="og:title" content="PostgreSQL 八. 查询语句">
-<meta property="og:url" content="http://yoursite.com/2019/08/database/PostgreSql/20190815_查询语句/index.html">
+  <meta charset="utf-8">
+  <title>PostgreSQL 八. 查询语句 | 崔永华的个人网站</title>
+  <meta name="keywords" content=" 数据库 , PostgreSQL ">
+  <meta name="description" content="PostgreSQL 八. 查询语句 | 崔永华的个人网站">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta property="og:type" content="website">
+<meta property="og:title" content="分类">
+<meta property="og:url" content="http://yoursite.com/categories/index.html">
 <meta property="og:site_name" content="崔永华的个人网站">
-<meta property="og:description" content="查询语句首先定义数据表，12345678CREATE TABLE fruits(f_id    char(10)      NOT NULL,s_id    INT            NOT NULL,f_name  char(255)     NOT NULL,f_price decimal(8,2)  NOT NULL,PRIMARY KEY(f_id) );">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-10-28T03:38:36.190Z">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-07-04T03:30:52.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="PostgreSQL 八. 查询语句">
-<meta name="twitter:description" content="查询语句首先定义数据表，12345678CREATE TABLE fruits(f_id    char(10)      NOT NULL,s_id    INT            NOT NULL,f_name  char(255)     NOT NULL,f_price decimal(8,2)  NOT NULL,PRIMARY KEY(f_id) );">
+<meta name="twitter:title" content="分类">
 
 
+<link rel="icon" href="/img/avatar.jpg">
 
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Pisces',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
-    fancybox: true,
-    motion: true,
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-dark.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0"></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
 </script>
 
-
-
-  <link rel="canonical" href="http://yoursite.com/2019/08/database/PostgreSql/20190815_查询语句/">
-
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
 
 
 
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js"></script>
 
-  <title> PostgreSQL 八. 查询语句 | 崔永华的个人网站 </title>
+<script src="/js/iconfont.js?v=1.1.0"></script>
+
 </head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail ">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">崔永华的个人网站</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-      
-        <h1 class="site-subtitle" itemprop="description"></h1>
-      
-  </div>
-
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
-            
-            分类
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
-            
-            关于
-          </a>
-        </li>
-      
-
-      
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
-            
-            搜索
-          </a>
-        </li>
-      
-    </ul>
-  
-
-  
-    <div class="site-search">
-      
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
-    <div class="local-search-input-wrapper">
-      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
-    </div>
-  </div>
-  <div id="local-search-result"></div>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="undefined">
+  <input class="theme_blog_path" value>
+  <input id="theme_shortcut" value="true">
+  <input id="theme_highlight_on" value="true">
+  <input id="theme_code_copy" value="true">
 </div>
 
 
 
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="/img/avatar.jpg"/>
+</a>
+<div class="author">
+    <span>崔永华</span>
+</div>
+
+<div class="icon">
+    
+        
+            <a title="csdn"
+               href="https://cuiyonghua.blog.csdn.net/"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-csdn"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="github"
+               href="https://github.com/cuiyonghua6"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-github"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="facebook"
+               href="https://www.facebook.com/faker.tops"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-facebook"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="instagram"
+               href="https://www.facebook.com/faker.tops"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-instagram"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="reddit"
+               href="https://www.reddit.com/user/yelog/"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-reddit"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="weibo"
+               href="http://weibo.com/u/2307534817"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-weibo"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="jianshu"
+               href="https://www.jianshu.com/u/ff56736de7cf"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-jianshu"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="zhihu"
+               href="https://www.zhihu.com/people/jaytp/activities"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-zhihu"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="oschina"
+               href="https://my.oschina.net/yelog"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-oschina"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="email"
+               href="mailto:cui_yonghua6@163.com"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-email"></use>
+                    </svg>
+                
+            </a>
+        
+    
+</div>
+
+
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="全部文章">全部文章
+            
+                <small>(115)</small>
+            
+        </div>
+    </li>
+    
+        
+            
+                <li>
+                    <div data-rel="数据库">
+                        <i class="fold iconfont icon-right"></i>
+                        
+                        数据库
+                        <small>(26)</small>
+                        
+                    </div>
+                    
+                        <ul class="sub hide">
+                            
+                                <li>
+                                    <div data-rel="数据库<--->MySQL">
+                                        <i class="fold iconfont icon-right"></i>
+                                        
+                                        MySQL
+                                        
+                                            <small>(6
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                        <ul class="sub hide">
+                                            
+                                                <li>
+                                                    <div data-rel="数据库<--->MySQLPostgreSQL">
+                                                        
+                                                        PostgreSQL
+                                                        
+                                                            <small>(1)</small>
+                                                        
+                                                    </div>
+                                                </li>
+                                            
+                                        </ul>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="数据库<--->PostgreSQL">
+                                        
+                                        PostgreSQL
+                                        
+                                            <small>(20
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+                <li>
+                    <div data-rel="Java">
+                        <i class="fold iconfont icon-right"></i>
+                        
+                        Java
+                        <small>(36)</small>
+                        
+                    </div>
+                    
+                        <ul class="sub hide">
+                            
+                                <li>
+                                    <div data-rel="Java<--->java基础">
+                                        
+                                        java基础
+                                        
+                                            <small>(6
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="Java<--->java数据结构和算法">
+                                        
+                                        java数据结构和算法
+                                        
+                                            <small>(2
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="Java<--->java案例">
+                                        
+                                        java案例
+                                        
+                                            <small>(1
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="Java<--->java设计模式">
+                                        
+                                        java设计模式
+                                        
+                                            <small>(25
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="Java<--->新特性">
+                                        
+                                        新特性
+                                        
+                                            <small>(2
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+                <li>
+                    <div data-rel="python">
+                        <i class="fold iconfont icon-right"></i>
+                        
+                        python
+                        <small>(51)</small>
+                        
+                    </div>
+                    
+                        <ul class="sub hide">
+                            
+                                <li>
+                                    <div data-rel="python<--->fastapi">
+                                        
+                                        fastapi
+                                        
+                                            <small>(1
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="python<--->flask">
+                                        
+                                        flask
+                                        
+                                            <small>(1
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="python<--->python基础">
+                                        
+                                        python基础
+                                        
+                                            <small>(27
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="python<--->python案例">
+                                        
+                                        python案例
+                                        
+                                            <small>(1
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="python<--->爬虫">
+                                        <i class="fold iconfont icon-right"></i>
+                                        
+                                        爬虫
+                                        
+                                            <small>(20
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                        <ul class="sub hide">
+                                            
+                                                <li>
+                                                    <div data-rel="python<--->爬虫pyppeteer">
+                                                        
+                                                        pyppeteer
+                                                        
+                                                            <small>(2)</small>
+                                                        
+                                                    </div>
+                                                </li>
+                                            
+                                                <li>
+                                                    <div data-rel="python<--->爬虫scrapy">
+                                                        
+                                                        scrapy
+                                                        
+                                                            <small>(12)</small>
+                                                        
+                                                    </div>
+                                                </li>
+                                            
+                                                <li>
+                                                    <div data-rel="python<--->爬虫selenium">
+                                                        
+                                                        selenium
+                                                        
+                                                            <small>(2)</small>
+                                                        
+                                                    </div>
+                                                </li>
+                                            
+                                        </ul>
+                                    
+                                </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+                <li>
+                    <div data-rel="编程语言">
+                        
+                        编程语言
+                        <small>(1)</small>
+                        
+                    </div>
+                    
+                </li>
+            
+        
+    
+        
+            
+                <li>
+                    <div data-rel="自然语言处理">
+                        <i class="fold iconfont icon-right"></i>
+                        
+                        自然语言处理
+                        <small>(1)</small>
+                        
+                    </div>
+                    
+                        <ul class="sub hide">
+                            
+                                <li>
+                                    <div data-rel="自然语言处理<--->nllp">
+                                        <i class="fold iconfont icon-right"></i>
+                                        
+                                        nllp
+                                        
+                                            <small>(1
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                        <ul class="sub hide">
+                                            
+                                                <li>
+                                                    <div data-rel="自然语言处理<--->nllpsjlf">
+                                                        
+                                                        sjlf
+                                                        
+                                                            <small>(1)</small>
+                                                        
+                                                    </div>
+                                                </li>
+                                            
+                                        </ul>
+                                    
+                                </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+            
+            
     </div>
-  
-</nav>
+    <div>
+        
+            <a class="about  hasFriend  site_url"
+               
+               href="/about">关于</a>
+        
+        <a style="width: 50%"
+                
+                                           class="friends">友链</a>
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="115">
 
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
 
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        友情链接
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
             
+            <li><a target="_blank" href="http://yelog.org/">叶落阁</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">全部文章</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">大纲</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
 
-  <div id="posts" class="posts-expand">
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>fastapi</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>flask</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Hadoop</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>java</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>java基础</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>java打印图形</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>java数据结构和算法</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>java新特性</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>java案例</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>java设计模式</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>MySQL</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>PostgreSQL</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>pyppeteer</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>python</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>python3</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>python基础</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>python案例</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>scrapy</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>selenium</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>代码雨</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>反爬</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>大数据</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>数据库</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>爬虫</a>
+            </li>
+        
+    </div>
+
+</div>
+
     
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/database/PostgreSql/20190815_查询语句/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="崔永华（Andy）">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="崔永华的个人网站">
-    </span>
-
-    
-      <header class="post-header">
-
+    <nav id="title-list-nav">
         
+        <a  class="全部文章 python python案例 "
+           href="/2020/12/python/my_application/20201202_将excel中的内容存入mysql/"
+           data-tag="python,python案例"
+           data-author="" >
+            <span class="post-title" title="将excel中的内容存入mysql">将excel中的内容存入mysql</span>
+            <span class="post-date" title="2020-12-02 15:24:20">2020/12/02</span>
+        </a>
         
-          <h2 class="post-title" itemprop="name headline">
-            
-            
-              
-                PostgreSQL 八. 查询语句
-              
-            
-          </h2>
+        <a  class="全部文章 python "
+           href="/2020/10/python/my_application/20201015_代码雨/"
+           data-tag="python,python案例,代码雨"
+           data-author="" >
+            <span class="post-title" title="用python实现代码雨（电影黑客帝国里的效果，代码可直接运行）">用python实现代码雨（电影黑客帝国里的效果，代码可直接运行）</span>
+            <span class="post-date" title="2020-10-15 15:24:20">2020/10/15</span>
+        </a>
         
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-15T15:24:20+08:00">
-                2019-08-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据库/" itemprop="url" rel="index">
-                    <span itemprop="name">数据库</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据库/PostgreSQL/" itemprop="url" rel="index">
-                    <span itemprop="name">PostgreSQL</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-            <span class="post-meta-divider">|</span>
-            <span class="page-pv">被围观
-            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
-            </span>
-          
-
-          
-
-          
+        <a  class="全部文章 Java 新特性 "
+           href="/2020/10/java/其他/20201002_java9到14新特性/"
+           data-tag="java,java新特性"
+           data-author="" >
+            <span class="post-title" title="JDK9到14的重要新特性">JDK9到14的重要新特性</span>
+            <span class="post-date" title="2020-10-02 23:19:19">2020/10/02</span>
+        </a>
+        
+        <a  class="全部文章 Java 新特性 "
+           href="/2020/10/java/其他/20201001_java8新特性/"
+           data-tag="java,java新特性"
+           data-author="" >
+            <span class="post-title" title="Java8新特性总结">Java8新特性总结</span>
+            <span class="post-date" title="2020-10-01 23:19:19">2020/10/01</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 "
+           href="/2020/09/python/spider/20200929_三种加密方式/"
+           data-tag="python,爬虫,反爬"
+           data-author="" >
+            <span class="post-title" title="三种加密方式 sha1加密、MD5加密、Base64加密 (附H5源码和js源码)">三种加密方式 sha1加密、MD5加密、Base64加密 (附H5源码和js源码)</span>
+            <span class="post-date" title="2020-09-29 10:30:00">2020/09/29</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 scrapy "
+           href="/2020/07/python/spider/scrapy/20200715_ ajaxcrawl/"
+           data-tag="python,爬虫,scrapy"
+           data-author="" >
+            <span class="post-title" title="scrapy源码12 - ajaxcrawl">scrapy源码12 - ajaxcrawl</span>
+            <span class="post-date" title="2020-07-15 10:35:00">2020/07/15</span>
+        </a>
+        
+        <a  class="全部文章 数据库 MySQL "
+           href="/2020/07/database/mysql/20200713_mysql与pg用户管理对比/"
+           data-tag="数据库,PostgreSQL,MySQL"
+           data-author="" >
+            <span class="post-title" title="MySQL用户管理与PostgreSQL用户管理的对比">MySQL用户管理与PostgreSQL用户管理的对比</span>
+            <span class="post-date" title="2020-07-13 15:24:20">2020/07/13</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 scrapy "
+           href="/2020/07/python/spider/scrapy/20200713_ webclient/"
+           data-tag="python,爬虫,scrapy"
+           data-author="" >
+            <span class="post-title" title="scrapy源码11 - webclient">scrapy源码11 - webclient</span>
+            <span class="post-date" title="2020-07-13 10:35:00">2020/07/13</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 scrapy "
+           href="/2020/07/python/spider/scrapy/20200712_tls/"
+           data-tag="python,爬虫,scrapy"
+           data-author="" >
+            <span class="post-title" title="scrapy源码10 - tls">scrapy源码10 - tls</span>
+            <span class="post-date" title="2020-07-12 10:35:00">2020/07/12</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 scrapy "
+           href="/2020/07/python/spider/scrapy/20200711_ downloadermiddleware/"
+           data-tag="python,爬虫,scrapy"
+           data-author="" >
+            <span class="post-title" title="scrapy源码9 - downloadermiddleware">scrapy源码9 - downloadermiddleware</span>
+            <span class="post-date" title="2020-07-11 10:35:00">2020/07/11</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 scrapy "
+           href="/2020/07/python/spider/scrapy/20200709_ contextfactory/"
+           data-tag="python,爬虫,scrapy"
+           data-author="" >
+            <span class="post-title" title="scrapy源码8 - contextfactory">scrapy源码8 - contextfactory</span>
+            <span class="post-date" title="2020-07-09 10:35:00">2020/07/09</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 scrapy "
+           href="/2020/07/python/spider/scrapy/20200708_downloader/"
+           data-tag="python,爬虫,scrapy"
+           data-author="" >
+            <span class="post-title" title="scrapy源码7：downloader的源码分析">scrapy源码7：downloader的源码分析</span>
+            <span class="post-date" title="2020-07-08 10:35:00">2020/07/08</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 scrapy "
+           href="/2020/07/python/spider/scrapy/20200707_deffer和parallel/"
+           data-tag="python,爬虫,scrapy"
+           data-author="" >
+            <span class="post-title" title="scrapy源码6：deffer和parallel的源码分析">scrapy源码6：deffer和parallel的源码分析</span>
+            <span class="post-date" title="2020-07-07 10:35:00">2020/07/07</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 pyppeteer "
+           href="/2020/07/python/spider/pyppeteer/02_各种案例/"
+           data-tag="python,pyppeteer"
+           data-author="" >
+            <span class="post-title" title="pyppeteer的各种案例">pyppeteer的各种案例</span>
+            <span class="post-date" title="2020-07-06 10:30:00">2020/07/06</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 scrapy "
+           href="/2020/07/python/spider/scrapy/20200705_ middleware/"
+           data-tag="python,爬虫,scrapy"
+           data-author="" >
+            <span class="post-title" title="scrapy源码5：middleware的源码分析">scrapy源码5：middleware的源码分析</span>
+            <span class="post-date" title="2020-07-05 10:35:00">2020/07/05</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 scrapy "
+           href="/2020/07/python/spider/scrapy/20200704_ spidermw/"
+           data-tag="python,爬虫,scrapy"
+           data-author="" >
+            <span class="post-title" title="scrapy源码4：spidermw的源码分析">scrapy源码4：spidermw的源码分析</span>
+            <span class="post-date" title="2020-07-04 10:35:00">2020/07/04</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 scrapy "
+           href="/2020/07/python/spider/scrapy/20200703_ scraper/"
+           data-tag="python,爬虫,scrapy"
+           data-author="" >
+            <span class="post-title" title="scrapy源码3：scraper的源码分析">scrapy源码3：scraper的源码分析</span>
+            <span class="post-date" title="2020-07-03 10:35:00">2020/07/03</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 scrapy "
+           href="/2020/07/python/spider/scrapy/20200701_scheduler/"
+           data-tag="python,爬虫,scrapy"
+           data-author="" >
+            <span class="post-title" title="scrapy源码2：scheduler的源码分析">scrapy源码2：scheduler的源码分析</span>
+            <span class="post-date" title="2020-07-01 10:35:00">2020/07/01</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 scrapy "
+           href="/2020/06/python/spider/scrapy/20200630_engine/"
+           data-tag="python,爬虫,scrapy"
+           data-author="" >
+            <span class="post-title" title="scrapy源码1：engine的源码分析">scrapy源码1：engine的源码分析</span>
+            <span class="post-date" title="2020-06-30 10:35:00">2020/06/30</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 pyppeteer "
+           href="/2020/06/python/spider/pyppeteer/01_介绍及环境/"
+           data-tag="python,pyppeteer"
+           data-author="" >
+            <span class="post-title" title="pyppeteer的环境搭建，常见参数及2个案例">pyppeteer的环境搭建，常见参数及2个案例</span>
+            <span class="post-date" title="2020-06-28 10:30:00">2020/06/28</span>
+        </a>
+        
+        <a  class="全部文章 编程语言 "
+           href="/2020/06/database/my-post2/"
+           data-tag="大数据,Hadoop"
+           data-author="" >
+            <span class="post-title" title="python...">python...</span>
+            <span class="post-date" title="2020-06-23 15:24:20">2020/06/23</span>
+        </a>
+        
+        <a  class="全部文章 数据库 MySQL "
+           href="/2020/06/database/mysql/20200609_mysql报错1366/"
+           data-tag="数据库,MySQL"
+           data-author="" >
+            <span class="post-title" title="mysql报错：1366, Incorrect string value:for colum 的解决办法">mysql报错：1366, Incorrect string value:for colum 的解决办法</span>
+            <span class="post-date" title="2020-06-09 15:24:20">2020/06/09</span>
+        </a>
+        
+        <a  class="全部文章 python fastapi "
+           href="/2020/04/python/web/flask,tornado,fastapi的比较/"
+           data-tag="python3,fastapi"
+           data-author="" >
+            <span class="post-title" title="flask,tornado,fastapi 的比较">flask,tornado,fastapi 的比较</span>
+            <span class="post-date" title="2020-04-23 15:24:20">2020/04/23</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/12/database/PostgreSql/20191220_对pg中json数据进行增删改/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="向PostgreSQL中json中加入某个字段 或者更新某个字段的SQL语句">向PostgreSQL中json中加入某个字段 或者更新某个字段的SQL语句</span>
+            <span class="post-date" title="2019-12-20 15:24:20">2019/12/20</span>
+        </a>
+        
+        <a  class="全部文章 数据库 MySQL "
+           href="/2019/11/database/es/20191101_es介绍及pyhton操作es/"
+           data-tag="数据库,MySQL"
+           data-author="" >
+            <span class="post-title" title="Elasticsearch的介绍 以及使用python操作es详细步骤">Elasticsearch的介绍 以及使用python操作es详细步骤</span>
+            <span class="post-date" title="2019-11-01 15:24:20">2019/11/01</span>
+        </a>
+        
+        <a  class="全部文章 数据库 MySQL PostgreSQL "
+           href="/2019/10/database/PostgreSql/20191008_更改数据/"
+           data-tag="数据库,PostgreSQL,MySQL"
+           data-author="" >
+            <span class="post-title" title="对数据库中的数据 进行增删改查用到的SQL语句">对数据库中的数据 进行增删改查用到的SQL语句</span>
+            <span class="post-date" title="2019-10-08 15:24:20">2019/10/08</span>
+        </a>
+        
+        <a  class="全部文章 数据库 MySQL "
+           href="/2019/09/database/mysql/20190927_mysql更改数据/"
+           data-tag="数据库,MySQL"
+           data-author="" >
+            <span class="post-title" title="MySQL中增加，更新或删除 数据库中原数据的内容">MySQL中增加，更新或删除 数据库中原数据的内容</span>
+            <span class="post-date" title="2019-09-27 15:24:20">2019/09/27</span>
+        </a>
+        
+        <a  class="全部文章 数据库 MySQL "
+           href="/2019/09/database/mysql/20190921_每5分钟mysql的插入量/"
+           data-tag="数据库,MySQL"
+           data-author="" >
+            <span class="post-title" title="统计每5分钟，MySQL数据库中数据的插入量">统计每5分钟，MySQL数据库中数据的插入量</span>
+            <span class="post-date" title="2019-09-21 15:24:20">2019/09/21</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/09/database/PostgreSql/20190909_查看pg内存/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="查询PostgreSQL占多大内存">查询PostgreSQL占多大内存</span>
+            <span class="post-date" title="2019-09-09 15:24:20">2019/09/09</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190827_内部结构/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：十八. 内部结构">PostgreSQL：十八. 内部结构</span>
+            <span class="post-date" title="2019-08-27 15:24:20">2019/08/27</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190825_配置与监控/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：十七. 服务器配置与数据库监控">PostgreSQL：十七. 服务器配置与数据库监控</span>
+            <span class="post-date" title="2019-08-25 15:24:20">2019/08/25</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190824_高可用/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：十六. 高可用、负载均衡和数据复制">PostgreSQL：十六. 高可用、负载均衡和数据复制</span>
+            <span class="post-date" title="2019-08-24 15:24:20">2019/08/24</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190823_性能优化/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：十五. 性能优化">PostgreSQL：十五. 性能优化</span>
+            <span class="post-date" title="2019-08-23 15:24:20">2019/08/23</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190822_备份还原/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：十四. 数据备份与还原">PostgreSQL：十四. 数据备份与还原</span>
+            <span class="post-date" title="2019-08-22 15:24:20">2019/08/22</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190821_用户管理/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：十三. PostgreSQL的用户管理">PostgreSQL：十三. PostgreSQL的用户管理</span>
+            <span class="post-date" title="2019-08-21 15:24:20">2019/08/21</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190819_事务处理/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：十二. 事务处理">PostgreSQL：十二. 事务处理</span>
+            <span class="post-date" title="2019-08-19 15:24:20">2019/08/19</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190818_触发器/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：十一. 触发器">PostgreSQL：十一. 触发器</span>
+            <span class="post-date" title="2019-08-18 15:24:20">2019/08/18</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190817_视图/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL 十. 视图">PostgreSQL 十. 视图</span>
+            <span class="post-date" title="2019-08-17 15:24:20">2019/08/17</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190816_索引/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL 九. 索引">PostgreSQL 九. 索引</span>
+            <span class="post-date" title="2019-08-16 15:24:20">2019/08/16</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190815_查询语句/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL 八. 查询语句">PostgreSQL 八. 查询语句</span>
+            <span class="post-date" title="2019-08-15 15:24:20">2019/08/15</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190813_插入更新删除数据/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：七. 插入，更新与删除数据">PostgreSQL：七. 插入，更新与删除数据</span>
+            <span class="post-date" title="2019-08-13 15:24:20">2019/08/13</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190811_函数/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：六. PostgreSQL函数">PostgreSQL：六. PostgreSQL函数</span>
+            <span class="post-date" title="2019-08-11 15:24:20">2019/08/11</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190810_数据类型和运算符/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：五. 数据类型和运算符">PostgreSQL：五. 数据类型和运算符</span>
+            <span class="post-date" title="2019-08-10 15:24:20">2019/08/10</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190808_数据库的基本操作/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：三. 数据库的基本操作">PostgreSQL：三. 数据库的基本操作</span>
+            <span class="post-date" title="2019-08-08 15:24:20">2019/08/08</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190807_安装和配置/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：二. PostgreSQL 11 的安装与配置">PostgreSQL：二. PostgreSQL 11 的安装与配置</span>
+            <span class="post-date" title="2019-08-07 15:24:20">2019/08/07</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190806_postgresql介绍/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL介绍">PostgreSQL介绍</span>
+            <span class="post-date" title="2019-08-06 15:24:20">2019/08/06</span>
+        </a>
+        
+        <a  class="全部文章 数据库 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190809_数据表的基本操作/"
+           data-tag="数据库,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL介绍">PostgreSQL介绍</span>
+            <span class="post-date" title="2019-08-06 15:24:20">2019/08/06</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 "
+           href="/2019/07/python/spider/百度图片爬虫/"
+           data-tag="python"
+           data-author="" >
+            <span class="post-title" title="爬取百度图片并把图片存到本地">爬取百度图片并把图片存到本地</span>
+            <span class="post-date" title="2019-07-04 10:35:00">2019/07/04</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 "
+           href="/2019/07/python/spider/有毒段子爬虫/"
+           data-tag="python"
+           data-author="" >
+            <span class="post-title" title="爬取心灵毒鸡汤、你好污啊 网站数据并存入本地txt文件">爬取心灵毒鸡汤、你好污啊 网站数据并存入本地txt文件</span>
+            <span class="post-date" title="2019-07-03 10:30:00">2019/07/03</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/06/java/java设计模式/20190629_6大设计原则/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="设计模式之6大设计原则详解">设计模式之6大设计原则详解</span>
+            <span class="post-date" title="2019-06-29 01:30:00">2019/06/29</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/06/java/java设计模式/20190624_状态模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="状态模式详解 (附java语言源码)">状态模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-06-24 01:30:00">2019/06/24</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/06/java/java设计模式/20190624_解释器/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="解释器模式详解 (没有附java语言源码)">解释器模式详解 (没有附java语言源码)</span>
+            <span class="post-date" title="2019-06-24 01:30:00">2019/06/24</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/06/java/java设计模式/20190624_访问者/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="访问者模式详解 (没有附java语言源码)">访问者模式详解 (没有附java语言源码)</span>
+            <span class="post-date" title="2019-06-24 01:30:00">2019/06/24</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/06/java/java设计模式/20190624_责任链/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="责任链模式详解 (附java语言源码)">责任链模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-06-24 01:30:00">2019/06/24</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/06/java/java设计模式/20190620_备忘录/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="备忘录模式详解 (附java语言源码)">备忘录模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-06-20 01:30:00">2019/06/20</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/06/java/java设计模式/20190619_中介者/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="中介者模式详解 (附java语言源码)">中介者模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-06-19 01:30:00">2019/06/19</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/06/java/java设计模式/20190618_迭代器/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="迭代器模式详解 (附java语言源码)">迭代器模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-06-18 01:30:00">2019/06/18</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/06/java/java设计模式/20190617_命令模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="命令模式详解 (附java语言源码)">命令模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-06-17 01:30:00">2019/06/17</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/06/java/java设计模式/20190614_模板方法/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="模板方法模式详解 (附java语言源码)">模板方法模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-06-14 01:30:00">2019/06/14</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 selenium "
+           href="/2019/06/python/spider/selenium/20190613_突破屏蔽/"
+           data-tag="python,爬虫,selenium"
+           data-author="" >
+            <span class="post-title" title="如何突破网站对selenium的屏蔽">如何突破网站对selenium的屏蔽</span>
+            <span class="post-date" title="2019-06-13 10:35:00">2019/06/13</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/06/java/java设计模式/20190613_享元模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="享元模式详解 (附java语言源码)">享元模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-06-13 01:30:00">2019/06/13</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/06/java/java设计模式/20190613_外观模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="外观模式详解 (附java语言源码)">外观模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-06-13 01:30:00">2019/06/13</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 selenium "
+           href="/2019/06/python/spider/selenium/20190612_隐式和显示等待/"
+           data-tag="python,爬虫,selenium"
+           data-author="" >
+            <span class="post-title" title="Selenium显示等待和隐式等待的区别">Selenium显示等待和隐式等待的区别</span>
+            <span class="post-date" title="2019-06-12 10:35:00">2019/06/12</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/06/java/java设计模式/20190611_桥接模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="桥接模式详解 (附java语言源码)">桥接模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-06-11 01:30:00">2019/06/11</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/06/java/java设计模式/20190611_组合模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="组合模式详解 (附java语言源码)">组合模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-06-11 01:30:00">2019/06/11</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/06/java/java设计模式/20190605_适配器/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="适配器模式详解 (附java语言源码)">适配器模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-06-05 01:30:00">2019/06/05</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/06/java/java设计模式/20190604_原型模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="原型模式详解 (附java语言源码)">原型模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-06-04 01:30:00">2019/06/04</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/06/java/java设计模式/20190603_代理模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="代理模式详解 (附java语言源码)">代理模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-06-03 01:30:00">2019/06/03</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/05/java/java设计模式/20190531_工厂模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="工厂模式详解 (附java语言源码)">工厂模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-05-31 01:30:00">2019/05/31</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/05/java/java设计模式/20190531_抽象工厂/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="抽象工厂模式详解 (附java语言源码)">抽象工厂模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-05-31 01:30:00">2019/05/31</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/05/java/java设计模式/20190530_装饰模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="装饰模式详解 (附java语言源码)">装饰模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-05-30 01:30:00">2019/05/30</span>
+        </a>
+        
+        <a  class="全部文章 自然语言处理 nllp sjlf "
+           href="/2019/05/ziranyuayn/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="建造者模式详解 (附java语言源码)">建造者模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-05-29 01:30:00">2019/05/29</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/05/java/java设计模式/20190529_建造者/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="建造者模式详解 (附java语言源码)">建造者模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-05-29 01:30:00">2019/05/29</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/05/java/java设计模式/20190528_观察者/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="观察者模式详解 (附java语言源码)">观察者模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-05-28 01:30:00">2019/05/28</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/05/java/java设计模式/20190527_策略模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="策略模式详解（用java语言实现策略模式）">策略模式详解（用java语言实现策略模式）</span>
+            <span class="post-date" title="2019-05-27 01:30:00">2019/05/27</span>
+        </a>
+        
+        <a  class="全部文章 python 爬虫 "
+           href="/2019/05/python/spider/有用代码/20190526_定时任务/"
+           data-tag="python,爬虫"
+           data-author="" >
+            <span class="post-title" title="爬虫定时任务汇总">爬虫定时任务汇总</span>
+            <span class="post-date" title="2019-05-26 10:35:00">2019/05/26</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/05/java/java设计模式/20190524_单例模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="单例模式详解（附常见的7种单例模式源码）">单例模式详解（附常见的7种单例模式源码）</span>
+            <span class="post-date" title="2019-05-24 01:30:00">2019/05/24</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/05/java/java设计模式/20190524_汇总/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="java设计模式汇总">java设计模式汇总</span>
+            <span class="post-date" title="2019-05-24 01:30:00">2019/05/24</span>
+        </a>
+        
+        <a  class="全部文章 python flask "
+           href="/2019/04/python/flask/20190420_案例_登录/"
+           data-tag="python,flask"
+           data-author="" >
+            <span class="post-title" title="flask案例_登录和遍历操作">flask案例_登录和遍历操作</span>
+            <span class="post-date" title="2019-04-20 10:35:00">2019/04/20</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/03/python/python基础/20190313_时间处理/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python时间处理">python时间处理</span>
+            <span class="post-date" title="2019-03-13 15:24:20">2019/03/13</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/03/python/python基础/20190311_打包/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python打包">python打包</span>
+            <span class="post-date" title="2019-03-11 15:24:20">2019/03/11</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/03/python/python基础/20190310_发布模块/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python发布模块">python发布模块</span>
+            <span class="post-date" title="2019-03-10 15:24:20">2019/03/10</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/03/python/python基础/20190307_python编码规范/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python编码规范">python编码规范</span>
+            <span class="post-date" title="2019-03-08 15:24:20">2019/03/08</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/03/python/python基础/20190306_python虚拟环境/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python虚拟环境">python虚拟环境</span>
+            <span class="post-date" title="2019-03-06 15:24:20">2019/03/06</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/03/python/python基础/20190305_图形界面/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python图形界面">python图形界面</span>
+            <span class="post-date" title="2019-03-05 15:24:20">2019/03/05</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/03/python/python基础/20190304_操作excel/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python操作excel">python操作excel</span>
+            <span class="post-date" title="2019-03-04 15:24:20">2019/03/04</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/03/python/python基础/20190303_sqlchemy的使用/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="sqlalchemy的使用">sqlalchemy的使用</span>
+            <span class="post-date" title="2019-03-03 15:24:20">2019/03/03</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/03/python/python基础/20190302_sqlalchemy的一些概念/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="sqlalchemy的一些概念">sqlalchemy的一些概念</span>
+            <span class="post-date" title="2019-03-02 15:24:20">2019/03/02</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/03/python/python基础/20190301_访问数据库/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python访问数据库">python访问数据库</span>
+            <span class="post-date" title="2019-03-01 15:24:20">2019/03/01</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190228_网络编程/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python网络编程">python网络编程</span>
+            <span class="post-date" title="2019-02-28 15:24:20">2019/02/28</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190226_文件操作/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python文件操作">python文件操作</span>
+            <span class="post-date" title="2019-02-26 15:24:20">2019/02/26</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190225_进程和线程/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python进程和线程">python进程和线程</span>
+            <span class="post-date" title="2019-02-25 15:24:20">2019/02/25</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190223_python正则表达式/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python正则表达式">python正则表达式</span>
+            <span class="post-date" title="2019-02-23 15:24:20">2019/02/23</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190222_时间处理汇总/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python时间处理汇总">python时间处理汇总</span>
+            <span class="post-date" title="2019-02-22 15:24:20">2019/02/22</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190221_模块和包以及各种库/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python模块和包以及各种库">python模块和包以及各种库</span>
+            <span class="post-date" title="2019-02-21 15:24:20">2019/02/21</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190220_面向对象编程/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python面向对象编程">python面向对象编程</span>
+            <span class="post-date" title="2019-02-20 15:24:20">2019/02/20</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190219_错误,测试和调试/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python错误，测试和调试">python错误，测试和调试</span>
+            <span class="post-date" title="2019-02-19 15:24:20">2019/02/19</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190218_函数式编程/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python函数式编程">python函数式编程</span>
+            <span class="post-date" title="2019-02-18 15:24:20">2019/02/18</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190217_函数及其高级特性/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python函数及其高级特性">python函数及其高级特性</span>
+            <span class="post-date" title="2019-02-17 15:24:20">2019/02/17</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190216_控制语句/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python控制语句">python控制语句</span>
+            <span class="post-date" title="2019-02-16 15:24:20">2019/02/16</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190215_序列（列表，元组，字典，集合）/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python序列（列表，元组，字典，集合）">python序列（列表，元组，字典，集合）</span>
+            <span class="post-date" title="2019-02-15 15:24:20">2019/02/15</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190214_python字符串和编码/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python字符串和编码">python字符串和编码</span>
+            <span class="post-date" title="2019-02-14 15:24:20">2019/02/14</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190213_python关键字和内置函数/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python关键字和内置函数">python关键字和内置函数</span>
+            <span class="post-date" title="2019-02-13 15:24:20">2019/02/13</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190212_python变量和数据类型/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python变量和数据类型">python变量和数据类型</span>
+            <span class="post-date" title="2019-02-12 15:24:20">2019/02/12</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190212_python标识符和运算符/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python标识符和运算符">python标识符和运算符</span>
+            <span class="post-date" title="2019-02-12 15:24:20">2019/02/12</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190211_python简介/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python简介">python简介</span>
+            <span class="post-date" title="2019-02-11 15:24:20">2019/02/11</span>
+        </a>
+        
+        <a  class="全部文章 Java java案例 "
+           href="/2017/05/java/java案例/20170517_java打印图形/"
+           data-tag="java,java案例,java打印图形"
+           data-author="" >
+            <span class="post-title" title="用java实现打印各种图形总结 (包括长方形 三角形 菱形 平行四边形等)">用java实现打印各种图形总结 (包括长方形 三角形 菱形 平行四边形等)</span>
+            <span class="post-date" title="2017-05-17 23:19:19">2017/05/17</span>
+        </a>
+        
+        <a  class="全部文章 Java java数据结构和算法 "
+           href="/2017/05/java/java数据结构和算法/20170505_概述/"
+           data-tag="java,java数据结构和算法"
+           data-author="" >
+            <span class="post-title" title="01 数据结构和算法——概述和总结">01 数据结构和算法——概述和总结</span>
+            <span class="post-date" title="2017-05-05 01:30:00">2017/05/05</span>
+        </a>
+        
+        <a  class="全部文章 Java java数据结构和算法 "
+           href="/2017/05/java/java数据结构和算法/20170504_java数据结构和算法/"
+           data-tag="java,java数据结构和算法"
+           data-author="" >
+            <span class="post-title" title="java数据结构和算法">java数据结构和算法</span>
+            <span class="post-date" title="2017-05-04 01:30:00">2017/05/04</span>
+        </a>
+        
+        <a  class="全部文章 Java java基础 "
+           href="/2017/04/java/java基础/2017427_java核心类/"
+           data-tag="java"
+           data-author="" >
+            <span class="post-title" title="java基础">java基础</span>
+            <span class="post-date" title="2017-04-27 01:30:00">2017/04/27</span>
+        </a>
+        
+        <a  class="全部文章 Java java基础 "
+           href="/2017/04/java/java基础/2017424_数组和string类/"
+           data-tag="java,java基础"
+           data-author="" >
+            <span class="post-title" title="java数组">java数组</span>
+            <span class="post-date" title="2017-04-24 01:30:00">2017/04/24</span>
+        </a>
+        
+        <a  class="全部文章 Java java基础 "
+           href="/2017/04/java/java基础/2017425_字符串string类的/"
+           data-tag="java,java基础"
+           data-author="" >
+            <span class="post-title" title="java字符串String类">java字符串String类</span>
+            <span class="post-date" title="2017-04-24 01:30:00">2017/04/24</span>
+        </a>
+        
+        <a  class="全部文章 Java java基础 "
+           href="/2017/04/java/java基础/2017423_运算和流程控制/"
+           data-tag="java,java基础"
+           data-author="" >
+            <span class="post-title" title="java运算和流程控制">java运算和流程控制</span>
+            <span class="post-date" title="2017-04-23 01:30:00">2017/04/23</span>
+        </a>
+        
+        <a  class="全部文章 Java java基础 "
+           href="/2017/04/java/java基础/2017422_变量和数据类型/"
+           data-tag="java,java基础"
+           data-author="" >
+            <span class="post-title" title="java变量和数据类型">java变量和数据类型</span>
+            <span class="post-date" title="2017-04-22 01:30:00">2017/04/22</span>
+        </a>
+        
+        <a  class="全部文章 Java java基础 "
+           href="/2017/04/java/java基础/2017421_java基础/"
+           data-tag="java"
+           data-author="" >
+            <span class="post-title" title="java基础">java基础</span>
+            <span class="post-date" title="2017-04-21 01:30:00">2017/04/21</span>
+        </a>
+        
+        <div id="no-item-tips">
 
         </div>
-      </header>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-database/PostgreSql/20190815_查询语句" class="article article-type-post" itemscope itemprop="blogPost">
     
-
-
-    <div class="post-body han-init-context" itemprop="articleBody">
-
+        <h1 class="article-title">PostgreSQL 八. 查询语句</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="数据库">数据库</a> > 
+            
+            <a  data-rel="数据库&lt;---&gt;PostgreSQL">PostgreSQL</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color4">数据库</a>
+            
+            <a class="color1">PostgreSQL</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            发布时间 : <time class="date" title='最后更新: 2020-10-28 11:38:36'>2019-08-15 15:24</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#查询语句"><span class="toc-text">查询语句</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#单表查询"><span class="toc-text">单表查询</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用集合函数查询"><span class="toc-text">使用集合函数查询</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#连接查询"><span class="toc-text">连接查询</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#子查询"><span class="toc-text">子查询</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#合并查询结果"><span class="toc-text">合并查询结果</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#为表和字段取别名"><span class="toc-text">为表和字段取别名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用正则表达式查询"><span class="toc-text">使用正则表达式查询</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#常见问题及解答"><span class="toc-text">常见问题及解答</span></a></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
       
-      
-
-      
-        <h4 id="查询语句"><a href="#查询语句" class="headerlink" title="查询语句"></a>查询语句</h4><p>首先定义数据表，<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> fruits</span><br><span class="line">(</span><br><span class="line">f_id    <span class="built_in">char</span>(<span class="number">10</span>)      <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">s_id    <span class="built_in">INT</span>            <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">f_name  <span class="built_in">char</span>(<span class="number">255</span>)     <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">f_price <span class="built_in">decimal</span>(<span class="number">8</span>,<span class="number">2</span>)  <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">PRIMARY <span class="keyword">KEY</span>(f_id) </span><br><span class="line">);</span><br></pre></td></tr></table></figure></p>
+        <h4 id="查询语句"><a href="#查询语句" class="headerlink" title="查询语句"></a>查询语句</h4><p>首先定义数据表，</p>
+<pre><code class="sql">CREATE TABLE fruits
+(
+f_id    char(10)      NOT NULL,
+s_id    INT            NOT NULL,
+f_name  char(255)     NOT NULL,
+f_price decimal(8,2)  NOT NULL,
+PRIMARY KEY(f_id) 
+);
+</code></pre>
 <a id="more"></a>
-<p>为了演示如何使用SELECT语句，需要插入数据，现插入如下数据：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> fruits (f_id, s_id, f_name, f_price)</span><br><span class="line">    <span class="keyword">VALUES</span>(<span class="string">'a1'</span>, <span class="number">101</span>,<span class="string">'apple'</span>,<span class="number">5.2</span>),</span><br><span class="line">    (<span class="string">'b1'</span>,<span class="number">101</span>,<span class="string">'blackberry'</span>, <span class="number">10.2</span>),</span><br><span class="line">    (<span class="string">'bs1'</span>,<span class="number">102</span>,<span class="string">'orange'</span>, <span class="number">11.2</span>),</span><br><span class="line">    (<span class="string">'bs2'</span>,<span class="number">105</span>,<span class="string">'melon'</span>,<span class="number">8.2</span>),</span><br><span class="line">    (<span class="string">'t1'</span>,<span class="number">102</span>,<span class="string">'banana'</span>, <span class="number">10.3</span>),</span><br><span class="line">    (<span class="string">'t2'</span>,<span class="number">102</span>,<span class="string">'grape'</span>, <span class="number">5.3</span>),</span><br><span class="line">    (<span class="string">'o2'</span>,<span class="number">103</span>,<span class="string">'coconut'</span>, <span class="number">9.2</span>),</span><br><span class="line">    (<span class="string">'c0'</span>,<span class="number">101</span>,<span class="string">'cherry'</span>, <span class="number">3.2</span>),</span><br><span class="line">    (<span class="string">'a2'</span>,<span class="number">103</span>, <span class="string">'apricot'</span>,<span class="number">2.2</span>),</span><br><span class="line">    (<span class="string">'l2'</span>,<span class="number">104</span>,<span class="string">'lemon'</span>, <span class="number">6.4</span>),</span><br><span class="line">    (<span class="string">'b2'</span>,<span class="number">104</span>,<span class="string">'berry'</span>, <span class="number">8.6</span>),</span><br><span class="line">    (<span class="string">'m1'</span>,<span class="number">106</span>,<span class="string">'mango'</span>, <span class="number">15.6</span>),</span><br><span class="line">    (<span class="string">'m2'</span>,<span class="number">105</span>,<span class="string">'xbabay'</span>, <span class="number">2.6</span>),</span><br><span class="line">    (<span class="string">'t4'</span>,<span class="number">107</span>,<span class="string">'xbababa'</span>, <span class="number">3.6</span>),</span><br><span class="line">    (<span class="string">'m3'</span>,<span class="number">105</span>,<span class="string">'xxtt'</span>, <span class="number">11.6</span>),</span><br><span class="line">    (<span class="string">'b5'</span>,<span class="number">107</span>,<span class="string">'xxxx'</span>, <span class="number">3.6</span>);</span><br></pre></td></tr></table></figure></p>
+<p>为了演示如何使用SELECT语句，需要插入数据，现插入如下数据：</p>
+<pre><code class="sql">INSERT INTO fruits (f_id, s_id, f_name, f_price)
+    VALUES(&#39;a1&#39;, 101,&#39;apple&#39;,5.2),
+    (&#39;b1&#39;,101,&#39;blackberry&#39;, 10.2),
+    (&#39;bs1&#39;,102,&#39;orange&#39;, 11.2),
+    (&#39;bs2&#39;,105,&#39;melon&#39;,8.2),
+    (&#39;t1&#39;,102,&#39;banana&#39;, 10.3),
+    (&#39;t2&#39;,102,&#39;grape&#39;, 5.3),
+    (&#39;o2&#39;,103,&#39;coconut&#39;, 9.2),
+    (&#39;c0&#39;,101,&#39;cherry&#39;, 3.2),
+    (&#39;a2&#39;,103, &#39;apricot&#39;,2.2),
+    (&#39;l2&#39;,104,&#39;lemon&#39;, 6.4),
+    (&#39;b2&#39;,104,&#39;berry&#39;, 8.6),
+    (&#39;m1&#39;,106,&#39;mango&#39;, 15.6),
+    (&#39;m2&#39;,105,&#39;xbabay&#39;, 2.6),
+    (&#39;t4&#39;,107,&#39;xbababa&#39;, 3.6),
+    (&#39;m3&#39;,105,&#39;xxtt&#39;, 11.6),
+    (&#39;b5&#39;,107,&#39;xxxx&#39;, 3.6);
+</code></pre>
 <h4 id="单表查询"><a href="#单表查询" class="headerlink" title="单表查询"></a>单表查询</h4><p>1、查询所有字段</p>
-<p>【例8.1】从fruits表中检索所有字段的数据，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> fruits;</span><br></pre></td></tr></table></figure></p>
+<p>【例8.1】从fruits表中检索所有字段的数据，SQL语句如下：</p>
+<pre><code class="sql">SELECT * FROM fruits;
+</code></pre>
 <p>2、查询指定字段</p>
-<p>【例8.2】查询当前表中f_name列所有水果名称，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> f_name <span class="keyword">FROM</span> fruits;</span><br></pre></td></tr></table></figure></p>
-<p>【例8.3】例如，从fruits表中获取f_name和f_price两列，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> f_name, f_price <span class="keyword">FROM</span> fruits;</span><br></pre></td></tr></table></figure></p>
+<p>【例8.2】查询当前表中f_name列所有水果名称，SQL语句如下：</p>
+<pre><code class="sql">SELECT f_name FROM fruits;
+</code></pre>
+<p>【例8.3】例如，从fruits表中获取f_name和f_price两列，SQL语句如下：</p>
+<pre><code class="sql">SELECT f_name, f_price FROM fruits;
+</code></pre>
 <p>3、查询指定记录</p>
-<p>【例8.4】查询价格为10.2元的水果的名称，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> f_name, f_price</span><br><span class="line"><span class="keyword">FROM</span> fruits</span><br><span class="line"><span class="keyword">WHERE</span> f_price = <span class="number">10.2</span>;</span><br></pre></td></tr></table></figure></p>
-<p>【例8.5】查找名称为“apple”的水果的价格，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> f_name, f_price</span><br><span class="line"><span class="keyword">FROM</span> fruits</span><br><span class="line"><span class="keyword">WHERE</span> f_name = <span class="string">'apple'</span>;</span><br></pre></td></tr></table></figure></p>
-<p>【例8.6】查询价格小于10的水果的名称，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> f_name, f_price</span><br><span class="line"><span class="keyword">FROM</span> fruits</span><br><span class="line"><span class="keyword">WHERE</span> f_price &lt; <span class="number">10</span>;</span><br></pre></td></tr></table></figure></p>
+<p>【例8.4】查询价格为10.2元的水果的名称，SQL语句如下：</p>
+<pre><code class="sql">SELECT f_name, f_price
+FROM fruits
+WHERE f_price = 10.2;
+</code></pre>
+<p>【例8.5】查找名称为“apple”的水果的价格，SQL语句如下：</p>
+<pre><code class="sql">SELECT f_name, f_price
+FROM fruits
+WHERE f_name = &#39;apple&#39;;
+</code></pre>
+<p>【例8.6】查询价格小于10的水果的名称，SQL语句如下：</p>
+<pre><code class="sql">SELECT f_name, f_price
+FROM fruits
+WHERE f_price &lt; 10;
+</code></pre>
 <p>4、带IN关键字的查询</p>
-<p>【例8.7】查询s_id为101和102的记录，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> s_id,f_name, f_price </span><br><span class="line"><span class="keyword">FROM</span> fruits </span><br><span class="line"><span class="keyword">WHERE</span> s_id <span class="keyword">IN</span> (<span class="number">101</span>,<span class="number">102</span>) </span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> f_name;</span><br></pre></td></tr></table></figure></p>
-<p>【例8.8】查询所有s_id不等于101也不等于102的记录，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> s_id,f_name, f_price</span><br><span class="line"><span class="keyword">FROM</span> fruits</span><br><span class="line"><span class="keyword">WHERE</span> s_id <span class="keyword">NOT</span> <span class="keyword">IN</span> (<span class="number">101</span>,<span class="number">102</span>)</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> f_name;</span><br></pre></td></tr></table></figure></p>
+<p>【例8.7】查询s_id为101和102的记录，SQL语句如下：</p>
+<pre><code class="sql">SELECT s_id,f_name, f_price 
+FROM fruits 
+WHERE s_id IN (101,102) 
+ORDER BY f_name;
+</code></pre>
+<p>【例8.8】查询所有s_id不等于101也不等于102的记录，SQL语句如下：</p>
+<pre><code class="sql">SELECT s_id,f_name, f_price
+FROM fruits
+WHERE s_id NOT IN (101,102)
+ORDER BY f_name;
+</code></pre>
 <p>5、带between and 的范围查询</p>
-<p>【例8.9】查询价格在2.00元到10.5元之间水果名称和价格，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> f_name, f_price </span><br><span class="line"><span class="keyword">FROM</span> fruits </span><br><span class="line"><span class="keyword">WHERE</span> f_price <span class="keyword">BETWEEN</span> <span class="number">2.00</span> <span class="keyword">AND</span> <span class="number">10.20</span>;</span><br></pre></td></tr></table></figure></p>
-<p>【例8.10】查询价格在2.00元到10.5元之外的水果名称和价格，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> f_name, f_price</span><br><span class="line"><span class="keyword">FROM</span> fruits </span><br><span class="line"><span class="keyword">WHERE</span> f_price <span class="keyword">NOT</span> <span class="keyword">BETWEEN</span> <span class="number">2.00</span> <span class="keyword">AND</span> <span class="number">10.20</span>;</span><br></pre></td></tr></table></figure></p>
+<p>【例8.9】查询价格在2.00元到10.5元之间水果名称和价格，SQL语句如下：</p>
+<pre><code class="sql">SELECT f_name, f_price 
+FROM fruits 
+WHERE f_price BETWEEN 2.00 AND 10.20;
+</code></pre>
+<p>【例8.10】查询价格在2.00元到10.5元之外的水果名称和价格，SQL语句如下：</p>
+<pre><code class="sql">SELECT f_name, f_price
+FROM fruits 
+WHERE f_price NOT BETWEEN 2.00 AND 10.20;
+</code></pre>
 <p>6、带like的字符匹配查询</p>
-<p>【例8.11】查找所有以‘b’字母开头的水果，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> f_id, f_name</span><br><span class="line"><span class="keyword">FROM</span> fruits</span><br><span class="line"><span class="keyword">WHERE</span> f_name <span class="keyword">LIKE</span> <span class="string">'b%'</span>;</span><br></pre></td></tr></table></figure></p>
-<p>【例8.12】在fruits表中，查询f_name中包含字母‘g’的记录，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> f_id, f_name</span><br><span class="line"><span class="keyword">FROM</span> fruits</span><br><span class="line"><span class="keyword">WHERE</span> f_name <span class="keyword">LIKE</span> <span class="string">'%g%'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>【例8.11】查找所有以‘b’字母开头的水果，SQL语句如下：</p>
+<pre><code class="sql">SELECT f_id, f_name
+FROM fruits
+WHERE f_name LIKE &#39;b%&#39;;
+</code></pre>
+<p>【例8.12】在fruits表中，查询f_name中包含字母‘g’的记录，SQL语句如下：</p>
+<pre><code class="sql">SELECT f_id, f_name
+FROM fruits
+WHERE f_name LIKE &#39;%g%&#39;;
+</code></pre>
 <p>7、查询空值</p>
-<p>【例8.13】查询customers表中c_email为空的记录的c_id、c_name和c_email字段值，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> c_id, c_name,c_email <span class="keyword">FROM</span> customers <span class="keyword">WHERE</span> c_email <span class="keyword">IS</span> <span class="literal">NULL</span>;</span><br></pre></td></tr></table></figure></p>
-<p>【例8.14】查询customers表中c_email不为空的记录的c_id、c_name和c_email字段值，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> c_id, c_name,c_email <span class="keyword">FROM</span> customers <span class="keyword">WHERE</span> c_email <span class="keyword">IS</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>;</span><br></pre></td></tr></table></figure></p>
+<p>【例8.13】查询customers表中c_email为空的记录的c_id、c_name和c_email字段值，SQL语句如下：</p>
+<pre><code class="sql">SELECT c_id, c_name,c_email FROM customers WHERE c_email IS NULL;
+</code></pre>
+<p>【例8.14】查询customers表中c_email不为空的记录的c_id、c_name和c_email字段值，SQL语句如下：</p>
+<pre><code class="sql">SELECT c_id, c_name,c_email FROM customers WHERE c_email IS NOT NULL;
+</code></pre>
 <p>8、带and的多条件查询</p>
-<p>【例8.15】在fruits表中查询s_id = 101，并且f_price大于5的记录价格和名称，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> s_id, f_price, f_name </span><br><span class="line"><span class="keyword">FROM</span> fruits </span><br><span class="line"><span class="keyword">WHERE</span> s_id = <span class="string">'101'</span> <span class="keyword">AND</span> f_price &gt;=<span class="number">5</span>;</span><br></pre></td></tr></table></figure></p>
-<p>【例8.16】在fruits表中查询s_id = 101或者102，并且f_price大于5，并且f_name=‘apple’的记录的价格和名称，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> f_id, f_price, f_name <span class="keyword">FROM</span> fruits </span><br><span class="line"><span class="keyword">WHERE</span> s_id <span class="keyword">IN</span>(<span class="string">'101'</span>, <span class="string">'102'</span>) <span class="keyword">AND</span> f_price &gt;= <span class="number">5</span> <span class="keyword">AND</span> f_name = <span class="string">'apple'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>【例8.15】在fruits表中查询s_id = 101，并且f_price大于5的记录价格和名称，SQL语句如下：</p>
+<pre><code class="sql">SELECT s_id, f_price, f_name 
+FROM fruits 
+WHERE s_id = &#39;101&#39; AND f_price &gt;=5;
+</code></pre>
+<p>【例8.16】在fruits表中查询s_id = 101或者102，并且f_price大于5，并且f_name=‘apple’的记录的价格和名称，SQL语句如下：</p>
+<pre><code class="sql">SELECT f_id, f_price, f_name FROM fruits 
+WHERE s_id IN(&#39;101&#39;, &#39;102&#39;) AND f_price &gt;= 5 AND f_name = &#39;apple&#39;;
+</code></pre>
 <p>9、带or的多条件查询</p>
-<p>【例8.17】查询s_id=101或者s_id=102的水果供应商的f_price和f_name，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> s_id,f_name, f_price </span><br><span class="line"><span class="keyword">FROM</span> fruits </span><br><span class="line"><span class="keyword">WHERE</span> s_id = <span class="number">101</span> <span class="keyword">OR</span> s_id = <span class="number">102</span>;</span><br></pre></td></tr></table></figure></p>
-<p>【例8.18】查询s_id=101或者s_id=102的水果供应商的f_price和f_name，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> s_id,f_name, f_price <span class="keyword">FROM</span> fruits <span class="keyword">WHERE</span> s_id <span class="keyword">IN</span>(<span class="number">101</span>,<span class="number">102</span>);</span><br></pre></td></tr></table></figure></p>
+<p>【例8.17】查询s_id=101或者s_id=102的水果供应商的f_price和f_name，SQL语句如下：</p>
+<pre><code class="sql">SELECT s_id,f_name, f_price 
+FROM fruits 
+WHERE s_id = 101 OR s_id = 102;
+</code></pre>
+<p>【例8.18】查询s_id=101或者s_id=102的水果供应商的f_price和f_name，SQL语句如下：</p>
+<pre><code class="sql">SELECT s_id,f_name, f_price FROM fruits WHERE s_id IN(101,102);
+</code></pre>
 <p>10、查询结果不重复</p>
-<p>【例8.19】查询fruits表中s_id字段的值，并返回s_id字段值不得重复，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> s_id <span class="keyword">FROM</span> fruits;</span><br></pre></td></tr></table></figure></p>
+<p>【例8.19】查询fruits表中s_id字段的值，并返回s_id字段值不得重复，SQL语句如下：</p>
+<pre><code class="sql">SELECT DISTINCT s_id FROM fruits;
+</code></pre>
 <p>11、对查询结果排序</p>
-<p>【例8.20】查询fruits表的f_name字段值，并对其进行排序，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> f_name <span class="keyword">FROM</span> fruits <span class="keyword">ORDER</span> <span class="keyword">BY</span> f_name;</span><br></pre></td></tr></table></figure></p>
-<p>【例8.21】查询fruits表中的f_name和f_price字段，先按f_name排序，再按f_price排序，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> f_name, f_price <span class="keyword">FROM</span> fruits <span class="keyword">ORDER</span> <span class="keyword">BY</span> f_name, f_price;</span><br></pre></td></tr></table></figure></p>
-<p>【例8.22】查询fruits表中的f_name和f_price字段，对结果按f_price降序方式排序，SQL语句如下：(ASC升序排序是默认的排序方式，加不加都可以)<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> f_name, f_price <span class="keyword">FROM</span> fruits <span class="keyword">ORDER</span> <span class="keyword">BY</span> f_price <span class="keyword">DESC</span>;</span><br></pre></td></tr></table></figure></p>
-<p>【例8.23】查询fruits表，先按f_price降序排序，再按f_name字段升序排序，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> f_price, f_name <span class="keyword">FROM</span> fruits <span class="keyword">ORDER</span> <span class="keyword">BY</span> f_price <span class="keyword">DESC</span>, f_name;</span><br></pre></td></tr></table></figure></p>
+<p>【例8.20】查询fruits表的f_name字段值，并对其进行排序，SQL语句如下：</p>
+<pre><code class="sql">SELECT f_name FROM fruits ORDER BY f_name;
+</code></pre>
+<p>【例8.21】查询fruits表中的f_name和f_price字段，先按f_name排序，再按f_price排序，SQL语句如下：</p>
+<pre><code class="sql">SELECT f_name, f_price FROM fruits ORDER BY f_name, f_price;
+</code></pre>
+<p>【例8.22】查询fruits表中的f_name和f_price字段，对结果按f_price降序方式排序，SQL语句如下：(ASC升序排序是默认的排序方式，加不加都可以)</p>
+<pre><code class="sql">SELECT f_name, f_price FROM fruits ORDER BY f_price DESC;
+</code></pre>
+<p>【例8.23】查询fruits表，先按f_price降序排序，再按f_name字段升序排序，SQL语句如下：</p>
+<pre><code class="sql">SELECT f_price, f_name FROM fruits ORDER BY f_price DESC, f_name;
+</code></pre>
 <p>12、分组查询</p>
-<p>【例8.24】根据s_id对fruits表中的数据进行分组，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> s_id, <span class="keyword">COUNT</span>(*) <span class="keyword">AS</span> Total <span class="keyword">FROM</span> fruits <span class="keyword">GROUP</span> <span class="keyword">BY</span> s_id;</span><br></pre></td></tr></table></figure></p>
-<p>【例8.25】根据s_id对fruits表中的数据进行分组，并显示水果种类大于1的分组信息，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> s_id,<span class="keyword">COUNT</span>(f_name)</span><br><span class="line"><span class="keyword">FROM</span> fruits </span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> s_id <span class="keyword">HAVING</span> <span class="keyword">COUNT</span>(f_name)&gt;<span class="number">1</span>;</span><br></pre></td></tr></table></figure></p>
-<p>【例8.26】根据s_id对fruits表中的数据进行分组，显示水果种类大于1的分组信息，并按照水果的种类排序，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> s_id,<span class="keyword">COUNT</span>(f_name)</span><br><span class="line"><span class="keyword">FROM</span> fruits </span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> s_id <span class="keyword">HAVING</span> <span class="keyword">COUNT</span>(f_name)&gt;<span class="number">1</span></span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="keyword">COUNT</span>(f_name);</span><br></pre></td></tr></table></figure></p>
-<p>【例8.27】显示fruits表查询结果的前4行。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">From</span> fruits <span class="keyword">LIMIT</span> <span class="number">4</span>;</span><br></pre></td></tr></table></figure></p>
-<p>【例8.28】在fruits表中，使用LIMIT子句，返回从第5个记录开始的，行数长度为3的记录，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">From</span> fruits <span class="keyword">LIMIT</span> <span class="number">3</span> <span class="keyword">OFFSET</span> <span class="number">4</span>;</span><br></pre></td></tr></table></figure></p>
+<p>【例8.24】根据s_id对fruits表中的数据进行分组，SQL语句如下：</p>
+<pre><code class="sql">SELECT s_id, COUNT(*) AS Total FROM fruits GROUP BY s_id;
+</code></pre>
+<p>【例8.25】根据s_id对fruits表中的数据进行分组，并显示水果种类大于1的分组信息，SQL语句如下：</p>
+<pre><code class="sql">SELECT s_id,COUNT(f_name)
+FROM fruits 
+GROUP BY s_id HAVING COUNT(f_name)&gt;1;
+</code></pre>
+<p>【例8.26】根据s_id对fruits表中的数据进行分组，显示水果种类大于1的分组信息，并按照水果的种类排序，SQL语句如下：</p>
+<pre><code class="sql">SELECT s_id,COUNT(f_name)
+FROM fruits 
+GROUP BY s_id HAVING COUNT(f_name)&gt;1
+ORDER BY COUNT(f_name);
+</code></pre>
+<p>【例8.27】显示fruits表查询结果的前4行。</p>
+<pre><code class="sql">SELECT * From fruits LIMIT 4;
+</code></pre>
+<p>【例8.28】在fruits表中，使用LIMIT子句，返回从第5个记录开始的，行数长度为3的记录，SQL语句如下：</p>
+<pre><code class="sql">SELECT * From fruits LIMIT 3 OFFSET 4;
+</code></pre>
 <h4 id="使用集合函数查询"><a href="#使用集合函数查询" class="headerlink" title="使用集合函数查询"></a>使用集合函数查询</h4><p>1、COUNT()函数</p>
-<p>COUNT()函数统计数据表中包含的记录行的总数，或者根据查询结果返回的列中包含的数据行数。其使用方法有两种：<br>⑴ COUNT(*) 计算表中总的行数，不管某列有数值或者为空值。<br>⑵ COUNT(字段名)计算指定列下总的行数，计算时将忽略字段值为空值的行。<br>【例8.29】查询customers表中总的行数，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">COUNT</span>(*) <span class="keyword">AS</span> cust_num <span class="keyword">FROM</span> customers;</span><br></pre></td></tr></table></figure></p>
-<p>【例8.30】查询customers表中有电子邮箱的顾客的总数，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">COUNT</span>(c_email) <span class="keyword">AS</span> email_num <span class="keyword">FROM</span> customers;</span><br></pre></td></tr></table></figure></p>
-<p>【例8.31】在fruits表中，使用COUNT()函数统计不同的s_id的水果种类，然后计算每个分组中的总记录数。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> s_id,<span class="keyword">COUNT</span>(f_name)</span><br><span class="line"><span class="keyword">FROM</span> fruits </span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> s_id;</span><br></pre></td></tr></table></figure></p>
-<p>【例8.32】在fruits表中查询s_id=101的水果价格总和。SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">SUM</span>(f_price) <span class="keyword">AS</span> price_total</span><br><span class="line"><span class="keyword">FROM</span> fruits</span><br><span class="line"><span class="keyword">WHERE</span> s_id=<span class="number">101</span>;</span><br></pre></td></tr></table></figure></p>
+<p>COUNT()函数统计数据表中包含的记录行的总数，或者根据查询结果返回的列中包含的数据行数。其使用方法有两种：<br>⑴ COUNT(*) 计算表中总的行数，不管某列有数值或者为空值。<br>⑵ COUNT(字段名)计算指定列下总的行数，计算时将忽略字段值为空值的行。<br>【例8.29】查询customers表中总的行数，SQL语句如下：</p>
+<pre><code class="sql">SELECT COUNT(*) AS cust_num FROM customers;
+</code></pre>
+<p>【例8.30】查询customers表中有电子邮箱的顾客的总数，SQL语句如下：</p>
+<pre><code class="sql">SELECT COUNT(c_email) AS email_num FROM customers;
+</code></pre>
+<p>【例8.31】在fruits表中，使用COUNT()函数统计不同的s_id的水果种类，然后计算每个分组中的总记录数。</p>
+<pre><code class="sql">SELECT s_id,COUNT(f_name)
+FROM fruits 
+GROUP BY s_id;
+</code></pre>
+<p>【例8.32】在fruits表中查询s_id=101的水果价格总和。SQL语句如下：</p>
+<pre><code class="sql">SELECT SUM(f_price) AS price_total
+FROM fruits
+WHERE s_id=101;
+</code></pre>
 <p>2、SUM()函数</p>
-<p>【例8.33】在fruits表中查询不同s_id的水果价格总和。SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> s_id,<span class="keyword">SUM</span>(f_price) <span class="keyword">AS</span> price_total</span><br><span class="line"><span class="keyword">FROM</span> fruits</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> s_id;</span><br></pre></td></tr></table></figure></p>
+<p>【例8.33】在fruits表中查询不同s_id的水果价格总和。SQL语句如下：</p>
+<pre><code class="sql">SELECT s_id,SUM(f_price) AS price_total
+FROM fruits
+GROUP BY s_id;
+</code></pre>
 <p>3、AVG()函数</p>
-<p>【例8.34】在fruits表中，查询s_id=103的供应商的水果价格的平均值，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">AVG</span>(f_price) <span class="keyword">AS</span> avg_price</span><br><span class="line">     <span class="keyword">FROM</span> fruits</span><br><span class="line">     <span class="keyword">WHERE</span> s_id = <span class="number">103</span>;</span><br></pre></td></tr></table></figure></p>
-<p>【例8.35】在fruits表中，查询每一个供应商的水果价格的平均值，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> s_id,<span class="keyword">AVG</span>(f_price) <span class="keyword">AS</span> avg_price</span><br><span class="line"><span class="keyword">FROM</span> fruits</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> s_id;</span><br></pre></td></tr></table></figure></p>
+<p>【例8.34】在fruits表中，查询s_id=103的供应商的水果价格的平均值，SQL语句如下：</p>
+<pre><code class="sql">SELECT AVG(f_price) AS avg_price
+     FROM fruits
+     WHERE s_id = 103;
+</code></pre>
+<p>【例8.35】在fruits表中，查询每一个供应商的水果价格的平均值，SQL语句如下：</p>
+<pre><code class="sql">SELECT s_id,AVG(f_price) AS avg_price
+FROM fruits
+GROUP BY s_id;
+</code></pre>
 <p>4、MAX()函数</p>
-<p>【例8.36】在fruits表中查找市场上价格最高的水果，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">MAX</span>(f_price) <span class="keyword">AS</span> max_price <span class="keyword">FROM</span> fruits;</span><br></pre></td></tr></table></figure></p>
-<p>【例8.37】在fruits表中查找不同供应商提供的价格最高的水果，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> s_id, <span class="keyword">MAX</span>(f_price) <span class="keyword">AS</span> max_price</span><br><span class="line"><span class="keyword">FROM</span> fruits</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> s_id;</span><br></pre></td></tr></table></figure></p>
-<p>【例8.38】在fruits表中查找f_name的最大值，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">MAX</span>(f_name) <span class="keyword">FROM</span> fruits;</span><br></pre></td></tr></table></figure></p>
+<p>【例8.36】在fruits表中查找市场上价格最高的水果，SQL语句如下：</p>
+<pre><code class="sql">SELECT MAX(f_price) AS max_price FROM fruits;
+</code></pre>
+<p>【例8.37】在fruits表中查找不同供应商提供的价格最高的水果，SQL语句如下：</p>
+<pre><code class="sql">SELECT s_id, MAX(f_price) AS max_price
+FROM fruits
+GROUP BY s_id;
+</code></pre>
+<p>【例8.38】在fruits表中查找f_name的最大值，SQL语句如下：</p>
+<pre><code class="sql">SELECT MAX(f_name) FROM fruits;
+</code></pre>
 <p>5、MIN()函数</p>
-<p>【例8.39】在fruits表中查找市场上水果的最低价格，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">MIN</span>(f_price) <span class="keyword">AS</span> min_price <span class="keyword">FROM</span> fruits;</span><br></pre></td></tr></table></figure></p>
-<p>【例8.40】在fruits表中查找不同供应商提供的价格最低的水果，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> s_id, <span class="keyword">MIN</span>(f_price) <span class="keyword">AS</span> min_price</span><br><span class="line"><span class="keyword">FROM</span> fruits</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> s_id;</span><br></pre></td></tr></table></figure></p>
+<p>【例8.39】在fruits表中查找市场上水果的最低价格，SQL语句如下：</p>
+<pre><code class="sql">SELECT MIN(f_price) AS min_price FROM fruits;
+</code></pre>
+<p>【例8.40】在fruits表中查找不同供应商提供的价格最低的水果，SQL语句如下：</p>
+<pre><code class="sql">SELECT s_id, MIN(f_price) AS min_price
+FROM fruits
+GROUP BY s_id;
+</code></pre>
 <h4 id="连接查询"><a href="#连接查询" class="headerlink" title="连接查询"></a>连接查询</h4><p>1、内连接查询（inner join）</p>
-<p>【例8.41】在fruits表和suppliers表之间使用内连接查询。<br>查询之前，在数据库中创建数据表suppliers，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> suppliers</span><br><span class="line">(</span><br><span class="line">s_id    <span class="built_in">INT</span>   PRIMARY <span class="keyword">KEY</span>, </span><br><span class="line">s_name   <span class="built_in">varchar</span>(<span class="number">50</span>)   <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">s_city   <span class="built_in">varchar</span>(<span class="number">50</span>)    <span class="keyword">NOT</span> <span class="literal">NULL</span>);</span><br></pre></td></tr></table></figure></p>
-<p>为了演示需要插入数据，可执行以下语句：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> suppliers (s_id, s_name, s_city)</span><br><span class="line"><span class="keyword">VALUES</span>(<span class="number">101</span>,<span class="string">'FastFruit Inc'</span>, <span class="string">'Tianjin'</span>),</span><br><span class="line"> (<span class="number">102</span>,<span class="string">'LT Supplies'</span>, <span class="string">'shanghai'</span>),</span><br><span class="line">(<span class="number">103</span>,<span class="string">'ACME'</span>, <span class="string">'beijing'</span>),</span><br><span class="line">(<span class="number">104</span>,<span class="string">'FNK Inc'</span>, <span class="string">'zhengzhou'</span>),</span><br><span class="line">(<span class="number">105</span>,<span class="string">'Good Set'</span>, <span class="string">'xinjiang'</span>),</span><br><span class="line">(<span class="number">106</span>,<span class="string">'Just Eat Ours'</span>, <span class="string">'yunnan'</span>),</span><br><span class="line">(<span class="number">107</span>,<span class="string">'JOTO meoukou'</span>, <span class="string">'guangdong'</span>);</span><br></pre></td></tr></table></figure></p>
-<p>fruits表和suppliers表中都有相同数据类型的字段s_id，两个表通过s_id字段建立联系。接下来从fruits表中查询f_name、f_price字段，从suppliers表中查询s_id、s_name，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> suppliers.s_id, s_name,f_name, f_price</span><br><span class="line"><span class="keyword">FROM</span> fruits ,suppliers</span><br><span class="line"><span class="keyword">WHERE</span> fruits.s_id = suppliers.s_id;</span><br></pre></td></tr></table></figure></p>
-<p>【例8.42】在fruits表和suppliers表之间使用INNER JOIN语法进行内连接查询，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> suppliers.s_id, s_name,f_name, f_price</span><br><span class="line">       <span class="keyword">FROM</span> fruits <span class="keyword">INNER</span> <span class="keyword">JOIN</span> suppliers</span><br><span class="line">       <span class="keyword">ON</span> fruits.s_id = suppliers.s_id;</span><br></pre></td></tr></table></figure></p>
-<p>【例8.43】查询f_id=’a1’的水果供应商提供的其他水果种类，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> f1.f_id, f1.f_name</span><br><span class="line">        <span class="keyword">FROM</span> fruits <span class="keyword">AS</span> f1, fruits <span class="keyword">AS</span> f2</span><br><span class="line">        <span class="keyword">WHERE</span> f1.s_id = f2.s_id <span class="keyword">AND</span> f2.f_id = <span class="string">'a1'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>【例8.41】在fruits表和suppliers表之间使用内连接查询。<br>查询之前，在数据库中创建数据表suppliers，SQL语句如下：</p>
+<pre><code class="sql">CREATE TABLE suppliers
+(
+s_id    INT   PRIMARY KEY, 
+s_name   varchar(50)   NOT NULL,
+s_city   varchar(50)    NOT NULL);
+</code></pre>
+<p>为了演示需要插入数据，可执行以下语句：</p>
+<pre><code class="sql">INSERT INTO suppliers (s_id, s_name, s_city)
+VALUES(101,&#39;FastFruit Inc&#39;, &#39;Tianjin&#39;),
+ (102,&#39;LT Supplies&#39;, &#39;shanghai&#39;),
+(103,&#39;ACME&#39;, &#39;beijing&#39;),
+(104,&#39;FNK Inc&#39;, &#39;zhengzhou&#39;),
+(105,&#39;Good Set&#39;, &#39;xinjiang&#39;),
+(106,&#39;Just Eat Ours&#39;, &#39;yunnan&#39;),
+(107,&#39;JOTO meoukou&#39;, &#39;guangdong&#39;);
+</code></pre>
+<p>fruits表和suppliers表中都有相同数据类型的字段s_id，两个表通过s_id字段建立联系。接下来从fruits表中查询f_name、f_price字段，从suppliers表中查询s_id、s_name，SQL语句如下：</p>
+<pre><code class="sql">SELECT suppliers.s_id, s_name,f_name, f_price
+FROM fruits ,suppliers
+WHERE fruits.s_id = suppliers.s_id;
+</code></pre>
+<p>【例8.42】在fruits表和suppliers表之间使用INNER JOIN语法进行内连接查询，SQL语句如下：</p>
+<pre><code class="sql">SELECT suppliers.s_id, s_name,f_name, f_price
+       FROM fruits INNER JOIN suppliers
+       ON fruits.s_id = suppliers.s_id;
+</code></pre>
+<p>【例8.43】查询f_id=’a1’的水果供应商提供的其他水果种类，SQL语句如下：</p>
+<pre><code class="sql">SELECT f1.f_id, f1.f_name
+        FROM fruits AS f1, fruits AS f2
+        WHERE f1.s_id = f2.s_id AND f2.f_id = &#39;a1&#39;;
+</code></pre>
 <p>2、外连接查询</p>
 <p>left join(左连接)：返回包括左表的所有记录和右表中连接字段相等的记录；<br>right join(左连接)：返回包括右表的所有记录和左表中连接字段相等的记录；</p>
-<p>在做外连接查询的案例之前，在数据库中创建数据表orders，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> orders</span><br><span class="line">(</span><br><span class="line">o_num    <span class="built_in">INT</span>   <span class="literal">NULL</span>, </span><br><span class="line">o_date   <span class="built_in">DATE</span>   <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">c_id   <span class="built_in">varchar</span>(<span class="number">50</span>)    <span class="keyword">NOT</span> <span class="literal">NULL</span>);</span><br></pre></td></tr></table></figure></p>
-<p>为了演示需要插入数据，可执行以下语句：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> orders (o_num, o_date, c_id)</span><br><span class="line"><span class="keyword">VALUES</span></span><br><span class="line">(<span class="number">30001</span>,<span class="string">'2008-09-01 00:00:00'</span>, <span class="string">'10001'</span>),</span><br><span class="line">(<span class="number">30002</span>,<span class="string">'2008-09-12 00:00:00'</span>, <span class="string">'10003'</span>),</span><br><span class="line">(<span class="number">30003</span>,<span class="string">'2008-09-30 00:00:00'</span>, <span class="string">'10004'</span>),</span><br><span class="line">(<span class="literal">NULL</span>,<span class="string">'2008-10-03 00:00:00'</span>, <span class="string">'10002'</span>),</span><br><span class="line">(<span class="number">30004</span>,<span class="string">'2008-10-03 00:00:00'</span>, <span class="string">'NULL'</span>),</span><br><span class="line">(<span class="number">30005</span>,<span class="string">'2008-10-08 00:00:00'</span>, <span class="string">'10001'</span>);</span><br></pre></td></tr></table></figure></p>
-<p>【例8.44】在customers表和orders表中，查询所有客户，包括没有订单的客户，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> customers.c_id, orders.o_num</span><br><span class="line">       <span class="keyword">FROM</span> customers <span class="keyword">LEFT</span> <span class="keyword">OUTER</span> <span class="keyword">JOIN</span> orders</span><br><span class="line">       <span class="keyword">ON</span> customers.c_id = orders.c_id;</span><br></pre></td></tr></table></figure></p>
-<p>【例8.45】在customers表和orders表中，查询所有订单，包括没有客户的订单，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> customers.c_id, orders.o_num</span><br><span class="line">       <span class="keyword">FROM</span> customers <span class="keyword">RIGHT</span> <span class="keyword">OUTER</span> <span class="keyword">JOIN</span> orders</span><br><span class="line">       <span class="keyword">ON</span> customers.c_id = orders.c_id;</span><br></pre></td></tr></table></figure></p>
+<p>在做外连接查询的案例之前，在数据库中创建数据表orders，SQL语句如下：</p>
+<pre><code class="sql">CREATE TABLE orders
+(
+o_num    INT   NULL, 
+o_date   DATE   NOT NULL,
+c_id   varchar(50)    NOT NULL);
+</code></pre>
+<p>为了演示需要插入数据，可执行以下语句：</p>
+<pre><code class="sql">INSERT INTO orders (o_num, o_date, c_id)
+VALUES
+(30001,&#39;2008-09-01 00:00:00&#39;, &#39;10001&#39;),
+(30002,&#39;2008-09-12 00:00:00&#39;, &#39;10003&#39;),
+(30003,&#39;2008-09-30 00:00:00&#39;, &#39;10004&#39;),
+(NULL,&#39;2008-10-03 00:00:00&#39;, &#39;10002&#39;),
+(30004,&#39;2008-10-03 00:00:00&#39;, &#39;NULL&#39;),
+(30005,&#39;2008-10-08 00:00:00&#39;, &#39;10001&#39;);
+</code></pre>
+<p>【例8.44】在customers表和orders表中，查询所有客户，包括没有订单的客户，SQL语句如下：</p>
+<pre><code class="sql">SELECT customers.c_id, orders.o_num
+       FROM customers LEFT OUTER JOIN orders
+       ON customers.c_id = orders.c_id;
+</code></pre>
+<p>【例8.45】在customers表和orders表中，查询所有订单，包括没有客户的订单，SQL语句如下：</p>
+<pre><code class="sql">SELECT customers.c_id, orders.o_num
+       FROM customers RIGHT OUTER JOIN orders
+       ON customers.c_id = orders.c_id;
+</code></pre>
 <p>3、复合条件连接查询</p>
-<p>【例8.46】在customers表和orders表中，使用INNER JOIN语法查询customers表中ID为10001的客户的订单信息，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> customers.c_id, orders.o_num</span><br><span class="line">       <span class="keyword">FROM</span> customers <span class="keyword">INNER</span> <span class="keyword">JOIN</span> orders</span><br><span class="line">       <span class="keyword">ON</span> customers.c_id = orders.c_id <span class="keyword">AND</span> customers.c_id =<span class="string">'10001'</span>;</span><br></pre></td></tr></table></figure></p>
-<p>【例8.47】在fruits表和suppliers表之间使用INNER JOIN语法进行内连接查询，并对查询结果排序，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> suppliers.s_id, s_name,f_name, f_price</span><br><span class="line">       <span class="keyword">FROM</span> fruits <span class="keyword">INNER</span> <span class="keyword">JOIN</span> suppliers</span><br><span class="line">       <span class="keyword">ON</span> fruits.s_id = suppliers.s_id</span><br><span class="line">       <span class="keyword">ORDER</span> <span class="keyword">BY</span> fruits.s_id;</span><br></pre></td></tr></table></figure></p>
+<p>【例8.46】在customers表和orders表中，使用INNER JOIN语法查询customers表中ID为10001的客户的订单信息，SQL语句如下：</p>
+<pre><code class="sql">SELECT customers.c_id, orders.o_num
+       FROM customers INNER JOIN orders
+       ON customers.c_id = orders.c_id AND customers.c_id =&#39;10001&#39;;
+</code></pre>
+<p>【例8.47】在fruits表和suppliers表之间使用INNER JOIN语法进行内连接查询，并对查询结果排序，SQL语句如下：</p>
+<pre><code class="sql">SELECT suppliers.s_id, s_name,f_name, f_price
+       FROM fruits INNER JOIN suppliers
+       ON fruits.s_id = suppliers.s_id
+       ORDER BY fruits.s_id;
+</code></pre>
 <h4 id="子查询"><a href="#子查询" class="headerlink" title="子查询"></a>子查询</h4><p>1、带any、some关键字的子查询</p>
-<p>下面定义两个表tb1和tb2<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">table</span> tbl1 ( num1 <span class="built_in">INT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>);</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">table</span> tbl2 ( num2 <span class="built_in">INT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>);</span><br></pre></td></tr></table></figure></p>
-<p>分别向两个表中插入数据，<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> tbl1 <span class="keyword">values</span>(<span class="number">1</span>), (<span class="number">5</span>), (<span class="number">13</span>), (<span class="number">27</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> tbl2 <span class="keyword">values</span>(<span class="number">6</span>), (<span class="number">14</span>), (<span class="number">11</span>), (<span class="number">20</span>);</span><br></pre></td></tr></table></figure></p>
-<p>ANY关键字接在一个比较操作符的后面，表示与子查询返回的任何值比较为TRUE，则返回TRUE。<br>【例8.48】返回tbl2表的所有num2列，然后将tbl1中的num1的值与之进行比较，只要大于num2的任何值为符合查询条件的结果。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> num1 <span class="keyword">FROM</span> tbl1 <span class="keyword">WHERE</span> num1 &gt; <span class="keyword">ANY</span> (<span class="keyword">SELECT</span> num2 <span class="keyword">FROM</span> tbl2);</span><br></pre></td></tr></table></figure></p>
+<p>下面定义两个表tb1和tb2</p>
+<pre><code class="sql">CREATE table tbl1 ( num1 INT NOT NULL);
+CREATE table tbl2 ( num2 INT NOT NULL);
+</code></pre>
+<p>分别向两个表中插入数据，</p>
+<pre><code class="sql">INSERT INTO tbl1 values(1), (5), (13), (27);
+INSERT INTO tbl2 values(6), (14), (11), (20);
+</code></pre>
+<p>ANY关键字接在一个比较操作符的后面，表示与子查询返回的任何值比较为TRUE，则返回TRUE。<br>【例8.48】返回tbl2表的所有num2列，然后将tbl1中的num1的值与之进行比较，只要大于num2的任何值为符合查询条件的结果。</p>
+<pre><code class="sql">SELECT num1 FROM tbl1 WHERE num1 &gt; ANY (SELECT num2 FROM tbl2);
+</code></pre>
 <p>2、带ALL关键字的子查询</p>
-<p>【例8.49】返回tbl1表的中比tbl2表num2 列所有值都大的值，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> num1 <span class="keyword">FROM</span> tbl1 <span class="keyword">WHERE</span> num1 &gt; <span class="keyword">ALL</span> (<span class="keyword">SELECT</span> num2 <span class="keyword">FROM</span> tbl2);</span><br></pre></td></tr></table></figure></p>
+<p>【例8.49】返回tbl1表的中比tbl2表num2 列所有值都大的值，SQL语句如下：</p>
+<pre><code class="sql">SELECT num1 FROM tbl1 WHERE num1 &gt; ALL (SELECT num2 FROM tbl2);
+</code></pre>
 <p>3、带exists关键字的子查询</p>
-<p>【例8.50】查询表suppliers表中是否存在s_id=107的供应商，如果存在则查询fruits表中的记录，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> fruits</span><br><span class="line">       <span class="keyword">WHERE</span> <span class="keyword">EXISTS</span></span><br><span class="line">       (<span class="keyword">SELECT</span> s_name <span class="keyword">FROM</span> suppliers <span class="keyword">WHERE</span> s_id = <span class="number">107</span>);</span><br></pre></td></tr></table></figure></p>
-<p>【例8.51】查询表suppliers表中是否存在s_id=107的供应商，如果存在则查询fruits表中的f_price大于10.20的记录，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> fruits</span><br><span class="line">       <span class="keyword">WHERE</span> f_price&gt;<span class="number">10.20</span> <span class="keyword">AND</span> <span class="keyword">EXISTS</span></span><br><span class="line">       (<span class="keyword">SELECT</span> s_name <span class="keyword">FROM</span> suppliers <span class="keyword">WHERE</span> s_id = <span class="number">107</span>);</span><br></pre></td></tr></table></figure></p>
-<p>【例8.52】查询表suppliers表中是否存在s_id=107的供应商，如果不存在则查询fruits表中的记录，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> fruits</span><br><span class="line">       <span class="keyword">WHERE</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span></span><br><span class="line">       (<span class="keyword">SELECT</span> s_name <span class="keyword">FROM</span> suppliers <span class="keyword">WHERE</span> s_id = <span class="number">107</span>);</span><br></pre></td></tr></table></figure></p>
+<p>【例8.50】查询表suppliers表中是否存在s_id=107的供应商，如果存在则查询fruits表中的记录，SQL语句如下：</p>
+<pre><code class="sql">SELECT * FROM fruits
+       WHERE EXISTS
+       (SELECT s_name FROM suppliers WHERE s_id = 107);
+</code></pre>
+<p>【例8.51】查询表suppliers表中是否存在s_id=107的供应商，如果存在则查询fruits表中的f_price大于10.20的记录，SQL语句如下：</p>
+<pre><code class="sql">SELECT * FROM fruits
+       WHERE f_price&gt;10.20 AND EXISTS
+       (SELECT s_name FROM suppliers WHERE s_id = 107);
+</code></pre>
+<p>【例8.52】查询表suppliers表中是否存在s_id=107的供应商，如果不存在则查询fruits表中的记录，SQL语句如下：</p>
+<pre><code class="sql">SELECT * FROM fruits
+       WHERE NOT EXISTS
+       (SELECT s_name FROM suppliers WHERE s_id = 107);
+</code></pre>
 <p>4、带in关键字的子查询</p>
-<p>【例8.53】在customers表中查询c_name=“RedHook”的客户ID(c_id)，并根据c_id查询订单号o_num，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> o_num <span class="keyword">FROM</span> orders <span class="keyword">WHERE</span> c_id <span class="keyword">IN</span></span><br><span class="line">       (<span class="keyword">SELECT</span> c_id  <span class="keyword">FROM</span> customers <span class="keyword">WHERE</span> c_name=<span class="string">'RedHook'</span>);</span><br></pre></td></tr></table></figure></p>
-<p>【例8.54】与前一个例子语句类似，但是在SELECT语句中使用NOT IN操作符，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> o_num <span class="keyword">FROM</span> orders <span class="keyword">WHERE</span> c_id <span class="keyword">NOT</span> <span class="keyword">IN</span></span><br><span class="line">       (<span class="keyword">SELECT</span> c_id  <span class="keyword">FROM</span> customers <span class="keyword">WHERE</span> c_name=<span class="string">'RedHook'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>【例8.53】在customers表中查询c_name=“RedHook”的客户ID(c_id)，并根据c_id查询订单号o_num，SQL语句如下：</p>
+<pre><code class="sql">SELECT o_num FROM orders WHERE c_id IN
+       (SELECT c_id  FROM customers WHERE c_name=&#39;RedHook&#39;);
+</code></pre>
+<p>【例8.54】与前一个例子语句类似，但是在SELECT语句中使用NOT IN操作符，SQL语句如下：</p>
+<pre><code class="sql">SELECT o_num FROM orders WHERE c_id NOT IN
+       (SELECT c_id  FROM customers WHERE c_name=&#39;RedHook&#39;);
+</code></pre>
 <p>5、带比较运算符的子查询（&gt;,&lt;,&lt;=,=,&gt;=,!=）</p>
-<p>【例8.55】在suppliers表中查询s_city等于“Tianjin”的供应商s_id，然后在fruits表中查询所有该供应商提供的水果的种类，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> s_id, f_name <span class="keyword">FROM</span> fruits</span><br><span class="line"><span class="keyword">WHERE</span> s_id =</span><br><span class="line">(<span class="keyword">SELECT</span> s1.s_id <span class="keyword">FROM</span> suppliers <span class="keyword">AS</span> s1 <span class="keyword">WHERE</span> s1.s_city = <span class="string">'Tianjin'</span>);</span><br></pre></td></tr></table></figure></p>
-<p>该嵌套查询首先在suppliers表中查找s_city等于Tianjin的供应商的s_id，单独执行子查询查看s_id的值，执行下面的操作过程：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> s1.s_id <span class="keyword">FROM</span> suppliers <span class="keyword">AS</span> s1 <span class="keyword">WHERE</span> s1.s_city = <span class="string">'Tianjin'</span>;</span><br></pre></td></tr></table></figure></p>
-<p>然后在外层查询时，在fruits表中查找s_id等于101的供应商提供的水果的种类，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> s_id, f_name <span class="keyword">FROM</span> fruits</span><br><span class="line">       <span class="keyword">WHERE</span> s_id =</span><br><span class="line">       (<span class="keyword">SELECT</span> s1.s_id <span class="keyword">FROM</span> suppliers <span class="keyword">AS</span> s1 <span class="keyword">WHERE</span> s1.s_city = <span class="string">'Tianjin'</span>);</span><br></pre></td></tr></table></figure></p>
-<p>【例8.56】在suppliers表中查询s_city等于“Tianjin”的供应商s_id，然后在fruits表中查询所有非该供应商提供的水果的种类，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> s_id, f_name <span class="keyword">FROM</span> fruits</span><br><span class="line">       <span class="keyword">WHERE</span> s_id &lt;&gt;</span><br><span class="line">       (<span class="keyword">SELECT</span> s1.s_id <span class="keyword">FROM</span> suppliers <span class="keyword">AS</span> s1 <span class="keyword">WHERE</span> s1.s_city = <span class="string">'Tianjin'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>【例8.55】在suppliers表中查询s_city等于“Tianjin”的供应商s_id，然后在fruits表中查询所有该供应商提供的水果的种类，SQL语句如下：</p>
+<pre><code class="sql">SELECT s_id, f_name FROM fruits
+WHERE s_id =
+(SELECT s1.s_id FROM suppliers AS s1 WHERE s1.s_city = &#39;Tianjin&#39;);
+</code></pre>
+<p>该嵌套查询首先在suppliers表中查找s_city等于Tianjin的供应商的s_id，单独执行子查询查看s_id的值，执行下面的操作过程：</p>
+<pre><code class="sql">SELECT s1.s_id FROM suppliers AS s1 WHERE s1.s_city = &#39;Tianjin&#39;;
+</code></pre>
+<p>然后在外层查询时，在fruits表中查找s_id等于101的供应商提供的水果的种类，SQL语句如下： </p>
+<pre><code class="sql">SELECT s_id, f_name FROM fruits
+       WHERE s_id =
+       (SELECT s1.s_id FROM suppliers AS s1 WHERE s1.s_city = &#39;Tianjin&#39;);
+</code></pre>
+<p>【例8.56】在suppliers表中查询s_city等于“Tianjin”的供应商s_id，然后在fruits表中查询所有非该供应商提供的水果的种类，SQL语句如下：</p>
+<pre><code class="sql">SELECT s_id, f_name FROM fruits
+       WHERE s_id &lt;&gt;
+       (SELECT s1.s_id FROM suppliers AS s1 WHERE s1.s_city = &#39;Tianjin&#39;);
+</code></pre>
 <h4 id="合并查询结果"><a href="#合并查询结果" class="headerlink" title="合并查询结果"></a>合并查询结果</h4><p>利用UNION关键字，可以给出多条select语句，并将它们的结果组合成单个结果集。</p>
-<p>【例8.57】查询所有价格小于9的水果的信息，查询s_id等于101和103所有的水果的信息，使用UNION连接查询结果，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> s_id, f_name, f_price <span class="keyword">FROM</span> fruits</span><br><span class="line"><span class="keyword">WHERE</span> f_price &lt; <span class="number">9.0</span></span><br><span class="line"><span class="keyword">UNION</span> </span><br><span class="line"><span class="keyword">SELECT</span> s_id, f_name, f_price <span class="keyword">FROM</span> fruits</span><br><span class="line"><span class="keyword">WHERE</span> s_id <span class="keyword">IN</span>(<span class="number">101</span>,<span class="number">103</span>);</span><br></pre></td></tr></table></figure></p>
-<p>如前所述，UNION将多个SELECT语句的结果组合成一个结果集合。可以分开查看每个SELECT语句的结果。第1个SELECT语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> s_id, f_name, f_price <span class="keyword">FROM</span> fruits</span><br><span class="line"><span class="keyword">WHERE</span> f_price &lt; <span class="number">9.0</span>;</span><br></pre></td></tr></table></figure></p>
-<p>第2个SELECT语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> s_id, f_name, f_price <span class="keyword">FROM</span> fruits</span><br><span class="line"><span class="keyword">WHERE</span> s_id <span class="keyword">IN</span>(<span class="number">101</span>,<span class="number">103</span>);</span><br></pre></td></tr></table></figure></p>
-<p>【例8.58】查询所有价格小于9的水果的信息，查询s_id等于101和103所有的水果的信息，使用UNION ALL连接查询结果，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> s_id, f_name, f_price <span class="keyword">FROM</span> fruits</span><br><span class="line"><span class="keyword">WHERE</span> f_price &lt; <span class="number">9.0</span></span><br><span class="line"><span class="keyword">UNION</span> <span class="keyword">ALL</span></span><br><span class="line"><span class="keyword">SELECT</span> s_id, f_name, f_price <span class="keyword">FROM</span> fruits</span><br><span class="line"><span class="keyword">WHERE</span> s_id <span class="keyword">IN</span>(<span class="number">101</span>,<span class="number">103</span>);</span><br></pre></td></tr></table></figure></p>
+<p>【例8.57】查询所有价格小于9的水果的信息，查询s_id等于101和103所有的水果的信息，使用UNION连接查询结果，SQL语句如下：</p>
+<pre><code class="sql">SELECT s_id, f_name, f_price FROM fruits
+WHERE f_price &lt; 9.0
+UNION 
+SELECT s_id, f_name, f_price FROM fruits
+WHERE s_id IN(101,103);
+</code></pre>
+<p>如前所述，UNION将多个SELECT语句的结果组合成一个结果集合。可以分开查看每个SELECT语句的结果。第1个SELECT语句如下：</p>
+<pre><code class="sql">SELECT s_id, f_name, f_price FROM fruits
+WHERE f_price &lt; 9.0;
+</code></pre>
+<p>第2个SELECT语句如下：</p>
+<pre><code class="sql">SELECT s_id, f_name, f_price FROM fruits
+WHERE s_id IN(101,103);
+</code></pre>
+<p>【例8.58】查询所有价格小于9的水果的信息，查询s_id等于101和103所有的水果的信息，使用UNION ALL连接查询结果，SQL语句如下：</p>
+<pre><code class="sql">SELECT s_id, f_name, f_price FROM fruits
+WHERE f_price &lt; 9.0
+UNION ALL
+SELECT s_id, f_name, f_price FROM fruits
+WHERE s_id IN(101,103);
+</code></pre>
 <h4 id="为表和字段取别名"><a href="#为表和字段取别名" class="headerlink" title="为表和字段取别名"></a>为表和字段取别名</h4><p>1、为表取别名</p>
-<p>【例8.59】为orders表取别名o，查询订30001订单的下单日期，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> orders <span class="keyword">AS</span> o <span class="keyword">WHERE</span> o.o_num=<span class="number">30001</span>;</span><br></pre></td></tr></table></figure></p>
-<p>【例8.60】为customers和orders表分别取别名，并进行连接查询，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> c.c_id, o.o_num</span><br><span class="line"><span class="keyword">FROM</span> customers <span class="keyword">AS</span> c <span class="keyword">LEFT</span> <span class="keyword">OUTER</span> <span class="keyword">JOIN</span> orders <span class="keyword">AS</span> o</span><br><span class="line"><span class="keyword">ON</span> c.c_id = o.c_id;</span><br></pre></td></tr></table></figure></p>
-<p>在前面介绍内连接查询时指出自连接是一种特殊的内连接，在连接查询中的两个表都是同一个表，其查询语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> f1.f_id, f1.f_name</span><br><span class="line"><span class="keyword">FROM</span> fruits <span class="keyword">AS</span> f1, fruits <span class="keyword">AS</span> f2</span><br><span class="line"><span class="keyword">WHERE</span> f1.s_id = f2.s_id <span class="keyword">AND</span> f2.f_id = <span class="string">'a1'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>【例8.59】为orders表取别名o，查询订30001订单的下单日期，SQL语句如下：</p>
+<pre><code class="sql">SELECT * FROM orders AS o WHERE o.o_num=30001;
+</code></pre>
+<p>【例8.60】为customers和orders表分别取别名，并进行连接查询，SQL语句如下：</p>
+<pre><code class="sql">SELECT c.c_id, o.o_num
+FROM customers AS c LEFT OUTER JOIN orders AS o
+ON c.c_id = o.c_id;
+</code></pre>
+<p>在前面介绍内连接查询时指出自连接是一种特殊的内连接，在连接查询中的两个表都是同一个表，其查询语句如下：</p>
+<pre><code class="sql">SELECT f1.f_id, f1.f_name
+FROM fruits AS f1, fruits AS f2
+WHERE f1.s_id = f2.s_id AND f2.f_id = &#39;a1&#39;;
+</code></pre>
 <p>2、为字段取别名</p>
-<p>【例8.61】查询fruits表，为f_name取别名fruit_name，f_price取别名fruit_price，为fruits表取别名f1，查询表中f_price &lt; 8的水果的名称，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> f1.f_name <span class="keyword">AS</span> fruit_name, f1.f_price <span class="keyword">AS</span> fruit_price</span><br><span class="line"><span class="keyword">FROM</span> fruits <span class="keyword">AS</span> f1</span><br><span class="line"><span class="keyword">WHERE</span> f1.f_price &lt; <span class="number">8</span>;</span><br></pre></td></tr></table></figure></p>
-<p>【例8.62】查询suppliers表中字段s_name和s_city，使用CONCAT函数连接这个两个字段值，并取列别名为suppliers_title。<br>如果没有对连接后的值取别名，其显示列名称将会不够直观，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">CONCAT</span>(<span class="keyword">RTRIM</span>(s_name) , <span class="string">' ('</span>,  <span class="keyword">RTRIM</span>(s_city), <span class="string">')'</span>)</span><br><span class="line"><span class="keyword">FROM</span> suppliers</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> s_name;</span><br></pre></td></tr></table></figure></p>
-<p>由结果可以看到，显示结果的列名称为SELECT子句后面的计算字段，实际上计算之后的列是没有名字的，这样的结果让人很不容易理解，如果为字段取一个别名，将会使结果清晰，SQL语句如下，<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">CONCAT</span>(<span class="keyword">RTRIM</span>(s_name) , <span class="string">' ('</span>, <span class="keyword">RTRIM</span>(s_city), <span class="string">')'</span>)</span><br><span class="line"><span class="keyword">AS</span> suppliers_title</span><br><span class="line"><span class="keyword">FROM</span> suppliers</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> s_name;</span><br></pre></td></tr></table></figure></p>
+<p>【例8.61】查询fruits表，为f_name取别名fruit_name，f_price取别名fruit_price，为fruits表取别名f1，查询表中f_price &lt; 8的水果的名称，SQL语句如下：</p>
+<pre><code class="sql">SELECT f1.f_name AS fruit_name, f1.f_price AS fruit_price
+FROM fruits AS f1
+WHERE f1.f_price &lt; 8;
+</code></pre>
+<p>【例8.62】查询suppliers表中字段s_name和s_city，使用CONCAT函数连接这个两个字段值，并取列别名为suppliers_title。<br>如果没有对连接后的值取别名，其显示列名称将会不够直观，SQL语句如下：</p>
+<pre><code class="sql">SELECT CONCAT(RTRIM(s_name) , &#39; (&#39;,  RTRIM(s_city), &#39;)&#39;)
+FROM suppliers
+ORDER BY s_name;
+</code></pre>
+<p>由结果可以看到，显示结果的列名称为SELECT子句后面的计算字段，实际上计算之后的列是没有名字的，这样的结果让人很不容易理解，如果为字段取一个别名，将会使结果清晰，SQL语句如下，</p>
+<pre><code class="sql">SELECT CONCAT(RTRIM(s_name) , &#39; (&#39;, RTRIM(s_city), &#39;)&#39;)
+AS suppliers_title
+FROM suppliers
+ORDER BY s_name;
+</code></pre>
 <h4 id="使用正则表达式查询"><a href="#使用正则表达式查询" class="headerlink" title="使用正则表达式查询"></a>使用正则表达式查询</h4><p>PostgreSQL中正则表达式的操作符使用方法如下：</p>
 <ol>
 <li>~  匹配正则表达式，区分大小写；</li>
@@ -530,598 +2166,245 @@
 <li>！~*  不匹配正则表达式，不区分大小写。</li>
 </ol>
 <p>1、查询以特定字符或字符串开头的记录</p>
-<p>【例8.63】在fruits表中，查询f_name字段以字母‘b’开头的记录，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> fruits <span class="keyword">WHERE</span> f_name ~ <span class="string">'^b'</span>;</span><br></pre></td></tr></table></figure></p>
-<p>【例8.64】在fruits表中，查询f_name字段以“be”开头的记录，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> fruits <span class="keyword">WHERE</span> f_name ~ <span class="string">'^be'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>【例8.63】在fruits表中，查询f_name字段以字母‘b’开头的记录，SQL语句如下：</p>
+<pre><code class="sql">SELECT * FROM fruits WHERE f_name ~ &#39;^b&#39;;
+</code></pre>
+<p>【例8.64】在fruits表中，查询f_name字段以“be”开头的记录，SQL语句如下：</p>
+<pre><code class="sql">SELECT * FROM fruits WHERE f_name ~ &#39;^be&#39;;
+</code></pre>
 <p>2、查询以特定字符或字符串结尾的记录</p>
-<p>【例8.65】在fruits表中，查询f_name字段以字母‘t’结尾的记录，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> fruits <span class="keyword">WHERE</span> f_name ~ <span class="string">'t'</span>;</span><br></pre></td></tr></table></figure></p>
-<p>fruits表中有3条记录的f_name字段值是以字母‘t’结尾，返回结果有3条记录。<br>【例8.66】在fruits表中，查询f_name字段以字符串“rry”结尾的记录，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> fruits <span class="keyword">WHERE</span> f_name ~ <span class="string">'rry'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>【例8.65】在fruits表中，查询f_name字段以字母‘t’结尾的记录，SQL语句如下：</p>
+<pre><code class="sql">SELECT * FROM fruits WHERE f_name ~ &#39;t&#39;;
+</code></pre>
+<p>fruits表中有3条记录的f_name字段值是以字母‘t’结尾，返回结果有3条记录。<br>【例8.66】在fruits表中，查询f_name字段以字符串“rry”结尾的记录，SQL语句如下：</p>
+<pre><code class="sql">SELECT * FROM fruits WHERE f_name ~ &#39;rry&#39;;
+</code></pre>
 <p>3、用符号“.”来替代字符串中任意一个字符</p>
-<p>【例8.67】在fruits表中，查询f_name字段值包含字母‘a’与‘g’且两个字母之间只有一个字母的记录，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> fruits <span class="keyword">WHERE</span> f_name ~ <span class="string">'a.g'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>【例8.67】在fruits表中，查询f_name字段值包含字母‘a’与‘g’且两个字母之间只有一个字母的记录，SQL语句如下：</p>
+<pre><code class="sql">SELECT * FROM fruits WHERE f_name ~ &#39;a.g&#39;;
+</code></pre>
 <p>星号‘*’匹配前面的字符任意多次，包括0次。加号‘+’匹配前面的字符至少一次。</p>
 <p>4、使用“*”或者“+”来匹配多个字符</p>
-<p>【例8.68】在fruits表中，查询f_name字段值以字母‘b’开头，且‘b’后面出现字母‘a’的记录，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> fruits <span class="keyword">WHERE</span> f_name ~ <span class="string">'^ba*'</span>;</span><br></pre></td></tr></table></figure></p>
-<p>【例8.69】在fruits表中，查询f_name字段值以字母‘b’开头，且‘b’后面出现字母‘a’至少一次的记录，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> fruits <span class="keyword">WHERE</span> f_name ~ <span class="string">'^ba+'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>【例8.68】在fruits表中，查询f_name字段值以字母‘b’开头，且‘b’后面出现字母‘a’的记录，SQL语句如下：</p>
+<pre><code class="sql">SELECT * FROM fruits WHERE f_name ~ &#39;^ba*&#39;;
+</code></pre>
+<p>【例8.69】在fruits表中，查询f_name字段值以字母‘b’开头，且‘b’后面出现字母‘a’至少一次的记录，SQL语句如下：</p>
+<pre><code class="sql">SELECT * FROM fruits WHERE f_name ~ &#39;^ba+&#39;;
+</code></pre>
 <p>5、匹配指定字符串</p>
-<p>【例8.70】在fruits表中，查询f_name字段值包含字符串“on”的记录，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> fruits <span class="keyword">WHERE</span> f_name ~ <span class="string">'on'</span>;</span><br></pre></td></tr></table></figure></p>
-<p>【例8.71】在fruits表中，查询f_name字段值包含字符串“on”或者“ap”的记录，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> fruits <span class="keyword">WHERE</span> f_name ~ <span class="string">'on|ap'</span>;</span><br></pre></td></tr></table></figure></p>
-<p>【例8.72】在fruits表中，使用LIKE运算符查询f_name字段值为“on”的记录，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> fruits <span class="keyword">WHERE</span> f_name <span class="keyword">LIKE</span> <span class="string">'on'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>【例8.70】在fruits表中，查询f_name字段值包含字符串“on”的记录，SQL语句如下：</p>
+<pre><code class="sql">SELECT * FROM fruits WHERE f_name ~ &#39;on&#39;;
+</code></pre>
+<p>【例8.71】在fruits表中，查询f_name字段值包含字符串“on”或者“ap”的记录，SQL语句如下：</p>
+<pre><code class="sql">SELECT * FROM fruits WHERE f_name ~ &#39;on|ap&#39;;
+</code></pre>
+<p>【例8.72】在fruits表中，使用LIKE运算符查询f_name字段值为“on”的记录，SQL语句如下：</p>
+<pre><code class="sql">SELECT * FROM fruits WHERE f_name LIKE &#39;on&#39;;
+</code></pre>
 <p>6、匹配指定字符串的任意一个</p>
-<p>【例8.73】在fruits表中，查找f_name字段中包含字母‘o’或者‘t’的记录，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> fruits <span class="keyword">WHERE</span> f_name ~ <span class="string">'[ot]'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>【例8.73】在fruits表中，查找f_name字段中包含字母‘o’或者‘t’的记录，SQL语句如下：</p>
+<pre><code class="sql">SELECT * FROM fruits WHERE f_name ~ &#39;[ot]&#39;;
+</code></pre>
 <p>7、匹配指定字符以外的字符</p>
-<p>【例8.74】在fruits表中，查询f_id字段不包含字母a到e或数字1到2的字符的记录，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> fruits <span class="keyword">WHERE</span> f_id !~ <span class="string">'[a-e1-2]'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>【例8.74】在fruits表中，查询f_id字段不包含字母a到e或数字1到2的字符的记录，SQL语句如下：</p>
+<pre><code class="sql">SELECT * FROM fruits WHERE f_id !~ &#39;[a-e1-2]&#39;;
+</code></pre>
 <p>8、使用{M}或者{M,N}来指定字符串连续出现的次数</p>
-<p>【例8.75】在fruits表中，查询f_name字段值出现字母‘x’至少2次的记录，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> fruits <span class="keyword">WHERE</span> f_name ~ <span class="string">'x&#123;2,&#125;'</span>;</span><br></pre></td></tr></table></figure></p>
-<p>【例8.76】在fruits表中，查询f_name字段值出现字符串“ba”最少1次，最多3次的记录，SQL语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> fruits <span class="keyword">WHERE</span> f_name ~ <span class="string">'ba&#123;1,3&#125;'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>【例8.75】在fruits表中，查询f_name字段值出现字母‘x’至少2次的记录，SQL语句如下：</p>
+<pre><code class="sql">SELECT * FROM fruits WHERE f_name ~ &#39;x{2,}&#39;;
+</code></pre>
+<p>【例8.76】在fruits表中，查询f_name字段值出现字符串“ba”最少1次，最多3次的记录，SQL语句如下：</p>
+<pre><code class="sql">SELECT * FROM fruits WHERE f_name ~ &#39;ba{1,3}&#39;;
+</code></pre>
 <h4 id="常见问题及解答"><a href="#常见问题及解答" class="headerlink" title="常见问题及解答"></a>常见问题及解答</h4>
       
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 320479069@qq.com </span>
     </div>
+</article>
 
-    <div>
-      
-        
 
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/数据库/" rel="tag"># 数据库</a>
-          
-            <a href="/tags/PostgreSQL/" rel="tag"># PostgreSQL</a>
-          
-        </div>
-      
-
-      
-        
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2019/08/database/PostgreSql/20190813_插入更新删除数据/" rel="next" title="PostgreSQL：七. 插入，更新与删除数据">
-                <i class="fa fa-chevron-left"></i> PostgreSQL：七. 插入，更新与删除数据
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/08/database/PostgreSql/20190816_索引/" rel="prev" title="PostgreSQL 九. 索引">
-                PostgreSQL 九. 索引 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </article>
+<p>
+    <a  class="dashang" onclick="dashangToggle()">赏</a>
+</p>
 
 
 
-    <div class="post-spread">
-      
-        <!-- JiaThis Button BEGIN -->
-<div class="jiathis_style">
-  <a class="jiathis_button_tsina"></a>
-  <a class="jiathis_button_tqq"></a>
-  <a class="jiathis_button_weixin"></a>
-  <a class="jiathis_button_cqq"></a>
-  <a class="jiathis_button_douban"></a>
-  <a class="jiathis_button_renren"></a>
-  <a class="jiathis_button_qzone"></a>
-  <a class="jiathis_button_kaixin001"></a>
-  <a class="jiathis_button_copy"></a>
-  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
-  <a class="jiathis_counter_style"></a>
-</div>
-<script type="text/javascript">
-  var jiathis_config={
-    hideMore:false
-  }
-</script>
-<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
-<!-- JiaThis Button END -->
-
-      
-    </div>
-  </div>
 
 
-          </div>
-          
-
-
-          
-  <div class="comments" id="comments">
-    
-  </div>
-
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="崔永华（Andy）">
-          <p class="site-author-name" itemprop="name">崔永华（Andy）</p>
-           
-              <p class="site-description motion-element" itemprop="description"></p>
-           
-        </div>
-        <nav class="site-state motion-element">
-
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">129</span>
-                <span class="site-state-item-name">日志</span>
-              </a>
-            </div>
-          
-
-          
-            
-            
-            <div class="site-state-item site-state-categories">
-              <a href="/categories/index.html">
-                <span class="site-state-item-count">44</span>
-                <span class="site-state-item-name">分类</span>
-              </a>
-            </div>
-          
-
-          
-            
-            
-            <div class="site-state-item site-state-tags">
-              <a href="/tags/index.html">
-                <span class="site-state-item-count">50</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-
-        <div class="links-of-author motion-element">
-          
-            
-              <span class="links-of-author-item">
-                <a href="https://github.com/cuiyonghua6" target="_blank" title="GitHub">
-                  
-                    <i class="fa fa-fw fa-github"></i>
-                  
-                  GitHub
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="https://blog.csdn.net/cui_yonghua" target="_blank" title="CSDN">
-                  
-                    <i class="fa fa-fw fa-bandcamp"></i>
-                  
-                  CSDN
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="https://www.zhihu.com/people/cuiyonghua" target="_blank" title="知乎">
-                  
-                    <i class="fa fa-fw fa-globe"></i>
-                  
-                  知乎
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="https://weibo.com/cuiyonghua" target="_blank" title="Weibo">
-                  
-                    <i class="fa fa-fw fa-weibo"></i>
-                  
-                  Weibo
-                </a>
-              </span>
-            
-          
-        </div>
-
-        
-        
-
-        
-        
-
-        
-
-
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#查询语句"><span class="nav-number">1.</span> <span class="nav-text">查询语句</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#单表查询"><span class="nav-number">2.</span> <span class="nav-text">单表查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用集合函数查询"><span class="nav-number">3.</span> <span class="nav-text">使用集合函数查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#连接查询"><span class="nav-number">4.</span> <span class="nav-text">连接查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#子查询"><span class="nav-number">5.</span> <span class="nav-text">子查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#合并查询结果"><span class="nav-number">6.</span> <span class="nav-text">合并查询结果</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#为表和字段取别名"><span class="nav-number">7.</span> <span class="nav-text">为表和字段取别名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用正则表达式查询"><span class="nav-number">8.</span> <span class="nav-text">使用正则表达式查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常见问题及解答"><span class="nav-number">9.</span> <span class="nav-text">常见问题及解答</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2021</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">崔永华（Andy）</span>
-</div>
-
-
-<div class="powered-by">
-  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
-</div>
-
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Pisces
-  </a>
-</div>
-
-
-        
-<div class="busuanzi-count">
-  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-  
-
-  
-    <span class="site-pv">
-      本站总访问量
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-      次
-    </span>
-  
-</div>
-
-
-        
-      </div>
-    </footer>
 
     
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
 
-  </div>
 
-  
 
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
 
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2016-2021 CuiYonghua
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+<div class="hide_box" onclick="dashangToggle()"></div>
+<div class="shang_box">
+    <a class="shang_close"  onclick="dashangToggle()">×</a>
+    <div class="shang_tit">
+        <p>喜欢就点赞,疼爱就打赏</p>
+    </div>
+    <div class="shang_payimg">
+        <div class="pay_img">
+            <img src="/img/alipay.jpg" class="alipay" title="扫码支持">
+            <img src="/img/weixin.jpg" class="weixin" title="扫码支持">
+        </div>
+    </div>
+    <div class="shang_payselect">
+        <span><label><input type="radio" name="pay" checked value="alipay">支付宝</label></span><span><label><input type="radio" name="pay" value="weixin">微信</label></span>
+    </div>
+</div>
 
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-  
-
-  <script type="text/javascript">
-    // Popup Window;
-    var isfetched = false;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length == 0) {
-      search_path = "search.xml";
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
-
-    function proceedsearch() {
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
-        .css('overflow', 'hidden');
-      $('.popup').toggle();
-    }
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-      $.ajax({
-        url: path,
-        dataType: "xml",
-        async: true,
-        success: function( xmlResponse ) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = $( "entry", xmlResponse ).map(function() {
-            return {
-              title: $( "title", this ).text(),
-              content: $("content",this).text(),
-              url: $( "url" , this).text()
-            };
-          }).get();
-          var $input = document.getElementById(search_id);
-          var $resultContent = document.getElementById(content_id);
-          $input.addEventListener('input', function(){
-            var matchcounts = 0;
-            var str='<ul class=\"search-result-list\">';
-            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
-            $resultContent.innerHTML = "";
-            if (this.value.trim().length > 1) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var content_index = [];
-                var data_title = data.title.trim().toLowerCase();
-                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
-                var data_url = decodeURIComponent(data.url);
-                var index_title = -1;
-                var index_content = -1;
-                var first_occur = -1;
-                // only match artiles with not empty titles and contents
-                if(data_title != '') {
-                  keywords.forEach(function(keyword, i) {
-                    index_title = data_title.indexOf(keyword);
-                    index_content = data_content.indexOf(keyword);
-                    if( index_title >= 0 || index_content >= 0 ){
-                      isMatch = true;
-                      if (i == 0) {
-                        first_occur = index_content;
-                      }
-                    }
-
-                  });
-                }
-                // show search results
-                if (isMatch) {
-                  matchcounts += 1;
-                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
-                  var content = data.content.trim().replace(/<[^>]+>/g,"");
-                  if (first_occur >= 0) {
-                    // cut out 100 characters
-                    var start = first_occur - 20;
-                    var end = first_occur + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if(start == 0){
-                      end = 50;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    var match_content = content.substring(start, end);
-                    // highlight all keywords
-                    keywords.forEach(function(keyword){
-                      var regS = new RegExp(keyword, "gi");
-                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
-                    });
-
-                    str += "<p class=\"search-result\">" + match_content +"...</p>"
-                  }
-                  str += "</li>";
-                }
-              })};
-            str += "</ul>";
-            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
-            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
-            $resultContent.innerHTML = str;
-          });
-          proceedsearch();
-        }
-      });}
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched == false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(function(e){
-      $('.popup').hide();
-      $(".local-search-pop-overlay").remove();
-      $('body').css('overflow', '');
-    });
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-  </script>
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-
-  
 
 </body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+        $("input[name=pay]").on("click", function () {
+            if($("input[name=pay]:checked").val()=="weixin"){
+                $(".shang_box .shang_payimg .pay_img").addClass("weixin_img");
+            } else {
+                $(".shang_box .shang_payimg .pay_img").removeClass("weixin_img");
+            }
+        })
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+    function dashangToggle() {
+        $(".shang_box").fadeToggle();
+        $(".hide_box").fadeToggle();
+    }
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+
+
+
+
+
 </html>
