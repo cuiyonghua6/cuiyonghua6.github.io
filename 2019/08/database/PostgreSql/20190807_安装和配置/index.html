@@ -578,6 +578,10 @@
             
             <li><a target="_blank" href="http://yelog.org/">叶落阁</a></li>
             
+            <li><a target="_blank" href="https://blog.wedaggo.com/">冯义万</a></li>
+            
+            <li><a target="_blank" href="http://yxu-shaoyu.github.io">徐绍玉</a></li>
+            
         </ul>
     </div>
 </div>
@@ -1189,18 +1193,18 @@
         </a>
         
         <a  class="全部文章 Java java设计模式 "
-           href="/2019/06/java/java设计模式/20190613_享元模式/"
-           data-tag="java,java设计模式"
-           data-author="" >
-            <span class="post-title" title="享元模式详解 (附java语言源码)">享元模式详解 (附java语言源码)</span>
-            <span class="post-date" title="2019-06-13 01:30:00">2019/06/13</span>
-        </a>
-        
-        <a  class="全部文章 Java java设计模式 "
            href="/2019/06/java/java设计模式/20190613_外观模式/"
            data-tag="java,java设计模式"
            data-author="" >
             <span class="post-title" title="外观模式详解 (附java语言源码)">外观模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-06-13 01:30:00">2019/06/13</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/06/java/java设计模式/20190613_享元模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="享元模式详解 (附java语言源码)">享元模式详解 (附java语言源码)</span>
             <span class="post-date" title="2019-06-13 01:30:00">2019/06/13</span>
         </a>
         
@@ -1213,18 +1217,18 @@
         </a>
         
         <a  class="全部文章 Java java设计模式 "
-           href="/2019/06/java/java设计模式/20190611_桥接模式/"
-           data-tag="java,java设计模式"
-           data-author="" >
-            <span class="post-title" title="桥接模式详解 (附java语言源码)">桥接模式详解 (附java语言源码)</span>
-            <span class="post-date" title="2019-06-11 01:30:00">2019/06/11</span>
-        </a>
-        
-        <a  class="全部文章 Java java设计模式 "
            href="/2019/06/java/java设计模式/20190611_组合模式/"
            data-tag="java,java设计模式"
            data-author="" >
             <span class="post-title" title="组合模式详解 (附java语言源码)">组合模式详解 (附java语言源码)</span>
+            <span class="post-date" title="2019-06-11 01:30:00">2019/06/11</span>
+        </a>
+        
+        <a  class="全部文章 Java java设计模式 "
+           href="/2019/06/java/java设计模式/20190611_桥接模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="桥接模式详解 (附java语言源码)">桥接模式详解 (附java语言源码)</span>
             <span class="post-date" title="2019-06-11 01:30:00">2019/06/11</span>
         </a>
         
@@ -1720,7 +1724,7 @@
 <p>Linux操作系统的发行版比较多。本章节以常用的Linux系统CentOS 7操作系统为例，讲解如何安装Postgresql 11。<br>步骤1：创建postgres用户。<br>[root@VMTest postgresql11]# useradd -g postgres post123<br>步骤2：下载rpm离线安装包。下载地址如下：<br><a href="https://download.postgresql.org/pub/repos/yum/11/redhat/rhel-7-x86_64/" target="_blank" rel="noopener">https://download.postgresql.org/pub/repos/yum/11/redhat/rhel-7-x86_64/</a><br>需要下载的安装包如下：<br>postgresql11-11.2-1PGDG.rhel7.x86_64.rpm<br>postgresql11-libs-11.2-1PGDG.rhel7.x86_64.rpm<br>postgresql11-server-11.2-1PGDG.rhel7.x86_64.rpm<br>步骤3：使用rpm -ivh安装Postgresql 11的rpm包。<br>[root@VMTest ~]# cd /home/lpf/soft/postgresql11/             #安装包存放路径<br>[root@VMTest ~]# systemctl start postgresql-11   #启动postgresq<br>步骤4：如果要卸载Postgresql 11，则需要先停止Postgresql服务，然后执行以下命令即可：<br>[root@VMTest ~]# rpm -qe postgresql11-libs-11.2-1PGDG.rhel7.x86_64<br>[root@VMTest ~]# rpm -qe postgresql11-11.2-1PGDG.rhel7.x86_64<br>[root@VMTest ~]# rpm -qe postgresql11-server-11.2-1PGDG.rhel7.x86_64<br>步骤5：初始化数据库。<br>[root@VMTest ~]# /usr/pgsql-11/bin/postgresql-11-setup initdb<br>Initializing database … OK<br>步骤6：设置开机启动数据库。<br>[root@VMTest ~]# systemctl enable postgresql-11  #设置开机启动<br>[root@VMTest ~]# systemctl start postgresql-11   #启动postgresq</p>
 <h4 id="常见问题及解答"><a href="#常见问题及解答" class="headerlink" title="常见问题及解答"></a>常见问题及解答</h4>
       
-       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 320479069@qq.com </span>
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎指出任何有错误或不够清晰的表达。欢迎邮件至 320479069@qq.com </span>
     </div>
 </article>
 
@@ -1742,7 +1746,7 @@
     </div>
     <div class="copyright">
         <p class="footer-entry">
-    ©2016-2021 CuiYonghua
+    ©2017-2021 CuiYonghua
 </p>
 <p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
 
