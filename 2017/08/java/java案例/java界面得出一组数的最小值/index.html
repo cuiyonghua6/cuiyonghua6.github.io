@@ -2,18 +2,21 @@
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
-  <title>观察者模式详解 | 崔永华的个人网站</title>
-  <meta name="keywords" content=" java , java设计模式 ">
-  <meta name="description" content="观察者模式详解 | 崔永华的个人网站">
+  <title>java界面得出一组数的最小值 | 崔永华的个人网站</title>
+  <meta name="keywords" content=" java , java案例 ">
+  <meta name="description" content="java界面得出一组数的最小值 | 崔永华的个人网站">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="个人简介大家好，我叫崔永华，英文名Andy。  书山有路勤为径，学海无涯苦作舟。驾舟行船奔大海，收藏海中学无边。  工作经历三年IT研发，两年爬虫经验。对爬虫的设计和抓取，高并发高可用性系统，分布式系统，海量数据处理等有一些经验和心得。平时喜欢关注底层技术实现（如scrapy源码，flask源码等）、新技术趋势发展和互联网行业应用。最擅长反爬、运维DevOps等领域等技术方面。 曾在创业公司中锻">
 <meta property="og:type" content="website">
-<meta property="og:title" content="分类">
-<meta property="og:url" content="http://yoursite.com/categories/index.html">
+<meta property="og:title" content="关于崔永华">
+<meta property="og:url" content="http://yoursite.com/about/index.html">
 <meta property="og:site_name" content="崔永华的个人网站">
+<meta property="og:description" content="个人简介大家好，我叫崔永华，英文名Andy。  书山有路勤为径，学海无涯苦作舟。驾舟行船奔大海，收藏海中学无边。  工作经历三年IT研发，两年爬虫经验。对爬虫的设计和抓取，高并发高可用性系统，分布式系统，海量数据处理等有一些经验和心得。平时喜欢关注底层技术实现（如scrapy源码，flask源码等）、新技术趋势发展和互联网行业应用。最擅长反爬、运维DevOps等领域等技术方面。 曾在创业公司中锻">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-07-04T03:30:52.000Z">
+<meta property="og:updated_time" content="2021-07-29T04:41:03.571Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="分类">
+<meta name="twitter:title" content="关于崔永华">
+<meta name="twitter:description" content="个人简介大家好，我叫崔永华，英文名Andy。  书山有路勤为径，学海无涯苦作舟。驾舟行船奔大海，收藏海中学无边。  工作经历三年IT研发，两年爬虫经验。对爬虫的设计和抓取，高并发高可用性系统，分布式系统，海量数据处理等有一些经验和心得。平时喜欢关注底层技术实现（如scrapy源码，flask源码等）、新技术趋势发展和互联网行业应用。最擅长反爬、运维DevOps等领域等技术方面。 曾在创业公司中锻">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -135,7 +138,7 @@
     <li>
         <div class="all active" data-rel="全部文章">全部文章
             
-                <small>(292)</small>
+                <small>(298)</small>
             
         </div>
     </li>
@@ -522,7 +525,7 @@
                         <i class="fold iconfont icon-right"></i>
                         
                         java
-                        <small>(74)</small>
+                        <small>(78)</small>
                         
                     </div>
                     
@@ -545,7 +548,7 @@
                                         
                                         java案例
                                         
-                                            <small>(21
+                                            <small>(25
                                                 )</small>
                                         
                                     </div>
@@ -589,7 +592,7 @@
                         <i class="fold iconfont icon-right"></i>
                         
                         其它
-                        <small>(14)</small>
+                        <small>(16)</small>
                         
                     </div>
                     
@@ -600,7 +603,7 @@
                                         
                                         工具
                                         
-                                            <small>(1
+                                            <small>(3
                                                 )</small>
                                         
                                     </div>
@@ -840,7 +843,7 @@
         
     </div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="292">
+<input type="hidden" id="yelog_site_posts_number" value="298">
 
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
@@ -1011,6 +1014,10 @@
             </li>
         
             <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>工具</a>
+            </li>
+        
+            <li class="article-tag-list-item">
                 <i class="iconfont icon-tag"></i><a>数据处理</a>
             </li>
         
@@ -1043,10 +1050,6 @@
             </li>
         
             <li class="article-tag-list-item">
-                <i class="iconfont icon-tag"></i><a>网址</a>
-            </li>
-        
-            <li class="article-tag-list-item">
                 <i class="iconfont icon-tag"></i><a>英语</a>
             </li>
         
@@ -1064,6 +1067,14 @@
 
     
     <nav id="title-list-nav">
+        
+        <a  class="全部文章 其它 工具 "
+           href="/2021/08/others/tools/markdown中数学符号公式整理/"
+           data-tag="其它,工具"
+           data-author="" >
+            <span class="post-title" title="markdown中数学符号公式整理">markdown中数学符号公式整理</span>
+            <span class="post-date" title="2021-08-01 20:00:20">2021/08/01</span>
+        </a>
         
         <a  class="全部文章 爬虫 爬虫案例 "
            href="/2021/07/spider/cases/异步爬虫爬照片/"
@@ -1187,7 +1198,7 @@
         
         <a  class="全部文章 其它 工具 "
            href="/2021/03/others/tools/网站收集/"
-           data-tag="网址"
+           data-tag="其它,工具"
            data-author="" >
             <span class="post-title" title="阿里云网址记录">阿里云网址记录</span>
             <span class="post-date" title="2021-03-01 20:00:20">2021/03/01</span>
@@ -2178,18 +2189,18 @@
         </a>
         
         <a  class="全部文章 python python算法 "
-           href="/2019/07/python/python算法/算法概述/"
-           data-tag="python,python算法"
-           data-author="" >
-            <span class="post-title" title="算法概述和总结">算法概述和总结</span>
-            <span class="post-date" title="2019-07-13 22:09:25">2019/07/13</span>
-        </a>
-        
-        <a  class="全部文章 python python算法 "
            href="/2019/07/python/python算法/学习数据结构和算法的经验/"
            data-tag="python,python算法"
            data-author="" >
             <span class="post-title" title="学习数据结构和算法的经验">学习数据结构和算法的经验</span>
+            <span class="post-date" title="2019-07-13 22:09:25">2019/07/13</span>
+        </a>
+        
+        <a  class="全部文章 python python算法 "
+           href="/2019/07/python/python算法/算法概述/"
+           data-tag="python,python算法"
+           data-author="" >
+            <span class="post-title" title="算法概述和总结">算法概述和总结</span>
             <span class="post-date" title="2019-07-13 22:09:25">2019/07/13</span>
         </a>
         
@@ -2290,14 +2301,6 @@
         </a>
         
         <a  class="全部文章 java java设计模式 "
-           href="/2019/06/java/java设计模式/20190624_访问者/"
-           data-tag="java,java设计模式"
-           data-author="" >
-            <span class="post-title" title="访问者模式详解">访问者模式详解</span>
-            <span class="post-date" title="2019-06-24 01:30:00">2019/06/24</span>
-        </a>
-        
-        <a  class="全部文章 java java设计模式 "
            href="/2019/06/java/java设计模式/20190624_状态模式/"
            data-tag="java,java设计模式"
            data-author="" >
@@ -2310,6 +2313,14 @@
            data-tag="java,java设计模式"
            data-author="" >
             <span class="post-title" title="解释器模式详解">解释器模式详解</span>
+            <span class="post-date" title="2019-06-24 01:30:00">2019/06/24</span>
+        </a>
+        
+        <a  class="全部文章 java java设计模式 "
+           href="/2019/06/java/java设计模式/20190624_访问者/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="访问者模式详解">访问者模式详解</span>
             <span class="post-date" title="2019-06-24 01:30:00">2019/06/24</span>
         </a>
         
@@ -2450,7 +2461,7 @@
         </a>
         
         <a  class="全部文章 java java设计模式 "
-           href="/2019/06/java/java设计模式/20190604_原型模式/"
+           href="/2019/06/java/java设计模式/原型模式/"
            data-tag="java,java设计模式"
            data-author="" >
             <span class="post-title" title="原型模式详解">原型模式详解</span>
@@ -2458,7 +2469,7 @@
         </a>
         
         <a  class="全部文章 java java设计模式 "
-           href="/2019/06/java/java设计模式/20190603_代理模式/"
+           href="/2019/06/java/java设计模式/代理模式/"
            data-tag="java,java设计模式"
            data-author="" >
             <span class="post-title" title="代理模式详解">代理模式详解</span>
@@ -2506,7 +2517,7 @@
         </a>
         
         <a  class="全部文章 java java设计模式 "
-           href="/2019/05/java/java设计模式/20190529_建造者/"
+           href="/2019/05/java/java设计模式/建造者/"
            data-tag="java,java设计模式"
            data-author="" >
             <span class="post-title" title="建造者模式详解">建造者模式详解</span>
@@ -2514,7 +2525,7 @@
         </a>
         
         <a  class="全部文章 java java设计模式 "
-           href="/2019/05/java/java设计模式/20190528_观察者/"
+           href="/2019/05/java/java设计模式/观察者/"
            data-tag="java,java设计模式"
            data-author="" >
             <span class="post-title" title="观察者模式详解">观察者模式详解</span>
@@ -3138,11 +3149,43 @@
         </a>
         
         <a  class="全部文章 java java案例 "
-           href="/2017/08/java/java案例/java实现界面进制转换/"
+           href="/2017/09/java/java案例/java重定向输出流实现程序日志/"
            data-tag="java,java案例"
            data-author="" >
-            <span class="post-title" title="java实现界面进制转换">java实现界面进制转换</span>
+            <span class="post-title" title="java重定向输出流实现程序日志">java重定向输出流实现程序日志</span>
+            <span class="post-date" title="2017-09-11 19:20:33">2017/09/11</span>
+        </a>
+        
+        <a  class="全部文章 java java案例 "
+           href="/2017/08/java/java案例/java界面实现字符串大小写的转换/"
+           data-tag="java,java案例"
+           data-author="" >
+            <span class="post-title" title="java界面实现字符串大小写的转换">java界面实现字符串大小写的转换</span>
+            <span class="post-date" title="2017-08-17 19:20:33">2017/08/17</span>
+        </a>
+        
+        <a  class="全部文章 java java案例 "
+           href="/2017/08/java/java案例/java界面得出一组数的最小值/"
+           data-tag="java,java案例"
+           data-author="" >
+            <span class="post-title" title="java界面得出一组数的最小值">java界面得出一组数的最小值</span>
+            <span class="post-date" title="2017-08-14 19:20:33">2017/08/14</span>
+        </a>
+        
+        <a  class="全部文章 java java案例 "
+           href="/2017/08/java/java案例/java界面进制转换/"
+           data-tag="java,java案例"
+           data-author="" >
+            <span class="post-title" title="java界面进制转换">java界面进制转换</span>
             <span class="post-date" title="2017-08-13 19:20:33">2017/08/13</span>
+        </a>
+        
+        <a  class="全部文章 java java案例 "
+           href="/2017/08/java/java案例/java界面变换颜色/"
+           data-tag="java,java案例"
+           data-author="" >
+            <span class="post-title" title="java界面变换颜色">java界面变换颜色</span>
+            <span class="post-date" title="2017-08-11 19:20:33">2017/08/11</span>
         </a>
         
         <a  class="全部文章 java java算法 "
@@ -3218,10 +3261,10 @@
         </a>
         
         <a  class="全部文章 java java案例 "
-           href="/2017/05/java/java案例/java变换界面的颜色/"
+           href="/2017/05/java/java案例/java把小写金额转成大写金额/"
            data-tag="java,java案例"
            data-author="" >
-            <span class="post-title" title="java变换界面的颜色">java变换界面的颜色</span>
+            <span class="post-title" title="java把小写金额转成大写金额">java把小写金额转成大写金额</span>
             <span class="post-date" title="2017-05-30 19:20:33">2017/05/30</span>
         </a>
         
@@ -3401,6 +3444,14 @@
             <span class="post-date" title="2017-04-21 01:30:00">2017/04/21</span>
         </a>
         
+        <a  class="全部文章 其它 工具 "
+           href="/2017/04/others/tools/markdown中的一些操作/"
+           data-tag="其它,工具"
+           data-author="" >
+            <span class="post-title" title="markdown中的一些操作">markdown中的一些操作</span>
+            <span class="post-date" title="2017-04-20 20:00:20">2017/04/20</span>
+        </a>
+        
         <div id="no-item-tips">
 
         </div>
@@ -3419,9 +3470,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-java/java设计模式/20190528_观察者" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-java/java案例/java界面得出一组数的最小值" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">观察者模式详解</h1>
+        <h1 class="article-title">java界面得出一组数的最小值</h1>
     
     <div class="article-meta">
         
@@ -3433,7 +3484,7 @@
             
             <a  data-rel="java">java</a> > 
             
-            <a  data-rel="java&lt;---&gt;java设计模式">java设计模式</a>
+            <a  data-rel="java&lt;---&gt;java案例">java案例</a>
             
         </span>
         
@@ -3443,14 +3494,14 @@
             
             <a class="color5">java</a>
             
-            <a class="color4">java设计模式</a>
+            <a class="color2">java案例</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2021-07-28 18:29:59'>2019-05-28 01:30</time>
+            发布时间 : <time class="date" title='最后更新: 2021-08-04 13:05:13'>2017-08-14 19:20</time>
         
     </div>
     <div class="article-meta">
@@ -3477,147 +3528,118 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>观察者模式（Observer Pattern）</strong>：</p>
-<blockquote>
-<p>定义对象间的一种一对多的依赖关系，以便当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并自动刷新。（Define a one-to-many dependency between objects so that when one object changes state all its dependents are notified and updated automatically.）</p>
-</blockquote>
-<a id="more"></a>
-<blockquote>
-</blockquote>
-<p>简单来说，就是 发布-订阅模式，发布者发布信息，订阅者获取信息，订阅了就能收到信息，没订阅就收不到信息。比如：有一个微信公众号服务，不定时发布一些消息，关注公众号就可以收到推送消息，取消关注就收不到推送消息。</p>
-<p><strong>观察者模式的核心</strong>：此设计模式最重要的作用就是 解耦！将观察者与被观察者解耦，使得他们之间的依赖性更小</p>
-<p><strong>观察者模式的优缺点</strong>：</p>
-<p>优点：</p>
-<ol>
-<li>观察者和被观察者之间抽象耦合。观察者模式容易扩展，被观察者只持有观察者集合，并不需要知道具体观察者内部的实现。</li>
-<li>对象之间的保持高度的协作。当被观察者发生变化时，所有被观察者都会通知到，然后做出相应的动作。</li>
-</ol>
-<p>缺点：</p>
-<ol>
-<li>如果观察者太多，被观察者通知观察者消耗的时间很多，影响系统的性能。</li>
-<li>当观察者集合中的某一观察者错误时就会导致系统卡壳，因此一般会采用异步方式。</li>
-</ol>
-<p><strong>跟代理模式对比</strong>：观察者模式和代理模式主要区别在它们功能不一样，观察者模式强调的是<em>被观察者反馈结果</em>，而代理模式是<em>同根负责做同样的事情</em>。</p>
-<p><strong>开发中常见的场景</strong>：</p>
-<ol>
-<li>聊天室程序的，服务器转发给所有客户端</li>
-<li>京东商城中，群发某商品打折信息</li>
-<li>Servlet中，监听器的实现</li>
-<li>邮件订阅</li>
-<li>网络游戏(多人联机对战)场景中，服务器将客户端的状态进行分发</li>
-</ol>
-<p><strong>案例</strong>：比如天气预报系统会不定时发布一些消息，关注的用户就可以收到推送消息，取消关注就收不到推送消息。</p>
-<p>用观察者模式完成该案例，大概有以下五步：</p>
-<p>第一，定义被观察者接口：也就是一个抽象主题，它把所有对观察者对象的引用保存在一个集合中，每个主题都可以有任意数量的观察者。抽象主题提供一个接口，可以增加和删除观察者角色。(也可以用抽象类来实现)</p>
-<pre><code class="java">/**
- * 抽象被观察者接口:声明了添加、删除、通知观察者方法
- */
-public interface Observed {
+        <p>用户输入一组整数，中间以空格分隔，点计算，会输出最小的数，执行代码如下：</p>
+<pre><code class="java">import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-    public void registerObserver(Observer o);
-    public void removeObserver(Observer o);
-    public void notifyObserver();
-}
-</code></pre>
-<p>第二，定义观察者接口：为所有的具体观察者定义一个接口，在得到主题通知时更新自己。</p>
-<pre><code class="java">/**
- * 抽象观察者:定义了一个update()方法，当被观察者调用notifyObservers()方法时，
- * 观察者的update()方法会被回调。
- */
-public interface Observer {
-    public void update(String message);
-}
-</code></pre>
-<p>第三，定义具体被观察者角色，也就是一个具体的主题，在集体主题的内部状态改变时，所有登记过的观察者发出通知。比如下面代码，实现了Observed接口，对Observed接口的三个方法进行了具体实现，同时有一个List集合，用以保存注册的观察者，等需要通知观察者时，遍历该集合即可。</p>
-<pre><code class="java">/**
- *被观察者，也就是天气服务发布系统
- *实现了Observerable接口，对Observerable接口的三个方法进行了具体实现
- */
-public class WeatherServer implements Observed {
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.border.EmptyBorder;
 
-    //注意到这个List集合的泛型参数为Observer接口，
-    //设计原则：面向接口编程而不是面向实现编程
-    private List&lt;Observer&gt; list;
-    private String message;
+public class ArrayMinValue extends JFrame {
 
-    public WeatherServer() {
-        list = new ArrayList&lt;Observer&gt;();
-    }
-    @Override
-    public void registerObserver(Observer o) {
-        list.add(o);
-    }
-    @Override
-    public void removeObserver(Observer o) {
-        if(!list.isEmpty()){
-            list.remove(o);
-        }
-    }
-    @Override
-    public void notifyObserver() {
-        for(int i=0;i&lt;list.size();i++){
-            Observer observer = list.get(i);
-            observer.update(message);
-        }
-    }
-    public void setInfomation(String s) {
-        this.message = s;
-        System.out.println(&quot;天气系统更新消息： &quot; + s);
-        //消息更新，通知所有观察者
-        notifyObserver();
-    }
-}
-</code></pre>
-<p>第四，定义具体观察者角色：实现抽象观察者角色所需要的更新接口，一边使本身的状态与系统的状态相协调</p>
-<pre><code class="java">/**
- * 定义具体观察者：实现了update方法
- */
-public class User implements Observer{
-    private String name;
-    private String message;
 
-    public User(String name) {
-        this.name = name;
-    }
+    //private static final long serialVersionUID = -8388043412533827271L;
+    private JPanel contentPane;
+    private JTextField textField;
+    private JLabel label;
+    private JLabel label_1;
 
-    @Override
-    public void update(String message) {
-        this.message = message;
-        read();
-    }
-
-    public void read() {
-        System.out.println(name + &quot; 收到推送消息： &quot; + message);
-    }
-}
-
-</code></pre>
-<p>第五，编写一个测试类：<br>首先注册了三个用户，zhangsan、lisi、wangwu。公众号发布了一条消息 “ 今天有大雨！！！”，三个用户都收到了消息。<br>若用户zhangsan不想看到天气预报推送的消息，于是取消订阅了，这时公众号又推送了一条消息 “ 明天是晴天~~~”，此时用户zhangsan已经收不到消息，其他用户还是正常能收到推送消息。</p>
-<pre><code class="java">/**
- * 测试类
- */
-public class TestObserver {
+    /**
+     * Launch the application.
+     */
     public static void main(String[] args) {
-        WeatherServer server = new WeatherServer();
+        try {
+            UIManager.setLookAndFeel(&quot;com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel&quot;);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    ArrayMinValue frame = new ArrayMinValue();
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
-        Observer userZhang = new User(&quot;zhangsan&quot;);
-        Observer userLi = new User(&quot;lisi&quot;);
-        Observer userWang = new User(&quot;wangwu&quot;);
+    /**
+     * Create the frame.
+     */
+    public ArrayMinValue() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 450, 200);
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPane);
+        setTitle(&quot;获取一维数组的最小值&quot;);
+        contentPane.setLayout(null);
 
-        server.registerObserver(userZhang);
-        server.registerObserver(userLi);
-        server.registerObserver(userWang);
-        server.setInfomation(&quot;今天有大雨！！！&quot;);
+        textField = new JTextField();
+        textField.setBounds(6, 36, 414, 30);
+        contentPane.add(textField);
+        textField.setColumns(10);
 
-        System.out.println(&quot;----------------------------------------------&quot;);
-        server.removeObserver(userZhang);
-        server.setInfomation(&quot;明天是晴天~~~&quot;);
+        JButton button = new JButton(&quot;\u8BA1\u7B97&quot;);
+        button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                do_button_actionPerformed(e);
+            }
+        });
+        button.setBounds(16, 76, 90, 30);
+        contentPane.add(button);
+
+        label = new JLabel(&quot;最小值：&quot;);
+        label.setBounds(116, 82, 304, 18);
+        contentPane.add(label);
+
+        label_1 = new JLabel(
+                &quot;请在文本框中输入多个整数，以空格为分隔符。例如：3 5 2 562 125&quot;);
+        label_1.setBounds(6, 6, 422, 18);
+        contentPane.add(label_1);
+    }
+
+    protected void do_button_actionPerformed(ActionEvent e) {
+        String arrayStr = textField.getText().trim();           //去除左右空格
+        if(arrayStr.equals(&quot;&quot;)){
+            JOptionPane.showMessageDialog(null, &quot;请输入数字内容&quot;);
+            return;
+        }
+        for (int i = 0; i &lt; arrayStr.length(); i++) {               // 过滤非法输入
+            char charAt = arrayStr.charAt(i);
+            if (!Character.isDigit(charAt) &amp;&amp; charAt != &#39; &#39;) {
+                JOptionPane.showMessageDialog(null, &quot;输入包含非数字内容&quot;);
+                textField.setText(&quot;&quot;);
+                return;
+            }
+        }
+        String[] numStrs = arrayStr.split(&quot; {1,}&quot;);         // 分割字符串
+        int[] numArray = new int[numStrs.length];           // 创建整型数组
+        // 转换输入为整型数组
+        for (int i = 0; i &lt; numArray.length; i++) {
+            numArray[i] = Integer.valueOf(numStrs[i]);
+        }
+        int min = numArray[0];                          // 创建最小数变量
+        for (int j = 0; j &lt; numArray.length; j++) {
+            if (min &gt; numArray[j]) {                    // 提取最小整数
+                min = numArray[j];
+            }
+        }
+        label.setText(&quot;数组中最小的数是：&quot; + min);       //显示最小值到指定的标签中
     }
 }
 
+
 </code></pre>
-<p>测试的结果如下图：<br><img src="https://img-blog.csdnimg.cn/20190528181053979.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N1aV95b25naHVh,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<p>如果想看更多设计模式，可点此链接：<a href="https://blog.csdn.net/cui_yonghua/article/details/90512943" target="_blank" rel="noopener">更多设计模式</a></p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎指出任何有错误或不够清晰的表达。欢迎邮件至 320479069@qq.com </span>
