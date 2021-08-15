@@ -1,23 +1,3994 @@
 <!DOCTYPE html>
 <html>
-<%- partial('_partial/header') %>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  <title>flask消息闪现 | 崔永华的个人网站</title>
+  <meta name="keywords" content=" python , web ">
+  <meta name="description" content="flask消息闪现 | 崔永华的个人网站">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="个人简介大家好，我叫崔永华，英文名Andy。  书山有路勤为径，学海无涯苦作舟。驾舟行船奔大海，收藏海中学无边。  工作经历三年IT研发，两年爬虫经验。对爬虫的设计和抓取，高并发高可用性系统，分布式系统，海量数据处理等有一些经验和心得。平时喜欢关注底层技术实现（如scrapy源码，flask源码等）、新技术趋势发展和互联网行业应用。最擅长反爬、运维DevOps等领域等技术方面。 曾在创业公司中锻">
+<meta property="og:type" content="website">
+<meta property="og:title" content="关于崔永华">
+<meta property="og:url" content="http://cuiyonghua.com/about/index.html">
+<meta property="og:site_name" content="崔永华的个人网站">
+<meta property="og:description" content="个人简介大家好，我叫崔永华，英文名Andy。  书山有路勤为径，学海无涯苦作舟。驾舟行船奔大海，收藏海中学无边。  工作经历三年IT研发，两年爬虫经验。对爬虫的设计和抓取，高并发高可用性系统，分布式系统，海量数据处理等有一些经验和心得。平时喜欢关注底层技术实现（如scrapy源码，flask源码等）、新技术趋势发展和互联网行业应用。最擅长反爬、运维DevOps等领域等技术方面。 曾在创业公司中锻">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-07-29T04:41:03.571Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于崔永华">
+<meta name="twitter:description" content="个人简介大家好，我叫崔永华，英文名Andy。  书山有路勤为径，学海无涯苦作舟。驾舟行船奔大海，收藏海中学无边。  工作经历三年IT研发，两年爬虫经验。对爬虫的设计和抓取，高并发高可用性系统，分布式系统，海量数据处理等有一些经验和心得。平时喜欢关注底层技术实现（如scrapy源码，flask源码等）、新技术趋势发展和互联网行业应用。最擅长反爬、运维DevOps等领域等技术方面。 曾在创业公司中锻">
+
+
+<link rel="icon" href="/img/avatar.jpg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-dark.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0"></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js"></script>
+
+<script src="/js/iconfont.js?v=1.1.0"></script>
+
+</head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="undefined">
+  <input class="theme_blog_path" value>
+  <input id="theme_shortcut" value="true">
+  <input id="theme_highlight_on" value="true">
+  <input id="theme_code_copy" value="true">
+</div>
+
+
+
 <body>
 <aside class="nav">
     <div class="nav-left">
-        <%- fragment_cache('left', function(){
-            return partial('_partial/nav-left');
-        }) %>
+        <a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="/img/avatar.jpg"/>
+</a>
+<div class="author">
+    <span>崔永华</span>
+</div>
+
+<div class="icon">
+    
+        
+            <a title="csdn"
+               href="https://cuiyonghua.blog.csdn.net/"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-csdn"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="github"
+               href="https://github.com/cuiyonghua6"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-github"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="weibo"
+               href="https://weibo.com/cuiyonghua"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-weibo"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="zhihu"
+               href="https://www.zhihu.com/people/cuiyonghua"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-zhihu"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="oschina"
+               href="https://my.oschina.net/cuiyonghua"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-oschina"></use>
+                    </svg>
+                
+            </a>
+        
+    
+</div>
+
+
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="全部文章">全部文章
+            
+                <small>(359)</small>
+            
+        </div>
+    </li>
+    
+        
+            
+                <li>
+                    <div data-rel="爬虫">
+                        <i class="fold iconfont icon-right"></i>
+                        
+                        爬虫
+                        <small>(66)</small>
+                        
+                    </div>
+                    
+                        <ul class="sub hide">
+                            
+                                <li>
+                                    <div data-rel="爬虫<--->appium">
+                                        
+                                        appium
+                                        
+                                            <small>(5
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="爬虫<--->pyppeteer">
+                                        
+                                        pyppeteer
+                                        
+                                            <small>(2
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="爬虫<--->scrapy">
+                                        
+                                        scrapy
+                                        
+                                            <small>(12
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="爬虫<--->selenium">
+                                        
+                                        selenium
+                                        
+                                            <small>(11
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="爬虫<--->反爬逆向">
+                                        
+                                        反爬逆向
+                                        
+                                            <small>(10
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="爬虫<--->爬虫总结">
+                                        
+                                        爬虫总结
+                                        
+                                            <small>(12
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="爬虫<--->爬虫案例">
+                                        
+                                        爬虫案例
+                                        
+                                            <small>(14
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+        
+    
+        
+            
+                <li>
+                    <div data-rel="数据处理">
+                        <i class="fold iconfont icon-right"></i>
+                        
+                        数据处理
+                        <small>(32)</small>
+                        
+                    </div>
+                    
+                        <ul class="sub hide">
+                            
+                                <li>
+                                    <div data-rel="数据处理<--->MySQL">
+                                        
+                                        MySQL
+                                        
+                                            <small>(6
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="数据处理<--->PostgreSQL">
+                                        
+                                        PostgreSQL
+                                        
+                                            <small>(20
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="数据处理<--->redis">
+                                        
+                                        redis
+                                        
+                                            <small>(2
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="数据处理<--->大数据">
+                                        
+                                        大数据
+                                        
+                                            <small>(4
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+        
+    
+        
+            
+                <li>
+                    <div data-rel="python">
+                        <i class="fold iconfont icon-right"></i>
+                        
+                        python
+                        <small>(118)</small>
+                        
+                    </div>
+                    
+                        <ul class="sub hide">
+                            
+                                <li>
+                                    <div data-rel="python<--->python优化">
+                                        
+                                        python优化
+                                        
+                                            <small>(8
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="python<--->python基础">
+                                        
+                                        python基础
+                                        
+                                            <small>(28
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="python<--->python案例">
+                                        
+                                        python案例
+                                        
+                                            <small>(32
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="python<--->python模块">
+                                        
+                                        python模块
+                                        
+                                            <small>(10
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="python<--->python算法">
+                                        
+                                        python算法
+                                        
+                                            <small>(19
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="python<--->web">
+                                        
+                                        web
+                                        
+                                            <small>(21
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+        
+    
+        
+            
+                <li>
+                    <div data-rel="前端">
+                        <i class="fold iconfont icon-right"></i>
+                        
+                        前端
+                        <small>(33)</small>
+                        
+                    </div>
+                    
+                        <ul class="sub hide">
+                            
+                                <li>
+                                    <div data-rel="前端<--->javascript">
+                                        
+                                        javascript
+                                        
+                                            <small>(16
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="前端<--->jQuery">
+                                        
+                                        jQuery
+                                        
+                                            <small>(7
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="前端<--->vue">
+                                        
+                                        vue
+                                        
+                                            <small>(6
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="前端<--->前端案例">
+                                        
+                                        前端案例
+                                        
+                                            <small>(4
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+        
+    
+        
+            
+                <li>
+                    <div data-rel="部署">
+                        <i class="fold iconfont icon-right"></i>
+                        
+                        部署
+                        <small>(7)</small>
+                        
+                    </div>
+                    
+                        <ul class="sub hide">
+                            
+                                <li>
+                                    <div data-rel="部署<--->jenkins">
+                                        
+                                        jenkins
+                                        
+                                            <small>(1
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="部署<--->linux">
+                                        
+                                        linux
+                                        
+                                            <small>(6
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+        
+    
+        
+            
+                <li>
+                    <div data-rel="java">
+                        <i class="fold iconfont icon-right"></i>
+                        
+                        java
+                        <small>(78)</small>
+                        
+                    </div>
+                    
+                        <ul class="sub hide">
+                            
+                                <li>
+                                    <div data-rel="java<--->java基础">
+                                        
+                                        java基础
+                                        
+                                            <small>(20
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="java<--->java案例">
+                                        
+                                        java案例
+                                        
+                                            <small>(25
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="java<--->java算法">
+                                        
+                                        java算法
+                                        
+                                            <small>(8
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="java<--->java设计模式">
+                                        
+                                        java设计模式
+                                        
+                                            <small>(25
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+        
+    
+        
+            
+                <li>
+                    <div data-rel="机器学习">
+                        <i class="fold iconfont icon-right"></i>
+                        
+                        机器学习
+                        <small>(6)</small>
+                        
+                    </div>
+                    
+                        <ul class="sub hide">
+                            
+                                <li>
+                                    <div data-rel="机器学习<--->NLP">
+                                        
+                                        NLP
+                                        
+                                            <small>(1
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="机器学习<--->科学计算">
+                                        
+                                        科学计算
+                                        
+                                            <small>(3
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+        
+    
+        
+            
+                <li>
+                    <div data-rel="其它">
+                        <i class="fold iconfont icon-right"></i>
+                        
+                        其它
+                        <small>(19)</small>
+                        
+                    </div>
+                    
+                        <ul class="sub hide">
+                            
+                                <li>
+                                    <div data-rel="其它<--->Android">
+                                        
+                                        Android
+                                        
+                                            <small>(2
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="其它<--->工具">
+                                        
+                                        工具
+                                        
+                                            <small>(4
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="其它<--->英语">
+                                        
+                                        英语
+                                        
+                                            <small>(3
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="其它<--->计算机">
+                                        
+                                        计算机
+                                        
+                                            <small>(4
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                                <li>
+                                    <div data-rel="其它<--->读书">
+                                        
+                                        读书
+                                        
+                                            <small>(6
+                                                )</small>
+                                        
+                                    </div>
+                                    
+                                </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+            
+            
+    </div>
+    <div>
+        
+            <a class="about  hasFriend  site_url"
+               
+               href="/about">关于</a>
+        
+        <a style="width: 50%"
+                
+                                           class="friends">友链</a>
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="359">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
     </div>
     <div class="nav-right">
-        <%- fragment_cache('friends', function(){
-            return partial('_partial/friends');
-        }) %>
-        <%- fragment_cache('right', function(){
-            return partial('_partial/nav-right');
-        }) %>
+        <div class="friends-area">
+    <div class="friends-title">
+        友情链接
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="https://blog.wedaggo.com/">冯义万</a></li>
+            
+            <li><a target="_blank" href="https://xu-shaoyu.github.io/">徐绍玉</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">全部文章</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">大纲</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>36计解说</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Android</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>appium</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>fastapi</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>flask</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>hive</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>java</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>javascript</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>java基础</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>java打印图形</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>java案例</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>java设计模式</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>jQuery</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>linum</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>linux</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>MySQL</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>NLP</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>PostgreSQL</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>pyppeteer</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>python</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>python3</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>python优化</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>python基础</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>python案例</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>python算法</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>redis</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>scrapy</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>selenium</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>vue</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>web</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>其它</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>前端</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>前端案例</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>反爬逆向</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>大数据</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>工具</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>数据处理</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>日常生活</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>机器学习</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>爬虫</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>爬虫总结</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>爬虫案例</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>科学计算</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>算法</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>英语</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>计算机</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>读书</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>部署</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        <a  class="全部文章 其它 工具 "
+           href="/2021/08/others/tools/Processing介绍及几个python模式下的案例/"
+           data-tag="其它,工具"
+           data-author="" >
+            <span class="post-title" title="Processing介绍及几个python模式下的案例">Processing介绍及几个python模式下的案例</span>
+            <span class="post-date" title="2021-08-08 20:00:20">2021/08/08</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 爬虫案例 "
+           href="/2021/08/spider/cases/爬取热榜数据并通过Qt界面显示/"
+           data-tag="python,爬虫"
+           data-author="" >
+            <span class="post-title" title="爬取热榜数据并通过Qt界面显示">爬取热榜数据并通过Qt界面显示</span>
+            <span class="post-date" title="2021-08-07 16:42:38">2021/08/07</span>
+        </a>
+        
+        <a  class="全部文章 前端 vue "
+           href="/2021/08/front/07vue/vue流行的UI库和开源的项目/"
+           data-tag="前端,vue"
+           data-author="" >
+            <span class="post-title" title="vue流行的UI库和开源的项目">vue流行的UI库和开源的项目</span>
+            <span class="post-date" title="2021-08-04 15:24:20">2021/08/04</span>
+        </a>
+        
+        <a  class="全部文章 其它 工具 "
+           href="/2021/08/others/tools/markdown中数学符号公式整理/"
+           data-tag="其它,工具"
+           data-author="" >
+            <span class="post-title" title="markdown中数学符号公式整理">markdown中数学符号公式整理</span>
+            <span class="post-date" title="2021-08-01 20:00:20">2021/08/01</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 爬虫案例 "
+           href="/2021/07/spider/cases/异步爬虫爬照片/"
+           data-tag="爬虫,爬虫案例"
+           data-author="" >
+            <span class="post-title" title="异步爬虫爬照片">异步爬虫爬照片</span>
+            <span class="post-date" title="2021-07-25 16:04:43">2021/07/25</span>
+        </a>
+        
+        <a  class="全部文章 python python优化 "
+           href="/2021/07/python/python优化/effective_python/"
+           data-tag="python基础,python优化"
+           data-author="" >
+            <span class="post-title" title="Effective Python（摘录）">Effective Python（摘录）</span>
+            <span class="post-date" title="2021-07-21 15:24:20">2021/07/21</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 爬虫案例 "
+           href="/2021/07/spider/cases/爬取豆瓣top250数据/"
+           data-tag="python,爬虫案例"
+           data-author="" >
+            <span class="post-title" title="分别用多进程，多线程，协程爬取豆瓣top250数据">分别用多进程，多线程，协程爬取豆瓣top250数据</span>
+            <span class="post-date" title="2021-07-19 20:34:53">2021/07/19</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 爬虫案例 "
+           href="/2021/07/spider/cases/爬取九酷音乐/"
+           data-tag="python,爬虫案例"
+           data-author="" >
+            <span class="post-title" title="爬取九酷音乐">爬取九酷音乐</span>
+            <span class="post-date" title="2021-07-12 20:44:15">2021/07/12</span>
+        </a>
+        
+        <a  class="全部文章 python python算法 "
+           href="/2021/06/python/python算法/cases/python解决约瑟夫环问题/"
+           data-tag="python,python算法"
+           data-author="" >
+            <span class="post-title" title="python解决约瑟夫环问题">python解决约瑟夫环问题</span>
+            <span class="post-date" title="2021-06-27 22:09:25">2021/06/27</span>
+        </a>
+        
+        <a  class="全部文章 python python优化 "
+           href="/2021/06/python/python优化/用装饰器改进代码/"
+           data-tag="python,python优化"
+           data-author="" >
+            <span class="post-title" title="用装饰器改进代码">用装饰器改进代码</span>
+            <span class="post-date" title="2021-06-26 15:24:20">2021/06/26</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 selenium "
+           href="/2021/06/spider/selenium/案例_从谷歌插件中爬取胖球信息/"
+           data-tag="python,selenium"
+           data-author="" >
+            <span class="post-title" title="案例_从谷歌插件中爬取胖球信息">案例_从谷歌插件中爬取胖球信息</span>
+            <span class="post-date" title="2021-06-25 16:42:38">2021/06/25</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 selenium "
+           href="/2021/06/spider/selenium/linux上安装selenium环境及测试/"
+           data-tag="python,爬虫,selenium"
+           data-author="" >
+            <span class="post-title" title="linux上安装selenium环境及测试">linux上安装selenium环境及测试</span>
+            <span class="post-date" title="2021-06-24 19:03:22">2021/06/24</span>
+        </a>
+        
+        <a  class="全部文章 python python优化 "
+           href="/2021/06/python/python优化/好代码的一般特征/"
+           data-tag="python,python优化"
+           data-author="" >
+            <span class="post-title" title="好代码的一般特征">好代码的一般特征</span>
+            <span class="post-date" title="2021-06-22 15:24:20">2021/06/22</span>
+        </a>
+        
+        <a  class="全部文章 python python案例 "
+           href="/2021/06/python/cases/比较2个图片的相似度/"
+           data-tag="python,python案例"
+           data-author="" >
+            <span class="post-title" title="比较2个图片的相似度">比较2个图片的相似度</span>
+            <span class="post-date" title="2021-06-21 13:50:19">2021/06/21</span>
+        </a>
+        
+        <a  class="全部文章 前端 vue "
+           href="/2021/05/front/07vue/vue3.x面试总结/"
+           data-tag="前端,vue"
+           data-author="" >
+            <span class="post-title" title="vue3.x面试总结">vue3.x面试总结</span>
+            <span class="post-date" title="2021-05-15 15:24:20">2021/05/15</span>
+        </a>
+        
+        <a  class="全部文章 前端 vue "
+           href="/2021/05/front/07vue/vue3.x经典案例46个/"
+           data-tag="前端,vue"
+           data-author="" >
+            <span class="post-title" title="vue3.x经典案例46个">vue3.x经典案例46个</span>
+            <span class="post-date" title="2021-05-12 15:24:20">2021/05/12</span>
+        </a>
+        
+        <a  class="全部文章 前端 vue "
+           href="/2021/05/front/07vue/vue3.x配套工具及项目化构建/"
+           data-tag="前端,vue"
+           data-author="" >
+            <span class="post-title" title="vue3.x配套工具及项目化构建">vue3.x配套工具及项目化构建</span>
+            <span class="post-date" title="2021-05-09 15:24:20">2021/05/09</span>
+        </a>
+        
+        <a  class="全部文章 前端 vue "
+           href="/2021/05/front/07vue/vue3.x高级语法/"
+           data-tag="前端,vue"
+           data-author="" >
+            <span class="post-title" title="vue3.x高级语法">vue3.x高级语法</span>
+            <span class="post-date" title="2021-05-08 15:24:20">2021/05/08</span>
+        </a>
+        
+        <a  class="全部文章 前端 vue "
+           href="/2021/05/front/07vue/vue3.x基础/"
+           data-tag="前端,vue"
+           data-author="" >
+            <span class="post-title" title="vue3.x基础">vue3.x基础</span>
+            <span class="post-date" title="2021-05-06 15:24:20">2021/05/06</span>
+        </a>
+        
+        <a  class="全部文章 python python模块 "
+           href="/2021/05/python/python模块/pyecharts数据可视化/"
+           data-tag="python"
+           data-author="" >
+            <span class="post-title" title="pyecharts数据可视化">pyecharts数据可视化</span>
+            <span class="post-date" title="2021-05-05 17:46:54">2021/05/05</span>
+        </a>
+        
+        <a  class="全部文章 前端 前端案例 "
+           href="/2021/05/front/04cases/echarts的使用/"
+           data-tag="前端,javascript"
+           data-author="" >
+            <span class="post-title" title="echarts的使用">echarts的使用</span>
+            <span class="post-date" title="2021-05-05 15:24:20">2021/05/05</span>
+        </a>
+        
+        <a  class="全部文章 python web "
+           href="/2021/04/python/web/django概述及资料参考/"
+           data-tag="python,web"
+           data-author="" >
+            <span class="post-title" title="django概述及资料参考">django概述及资料参考</span>
+            <span class="post-date" title="2021-04-01 15:24:20">2021/04/01</span>
+        </a>
+        
+        <a  class="全部文章 其它 Android "
+           href="/2021/03/others/android/Android概述/"
+           data-tag="其它,Android"
+           data-author="" >
+            <span class="post-title" title="Android概述">Android概述</span>
+            <span class="post-date" title="2021-03-27 17:39:41">2021/03/27</span>
+        </a>
+        
+        <a  class="全部文章 其它 Android "
+           href="/2021/03/others/android/Android环境搭建及第一个应用/"
+           data-tag="其它,Android"
+           data-author="" >
+            <span class="post-title" title="Android环境搭建及第一个应用">Android环境搭建及第一个应用</span>
+            <span class="post-date" title="2021-03-27 17:39:41">2021/03/27</span>
+        </a>
+        
+        <a  class="全部文章 数据处理 大数据 "
+           href="/2021/03/database/大数据/使用reduce进行累加操作/"
+           data-tag="数据处理,大数据"
+           data-author="" >
+            <span class="post-title" title="使用reduce进行累加操作">使用reduce进行累加操作</span>
+            <span class="post-date" title="2021-03-13 15:24:20">2021/03/13</span>
+        </a>
+        
+        <a  class="全部文章 其它 读书 "
+           href="/2021/03/others/reading/千古奇文_命运赋/"
+           data-tag="其它,读书"
+           data-author="" >
+            <span class="post-title" title="千古奇文_命运赋">千古奇文_命运赋</span>
+            <span class="post-date" title="2021-03-02 20:00:20">2021/03/02</span>
+        </a>
+        
+        <a  class="全部文章 其它 工具 "
+           href="/2021/03/others/tools/网站收集/"
+           data-tag="其它,工具"
+           data-author="" >
+            <span class="post-title" title="阿里云网址记录">阿里云网址记录</span>
+            <span class="post-date" title="2021-03-01 20:00:20">2021/03/01</span>
+        </a>
+        
+        <a  class="全部文章 其它 读书 "
+           href="/2021/02/others/reading/诗_十不足/"
+           data-tag="其它,读书"
+           data-author="" >
+            <span class="post-title" title="诗_十不足">诗_十不足</span>
+            <span class="post-date" title="2021-02-03 20:00:20">2021/02/03</span>
+        </a>
+        
+        <a  class="全部文章 python python模块 "
+           href="/2021/01/python/python模块/pyautogui模块的案例/"
+           data-tag="python"
+           data-author="" >
+            <span class="post-title" title="pyautogui模块的案例">pyautogui模块的案例</span>
+            <span class="post-date" title="2021-01-01 19:22:17">2021/01/01</span>
+        </a>
+        
+        <a  class="全部文章 python web "
+           href="/2020/12/python/web/FastAPI的介绍特性及几个常用案例/"
+           data-tag="python,web"
+           data-author="" >
+            <span class="post-title" title="FastAPI的介绍特性及几个常用案例">FastAPI的介绍特性及几个常用案例</span>
+            <span class="post-date" title="2020-12-29 12:08:15">2020/12/29</span>
+        </a>
+        
+        <a  class="全部文章 前端 javascript "
+           href="/2020/12/front/03javascript/typescript简介和基础类型/"
+           data-tag="前端,javascript"
+           data-author="" >
+            <span class="post-title" title="typescript简介和基础类型">typescript简介和基础类型</span>
+            <span class="post-date" title="2020-12-27 15:24:20">2020/12/27</span>
+        </a>
+        
+        <a  class="全部文章 前端 javascript "
+           href="/2020/12/front/03javascript/javascript的86个面试题汇总/"
+           data-tag="前端,javascript"
+           data-author="" >
+            <span class="post-title" title="Javascript的86个面试题汇总">Javascript的86个面试题汇总</span>
+            <span class="post-date" title="2020-12-15 20:15:43">2020/12/15</span>
+        </a>
+        
+        <a  class="全部文章 python python模块 "
+           href="/2020/12/python/python模块/freegames有趣的游戏库/"
+           data-tag="python"
+           data-author="" >
+            <span class="post-title" title="freegames有趣的游戏库">freegames有趣的游戏库</span>
+            <span class="post-date" title="2020-12-02 14:00:54">2020/12/02</span>
+        </a>
+        
+        <a  class="全部文章 python python模块 "
+           href="/2020/12/python/python模块/PySnooper调试神级工具/"
+           data-tag="python"
+           data-author="" >
+            <span class="post-title" title="PySnooper调试神级工具">PySnooper调试神级工具</span>
+            <span class="post-date" title="2020-12-01 14:00:54">2020/12/01</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 爬虫案例 "
+           href="/2020/11/spider/cases/用requests+tkinter实现小型翻译器/"
+           data-tag="爬虫,爬虫案例"
+           data-author="" >
+            <span class="post-title" title="用requests+tkinter实现小型翻译器">用requests+tkinter实现小型翻译器</span>
+            <span class="post-date" title="2020-11-30 20:43:06">2020/11/30</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 爬虫案例 "
+           href="/2020/10/spider/cases/爬取阳光电影的链接/"
+           data-tag="python,爬虫"
+           data-author="" >
+            <span class="post-title" title="爬取阳光电影的链接">爬取阳光电影的链接</span>
+            <span class="post-date" title="2020-10-20 17:59:21">2020/10/20</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 反爬逆向 "
+           href="/2020/10/spider/反爬逆向/frida详解/"
+           data-tag="python,爬虫,反爬逆向"
+           data-author="" >
+            <span class="post-title" title="frida详解">frida详解</span>
+            <span class="post-date" title="2020-10-18 19:52:19">2020/10/18</span>
+        </a>
+        
+        <a  class="全部文章 前端 javascript "
+           href="/2020/10/front/03javascript/javascript_ES6至ES10新特性/"
+           data-tag="前端,javascript"
+           data-author="" >
+            <span class="post-title" title="javascript_ES6至ES10新特性">javascript_ES6至ES10新特性</span>
+            <span class="post-date" title="2020-10-17 15:24:20">2020/10/17</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 反爬逆向 "
+           href="/2020/10/spider/反爬逆向/adb配置及常见命令/"
+           data-tag="python,爬虫,反爬逆向"
+           data-author="" >
+            <span class="post-title" title="adb配置及常见命令">adb配置及常见命令</span>
+            <span class="post-date" title="2020-10-14 19:52:19">2020/10/14</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 appium "
+           href="/2020/10/spider/appium/appium自动化测试并生成测试报告/"
+           data-tag="爬虫,appium"
+           data-author="" >
+            <span class="post-title" title="appium自动化测试并生成测试报告">appium自动化测试并生成测试报告</span>
+            <span class="post-date" title="2020-10-14 10:30:00">2020/10/14</span>
+        </a>
+        
+        <a  class="全部文章 部署 linux "
+           href="/2020/10/deploy/linux/vim相关配置/"
+           data-tag="linux"
+           data-author="" >
+            <span class="post-title" title="vim相关配置">vim相关配置</span>
+            <span class="post-date" title="2020-10-13 15:24:20">2020/10/13</span>
+        </a>
+        
+        <a  class="全部文章 其它 英语 "
+           href="/2020/10/others/english/800_centence/"
+           data-tag="英语"
+           data-author="" >
+            <span class="post-title" title="800个句子掌握7000单词">800个句子掌握7000单词</span>
+            <span class="post-date" title="2020-10-11 01:30:00">2020/10/11</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 selenium "
+           href="/2020/10/spider/selenium/selenium的一些问题/"
+           data-tag="python,爬虫,selenium"
+           data-author="" >
+            <span class="post-title" title="selenium的一些问题">selenium的一些问题</span>
+            <span class="post-date" title="2020-10-10 10:35:00">2020/10/10</span>
+        </a>
+        
+        <a  class="全部文章 java java基础 "
+           href="/2020/10/java/java基础/java9到14新特性/"
+           data-tag="java"
+           data-author="" >
+            <span class="post-title" title="JDK9到14的重要新特性">JDK9到14的重要新特性</span>
+            <span class="post-date" title="2020-10-02 23:19:19">2020/10/02</span>
+        </a>
+        
+        <a  class="全部文章 java java基础 "
+           href="/2020/10/java/java基础/java8新特性/"
+           data-tag="java"
+           data-author="" >
+            <span class="post-title" title="Java8新特性总结">Java8新特性总结</span>
+            <span class="post-date" title="2020-10-01 23:19:19">2020/10/01</span>
+        </a>
+        
+        <a  class="全部文章 部署 linux "
+           href="/2020/10/deploy/linux/vi和vim的常用指令/"
+           data-tag="linux"
+           data-author="" >
+            <span class="post-title" title="vi和vim的常用指令">vi和vim的常用指令</span>
+            <span class="post-date" title="2020-10-01 15:24:20">2020/10/01</span>
+        </a>
+        
+        <a  class="全部文章 前端 前端案例 "
+           href="/2020/09/front/04cases/三种加密方式 sha1加密、MD5加密、Base64加密/"
+           data-tag="前端,前端案例"
+           data-author="" >
+            <span class="post-title" title="三种加密方式 sha1加密、MD5加密、Base64加密">三种加密方式 sha1加密、MD5加密、Base64加密</span>
+            <span class="post-date" title="2020-09-29 10:30:00">2020/09/29</span>
+        </a>
+        
+        <a  class="全部文章 其它 计算机 "
+           href="/2020/09/others/computer/mac下关闭chrome浏览器的自动更新/"
+           data-tag="其它,计算机"
+           data-author="" >
+            <span class="post-title" title="mac下关闭chrome浏览器的自动更新">mac下关闭chrome浏览器的自动更新</span>
+            <span class="post-date" title="2020-09-14 17:39:41">2020/09/14</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 反爬逆向 "
+           href="/2020/09/spider/反爬逆向/逆向概述/"
+           data-tag="python,爬虫,反爬逆向"
+           data-author="" >
+            <span class="post-title" title="逆向概述">逆向概述</span>
+            <span class="post-date" title="2020-09-02 19:52:19">2020/09/02</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 爬虫总结 "
+           href="/2020/09/spider/爬虫总结/爬虫初中高巅峰级需要掌握的知识点/"
+           data-tag="python,爬虫"
+           data-author="" >
+            <span class="post-title" title="爬虫初中高巅峰级需要掌握的知识点">爬虫初中高巅峰级需要掌握的知识点</span>
+            <span class="post-date" title="2020-09-01 19:52:19">2020/09/01</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 appium "
+           href="/2020/08/spider/appium/appium真机测试/"
+           data-tag="爬虫,appium"
+           data-author="" >
+            <span class="post-title" title="appium真机测试">appium真机测试</span>
+            <span class="post-date" title="2020-08-09 10:30:00">2020/08/09</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 appium "
+           href="/2020/08/spider/appium/appium常用元素定位/"
+           data-tag="爬虫,appium"
+           data-author="" >
+            <span class="post-title" title="appium常用元素定位">appium常用元素定位</span>
+            <span class="post-date" title="2020-08-08 10:30:00">2020/08/08</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 appium "
+           href="/2020/08/spider/appium/appium学习建议及相关网站/"
+           data-tag="爬虫,appium"
+           data-author="" >
+            <span class="post-title" title="appium学习建议及相关网站">appium学习建议及相关网站</span>
+            <span class="post-date" title="2020-08-07 10:30:00">2020/08/07</span>
+        </a>
+        
+        <a  class="全部文章 部署 linux "
+           href="/2020/08/deploy/docker/docker使用及相关网站/"
+           data-tag="部署,linum"
+           data-author="" >
+            <span class="post-title" title="docker使用及相关网站">docker使用及相关网站</span>
+            <span class="post-date" title="2020-08-06 15:24:20">2020/08/06</span>
+        </a>
+        
+        <a  class="全部文章 部署 linux "
+           href="/2020/08/deploy/linux/DevOps常用的10个工具/"
+           data-tag="linux"
+           data-author="" >
+            <span class="post-title" title="DevOps常用的10个工具">DevOps常用的10个工具</span>
+            <span class="post-date" title="2020-08-05 15:24:20">2020/08/05</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 爬虫总结 "
+           href="/2020/08/spider/爬虫总结/PyExecJS库/"
+           data-tag="python,爬虫总结"
+           data-author="" >
+            <span class="post-title" title="用python执行js代码：PyExecJS库">用python执行js代码：PyExecJS库</span>
+            <span class="post-date" title="2020-08-04 20:37:51">2020/08/04</span>
+        </a>
+        
+        <a  class="全部文章 数据处理 大数据 "
+           href="/2020/08/database/大数据/hive操作/"
+           data-tag="数据处理,大数据,hive"
+           data-author="" >
+            <span class="post-title" title="hive操作">hive操作</span>
+            <span class="post-date" title="2020-08-03 15:24:20">2020/08/03</span>
+        </a>
+        
+        <a  class="全部文章 python python优化 "
+           href="/2020/07/python/python优化/python3面试汇总/"
+           data-tag="python"
+           data-author="" >
+            <span class="post-title" title="python3面试汇总">python3面试汇总</span>
+            <span class="post-date" title="2020-07-26 10:35:00">2020/07/26</span>
+        </a>
+        
+        <a  class="全部文章 机器学习 "
+           href="/2020/07/deep_learnning/深度学习/特征工程/"
+           data-tag="机器学习"
+           data-author="" >
+            <span class="post-title" title="特征工程">特征工程</span>
+            <span class="post-date" title="2020-07-24 01:30:00">2020/07/24</span>
+        </a>
+        
+        <a  class="全部文章 机器学习 "
+           href="/2020/07/deep_learnning/深度学习/机器学习概述/"
+           data-tag="机器学习"
+           data-author="" >
+            <span class="post-title" title="机器学习概述">机器学习概述</span>
+            <span class="post-date" title="2020-07-23 01:30:00">2020/07/23</span>
+        </a>
+        
+        <a  class="全部文章 机器学习 NLP "
+           href="/2020/07/deep_learnning/NLP/NLP自然语言处理概述/"
+           data-tag="机器学习,NLP"
+           data-author="" >
+            <span class="post-title" title="NLP自然语言处理概述">NLP自然语言处理概述</span>
+            <span class="post-date" title="2020-07-22 01:30:00">2020/07/22</span>
+        </a>
+        
+        <a  class="全部文章 python python模块 "
+           href="/2020/07/python/python模块/loguru超好用的日志模块/"
+           data-tag="python"
+           data-author="" >
+            <span class="post-title" title="loguru超好用的日志模块">loguru超好用的日志模块</span>
+            <span class="post-date" title="2020-07-21 20:54:16">2020/07/21</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 反爬逆向 "
+           href="/2020/07/spider/反爬逆向/Ajax动态刷新-有道翻译案例/"
+           data-tag="python,爬虫,反爬逆向"
+           data-author="" >
+            <span class="post-title" title="Ajax动态刷新-有道翻译案例">Ajax动态刷新-有道翻译案例</span>
+            <span class="post-date" title="2020-07-20 20:39:05">2020/07/20</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 scrapy "
+           href="/2020/07/spider/scrapy/ajaxcrawl/"
+           data-tag="python,爬虫,scrapy"
+           data-author="" >
+            <span class="post-title" title="scrapy源码12 - ajaxcrawl">scrapy源码12 - ajaxcrawl</span>
+            <span class="post-date" title="2020-07-15 10:35:00">2020/07/15</span>
+        </a>
+        
+        <a  class="全部文章 数据处理 MySQL "
+           href="/2020/07/database/mysql/mysql与pg用户管理对比/"
+           data-tag="数据处理,PostgreSQL,MySQL"
+           data-author="" >
+            <span class="post-title" title="MySQL用户管理与PostgreSQL用户管理的对比">MySQL用户管理与PostgreSQL用户管理的对比</span>
+            <span class="post-date" title="2020-07-13 15:24:20">2020/07/13</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 scrapy "
+           href="/2020/07/spider/scrapy/webclient/"
+           data-tag="python,爬虫,scrapy"
+           data-author="" >
+            <span class="post-title" title="scrapy源码11 - webclient">scrapy源码11 - webclient</span>
+            <span class="post-date" title="2020-07-13 10:35:00">2020/07/13</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 scrapy "
+           href="/2020/07/spider/scrapy/tls/"
+           data-tag="python,爬虫,scrapy"
+           data-author="" >
+            <span class="post-title" title="scrapy源码10 - tls">scrapy源码10 - tls</span>
+            <span class="post-date" title="2020-07-12 10:35:00">2020/07/12</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 scrapy "
+           href="/2020/07/spider/scrapy/downloadermiddleware/"
+           data-tag="python,爬虫,scrapy"
+           data-author="" >
+            <span class="post-title" title="scrapy源码9 - downloadermiddleware">scrapy源码9 - downloadermiddleware</span>
+            <span class="post-date" title="2020-07-11 10:35:00">2020/07/11</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 scrapy "
+           href="/2020/07/spider/scrapy/contextfactory/"
+           data-tag="python,爬虫,scrapy"
+           data-author="" >
+            <span class="post-title" title="scrapy源码8 - contextfactory">scrapy源码8 - contextfactory</span>
+            <span class="post-date" title="2020-07-09 10:35:00">2020/07/09</span>
+        </a>
+        
+        <a  class="全部文章 python python优化 "
+           href="/2020/07/python/python优化/python编码规范/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python编码规范">python编码规范</span>
+            <span class="post-date" title="2020-07-08 15:24:20">2020/07/08</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 scrapy "
+           href="/2020/07/spider/scrapy/downloader/"
+           data-tag="python,爬虫,scrapy"
+           data-author="" >
+            <span class="post-title" title="scrapy源码7：downloader的源码分析">scrapy源码7：downloader的源码分析</span>
+            <span class="post-date" title="2020-07-08 10:35:00">2020/07/08</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 scrapy "
+           href="/2020/07/spider/scrapy/deffer和parallel/"
+           data-tag="python,爬虫,scrapy"
+           data-author="" >
+            <span class="post-title" title="scrapy源码6：deffer和parallel的源码分析">scrapy源码6：deffer和parallel的源码分析</span>
+            <span class="post-date" title="2020-07-07 10:35:00">2020/07/07</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 pyppeteer "
+           href="/2020/07/spider/pyppeteer/02_各种案例/"
+           data-tag="python,pyppeteer"
+           data-author="" >
+            <span class="post-title" title="pyppeteer的各种案例">pyppeteer的各种案例</span>
+            <span class="post-date" title="2020-07-06 10:30:00">2020/07/06</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 scrapy "
+           href="/2020/07/spider/scrapy/middleware/"
+           data-tag="python,爬虫,scrapy"
+           data-author="" >
+            <span class="post-title" title="scrapy源码5：middleware的源码分析">scrapy源码5：middleware的源码分析</span>
+            <span class="post-date" title="2020-07-05 10:35:00">2020/07/05</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 scrapy "
+           href="/2020/07/spider/scrapy/spidermw/"
+           data-tag="python,爬虫,scrapy"
+           data-author="" >
+            <span class="post-title" title="scrapy源码4：spidermw的源码分析">scrapy源码4：spidermw的源码分析</span>
+            <span class="post-date" title="2020-07-04 10:35:00">2020/07/04</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 scrapy "
+           href="/2020/07/spider/scrapy/scraper/"
+           data-tag="python,爬虫,scrapy"
+           data-author="" >
+            <span class="post-title" title="scrapy源码3：scraper的源码分析">scrapy源码3：scraper的源码分析</span>
+            <span class="post-date" title="2020-07-03 10:35:00">2020/07/03</span>
+        </a>
+        
+        <a  class="全部文章 java java算法 "
+           href="/2020/07/java/java算法/用java实现巧妙过桥问题/"
+           data-tag="java,算法"
+           data-author="" >
+            <span class="post-title" title="用java实现巧妙过桥问题">用java实现巧妙过桥问题</span>
+            <span class="post-date" title="2020-07-01 13:31:38">2020/07/01</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 scrapy "
+           href="/2020/07/spider/scrapy/scheduler/"
+           data-tag="python,爬虫,scrapy"
+           data-author="" >
+            <span class="post-title" title="scrapy源码2：scheduler的源码分析">scrapy源码2：scheduler的源码分析</span>
+            <span class="post-date" title="2020-07-01 10:35:00">2020/07/01</span>
+        </a>
+        
+        <a  class="全部文章 java java算法 "
+           href="/2020/06/java/java算法/用java实现蛇形打印/"
+           data-tag="java,算法"
+           data-author="" >
+            <span class="post-title" title="用java实现蛇形打印">用java实现蛇形打印</span>
+            <span class="post-date" title="2020-06-30 20:49:27">2020/06/30</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 scrapy "
+           href="/2020/06/spider/scrapy/engine/"
+           data-tag="python,爬虫,scrapy"
+           data-author="" >
+            <span class="post-title" title="scrapy源码1：engine的源码分析">scrapy源码1：engine的源码分析</span>
+            <span class="post-date" title="2020-06-30 10:35:00">2020/06/30</span>
+        </a>
+        
+        <a  class="全部文章 java java算法 "
+           href="/2020/06/java/java算法/用java实现哥德巴赫猜想/"
+           data-tag="java,算法"
+           data-author="" >
+            <span class="post-title" title="用java实现哥德巴赫猜想">用java实现哥德巴赫猜想</span>
+            <span class="post-date" title="2020-06-30 09:14:25">2020/06/30</span>
+        </a>
+        
+        <a  class="全部文章 java java算法 "
+           href="/2020/06/java/java算法/用java实现字符串匹配问题/"
+           data-tag="java,算法"
+           data-author="" >
+            <span class="post-title" title="用java实现字符串匹配问题">用java实现字符串匹配问题</span>
+            <span class="post-date" title="2020-06-29 12:30:47">2020/06/29</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 appium "
+           href="/2020/06/spider/appium/appium概述/"
+           data-tag="爬虫,appium"
+           data-author="" >
+            <span class="post-title" title="appium概述环境搭建及案例">appium概述环境搭建及案例</span>
+            <span class="post-date" title="2020-06-28 10:30:00">2020/06/28</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 pyppeteer "
+           href="/2020/06/spider/pyppeteer/01_介绍及环境/"
+           data-tag="python,pyppeteer"
+           data-author="" >
+            <span class="post-title" title="pyppeteer的环境搭建，常见参数及2个案例">pyppeteer的环境搭建，常见参数及2个案例</span>
+            <span class="post-date" title="2020-06-28 10:30:00">2020/06/28</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 selenium "
+           href="/2020/06/spider/selenium/案例_用selenium爬取拉钩职位信息/"
+           data-tag="python,selenium"
+           data-author="" >
+            <span class="post-title" title="案例_用selenium爬取拉钩职位信息">案例_用selenium爬取拉钩职位信息</span>
+            <span class="post-date" title="2020-06-19 16:42:38">2020/06/19</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 爬虫案例 "
+           href="/2020/06/spider/cases/使用asyncio+aiohttp爬取数据并拼装返回的数据/"
+           data-tag="python,爬虫"
+           data-author="" >
+            <span class="post-title" title="使用asyncio+aiohttp爬取数据并拼装返回的数据">使用asyncio+aiohttp爬取数据并拼装返回的数据</span>
+            <span class="post-date" title="2020-06-18 18:25:13">2020/06/18</span>
+        </a>
+        
+        <a  class="全部文章 python python模块 "
+           href="/2020/06/python/python模块/tqdm进度条模块详解/"
+           data-tag="python"
+           data-author="" >
+            <span class="post-title" title="tqdm进度条模块详解">tqdm进度条模块详解</span>
+            <span class="post-date" title="2020-06-17 19:22:17">2020/06/17</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 爬虫案例 "
+           href="/2020/06/spider/cases/用4种方式爬取CSDN用户的全部文章/"
+           data-tag="python,爬虫"
+           data-author="" >
+            <span class="post-title" title="用4种方式爬取CSDN用户的全部文章">用4种方式爬取CSDN用户的全部文章</span>
+            <span class="post-date" title="2020-06-17 17:25:55">2020/06/17</span>
+        </a>
+        
+        <a  class="全部文章 数据处理 大数据 "
+           href="/2020/06/database/大数据/对象存储OSS/"
+           data-tag="数据处理,大数据"
+           data-author="" >
+            <span class="post-title" title="对象存储OSS">对象存储OSS</span>
+            <span class="post-date" title="2020-06-17 15:24:20">2020/06/17</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 selenium "
+           href="/2020/06/spider/selenium/案例_用selenium爬取csdn博客/"
+           data-tag="python,selenium"
+           data-author="" >
+            <span class="post-title" title="案例_用selenium爬取csdn博客">案例_用selenium爬取csdn博客</span>
+            <span class="post-date" title="2020-06-15 16:42:38">2020/06/15</span>
+        </a>
+        
+        <a  class="全部文章 数据处理 MySQL "
+           href="/2020/06/database/mysql/mysql报错1366/"
+           data-tag="数据处理,MySQL"
+           data-author="" >
+            <span class="post-title" title="mysql报错：1366, Incorrect string value:for colum 的解决办法">mysql报错：1366, Incorrect string value:for colum 的解决办法</span>
+            <span class="post-date" title="2020-06-09 15:24:20">2020/06/09</span>
+        </a>
+        
+        <a  class="全部文章 机器学习 科学计算 "
+           href="/2020/05/deep_learnning/科学计算/科学计算pandas/"
+           data-tag="机器学习,科学计算"
+           data-author="" >
+            <span class="post-title" title="科学计算pandas">科学计算pandas</span>
+            <span class="post-date" title="2020-05-29 09:30:00">2020/05/29</span>
+        </a>
+        
+        <a  class="全部文章 机器学习 科学计算 "
+           href="/2020/05/deep_learnning/科学计算/科学计算numpy/"
+           data-tag="机器学习,科学计算"
+           data-author="" >
+            <span class="post-title" title="科学计算numpy">科学计算numpy</span>
+            <span class="post-date" title="2020-05-29 01:30:00">2020/05/29</span>
+        </a>
+        
+        <a  class="全部文章 机器学习 科学计算 "
+           href="/2020/05/deep_learnning/科学计算/科学计算scipy/"
+           data-tag="机器学习,科学计算"
+           data-author="" >
+            <span class="post-title" title="科学计算scipy">科学计算scipy</span>
+            <span class="post-date" title="2020-05-29 01:30:00">2020/05/29</span>
+        </a>
+        
+        <a  class="全部文章 python web "
+           href="/2020/05/python/web/flask/flask的常见操作/"
+           data-tag="python3,fastapi"
+           data-author="" >
+            <span class="post-title" title="flask的常见操作">flask的常见操作</span>
+            <span class="post-date" title="2020-05-23 15:24:20">2020/05/23</span>
+        </a>
+        
+        <a  class="全部文章 python python案例 "
+           href="/2020/05/python/cases/钉钉报警案例/"
+           data-tag="python,python案例"
+           data-author="" >
+            <span class="post-title" title="钉钉报警案例">钉钉报警案例</span>
+            <span class="post-date" title="2020-05-22 13:50:19">2020/05/22</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 爬虫案例 "
+           href="/2020/05/spider/cases/爬链家二手房存mongo/"
+           data-tag="python,爬虫"
+           data-author="" >
+            <span class="post-title" title="用python爬取链家二手房信息，并把数据存入mongodb">用python爬取链家二手房信息，并把数据存入mongodb</span>
+            <span class="post-date" title="2020-05-21 21:00:59">2020/05/21</span>
+        </a>
+        
+        <a  class="全部文章 其它 读书 "
+           href="/2020/05/others/reading/与人相处/"
+           data-tag="其它,读书"
+           data-author="" >
+            <span class="post-title" title="与人相处">与人相处</span>
+            <span class="post-date" title="2020-05-01 20:00:20">2020/05/01</span>
+        </a>
+        
+        <a  class="全部文章 python python优化 "
+           href="/2020/04/python/python优化/关于python的思考/"
+           data-tag="python,python优化"
+           data-author="" >
+            <span class="post-title" title="关于python的思考">关于python的思考</span>
+            <span class="post-date" title="2020-04-24 15:24:20">2020/04/24</span>
+        </a>
+        
+        <a  class="全部文章 python web "
+           href="/2020/04/python/web/flask,tornado,fastapi的比较/"
+           data-tag="python,web"
+           data-author="" >
+            <span class="post-title" title="flask,tornado,fastapi 的比较">flask,tornado,fastapi 的比较</span>
+            <span class="post-date" title="2020-04-23 15:24:20">2020/04/23</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 反爬逆向 "
+           href="/2020/03/spider/反爬逆向/基于Base64编码的反爬虫/"
+           data-tag="python,爬虫,反爬逆向"
+           data-author="" >
+            <span class="post-title" title="基于Base64编码的反爬虫">基于Base64编码的反爬虫</span>
+            <span class="post-date" title="2020-03-29 23:36:33">2020/03/29</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 爬虫案例 "
+           href="/2020/03/spider/cases/用3种方式爬取动态网站数据/"
+           data-tag="python,爬虫"
+           data-author="" >
+            <span class="post-title" title="用3种方式爬取动态网站数据">用3种方式爬取动态网站数据</span>
+            <span class="post-date" title="2020-03-28 18:26:59">2020/03/28</span>
+        </a>
+        
+        <a  class="全部文章 python python优化 "
+           href="/2020/03/python/python优化/使用生成器/"
+           data-tag="python基础,python优化"
+           data-author="" >
+            <span class="post-title" title="使用生成器">使用生成器</span>
+            <span class="post-date" title="2020-03-24 15:24:20">2020/03/24</span>
+        </a>
+        
+        <a  class="全部文章 python python优化 "
+           href="/2020/03/python/python优化/异步编程/"
+           data-tag="python,python优化"
+           data-author="" >
+            <span class="post-title" title="异步编程">异步编程</span>
+            <span class="post-date" title="2020-03-20 15:24:20">2020/03/20</span>
+        </a>
+        
+        <a  class="全部文章 python python模块 "
+           href="/2020/03/python/python模块/collections模块/"
+           data-tag="python"
+           data-author="" >
+            <span class="post-title" title="collections模块">collections模块</span>
+            <span class="post-date" title="2020-03-01 20:30:21">2020/03/01</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 反爬逆向 "
+           href="/2020/02/spider/反爬逆向/请求参数中的mcode是按时间戳通过base64加密得来的/"
+           data-tag="python,爬虫,反爬逆向"
+           data-author="" >
+            <span class="post-title" title="请求参数中的mcode是按时间戳通过base64加密得来的">请求参数中的mcode是按时间戳通过base64加密得来的</span>
+            <span class="post-date" title="2020-02-29 19:58:44">2020/02/29</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 反爬逆向 "
+           href="/2020/02/spider/反爬逆向/请求头中加X-Requested-With才能请求到数据/"
+           data-tag="python,爬虫,反爬逆向"
+           data-author="" >
+            <span class="post-title" title="请求头中加X-Requested-With才能请求到数据">请求头中加X-Requested-With才能请求到数据</span>
+            <span class="post-date" title="2020-02-29 19:56:03">2020/02/29</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 爬虫总结 "
+           href="/2020/02/spider/爬虫总结/爬虫常见的加解密方法/"
+           data-tag="python,爬虫总结"
+           data-author="" >
+            <span class="post-title" title="爬虫常见的加解密方法">爬虫常见的加解密方法</span>
+            <span class="post-date" title="2020-02-03 20:37:51">2020/02/03</span>
+        </a>
+        
+        <a  class="全部文章 python python案例 "
+           href="/2020/02/python/cases/将excel中的内容存入mysql/"
+           data-tag="python,python案例"
+           data-author="" >
+            <span class="post-title" title="将excel中的内容存入mysql">将excel中的内容存入mysql</span>
+            <span class="post-date" title="2020-02-02 15:24:20">2020/02/02</span>
+        </a>
+        
+        <a  class="全部文章 python python案例 "
+           href="/2020/02/python/cases/Python3代码雨/"
+           data-tag="python,python案例"
+           data-author="" >
+            <span class="post-title" title="用python实现代码雨">用python实现代码雨</span>
+            <span class="post-date" title="2020-02-01 15:24:20">2020/02/01</span>
+        </a>
+        
+        <a  class="全部文章 python python案例 "
+           href="/2020/02/python/cases/用python实现工厂设计模式/"
+           data-tag="python,python案例"
+           data-author="" >
+            <span class="post-title" title="用python实现工厂设计模式">用python实现工厂设计模式</span>
+            <span class="post-date" title="2020-02-01 15:24:20">2020/02/01</span>
+        </a>
+        
+        <a  class="全部文章 python python案例 "
+           href="/2020/01/python/cases/用python实现简单记事本功能/"
+           data-tag="python,python案例"
+           data-author="" >
+            <span class="post-title" title="用python实现简单记事本功能">用python实现简单记事本功能</span>
+            <span class="post-date" title="2020-01-31 23:48:44">2020/01/31</span>
+        </a>
+        
+        <a  class="全部文章 python python案例 "
+           href="/2020/01/python/cases/tkinter库实现计算器功能/"
+           data-tag="python"
+           data-author="" >
+            <span class="post-title" title="tkinter库实现计算器功能">tkinter库实现计算器功能</span>
+            <span class="post-date" title="2020-01-31 23:32:46">2020/01/31</span>
+        </a>
+        
+        <a  class="全部文章 python web "
+           href="/2020/01/python/web/flask/flask部署/"
+           data-tag="python,web"
+           data-author="" >
+            <span class="post-title" title="flask部署">flask部署</span>
+            <span class="post-date" title="2020-01-16 15:24:20">2020/01/16</span>
+        </a>
+        
+        <a  class="全部文章 python web "
+           href="/2020/01/python/web/flask/flask拓展模块/flask_Sijax/"
+           data-tag="python,web"
+           data-author="" >
+            <span class="post-title" title="flask_Sijax">flask_Sijax</span>
+            <span class="post-date" title="2020-01-15 15:24:20">2020/01/15</span>
+        </a>
+        
+        <a  class="全部文章 python web "
+           href="/2020/01/python/web/flask/flask拓展模块/flask_SQLAlchemy/"
+           data-tag="python,web"
+           data-author="" >
+            <span class="post-title" title="flask_SQLAlchemy">flask_SQLAlchemy</span>
+            <span class="post-date" title="2020-01-14 15:24:20">2020/01/14</span>
+        </a>
+        
+        <a  class="全部文章 python web "
+           href="/2020/01/python/web/flask/flask拓展模块/flask_WTF/"
+           data-tag="python,web"
+           data-author="" >
+            <span class="post-title" title="flask_WTF">flask_WTF</span>
+            <span class="post-date" title="2020-01-13 15:24:20">2020/01/13</span>
+        </a>
+        
+        <a  class="全部文章 python web "
+           href="/2020/01/python/web/flask/flask拓展模块/flask邮件/"
+           data-tag="python,web"
+           data-author="" >
+            <span class="post-title" title="flask邮件">flask邮件</span>
+            <span class="post-date" title="2020-01-12 15:24:20">2020/01/12</span>
+        </a>
+        
+        <a  class="全部文章 python web "
+           href="/2020/01/python/web/flask/flask扩展/"
+           data-tag="python,web"
+           data-author="" >
+            <span class="post-title" title="flask扩展">flask扩展</span>
+            <span class="post-date" title="2020-01-11 15:24:20">2020/01/11</span>
+        </a>
+        
+        <a  class="全部文章 python web "
+           href="/2020/01/python/web/flask/flask文件上传/"
+           data-tag="python,web"
+           data-author="" >
+            <span class="post-title" title="flask文件上传">flask文件上传</span>
+            <span class="post-date" title="2020-01-10 15:24:20">2020/01/10</span>
+        </a>
+        
+        <a  class="全部文章 python web "
+           href="/2020/01/python/web/flask/flask消息闪现/"
+           data-tag="python,web"
+           data-author="" >
+            <span class="post-title" title="flask消息闪现">flask消息闪现</span>
+            <span class="post-date" title="2020-01-09 15:24:20">2020/01/09</span>
+        </a>
+        
+        <a  class="全部文章 python web "
+           href="/2020/01/python/web/flask/flask重定向和错误/"
+           data-tag="python,web"
+           data-author="" >
+            <span class="post-title" title="flask重定向和错误">flask重定向和错误</span>
+            <span class="post-date" title="2020-01-08 15:24:20">2020/01/08</span>
+        </a>
+        
+        <a  class="全部文章 python web "
+           href="/2020/01/python/web/flask/flask_cookie和session/"
+           data-tag="python,web"
+           data-author="" >
+            <span class="post-title" title="flask_cookie和session">flask_cookie和session</span>
+            <span class="post-date" title="2020-01-07 15:24:20">2020/01/07</span>
+        </a>
+        
+        <a  class="全部文章 python web "
+           href="/2020/01/python/web/flask/flask静态文件/"
+           data-tag="python,web"
+           data-author="" >
+            <span class="post-title" title="flask静态文件">flask静态文件</span>
+            <span class="post-date" title="2020-01-06 15:24:20">2020/01/06</span>
+        </a>
+        
+        <a  class="全部文章 python web "
+           href="/2020/01/python/web/flask/flask模板/"
+           data-tag="python,web"
+           data-author="" >
+            <span class="post-title" title="flask模板">flask模板</span>
+            <span class="post-date" title="2020-01-05 15:24:20">2020/01/05</span>
+        </a>
+        
+        <a  class="全部文章 python web "
+           href="/2020/01/python/web/flask/flask_URL构建/"
+           data-tag="python,web"
+           data-author="" >
+            <span class="post-title" title="flask_URL构建">flask_URL构建</span>
+            <span class="post-date" title="2020-01-04 15:24:20">2020/01/04</span>
+        </a>
+        
+        <a  class="全部文章 python web "
+           href="/2020/01/python/web/flask/flask变量规则/"
+           data-tag="python,web"
+           data-author="" >
+            <span class="post-title" title="flask变量规则">flask变量规则</span>
+            <span class="post-date" title="2020-01-04 15:24:20">2020/01/04</span>
+        </a>
+        
+        <a  class="全部文章 python web "
+           href="/2020/01/python/web/flask/flask路由/"
+           data-tag="python,web"
+           data-author="" >
+            <span class="post-title" title="flask路由">flask路由</span>
+            <span class="post-date" title="2020-01-03 15:24:20">2020/01/03</span>
+        </a>
+        
+        <a  class="全部文章 python web "
+           href="/2020/01/python/web/flask/flask概述及相关网站/"
+           data-tag="python,web"
+           data-author="" >
+            <span class="post-title" title="flask概述及相关网站">flask概述及相关网站</span>
+            <span class="post-date" title="2020-01-02 15:24:20">2020/01/02</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 selenium "
+           href="/2019/12/spider/selenium/突破屏蔽/"
+           data-tag="python,爬虫,selenium"
+           data-author="" >
+            <span class="post-title" title="如何突破网站对selenium的屏蔽">如何突破网站对selenium的屏蔽</span>
+            <span class="post-date" title="2019-12-29 10:35:00">2019/12/29</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 selenium "
+           href="/2019/12/spider/selenium/selenium启动Chrome配置参数问题/"
+           data-tag="python,爬虫,selenium"
+           data-author="" >
+            <span class="post-title" title="selenium启动Chrome配置参数问题">selenium启动Chrome配置参数问题</span>
+            <span class="post-date" title="2019-12-28 10:35:00">2019/12/28</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 selenium "
+           href="/2019/12/spider/selenium/在scrapy中使用selenium/"
+           data-tag="python,爬虫,selenium"
+           data-author="" >
+            <span class="post-title" title="在scrapy中使用selenium">在scrapy中使用selenium</span>
+            <span class="post-date" title="2019-12-27 20:29:35">2019/12/27</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 selenium "
+           href="/2019/12/spider/selenium/selenium的常见操作/"
+           data-tag="python,爬虫,selenium"
+           data-author="" >
+            <span class="post-title" title="selenium的常见操作">selenium的常见操作</span>
+            <span class="post-date" title="2019-12-25 10:35:00">2019/12/25</span>
+        </a>
+        
+        <a  class="全部文章 数据处理 PostgreSQL "
+           href="/2019/12/database/PostgreSql/20191220_对pg中json数据进行增删改/"
+           data-tag="数据处理,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="向PostgreSQL中json中加入某个字段 或者更新某个字段的SQL语句">向PostgreSQL中json中加入某个字段 或者更新某个字段的SQL语句</span>
+            <span class="post-date" title="2019-12-20 15:24:20">2019/12/20</span>
+        </a>
+        
+        <a  class="全部文章 java java案例 "
+           href="/2019/11/java/java案例/用3种方式现猜石头剪刀布的游戏的功能/"
+           data-tag="java,java案例,python案例"
+           data-author="" >
+            <span class="post-title" title="分别用java，go，python语言 实现猜石头剪刀布的游戏的功能">分别用java，go，python语言 实现猜石头剪刀布的游戏的功能</span>
+            <span class="post-date" title="2019-11-09 18:48:15">2019/11/09</span>
+        </a>
+        
+        <a  class="全部文章 python python模块 "
+           href="/2019/11/python/python模块/python标准库主题/"
+           data-tag="python"
+           data-author="" >
+            <span class="post-title" title="《Python3标准库》主题">《Python3标准库》主题</span>
+            <span class="post-date" title="2019-11-07 13:29:07">2019/11/07</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 爬虫总结 "
+           href="/2019/11/spider/爬虫总结/aiohttp的使用/"
+           data-tag="python,爬虫总结"
+           data-author="" >
+            <span class="post-title" title="aiohttp的使用">aiohttp的使用</span>
+            <span class="post-date" title="2019-11-03 20:37:51">2019/11/03</span>
+        </a>
+        
+        <a  class="全部文章 数据处理 大数据 "
+           href="/2019/11/database/大数据/es介绍及python操作es/"
+           data-tag="数据处理,大数据"
+           data-author="" >
+            <span class="post-title" title="Elasticsearch的介绍以及使用python操作es详细步骤">Elasticsearch的介绍以及使用python操作es详细步骤</span>
+            <span class="post-date" title="2019-11-01 15:24:20">2019/11/01</span>
+        </a>
+        
+        <a  class="全部文章 python python案例 "
+           href="/2019/10/python/cases/面向对象扑克牌发牌程序/"
+           data-tag="python"
+           data-author="" >
+            <span class="post-title" title="面向对象扑克牌发牌程序">面向对象扑克牌发牌程序</span>
+            <span class="post-date" title="2019-10-29 22:43:29">2019/10/29</span>
+        </a>
+        
+        <a  class="全部文章 python python模块 "
+           href="/2019/10/python/python模块/PyQt5模块/"
+           data-tag="python"
+           data-author="" >
+            <span class="post-title" title="PyQt5模块">PyQt5模块</span>
+            <span class="post-date" title="2019-10-28 19:22:17">2019/10/28</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 反爬逆向 "
+           href="/2019/10/spider/反爬逆向/运行js的execjs模块/"
+           data-tag="python,爬虫,反爬逆向"
+           data-author="" >
+            <span class="post-title" title="运行js的execjs模块">运行js的execjs模块</span>
+            <span class="post-date" title="2019-10-12 19:52:19">2019/10/12</span>
+        </a>
+        
+        <a  class="全部文章 数据处理 MySQL "
+           href="/2019/10/database/PostgreSql/20191008_更改数据/"
+           data-tag="数据处理,PostgreSQL,MySQL"
+           data-author="" >
+            <span class="post-title" title="对数据库中的数据 进行增删改查用到的SQL语句">对数据库中的数据 进行增删改查用到的SQL语句</span>
+            <span class="post-date" title="2019-10-08 15:24:20">2019/10/08</span>
+        </a>
+        
+        <a  class="全部文章 数据处理 MySQL "
+           href="/2019/09/database/mysql/mysql更改数据/"
+           data-tag="数据处理,MySQL"
+           data-author="" >
+            <span class="post-title" title="MySQL中增加，更新或删除 数据库中原数据的内容">MySQL中增加，更新或删除 数据库中原数据的内容</span>
+            <span class="post-date" title="2019-09-27 15:24:20">2019/09/27</span>
+        </a>
+        
+        <a  class="全部文章 python python算法 "
+           href="/2019/09/python/python算法/MD5加密总结/"
+           data-tag="python,python算法"
+           data-author="" >
+            <span class="post-title" title="MD5加密总结">MD5加密总结</span>
+            <span class="post-date" title="2019-09-23 22:09:25">2019/09/23</span>
+        </a>
+        
+        <a  class="全部文章 python python案例 "
+           href="/2019/09/python/cases/python中用正则表达式匹配文本/"
+           data-tag="python"
+           data-author="" >
+            <span class="post-title" title="python中用正则表达式匹配文本">python中用正则表达式匹配文本</span>
+            <span class="post-date" title="2019-09-21 17:24:10">2019/09/21</span>
+        </a>
+        
+        <a  class="全部文章 数据处理 MySQL "
+           href="/2019/09/database/mysql/每5分钟mysql的插入量/"
+           data-tag="数据处理,MySQL"
+           data-author="" >
+            <span class="post-title" title="统计每5分钟，MySQL数据库中数据的插入量">统计每5分钟，MySQL数据库中数据的插入量</span>
+            <span class="post-date" title="2019-09-21 15:24:20">2019/09/21</span>
+        </a>
+        
+        <a  class="全部文章 python python案例 "
+           href="/2019/09/python/cases/python控制台学生信息管理系统/"
+           data-tag="python"
+           data-author="" >
+            <span class="post-title" title="python控制台学生信息管理系统">python控制台学生信息管理系统</span>
+            <span class="post-date" title="2019-09-10 14:13:49">2019/09/10</span>
+        </a>
+        
+        <a  class="全部文章 数据处理 PostgreSQL "
+           href="/2019/09/database/PostgreSql/20190909_查看pg内存/"
+           data-tag="数据处理,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="查询PostgreSQL占多大内存">查询PostgreSQL占多大内存</span>
+            <span class="post-date" title="2019-09-09 15:24:20">2019/09/09</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 爬虫总结 "
+           href="/2019/08/spider/爬虫总结/随机请求头手机端/"
+           data-tag="python,爬虫总结"
+           data-author="" >
+            <span class="post-title" title="随机请求头手机端">随机请求头手机端</span>
+            <span class="post-date" title="2019-08-31 10:29:57">2019/08/31</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 爬虫总结 "
+           href="/2019/08/spider/爬虫总结/随机请求头web端/"
+           data-tag="python,爬虫总结"
+           data-author="" >
+            <span class="post-title" title="随机请求头web端">随机请求头web端</span>
+            <span class="post-date" title="2019-08-30 10:29:57">2019/08/30</span>
+        </a>
+        
+        <a  class="全部文章 python python算法 "
+           href="/2019/08/python/python算法/树_红黑树/"
+           data-tag="python,算法"
+           data-author="" >
+            <span class="post-title" title="树_红黑树">树_红黑树</span>
+            <span class="post-date" title="2019-08-28 13:35:15">2019/08/28</span>
+        </a>
+        
+        <a  class="全部文章 python python案例 "
+           href="/2019/08/python/cases/用python输出矩阵的转置形式/"
+           data-tag="python,python案例"
+           data-author="" >
+            <span class="post-title" title="用python输出矩阵的转置形式">用python输出矩阵的转置形式</span>
+            <span class="post-date" title="2019-08-27 17:50:39">2019/08/27</span>
+        </a>
+        
+        <a  class="全部文章 数据处理 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190827_内部结构/"
+           data-tag="数据处理,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：十八. 内部结构">PostgreSQL：十八. 内部结构</span>
+            <span class="post-date" title="2019-08-27 15:24:20">2019/08/27</span>
+        </a>
+        
+        <a  class="全部文章 数据处理 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190825_配置与监控/"
+           data-tag="数据处理,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：十七. 服务器配置与数据库监控">PostgreSQL：十七. 服务器配置与数据库监控</span>
+            <span class="post-date" title="2019-08-25 15:24:20">2019/08/25</span>
+        </a>
+        
+        <a  class="全部文章 数据处理 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190824_高可用/"
+           data-tag="数据处理,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：十六. 高可用、负载均衡和数据复制">PostgreSQL：十六. 高可用、负载均衡和数据复制</span>
+            <span class="post-date" title="2019-08-24 15:24:20">2019/08/24</span>
+        </a>
+        
+        <a  class="全部文章 python python案例 "
+           href="/2019/08/python/cases/打印各种图形总结/"
+           data-tag="python,python案例"
+           data-author="" >
+            <span class="post-title" title="用python实现打印各种图形总结">用python实现打印各种图形总结</span>
+            <span class="post-date" title="2019-08-23 17:17:53">2019/08/23</span>
+        </a>
+        
+        <a  class="全部文章 python python案例 "
+           href="/2019/08/python/cases/python控制台商品购买系统/"
+           data-tag="python,python案例"
+           data-author="" >
+            <span class="post-title" title="python控制台商品购买系统">python控制台商品购买系统</span>
+            <span class="post-date" title="2019-08-23 16:36:25">2019/08/23</span>
+        </a>
+        
+        <a  class="全部文章 数据处理 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190823_性能优化/"
+           data-tag="数据处理,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：十五. 性能优化">PostgreSQL：十五. 性能优化</span>
+            <span class="post-date" title="2019-08-23 15:24:20">2019/08/23</span>
+        </a>
+        
+        <a  class="全部文章 python python案例 "
+           href="/2019/08/python/cases/数字转人民币大写汉字读法/"
+           data-tag="python,python案例"
+           data-author="" >
+            <span class="post-title" title="数字转人民币大写汉字读法">数字转人民币大写汉字读法</span>
+            <span class="post-date" title="2019-08-23 14:06:10">2019/08/23</span>
+        </a>
+        
+        <a  class="全部文章 数据处理 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190822_备份还原/"
+           data-tag="数据处理,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：十四. 数据备份与还原">PostgreSQL：十四. 数据备份与还原</span>
+            <span class="post-date" title="2019-08-22 15:24:20">2019/08/22</span>
+        </a>
+        
+        <a  class="全部文章 数据处理 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190821_用户管理/"
+           data-tag="数据处理,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：十三. PostgreSQL的用户管理">PostgreSQL：十三. PostgreSQL的用户管理</span>
+            <span class="post-date" title="2019-08-21 15:24:20">2019/08/21</span>
+        </a>
+        
+        <a  class="全部文章 数据处理 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190819_事务处理/"
+           data-tag="数据处理,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：十二. 事务处理">PostgreSQL：十二. 事务处理</span>
+            <span class="post-date" title="2019-08-19 15:24:20">2019/08/19</span>
+        </a>
+        
+        <a  class="全部文章 数据处理 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190818_触发器/"
+           data-tag="数据处理,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：十一. 触发器">PostgreSQL：十一. 触发器</span>
+            <span class="post-date" title="2019-08-18 15:24:20">2019/08/18</span>
+        </a>
+        
+        <a  class="全部文章 数据处理 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190817_视图/"
+           data-tag="数据处理,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL 十. 视图">PostgreSQL 十. 视图</span>
+            <span class="post-date" title="2019-08-17 15:24:20">2019/08/17</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 爬虫案例 "
+           href="/2019/08/spider/cases/用python抓取网上的照片并保存在本地/"
+           data-tag="爬虫,爬虫案例"
+           data-author="" >
+            <span class="post-title" title="用python抓取网上的照片并保存在本地">用python抓取网上的照片并保存在本地</span>
+            <span class="post-date" title="2019-08-17 10:28:24">2019/08/17</span>
+        </a>
+        
+        <a  class="全部文章 数据处理 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190816_索引/"
+           data-tag="数据处理,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL 九. 索引">PostgreSQL 九. 索引</span>
+            <span class="post-date" title="2019-08-16 15:24:20">2019/08/16</span>
+        </a>
+        
+        <a  class="全部文章 数据处理 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190815_查询语句/"
+           data-tag="数据处理,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL 八. 查询语句">PostgreSQL 八. 查询语句</span>
+            <span class="post-date" title="2019-08-15 15:24:20">2019/08/15</span>
+        </a>
+        
+        <a  class="全部文章 数据处理 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190813_插入更新删除数据/"
+           data-tag="数据处理,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：七. 插入，更新与删除数据">PostgreSQL：七. 插入，更新与删除数据</span>
+            <span class="post-date" title="2019-08-13 15:24:20">2019/08/13</span>
+        </a>
+        
+        <a  class="全部文章 数据处理 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190811_函数/"
+           data-tag="数据处理,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：六. PostgreSQL函数">PostgreSQL：六. PostgreSQL函数</span>
+            <span class="post-date" title="2019-08-11 15:24:20">2019/08/11</span>
+        </a>
+        
+        <a  class="全部文章 数据处理 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190810_数据类型和运算符/"
+           data-tag="数据处理,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：五. 数据类型和运算符">PostgreSQL：五. 数据类型和运算符</span>
+            <span class="post-date" title="2019-08-10 15:24:20">2019/08/10</span>
+        </a>
+        
+        <a  class="全部文章 数据处理 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190808_数据库的基本操作/"
+           data-tag="数据处理,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL：三. 数据库的基本操作">PostgreSQL：三. 数据库的基本操作</span>
+            <span class="post-date" title="2019-08-08 15:24:20">2019/08/08</span>
+        </a>
+        
+        <a  class="全部文章 数据处理 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190807_安装和配置/"
+           data-tag="数据处理,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL 11的安装与配置">PostgreSQL 11的安装与配置</span>
+            <span class="post-date" title="2019-08-07 15:24:20">2019/08/07</span>
+        </a>
+        
+        <a  class="全部文章 数据处理 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190809_数据表的基本操作/"
+           data-tag="数据处理,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL数据表的基本操作">PostgreSQL数据表的基本操作</span>
+            <span class="post-date" title="2019-08-06 15:24:20">2019/08/06</span>
+        </a>
+        
+        <a  class="全部文章 数据处理 PostgreSQL "
+           href="/2019/08/database/PostgreSql/20190806_postgresql介绍/"
+           data-tag="数据处理,PostgreSQL"
+           data-author="" >
+            <span class="post-title" title="PostgreSQL介绍">PostgreSQL介绍</span>
+            <span class="post-date" title="2019-08-06 15:24:20">2019/08/06</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 爬虫案例 "
+           href="/2019/08/spider/cases/一个有意思的爬虫案例/"
+           data-tag="爬虫,爬虫案例"
+           data-author="" >
+            <span class="post-title" title="一个有意思的爬虫案例">一个有意思的爬虫案例</span>
+            <span class="post-date" title="2019-08-03 10:02:48">2019/08/03</span>
+        </a>
+        
+        <a  class="全部文章 python python算法 "
+           href="/2019/08/python/python算法/14_算法-图/"
+           data-tag="python,算法"
+           data-author="" >
+            <span class="post-title" title="算法-图">算法-图</span>
+            <span class="post-date" title="2019-08-02 14:09:43">2019/08/02</span>
+        </a>
+        
+        <a  class="全部文章 python python算法 "
+           href="/2019/08/python/python算法/13_算法-算法思想/"
+           data-tag="python,算法"
+           data-author="" >
+            <span class="post-title" title="算法-算法思想">算法-算法思想</span>
+            <span class="post-date" title="2019-08-01 14:23:41">2019/08/01</span>
+        </a>
+        
+        <a  class="全部文章 python python算法 "
+           href="/2019/07/python/python算法/各种查找总结/"
+           data-tag="python,算法"
+           data-author="" >
+            <span class="post-title" title="算法-各种查找总结">算法-各种查找总结</span>
+            <span class="post-date" title="2019-07-31 14:50:23">2019/07/31</span>
+        </a>
+        
+        <a  class="全部文章 python python算法 "
+           href="/2019/07/python/python算法/算法-各种树/"
+           data-tag="python,算法"
+           data-author="" >
+            <span class="post-title" title="算法-各种树">算法-各种树</span>
+            <span class="post-date" title="2019-07-30 13:35:15">2019/07/30</span>
+        </a>
+        
+        <a  class="全部文章 python python算法 "
+           href="/2019/07/python/python算法/树和二叉树/"
+           data-tag="python,算法"
+           data-author="" >
+            <span class="post-title" title="算法-树和二叉树">算法-树和二叉树</span>
+            <span class="post-date" title="2019-07-29 13:31:19">2019/07/29</span>
+        </a>
+        
+        <a  class="全部文章 python python算法 "
+           href="/2019/07/python/python算法/08_算法-堆/"
+           data-tag="python,算法"
+           data-author="" >
+            <span class="post-title" title="算法-堆">算法-堆</span>
+            <span class="post-date" title="2019-07-28 10:57:28">2019/07/28</span>
+        </a>
+        
+        <a  class="全部文章 python python算法 "
+           href="/2019/07/python/python算法/07_算法-散列表/"
+           data-tag="python,算法"
+           data-author="" >
+            <span class="post-title" title="算法-散列表（哈希表）">算法-散列表（哈希表）</span>
+            <span class="post-date" title="2019-07-27 10:07:50">2019/07/27</span>
+        </a>
+        
+        <a  class="全部文章 python python算法 "
+           href="/2019/07/python/python算法/06_算法-链表/"
+           data-tag="python,算法"
+           data-author="" >
+            <span class="post-title" title="算法-链表">算法-链表</span>
+            <span class="post-date" title="2019-07-26 09:45:12">2019/07/26</span>
+        </a>
+        
+        <a  class="全部文章 python python算法 "
+           href="/2019/07/python/python算法/05_算法-队列/"
+           data-tag="python,算法"
+           data-author="" >
+            <span class="post-title" title="算法-队列">算法-队列</span>
+            <span class="post-date" title="2019-07-25 09:27:39">2019/07/25</span>
+        </a>
+        
+        <a  class="全部文章 python python算法 "
+           href="/2019/07/python/python算法/04_算法-栈/"
+           data-tag="python,算法"
+           data-author="" >
+            <span class="post-title" title="算法-栈">算法-栈</span>
+            <span class="post-date" title="2019-07-25 09:14:17">2019/07/25</span>
+        </a>
+        
+        <a  class="全部文章 python python算法 "
+           href="/2019/07/python/python算法/03_算法-线性表/"
+           data-tag="python,算法"
+           data-author="" >
+            <span class="post-title" title="算法-线性表">算法-线性表</span>
+            <span class="post-date" title="2019-07-24 17:00:13">2019/07/24</span>
+        </a>
+        
+        <a  class="全部文章 python python算法 "
+           href="/2019/07/python/python算法/02_算法-数组/"
+           data-tag="python,算法"
+           data-author="" >
+            <span class="post-title" title="算法-数组">算法-数组</span>
+            <span class="post-date" title="2019-07-23 16:50:02">2019/07/23</span>
+        </a>
+        
+        <a  class="全部文章 python python案例 "
+           href="/2019/07/python/cases/python中区属性和方法的实例/"
+           data-tag="python,python案例"
+           data-author="" >
+            <span class="post-title" title="python中区属性和方法的实例">python中区属性和方法的实例</span>
+            <span class="post-date" title="2019-07-18 19:28:00">2019/07/18</span>
+        </a>
+        
+        <a  class="全部文章 python python案例 "
+           href="/2019/07/python/cases/用Python实现单例模式/"
+           data-tag="python,python案例"
+           data-author="" >
+            <span class="post-title" title="用Python实现单例模式">用Python实现单例模式</span>
+            <span class="post-date" title="2019-07-18 15:59:39">2019/07/18</span>
+        </a>
+        
+        <a  class="全部文章 python python案例 "
+           href="/2019/07/python/cases/用python实现名片管理系统/"
+           data-tag="python"
+           data-author="" >
+            <span class="post-title" title="用python实现名片管理系统">用python实现名片管理系统</span>
+            <span class="post-date" title="2019-07-17 17:25:08">2019/07/17</span>
+        </a>
+        
+        <a  class="全部文章 python python案例 "
+           href="/2019/07/python/cases/一个案例弄懂python中的LEGB规则/"
+           data-tag="python"
+           data-author="" >
+            <span class="post-title" title="一个案例弄懂python中的LEGB规则">一个案例弄懂python中的LEGB规则</span>
+            <span class="post-date" title="2019-07-17 16:51:12">2019/07/17</span>
+        </a>
+        
+        <a  class="全部文章 python python案例 "
+           href="/2019/07/python/cases/turtle库各种案例进阶/"
+           data-tag="python,python案例"
+           data-author="" >
+            <span class="post-title" title="turtle库各种案例进阶">turtle库各种案例进阶</span>
+            <span class="post-date" title="2019-07-16 11:00:07">2019/07/16</span>
+        </a>
+        
+        <a  class="全部文章 python python算法 "
+           href="/2019/07/python/python算法/各种排序总结/"
+           data-tag="python,算法"
+           data-author="" >
+            <span class="post-title" title="算法-各种排序">算法-各种排序</span>
+            <span class="post-date" title="2019-07-15 14:39:45">2019/07/15</span>
+        </a>
+        
+        <a  class="全部文章 python python算法 "
+           href="/2019/07/python/python算法/算法和数据结构的经验/"
+           data-tag="python,python算法"
+           data-author="" >
+            <span class="post-title" title="学习数据结构和算法的经验">学习数据结构和算法的经验</span>
+            <span class="post-date" title="2019-07-13 22:09:25">2019/07/13</span>
+        </a>
+        
+        <a  class="全部文章 python python算法 "
+           href="/2019/07/python/python算法/算法概述/"
+           data-tag="python,python算法"
+           data-author="" >
+            <span class="post-title" title="算法概述和总结">算法概述和总结</span>
+            <span class="post-date" title="2019-07-13 22:09:25">2019/07/13</span>
+        </a>
+        
+        <a  class="全部文章 python python算法 "
+           href="/2019/07/python/python算法/算法网站资料/"
+           data-tag="python,算法"
+           data-author="" >
+            <span class="post-title" title="算法网站资料收藏">算法网站资料收藏</span>
+            <span class="post-date" title="2019-07-13 19:13:58">2019/07/13</span>
+        </a>
+        
+        <a  class="全部文章 python python案例 "
+           href="/2019/07/python/cases/用python打印九九乘法表的7种方式/"
+           data-tag="python"
+           data-author="" >
+            <span class="post-title" title="用python打印九九乘法表的7种方式">用python打印九九乘法表的7种方式</span>
+            <span class="post-date" title="2019-07-13 08:08:54">2019/07/13</span>
+        </a>
+        
+        <a  class="全部文章 python python案例 "
+           href="/2019/07/python/cases/turtle库各种案例基础/"
+           data-tag="python,python案例"
+           data-author="" >
+            <span class="post-title" title="turtle库各种案例基础">turtle库各种案例基础</span>
+            <span class="post-date" title="2019-07-12 13:50:19">2019/07/12</span>
+        </a>
+        
+        <a  class="全部文章 java java案例 "
+           href="/2019/07/java/java案例/用java实现3种兔子小兔子问题/"
+           data-tag="java,java案例"
+           data-author="" >
+            <span class="post-title" title="用java实现3种兔子小兔子问题">用java实现3种兔子小兔子问题</span>
+            <span class="post-date" title="2019-07-09 19:20:49">2019/07/09</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 爬虫案例 "
+           href="/2019/07/spider/cases/百度图片爬虫/"
+           data-tag="python,爬虫"
+           data-author="" >
+            <span class="post-title" title="爬取百度图片并把图片存到本地">爬取百度图片并把图片存到本地</span>
+            <span class="post-date" title="2019-07-04 10:35:00">2019/07/04</span>
+        </a>
+        
+        <a  class="全部文章 其它 读书 "
+           href="/2019/07/others/reading/绕口令/"
+           data-tag="日常生活"
+           data-author="" >
+            <span class="post-title" title="绕口令">绕口令</span>
+            <span class="post-date" title="2019-07-03 15:24:20">2019/07/03</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 爬虫案例 "
+           href="/2019/07/spider/cases/有毒段子爬虫/"
+           data-tag="爬虫,爬虫案例"
+           data-author="" >
+            <span class="post-title" title="爬取心灵毒鸡汤、你好污啊 网站数据并存入本地txt文件">爬取心灵毒鸡汤、你好污啊 网站数据并存入本地txt文件</span>
+            <span class="post-date" title="2019-07-03 10:30:00">2019/07/03</span>
+        </a>
+        
+        <a  class="全部文章 java java设计模式 "
+           href="/2019/06/java/java设计模式/6大设计原则/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="设计模式之6大设计原则详解">设计模式之6大设计原则详解</span>
+            <span class="post-date" title="2019-06-29 01:30:00">2019/06/29</span>
+        </a>
+        
+        <a  class="全部文章 其它 读书 "
+           href="/2019/06/others/reading/毒鸡汤/"
+           data-tag="日常生活"
+           data-author="" >
+            <span class="post-title" title="心灵毒鸡汤语录">心灵毒鸡汤语录</span>
+            <span class="post-date" title="2019-06-28 15:24:20">2019/06/28</span>
+        </a>
+        
+        <a  class="全部文章 java java案例 "
+           href="/2019/06/java/java案例/用Java语言弹窗判断IP地址是否合法/"
+           data-tag="java,java案例"
+           data-author="" >
+            <span class="post-title" title="用Java语言弹窗判断IP地址是否合法">用Java语言弹窗判断IP地址是否合法</span>
+            <span class="post-date" title="2019-06-28 15:04:53">2019/06/28</span>
+        </a>
+        
+        <a  class="全部文章 java java案例 "
+           href="/2019/06/java/java案例/实现字符和Unicode码互换/"
+           data-tag="java,java案例"
+           data-author="" >
+            <span class="post-title" title="实现字符和Unicode码互换">实现字符和Unicode码互换</span>
+            <span class="post-date" title="2019-06-28 14:06:08">2019/06/28</span>
+        </a>
+        
+        <a  class="全部文章 java java案例 "
+           href="/2019/06/java/java案例/java将一个正整数分解质因数/"
+           data-tag="java,java案例"
+           data-author="" >
+            <span class="post-title" title="java将一个正整数分解质因数">java将一个正整数分解质因数</span>
+            <span class="post-date" title="2019-06-28 10:43:25">2019/06/28</span>
+        </a>
+        
+        <a  class="全部文章 java java设计模式 "
+           href="/2019/06/java/java设计模式/20190624_状态模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="状态模式详解">状态模式详解</span>
+            <span class="post-date" title="2019-06-24 01:30:00">2019/06/24</span>
+        </a>
+        
+        <a  class="全部文章 java java设计模式 "
+           href="/2019/06/java/java设计模式/20190624_解释器/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="解释器模式详解">解释器模式详解</span>
+            <span class="post-date" title="2019-06-24 01:30:00">2019/06/24</span>
+        </a>
+        
+        <a  class="全部文章 java java设计模式 "
+           href="/2019/06/java/java设计模式/20190624_访问者/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="访问者模式详解">访问者模式详解</span>
+            <span class="post-date" title="2019-06-24 01:30:00">2019/06/24</span>
+        </a>
+        
+        <a  class="全部文章 java java设计模式 "
+           href="/2019/06/java/java设计模式/20190624_责任链/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="责任链模式详解">责任链模式详解</span>
+            <span class="post-date" title="2019-06-24 01:30:00">2019/06/24</span>
+        </a>
+        
+        <a  class="全部文章 java java设计模式 "
+           href="/2019/06/java/java设计模式/20190620_备忘录/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="备忘录模式详解">备忘录模式详解</span>
+            <span class="post-date" title="2019-06-20 01:30:00">2019/06/20</span>
+        </a>
+        
+        <a  class="全部文章 java java设计模式 "
+           href="/2019/06/java/java设计模式/20190619_中介者/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="中介者模式详解">中介者模式详解</span>
+            <span class="post-date" title="2019-06-19 01:30:00">2019/06/19</span>
+        </a>
+        
+        <a  class="全部文章 java java设计模式 "
+           href="/2019/06/java/java设计模式/20190618_迭代器/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="迭代器模式详解">迭代器模式详解</span>
+            <span class="post-date" title="2019-06-18 01:30:00">2019/06/18</span>
+        </a>
+        
+        <a  class="全部文章 java java案例 "
+           href="/2019/06/java/java案例/java为新员工分配部门/"
+           data-tag="java,java案例"
+           data-author="" >
+            <span class="post-title" title="java为新员工分配部门">java为新员工分配部门</span>
+            <span class="post-date" title="2019-06-17 09:44:58">2019/06/17</span>
+        </a>
+        
+        <a  class="全部文章 java java设计模式 "
+           href="/2019/06/java/java设计模式/20190617_命令模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="命令模式详解">命令模式详解</span>
+            <span class="post-date" title="2019-06-17 01:30:00">2019/06/17</span>
+        </a>
+        
+        <a  class="全部文章 java java算法 "
+           href="/2019/06/java/java算法/算法思想-迭代/"
+           data-tag="java,算法"
+           data-author="" >
+            <span class="post-title" title="算法思想-迭代">算法思想-迭代</span>
+            <span class="post-date" title="2019-06-16 16:01:26">2019/06/16</span>
+        </a>
+        
+        <a  class="全部文章 java java设计模式 "
+           href="/2019/06/java/java设计模式/20190614_模板方法/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="模板方法模式详解">模板方法模式详解</span>
+            <span class="post-date" title="2019-06-14 01:30:00">2019/06/14</span>
+        </a>
+        
+        <a  class="全部文章 java java案例 "
+           href="/2019/06/java/java案例/java用位运算的异或运算实现加密和解密的功能/"
+           data-tag="java,java案例"
+           data-author="" >
+            <span class="post-title" title="java用位运算的异或运算实现加密和解密的功能">java用位运算的异或运算实现加密和解密的功能</span>
+            <span class="post-date" title="2019-06-13 17:50:52">2019/06/13</span>
+        </a>
+        
+        <a  class="全部文章 java java设计模式 "
+           href="/2019/06/java/java设计模式/20190613_享元模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="享元模式详解">享元模式详解</span>
+            <span class="post-date" title="2019-06-13 01:30:00">2019/06/13</span>
+        </a>
+        
+        <a  class="全部文章 java java设计模式 "
+           href="/2019/06/java/java设计模式/20190613_外观模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="外观模式详解">外观模式详解</span>
+            <span class="post-date" title="2019-06-13 01:30:00">2019/06/13</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 selenium "
+           href="/2019/06/spider/selenium/隐式和显示等待/"
+           data-tag="python,爬虫,selenium"
+           data-author="" >
+            <span class="post-title" title="Selenium显示等待和隐式等待的区别">Selenium显示等待和隐式等待的区别</span>
+            <span class="post-date" title="2019-06-12 10:35:00">2019/06/12</span>
+        </a>
+        
+        <a  class="全部文章 java java设计模式 "
+           href="/2019/06/java/java设计模式/20190611_组合模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="组合模式详解">组合模式详解</span>
+            <span class="post-date" title="2019-06-11 01:30:00">2019/06/11</span>
+        </a>
+        
+        <a  class="全部文章 java java设计模式 "
+           href="/2019/06/java/java设计模式/20190611_桥接模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="桥接模式详解">桥接模式详解</span>
+            <span class="post-date" title="2019-06-11 01:30:00">2019/06/11</span>
+        </a>
+        
+        <a  class="全部文章 部署 jenkins "
+           href="/2019/06/deploy/jenkins/genkins概述/"
+           data-tag="部署,linux"
+           data-author="" >
+            <span class="post-title" title="jenkins概述">jenkins概述</span>
+            <span class="post-date" title="2019-06-07 15:24:20">2019/06/07</span>
+        </a>
+        
+        <a  class="全部文章 java java设计模式 "
+           href="/2019/06/java/java设计模式/20190605_适配器/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="适配器模式详解">适配器模式详解</span>
+            <span class="post-date" title="2019-06-05 01:30:00">2019/06/05</span>
+        </a>
+        
+        <a  class="全部文章 java java设计模式 "
+           href="/2019/06/java/java设计模式/原型模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="原型模式详解">原型模式详解</span>
+            <span class="post-date" title="2019-06-04 01:30:00">2019/06/04</span>
+        </a>
+        
+        <a  class="全部文章 java java设计模式 "
+           href="/2019/06/java/java设计模式/代理模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="代理模式详解">代理模式详解</span>
+            <span class="post-date" title="2019-06-03 01:30:00">2019/06/03</span>
+        </a>
+        
+        <a  class="全部文章 java java设计模式 "
+           href="/2019/05/java/java设计模式/20190531_抽象工厂/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="抽象工厂模式详解">抽象工厂模式详解</span>
+            <span class="post-date" title="2019-05-31 01:30:00">2019/05/31</span>
+        </a>
+        
+        <a  class="全部文章 java java设计模式 "
+           href="/2019/05/java/java设计模式/工厂模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="工厂模式详解">工厂模式详解</span>
+            <span class="post-date" title="2019-05-31 01:30:00">2019/05/31</span>
+        </a>
+        
+        <a  class="全部文章 java java设计模式 "
+           href="/2019/05/java/java设计模式/20190530_装饰模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="装饰模式详解">装饰模式详解</span>
+            <span class="post-date" title="2019-05-30 01:30:00">2019/05/30</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 反爬逆向 "
+           href="/2019/05/spider/反爬逆向/请求头中需要加上Referer/"
+           data-tag="python,爬虫,反爬逆向"
+           data-author="" >
+            <span class="post-title" title="请求头中需要加上Referer">请求头中需要加上Referer</span>
+            <span class="post-date" title="2019-05-29 19:52:19">2019/05/29</span>
+        </a>
+        
+        <a  class="全部文章 java java设计模式 "
+           href="/2019/05/java/java设计模式/建造者/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="建造者模式详解">建造者模式详解</span>
+            <span class="post-date" title="2019-05-29 01:30:00">2019/05/29</span>
+        </a>
+        
+        <a  class="全部文章 java java设计模式 "
+           href="/2019/05/java/java设计模式/观察者/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="观察者模式详解">观察者模式详解</span>
+            <span class="post-date" title="2019-05-28 01:30:00">2019/05/28</span>
+        </a>
+        
+        <a  class="全部文章 java java设计模式 "
+           href="/2019/05/java/java设计模式/策略模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="策略模式详解">策略模式详解</span>
+            <span class="post-date" title="2019-05-27 01:30:00">2019/05/27</span>
+        </a>
+        
+        <a  class="全部文章 python python案例 "
+           href="/2019/05/python/cases/python定时任务汇总/"
+           data-tag="python"
+           data-author="" >
+            <span class="post-title" title="python定时任务汇总">python定时任务汇总</span>
+            <span class="post-date" title="2019-05-26 10:35:00">2019/05/26</span>
+        </a>
+        
+        <a  class="全部文章 java java设计模式 "
+           href="/2019/05/java/java设计模式/单例模式/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="7种单例模式详解">7种单例模式详解</span>
+            <span class="post-date" title="2019-05-24 01:30:00">2019/05/24</span>
+        </a>
+        
+        <a  class="全部文章 java java设计模式 "
+           href="/2019/05/java/java设计模式/设计模式汇总/"
+           data-tag="java,java设计模式"
+           data-author="" >
+            <span class="post-title" title="java设计模式汇总">java设计模式汇总</span>
+            <span class="post-date" title="2019-05-24 01:30:00">2019/05/24</span>
+        </a>
+        
+        <a  class="全部文章 数据处理 MySQL "
+           href="/2019/05/database/mysql/用pymysql连接mysql数据库案例/"
+           data-tag="数据处理,MySQL,python"
+           data-author="" >
+            <span class="post-title" title="用pymysql连接mysql数据库案例">用pymysql连接mysql数据库案例</span>
+            <span class="post-date" title="2019-05-22 15:24:20">2019/05/22</span>
+        </a>
+        
+        <a  class="全部文章 python python案例 "
+           href="/2019/05/python/cases/用python处理文本数据/"
+           data-tag="python"
+           data-author="" >
+            <span class="post-title" title="用python处理文本数据">用python处理文本数据</span>
+            <span class="post-date" title="2019-05-20 10:35:00">2019/05/20</span>
+        </a>
+        
+        <a  class="全部文章 python python模块 "
+           href="/2019/05/python/python模块/argparse模块的介绍和使用/"
+           data-tag="python"
+           data-author="" >
+            <span class="post-title" title="argparse模块的介绍和使用">argparse模块的介绍和使用</span>
+            <span class="post-date" title="2019-05-19 19:22:17">2019/05/19</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 selenium "
+           href="/2019/05/spider/selenium/selenium概述及网站参考/"
+           data-tag="python,爬虫,selenium"
+           data-author="" >
+            <span class="post-title" title="selenium概述及网站参考">selenium概述及网站参考</span>
+            <span class="post-date" title="2019-05-18 10:35:00">2019/05/18</span>
+        </a>
+        
+        <a  class="全部文章 java java基础 "
+           href="/2019/05/java/java基础/Java常用类库和API/"
+           data-tag="java,java基础"
+           data-author="" >
+            <span class="post-title" title="Java常用类库和API">Java常用类库和API</span>
+            <span class="post-date" title="2019-05-11 19:31:52">2019/05/11</span>
+        </a>
+        
+        <a  class="全部文章 python web "
+           href="/2019/04/python/web/flask/flask_案例_登录/"
+           data-tag="python,flask"
+           data-author="" >
+            <span class="post-title" title="flask案例_登录和遍历操作">flask案例_登录和遍历操作</span>
+            <span class="post-date" title="2019-04-20 10:35:00">2019/04/20</span>
+        </a>
+        
+        <a  class="全部文章 python python案例 "
+           href="/2019/04/python/cases/python一行代码可以做的事/"
+           data-tag="python,python案例"
+           data-author="" >
+            <span class="post-title" title="python一行代码可以做的事">python一行代码可以做的事</span>
+            <span class="post-date" title="2019-04-18 15:24:20">2019/04/18</span>
+        </a>
+        
+        <a  class="全部文章 python python案例 "
+           href="/2019/04/python/cases/用python去除list中重复的元素/"
+           data-tag="python,python案例"
+           data-author="" >
+            <span class="post-title" title="用python去除list中重复的元素">用python去除list中重复的元素</span>
+            <span class="post-date" title="2019-04-17 15:24:20">2019/04/17</span>
+        </a>
+        
+        <a  class="全部文章 python python案例 "
+           href="/2019/04/python/cases/python3的各种经典案例_后/"
+           data-tag="python,爬虫"
+           data-author="" >
+            <span class="post-title" title="python3的各种经典案例_后">python3的各种经典案例_后</span>
+            <span class="post-date" title="2019-04-15 10:35:00">2019/04/15</span>
+        </a>
+        
+        <a  class="全部文章 python python案例 "
+           href="/2019/04/python/cases/python3的各种经典案例_中/"
+           data-tag="python,爬虫"
+           data-author="" >
+            <span class="post-title" title="python3的各种经典案例_中">python3的各种经典案例_中</span>
+            <span class="post-date" title="2019-04-14 10:35:00">2019/04/14</span>
+        </a>
+        
+        <a  class="全部文章 python python案例 "
+           href="/2019/04/python/cases/python3的各种经典案例_前/"
+           data-tag="python"
+           data-author="" >
+            <span class="post-title" title="python3的各种经典案例_前">python3的各种经典案例_前</span>
+            <span class="post-date" title="2019-04-13 10:35:00">2019/04/13</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 反爬逆向 "
+           href="/2019/04/spider/反爬逆向/常见反爬虫策略及应对措施/"
+           data-tag="python,爬虫,反爬逆向"
+           data-author="" >
+            <span class="post-title" title="常见反爬虫策略及应对措施">常见反爬虫策略及应对措施</span>
+            <span class="post-date" title="2019-04-09 19:52:19">2019/04/09</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 爬虫总结 "
+           href="/2019/04/spider/爬虫总结/PyExecJS库的副本/"
+           data-tag="python,爬虫总结"
+           data-author="" >
+            <span class="post-title" title="解析库pyquery">解析库pyquery</span>
+            <span class="post-date" title="2019-04-08 20:37:51">2019/04/08</span>
+        </a>
+        
+        <a  class="全部文章 python python案例 "
+           href="/2019/03/python/cases/用python统计字符串数量/"
+           data-tag="python,python案例"
+           data-author="" >
+            <span class="post-title" title="用python统计字符串数量">用python统计字符串数量</span>
+            <span class="post-date" title="2019-03-20 15:24:20">2019/03/20</span>
+        </a>
+        
+        <a  class="全部文章 python python案例 "
+           href="/2019/03/python/cases/嵌套的列表和字典的处理/"
+           data-tag="python,python案例"
+           data-author="" >
+            <span class="post-title" title="嵌套的列表和字典的处理">嵌套的列表和字典的处理</span>
+            <span class="post-date" title="2019-03-19 15:24:20">2019/03/19</span>
+        </a>
+        
+        <a  class="全部文章 python python案例 "
+           href="/2019/03/python/cases/实现数学案例汇总/"
+           data-tag="python,python案例"
+           data-author="" >
+            <span class="post-title" title="实现数学案例汇总python">实现数学案例汇总python</span>
+            <span class="post-date" title="2019-03-15 15:24:20">2019/03/15</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/03/python/python基础/时间处理/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python时间处理">python时间处理</span>
+            <span class="post-date" title="2019-03-13 15:24:20">2019/03/13</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/03/python/python基础/打包/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python打包">python打包</span>
+            <span class="post-date" title="2019-03-11 15:24:20">2019/03/11</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/03/python/python基础/发布模块/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python发布模块">python发布模块</span>
+            <span class="post-date" title="2019-03-10 15:24:20">2019/03/10</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/03/python/python基础/python虚拟环境/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python虚拟环境">python虚拟环境</span>
+            <span class="post-date" title="2019-03-06 15:24:20">2019/03/06</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/03/python/python基础/图形界面/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python图形界面">python图形界面</span>
+            <span class="post-date" title="2019-03-05 15:24:20">2019/03/05</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/03/python/python基础/操作excel/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python操作excel">python操作excel</span>
+            <span class="post-date" title="2019-03-04 15:24:20">2019/03/04</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/03/python/python基础/sqlchemy的使用/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="sqlalchemy的使用">sqlalchemy的使用</span>
+            <span class="post-date" title="2019-03-03 15:24:20">2019/03/03</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/03/python/python基础/sqlalchemy一些概念/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="sqlalchemy的一些概念">sqlalchemy的一些概念</span>
+            <span class="post-date" title="2019-03-02 15:24:20">2019/03/02</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/03/python/python基础/访问数据库/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python访问数据库">python访问数据库</span>
+            <span class="post-date" title="2019-03-01 15:24:20">2019/03/01</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190228_网络编程/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python网络编程">python网络编程</span>
+            <span class="post-date" title="2019-02-28 15:24:20">2019/02/28</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/文件操作/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python文件操作">python文件操作</span>
+            <span class="post-date" title="2019-02-26 15:24:20">2019/02/26</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190225_进程和线程/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python进程和线程">python进程和线程</span>
+            <span class="post-date" title="2019-02-25 15:24:20">2019/02/25</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/python正则表达式/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python正则表达式">python正则表达式</span>
+            <span class="post-date" title="2019-02-23 15:24:20">2019/02/23</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/模块和包以及各种库/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python模块和包以及各种库">python模块和包以及各种库</span>
+            <span class="post-date" title="2019-02-21 15:24:20">2019/02/21</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/面向对象编程/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python面向对象编程">python面向对象编程</span>
+            <span class="post-date" title="2019-02-20 15:24:20">2019/02/20</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190219_错误,测试和调试/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python错误，测试和调试">python错误，测试和调试</span>
+            <span class="post-date" title="2019-02-19 15:24:20">2019/02/19</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/20190218_函数式编程/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python函数式编程">python函数式编程</span>
+            <span class="post-date" title="2019-02-18 15:24:20">2019/02/18</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/函数及其高级特性/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python函数及其高级特性">python函数及其高级特性</span>
+            <span class="post-date" title="2019-02-17 15:24:20">2019/02/17</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/控制语句/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python控制语句">python控制语句</span>
+            <span class="post-date" title="2019-02-16 15:24:20">2019/02/16</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/序列_字典和集合/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python序列_字典和集合">python序列_字典和集合</span>
+            <span class="post-date" title="2019-02-15 19:24:20">2019/02/15</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/序列_列表和元组/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python序列_列表和元组">python序列_列表和元组</span>
+            <span class="post-date" title="2019-02-15 15:24:20">2019/02/15</span>
+        </a>
+        
+        <a  class="全部文章 python python案例 "
+           href="/2019/02/python/cases/用python实现udp网络程序发送接收数据/"
+           data-tag="python案例"
+           data-author="" >
+            <span class="post-title" title="用python实现udp网络程序发送接收数据">用python实现udp网络程序发送接收数据</span>
+            <span class="post-date" title="2019-02-14 15:24:20">2019/02/14</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/python字符串和编码/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python字符串和编码">python字符串和编码</span>
+            <span class="post-date" title="2019-02-14 15:24:20">2019/02/14</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/python关键字和内置函数/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python关键字和内置函数">python关键字和内置函数</span>
+            <span class="post-date" title="2019-02-13 15:24:20">2019/02/13</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 爬虫总结 "
+           href="/2019/02/spider/爬虫总结/写爬虫遇到的各类较难的xpath汇总/"
+           data-tag="python,爬虫总结"
+           data-author="" >
+            <span class="post-title" title="写爬虫遇到的各类较难的xpath汇总">写爬虫遇到的各类较难的xpath汇总</span>
+            <span class="post-date" title="2019-02-13 10:29:57">2019/02/13</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/02_python变量和数据类型/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python变量和数据类型">python变量和数据类型</span>
+            <span class="post-date" title="2019-02-12 15:24:20">2019/02/12</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/标识符和运算符/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python标识符和运算符">python标识符和运算符</span>
+            <span class="post-date" title="2019-02-12 15:24:20">2019/02/12</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/python的一些理解/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="关于python的一些理解">关于python的一些理解</span>
+            <span class="post-date" title="2019-02-11 20:24:20">2019/02/11</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/python3的安装/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python3的安装">python3的安装</span>
+            <span class="post-date" title="2019-02-11 18:24:20">2019/02/11</span>
+        </a>
+        
+        <a  class="全部文章 python python基础 "
+           href="/2019/02/python/python基础/python3简介/"
+           data-tag="python基础"
+           data-author="" >
+            <span class="post-title" title="python简介">python简介</span>
+            <span class="post-date" title="2019-02-11 15:24:20">2019/02/11</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 爬虫总结 "
+           href="/2019/01/spider/爬虫总结/webmagic介绍和相关网站/"
+           data-tag="java,爬虫"
+           data-author="" >
+            <span class="post-title" title="webmagic介绍和相关网站">webmagic介绍和相关网站</span>
+            <span class="post-date" title="2019-01-04 18:51:26">2019/01/04</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 爬虫总结 "
+           href="/2019/01/spider/爬虫总结/java爬虫框架jsoup总结和使用/"
+           data-tag="java,爬虫"
+           data-author="" >
+            <span class="post-title" title="java爬虫框架jsoup总结和使用">java爬虫框架jsoup总结和使用</span>
+            <span class="post-date" title="2019-01-03 18:51:26">2019/01/03</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 爬虫总结 "
+           href="/2019/01/spider/爬虫总结/java常用的爬虫框架/"
+           data-tag="python,爬虫"
+           data-author="" >
+            <span class="post-title" title="java常用的爬虫框架">java常用的爬虫框架</span>
+            <span class="post-date" title="2019-01-02 18:51:26">2019/01/02</span>
+        </a>
+        
+        <a  class="全部文章 爬虫 爬虫总结 "
+           href="/2019/01/spider/爬虫总结/为什么选择java爬虫/"
+           data-tag="java,爬虫"
+           data-author="" >
+            <span class="post-title" title="为什么选择java爬虫">为什么选择java爬虫</span>
+            <span class="post-date" title="2019-01-01 18:51:26">2019/01/01</span>
+        </a>
+        
+        <a  class="全部文章 部署 linux "
+           href="/2018/10/deploy/linux/linux解压和压缩命令/"
+           data-tag="linux"
+           data-author="" >
+            <span class="post-title" title="linux解压和压缩命令">linux解压和压缩命令</span>
+            <span class="post-date" title="2018-10-17 15:24:20">2018/10/17</span>
+        </a>
+        
+        <a  class="全部文章 其它 英语 "
+           href="/2018/06/others/english/40篇短文掌握3500单词/"
+           data-tag="英语"
+           data-author="" >
+            <span class="post-title" title="40篇短文掌握3500单词">40篇短文掌握3500单词</span>
+            <span class="post-date" title="2018-06-27 01:30:00">2018/06/27</span>
+        </a>
+        
+        <a  class="全部文章 其它 读书 "
+           href="/2018/06/others/reading/36计/"
+           data-tag="日常生活,36计解说"
+           data-author="" >
+            <span class="post-title" title="36计">36计</span>
+            <span class="post-date" title="2018-06-23 15:24:20">2018/06/23</span>
+        </a>
+        
+        <a  class="全部文章 其它 英语 "
+           href="/2018/06/others/english/英语作文模板/"
+           data-tag="英语"
+           data-author="" >
+            <span class="post-title" title="英语作文模板">英语作文模板</span>
+            <span class="post-date" title="2018-06-22 01:30:00">2018/06/22</span>
+        </a>
+        
+        <a  class="全部文章 数据处理 redis "
+           href="/2018/04/database/redis/redis概述和使用/"
+           data-tag="数据处理,redis"
+           data-author="" >
+            <span class="post-title" title="redis概述和使用">redis概述和使用</span>
+            <span class="post-date" title="2018-04-04 15:24:20">2018/04/04</span>
+        </a>
+        
+        <a  class="全部文章 数据处理 redis "
+           href="/2018/04/database/redis/NoSql概述/"
+           data-tag="数据处理,redis"
+           data-author="" >
+            <span class="post-title" title="NoSql概述">NoSql概述</span>
+            <span class="post-date" title="2018-04-03 15:24:20">2018/04/03</span>
+        </a>
+        
+        <a  class="全部文章 java java案例 "
+           href="/2018/04/java/java案例/java验证登录信息的合法性/"
+           data-tag="java,java案例"
+           data-author="" >
+            <span class="post-title" title="java验证登录信息的合法性">java验证登录信息的合法性</span>
+            <span class="post-date" title="2018-04-01 09:44:58">2018/04/01</span>
+        </a>
+        
+        <a  class="全部文章 java java案例 "
+           href="/2018/03/java/java案例/java把控制台输入的内容写入到文件中/"
+           data-tag="java,java案例"
+           data-author="" >
+            <span class="post-title" title="java把控制台输入的内容写入到文件中">java把控制台输入的内容写入到文件中</span>
+            <span class="post-date" title="2018-03-28 22:43:17">2018/03/28</span>
+        </a>
+        
+        <a  class="全部文章 java java案例 "
+           href="/2018/03/java/java案例/用java实现Excel用户信息的导出/"
+           data-tag="java,java案例"
+           data-author="" >
+            <span class="post-title" title="用java实现Excel用户信息的导出">用java实现Excel用户信息的导出</span>
+            <span class="post-date" title="2018-03-26 22:43:17">2018/03/26</span>
+        </a>
+        
+        <a  class="全部文章 前端 前端案例 "
+           href="/2017/12/front/04cases/网页自动换肤/"
+           data-tag="前端,前端案例"
+           data-author="" >
+            <span class="post-title" title="网页自动换肤">网页自动换肤</span>
+            <span class="post-date" title="2017-12-06 15:24:20">2017/12/06</span>
+        </a>
+        
+        <a  class="全部文章 前端 jQuery "
+           href="/2017/12/front/06jQuery/jQuery插件/"
+           data-tag="前端,jQuery"
+           data-author="" >
+            <span class="post-title" title="jQuery插件">jQuery插件</span>
+            <span class="post-date" title="2017-12-04 15:24:20">2017/12/04</span>
+        </a>
+        
+        <a  class="全部文章 前端 jQuery "
+           href="/2017/12/front/06jQuery/jQuery_Ajac应用/"
+           data-tag="前端,jQuery"
+           data-author="" >
+            <span class="post-title" title="jQuery_Ajac应用">jQuery_Ajac应用</span>
+            <span class="post-date" title="2017-12-03 15:24:20">2017/12/03</span>
+        </a>
+        
+        <a  class="全部文章 前端 jQuery "
+           href="/2017/12/front/06jQuery/jQuery表单操作/"
+           data-tag="前端,jQuery"
+           data-author="" >
+            <span class="post-title" title="jQuery表单操作">jQuery表单操作</span>
+            <span class="post-date" title="2017-12-01 15:24:20">2017/12/01</span>
+        </a>
+        
+        <a  class="全部文章 前端 jQuery "
+           href="/2017/11/front/06jQuery/jQuery事件处理/"
+           data-tag="前端,jQuery"
+           data-author="" >
+            <span class="post-title" title="jQuery事件处理">jQuery事件处理</span>
+            <span class="post-date" title="2017-11-29 15:24:20">2017/11/29</span>
+        </a>
+        
+        <a  class="全部文章 前端 jQuery "
+           href="/2017/11/front/06jQuery/jQuery元素操作/"
+           data-tag="前端,jQuery"
+           data-author="" >
+            <span class="post-title" title="jQuery元素操作">jQuery元素操作</span>
+            <span class="post-date" title="2017-11-28 15:24:20">2017/11/28</span>
+        </a>
+        
+        <a  class="全部文章 前端 jQuery "
+           href="/2017/11/front/06jQuery/jQuery选择器/"
+           data-tag="前端,jQuery"
+           data-author="" >
+            <span class="post-title" title="jQuery选择器">jQuery选择器</span>
+            <span class="post-date" title="2017-11-26 15:24:20">2017/11/26</span>
+        </a>
+        
+        <a  class="全部文章 前端 jQuery "
+           href="/2017/11/front/06jQuery/jQuery概述/"
+           data-tag="前端,jQuery"
+           data-author="" >
+            <span class="post-title" title="jQuery概述">jQuery概述</span>
+            <span class="post-date" title="2017-11-25 15:24:20">2017/11/25</span>
+        </a>
+        
+        <a  class="全部文章 前端 前端案例 "
+           href="/2017/11/front/04cases/贪吃蛇案例/"
+           data-tag="前端,前端案例"
+           data-author="" >
+            <span class="post-title" title="javascript_贪吃蛇案例">javascript_贪吃蛇案例</span>
+            <span class="post-date" title="2017-11-24 15:24:20">2017/11/24</span>
+        </a>
+        
+        <a  class="全部文章 前端 javascript "
+           href="/2017/11/front/03javascript/javascript正则表达式/"
+           data-tag="前端,javascript"
+           data-author="" >
+            <span class="post-title" title="javascript正则表达式">javascript正则表达式</span>
+            <span class="post-date" title="2017-11-22 15:24:20">2017/11/22</span>
+        </a>
+        
+        <a  class="全部文章 前端 javascript "
+           href="/2017/11/front/03javascript/javascript垃圾回收机制/"
+           data-tag="前端,javascript"
+           data-author="" >
+            <span class="post-title" title="javascript垃圾回收机制">javascript垃圾回收机制</span>
+            <span class="post-date" title="2017-11-20 15:24:20">2017/11/20</span>
+        </a>
+        
+        <a  class="全部文章 前端 javascript "
+           href="/2017/11/front/03javascript/javascript面向对象编程/"
+           data-tag="前端,javascript"
+           data-author="" >
+            <span class="post-title" title="javascript面向对象编程">javascript面向对象编程</span>
+            <span class="post-date" title="2017-11-19 15:24:20">2017/11/19</span>
+        </a>
+        
+        <a  class="全部文章 前端 javascript "
+           href="/2017/11/front/03javascript/javascript_DOM和事件/"
+           data-tag="前端,javascript"
+           data-author="" >
+            <span class="post-title" title="javascript_DOM和事件">javascript_DOM和事件</span>
+            <span class="post-date" title="2017-11-18 15:24:20">2017/11/18</span>
+        </a>
+        
+        <a  class="全部文章 前端 javascript "
+           href="/2017/11/front/03javascript/javascrpt_BOM操作/"
+           data-tag="前端,javascript"
+           data-author="" >
+            <span class="post-title" title="javascript_BOM">javascript_BOM</span>
+            <span class="post-date" title="2017-11-17 15:24:20">2017/11/17</span>
+        </a>
+        
+        <a  class="全部文章 前端 javascript "
+           href="/2017/11/front/03javascript/javascript内置对象/"
+           data-tag="前端,javascript"
+           data-author="" >
+            <span class="post-title" title="javascript内置对象">javascript内置对象</span>
+            <span class="post-date" title="2017-11-16 18:24:20">2017/11/16</span>
+        </a>
+        
+        <a  class="全部文章 前端 javascript "
+           href="/2017/11/front/03javascript/javascript对象/"
+           data-tag="前端,javascript"
+           data-author="" >
+            <span class="post-title" title="javascript对象">javascript对象</span>
+            <span class="post-date" title="2017-11-16 15:24:20">2017/11/16</span>
+        </a>
+        
+        <a  class="全部文章 前端 javascript "
+           href="/2017/11/front/03javascript/javascript函数和作用域/"
+           data-tag="前端,javascript"
+           data-author="" >
+            <span class="post-title" title="javascript函数和作用域">javascript函数和作用域</span>
+            <span class="post-date" title="2017-11-15 20:24:20">2017/11/15</span>
+        </a>
+        
+        <a  class="全部文章 前端 javascript "
+           href="/2017/11/front/03javascript/javascript数组/"
+           data-tag="前端,javascript"
+           data-author="" >
+            <span class="post-title" title="javascript数组">javascript数组</span>
+            <span class="post-date" title="2017-11-15 15:24:20">2017/11/15</span>
+        </a>
+        
+        <a  class="全部文章 前端 javascript "
+           href="/2017/11/front/03javascript/javascript流程控制/"
+           data-tag="前端,javascript"
+           data-author="" >
+            <span class="post-title" title="javascript流程控制">javascript流程控制</span>
+            <span class="post-date" title="2017-11-14 15:24:20">2017/11/14</span>
+        </a>
+        
+        <a  class="全部文章 前端 javascript "
+           href="/2017/11/front/03javascript/javascript运算符/"
+           data-tag="前端,javascript"
+           data-author="" >
+            <span class="post-title" title="javascript运算符">javascript运算符</span>
+            <span class="post-date" title="2017-11-13 15:24:20">2017/11/13</span>
+        </a>
+        
+        <a  class="全部文章 前端 javascript "
+           href="/2017/11/front/03javascript/javascript变量和数据类型/"
+           data-tag="前端,javascript"
+           data-author="" >
+            <span class="post-title" title="javascript变量和数据类型">javascript变量和数据类型</span>
+            <span class="post-date" title="2017-11-12 15:24:20">2017/11/12</span>
+        </a>
+        
+        <a  class="全部文章 前端 javascript "
+           href="/2017/11/front/03javascript/javascript概述/"
+           data-tag="前端,javascript"
+           data-author="" >
+            <span class="post-title" title="javascript概述">javascript概述</span>
+            <span class="post-date" title="2017-11-11 15:24:20">2017/11/11</span>
+        </a>
+        
+        <a  class="全部文章 java java算法 "
+           href="/2017/09/java/java算法/算法思想-穷举/"
+           data-tag="java,算法"
+           data-author="" >
+            <span class="post-title" title="算法思想-穷举">算法思想-穷举</span>
+            <span class="post-date" title="2017-09-16 14:52:32">2017/09/16</span>
+        </a>
+        
+        <a  class="全部文章 java java案例 "
+           href="/2017/09/java/java案例/java中断单层和双层循环/"
+           data-tag="java,java案例"
+           data-author="" >
+            <span class="post-title" title="java中断单层和双层循环">java中断单层和双层循环</span>
+            <span class="post-date" title="2017-09-14 19:20:33">2017/09/14</span>
+        </a>
+        
+        <a  class="全部文章 java java案例 "
+           href="/2017/09/java/java案例/java重定向输出流实现程序日志/"
+           data-tag="java,java案例"
+           data-author="" >
+            <span class="post-title" title="java重定向输出流实现程序日志">java重定向输出流实现程序日志</span>
+            <span class="post-date" title="2017-09-11 19:20:33">2017/09/11</span>
+        </a>
+        
+        <a  class="全部文章 java java案例 "
+           href="/2017/08/java/java案例/java界面实现字符串大小写的转换/"
+           data-tag="java,java案例"
+           data-author="" >
+            <span class="post-title" title="java界面实现字符串大小写的转换">java界面实现字符串大小写的转换</span>
+            <span class="post-date" title="2017-08-17 19:20:33">2017/08/17</span>
+        </a>
+        
+        <a  class="全部文章 java java案例 "
+           href="/2017/08/java/java案例/java界面得出一组数的最小值/"
+           data-tag="java,java案例"
+           data-author="" >
+            <span class="post-title" title="java界面得出一组数的最小值">java界面得出一组数的最小值</span>
+            <span class="post-date" title="2017-08-14 19:20:33">2017/08/14</span>
+        </a>
+        
+        <a  class="全部文章 java java案例 "
+           href="/2017/08/java/java案例/java界面进制转换/"
+           data-tag="java,java案例"
+           data-author="" >
+            <span class="post-title" title="java界面进制转换">java界面进制转换</span>
+            <span class="post-date" title="2017-08-13 19:20:33">2017/08/13</span>
+        </a>
+        
+        <a  class="全部文章 java java案例 "
+           href="/2017/08/java/java案例/java界面变换颜色/"
+           data-tag="java,java案例"
+           data-author="" >
+            <span class="post-title" title="java界面变换颜色">java界面变换颜色</span>
+            <span class="post-date" title="2017-08-11 19:20:33">2017/08/11</span>
+        </a>
+        
+        <a  class="全部文章 java java算法 "
+           href="/2017/08/java/java算法/用java排序/"
+           data-tag="java,算法"
+           data-author="" >
+            <span class="post-title" title="用java实现各种排序">用java实现各种排序</span>
+            <span class="post-date" title="2017-08-02 12:30:47">2017/08/02</span>
+        </a>
+        
+        <a  class="全部文章 java java案例 "
+           href="/2017/07/java/java案例/用java语言3种方式实现九九乘法表/"
+           data-tag="java,java案例"
+           data-author="" >
+            <span class="post-title" title="用java语言3种方式实现九九乘法表">用java语言3种方式实现九九乘法表</span>
+            <span class="post-date" title="2017-07-26 22:43:17">2017/07/26</span>
+        </a>
+        
+        <a  class="全部文章 其它 计算机 "
+           href="/2017/07/others/computer/数据结构C语言/"
+           data-tag="其它,计算机"
+           data-author="" >
+            <span class="post-title" title="C语言-数据结构-排序汇总（代码可直接运行）">C语言-数据结构-排序汇总（代码可直接运行）</span>
+            <span class="post-date" title="2017-07-23 15:24:20">2017/07/23</span>
+        </a>
+        
+        <a  class="全部文章 其它 计算机 "
+           href="/2017/07/others/computer/计算机网络比较重要的概念/"
+           data-tag="其它,计算机"
+           data-author="" >
+            <span class="post-title" title="计算机网络比较重要的概念">计算机网络比较重要的概念</span>
+            <span class="post-date" title="2017-07-23 15:24:20">2017/07/23</span>
+        </a>
+        
+        <a  class="全部文章 java java案例 "
+           href="/2017/07/java/java案例/java使用Comparable接口自定义排序/"
+           data-tag="java,java案例"
+           data-author="" >
+            <span class="post-title" title="java使用Comparable接口自定义排序">java使用Comparable接口自定义排序</span>
+            <span class="post-date" title="2017-07-01 19:20:33">2017/07/01</span>
+        </a>
+        
+        <a  class="全部文章 java java案例 "
+           href="/2017/06/java/java案例/用java打印出杨辉三角形/"
+           data-tag="java,java案例"
+           data-author="" >
+            <span class="post-title" title="用java打印出杨辉三角形">用java打印出杨辉三角形</span>
+            <span class="post-date" title="2017-06-27 22:43:17">2017/06/27</span>
+        </a>
+        
+        <a  class="全部文章 java java案例 "
+           href="/2017/06/java/java案例/java求其最大公约数和最小公倍数/"
+           data-tag="java,java案例"
+           data-author="" >
+            <span class="post-title" title="java求其最大公约数和最小公倍数">java求其最大公约数和最小公倍数</span>
+            <span class="post-date" title="2017-06-26 22:43:17">2017/06/26</span>
+        </a>
+        
+        <a  class="全部文章 java java案例 "
+           href="/2017/06/java/java案例/java数学案例总结/"
+           data-tag="java,java案例"
+           data-author="" >
+            <span class="post-title" title="java数学案例总结">java数学案例总结</span>
+            <span class="post-date" title="2017-06-16 22:43:17">2017/06/16</span>
+        </a>
+        
+        <a  class="全部文章 部署 linux "
+           href="/2017/06/deploy/linux/操作系统介绍/"
+           data-tag="linux"
+           data-author="" >
+            <span class="post-title" title="操作系统介绍">操作系统介绍</span>
+            <span class="post-date" title="2017-06-07 15:24:20">2017/06/07</span>
+        </a>
+        
+        <a  class="全部文章 java java案例 "
+           href="/2017/05/java/java案例/java把小写金额转成大写金额/"
+           data-tag="java,java案例"
+           data-author="" >
+            <span class="post-title" title="java把小写金额转成大写金额">java把小写金额转成大写金额</span>
+            <span class="post-date" title="2017-05-30 19:20:33">2017/05/30</span>
+        </a>
+        
+        <a  class="全部文章 java java案例 "
+           href="/2017/05/java/java案例/java自动类型转换与强制类型转换/"
+           data-tag="java,java案例"
+           data-author="" >
+            <span class="post-title" title="java自动类型转换与强制类型转换">java自动类型转换与强制类型转换</span>
+            <span class="post-date" title="2017-05-24 19:20:33">2017/05/24</span>
+        </a>
+        
+        <a  class="全部文章 其它 计算机 "
+           href="/2017/05/others/computer/代码之髓--编程语言核心概念/"
+           data-tag="其它,计算机"
+           data-author="" >
+            <span class="post-title" title="《代码之髓--编程语言核心概念》读后感">《代码之髓--编程语言核心概念》读后感</span>
+            <span class="post-date" title="2017-05-20 22:19:19">2017/05/20</span>
+        </a>
+        
+        <a  class="全部文章 java java案例 "
+           href="/2017/05/java/java案例/java打印图形/"
+           data-tag="java,java案例,java打印图形"
+           data-author="" >
+            <span class="post-title" title="用java实现打印各种图形总结 (包括长方形 三角形 菱形 平行四边形等)">用java实现打印各种图形总结 (包括长方形 三角形 菱形 平行四边形等)</span>
+            <span class="post-date" title="2017-05-17 23:19:19">2017/05/17</span>
+        </a>
+        
+        <a  class="全部文章 java java基础 "
+           href="/2017/05/java/java基础/java面向对象进阶/"
+           data-tag="java,java基础"
+           data-author="" >
+            <span class="post-title" title="java面向对象进阶">java面向对象进阶</span>
+            <span class="post-date" title="2017-05-14 01:30:00">2017/05/14</span>
+        </a>
+        
+        <a  class="全部文章 java java基础 "
+           href="/2017/05/java/java基础/java面向对象基础/"
+           data-tag="java,java基础"
+           data-author="" >
+            <span class="post-title" title="Java面向对象基础">Java面向对象基础</span>
+            <span class="post-date" title="2017-05-12 01:30:00">2017/05/12</span>
+        </a>
+        
+        <a  class="全部文章 java java基础 "
+           href="/2017/05/java/java基础/java中GUI编程/"
+           data-tag="java,java基础"
+           data-author="" >
+            <span class="post-title" title="java中GUI编程">java中GUI编程</span>
+            <span class="post-date" title="2017-05-09 01:30:00">2017/05/09</span>
+        </a>
+        
+        <a  class="全部文章 java java基础 "
+           href="/2017/05/java/java基础/java反射机制总结/"
+           data-tag="java,java基础"
+           data-author="" >
+            <span class="post-title" title="java反射机制总结">java反射机制总结</span>
+            <span class="post-date" title="2017-05-07 01:30:00">2017/05/07</span>
+        </a>
+        
+        <a  class="全部文章 java java基础 "
+           href="/2017/05/java/java基础/java网络编程总结/"
+           data-tag="java,java基础"
+           data-author="" >
+            <span class="post-title" title="java网络编程总结">java网络编程总结</span>
+            <span class="post-date" title="2017-05-05 01:30:00">2017/05/05</span>
+        </a>
+        
+        <a  class="全部文章 java java算法 "
+           href="/2017/05/java/java算法/用java实现4种加密解密算法/"
+           data-tag="java,算法"
+           data-author="" >
+            <span class="post-title" title="用java实现4种加密解密算法">用java实现4种加密解密算法</span>
+            <span class="post-date" title="2017-05-05 01:30:00">2017/05/05</span>
+        </a>
+        
+        <a  class="全部文章 java java基础 "
+           href="/2017/05/java/java基础/Java多线程总结/"
+           data-tag="java,java基础"
+           data-author="" >
+            <span class="post-title" title="Java中的多线程总结">Java中的多线程总结</span>
+            <span class="post-date" title="2017-05-03 01:30:00">2017/05/03</span>
+        </a>
+        
+        <a  class="全部文章 java java基础 "
+           href="/2017/05/java/java基础/java枚举和注解/"
+           data-tag="java,java基础"
+           data-author="" >
+            <span class="post-title" title="java枚举和注解">java枚举和注解</span>
+            <span class="post-date" title="2017-05-01 09:30:00">2017/05/01</span>
+        </a>
+        
+        <a  class="全部文章 java java基础 "
+           href="/2017/04/java/java基础/Java中IO流/"
+           data-tag="java,java基础"
+           data-author="" >
+            <span class="post-title" title="Java中IO流">Java中IO流</span>
+            <span class="post-date" title="2017-04-29 01:30:00">2017/04/29</span>
+        </a>
+        
+        <a  class="全部文章 java java基础 "
+           href="/2017/04/java/java基础/java泛型总结/"
+           data-tag="java,java基础"
+           data-author="" >
+            <span class="post-title" title="Java中的泛型总结">Java中的泛型总结</span>
+            <span class="post-date" title="2017-04-28 01:30:00">2017/04/28</span>
+        </a>
+        
+        <a  class="全部文章 java java基础 "
+           href="/2017/04/java/java基础/Java集合框架总结/"
+           data-tag="java,java基础"
+           data-author="" >
+            <span class="post-title" title="java集合框架总结">java集合框架总结</span>
+            <span class="post-date" title="2017-04-27 01:30:00">2017/04/27</span>
+        </a>
+        
+        <a  class="全部文章 java java基础 "
+           href="/2017/04/java/java基础/java异常/"
+           data-tag="java,java基础"
+           data-author="" >
+            <span class="post-title" title="java异常">java异常</span>
+            <span class="post-date" title="2017-04-27 01:30:00">2017/04/27</span>
+        </a>
+        
+        <a  class="全部文章 java java基础 "
+           href="/2017/04/java/java基础/java核心类/"
+           data-tag="java"
+           data-author="" >
+            <span class="post-title" title="java基础">java基础</span>
+            <span class="post-date" title="2017-04-27 01:30:00">2017/04/27</span>
+        </a>
+        
+        <a  class="全部文章 java java案例 "
+           href="/2017/04/java/java案例/java控制台输出学生的成绩/"
+           data-tag="java,java案例"
+           data-author="" >
+            <span class="post-title" title="java控制台输出学生的成绩">java控制台输出学生的成绩</span>
+            <span class="post-date" title="2017-04-26 22:43:17">2017/04/26</span>
+        </a>
+        
+        <a  class="全部文章 java java基础 "
+           href="/2017/04/java/java基础/java数组/"
+           data-tag="java,java基础"
+           data-author="" >
+            <span class="post-title" title="java数组">java数组</span>
+            <span class="post-date" title="2017-04-24 01:30:00">2017/04/24</span>
+        </a>
+        
+        <a  class="全部文章 java java基础 "
+           href="/2017/04/java/java基础/字符串string类的/"
+           data-tag="java,java基础"
+           data-author="" >
+            <span class="post-title" title="java字符串String类">java字符串String类</span>
+            <span class="post-date" title="2017-04-24 01:30:00">2017/04/24</span>
+        </a>
+        
+        <a  class="全部文章 java java基础 "
+           href="/2017/04/java/java基础/运算和流程控制/"
+           data-tag="java,java基础"
+           data-author="" >
+            <span class="post-title" title="java运算和流程控制">java运算和流程控制</span>
+            <span class="post-date" title="2017-04-23 01:30:00">2017/04/23</span>
+        </a>
+        
+        <a  class="全部文章 java java基础 "
+           href="/2017/04/java/java基础/变量和数据类型/"
+           data-tag="java,java基础"
+           data-author="" >
+            <span class="post-title" title="java变量和数据类型">java变量和数据类型</span>
+            <span class="post-date" title="2017-04-22 01:30:00">2017/04/22</span>
+        </a>
+        
+        <a  class="全部文章 java java基础 "
+           href="/2017/04/java/java基础/java概述/"
+           data-tag="java"
+           data-author="" >
+            <span class="post-title" title="java基础">java基础</span>
+            <span class="post-date" title="2017-04-21 01:30:00">2017/04/21</span>
+        </a>
+        
+        <a  class="全部文章 其它 工具 "
+           href="/2017/04/others/tools/markdown中的一些操作/"
+           data-tag="其它,工具"
+           data-author="" >
+            <span class="post-title" title="markdown中的一些操作">markdown中的一些操作</span>
+            <span class="post-date" title="2017-04-20 20:00:20">2017/04/20</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
     </div>
     <div class="hide-list">
-        <div class="semicircle" data-title="切换全屏<% if (theme.shortcutKey != false) {%> 快捷键 s<%}%>">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
             <div class="brackets first"><</div>
             <div class="brackets">&gt;</div>
         </div>
@@ -25,26 +3996,489 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <%- partial('_partial/article', {post: page, index: false}) %>
+        <article id="post-python/web/flask/flask消息闪现" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">flask消息闪现</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="python">python</a> > 
+            
+            <a  data-rel="python&lt;---&gt;web">web</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color2">python</a>
+            
+            <a class="color4">web</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            发布时间 : <time class="date" title='最后更新: 2021-08-11 17:42:35'>2020-01-09 15:24</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-5 i,
+    .toc-level-5 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Flask 消息闪现<br>一个好的基于GUI的应用程序会向用户提供有关交互的反馈。例如，桌面应用程序使用对话框或消息框，JavaScript使用警报用于类似目的。</p>
+<p>在Flask Web应用程序中生成这样的信息性消息很容易。Flask框架的闪现系统可以在一个视图中创建消息，并在名为next的视图函数中呈现它。</p>
+<p>Flask模块包含flash()方法。它将消息传递给下一个请求，该请求通常是一个模板。</p>
+<pre><code class="python">flash(message, category)
+</code></pre>
+<p>其中，</p>
+<p>message参数是要闪现的实际消息。</p>
+<p>category参数是可选的。它可以是“error”，“info”或“warning”。</p>
+<p>为了从会话中删除消息，模板调用get_flashed_messages()。</p>
+<pre><code class="python">get_flashed_messages(with_categories, category_filter)
+</code></pre>
+<p>两个参数都是可选的。如果接收到的消息具有类别，则第一个参数是元组。第二个参数仅用于显示特定消息。</p>
+<p>以下闪现在模板中接收消息。</p>
+<pre><code class="js">{% with messages = get_flashed_messages() %}
+   {% if messages %}
+      {% for message in messages %}
+         {{ message }}
+      {% endfor %}
+   {% endif %}
+{% endwith %}
+</code></pre>
+<p>让我们看一个简单的例子，演示Flask中的闪现机制。在以下代码中，’/‘ URL显示登录页面的链接，没有消息闪现。</p>
+<pre><code class="python">@app.route(&#39;/&#39;)
+def index():
+    return render_template(&#39;index.html&#39;)
+</code></pre>
+<p>该链接会将用户引导到’/ login’ URL，该URL显示登录表单。提交时，login()视图函数验证用户名和密码，并相应闪现’success’消息或创建’error’变量。</p>
+<pre><code class="python">@app.route(&#39;/login&#39;, methods = [&#39;GET&#39;, &#39;POST&#39;])
+def login():
+    error = None
+
+    if request.method == &#39;POST&#39;:
+        if request.form[&#39;username&#39;] != &#39;admin&#39; or \
+           request.form[&#39;password&#39;] != &#39;admin&#39;:
+           error = &#39;Invalid username or password. Please try again!&#39;
+       else:
+           flash(&#39;You were successfully logged in&#39;)
+           return redirect(url_for(&#39;index&#39;))
+    return render_template(&#39;login.html&#39;, error = error)
+</code></pre>
+<p>如果出现错误，则会重新显示登录模板，并显示错误消息。</p>
+<p>Login.html</p>
+<pre><code class="html">&lt;!doctype html&gt;
+
+  &lt;h1&gt;Login&lt;/h1&gt;
+
+  {% if error %}
+  <p><strong>Error:</strong> {{ error }}
+  {% endif %}
+
+  &lt;form action = &quot;&quot; method = post&gt;
+     &lt;dl&gt;
+        &lt;dt&gt;Username:&lt;/dt&gt;
+
+    &amp;lt;dd&amp;gt;
+       &amp;lt;input type = text name = username 
+          value = &amp;quot;{{request.form.username }}&amp;quot;&amp;gt;
+    &amp;lt;/dd&amp;gt;
+
+    &amp;lt;dt&amp;gt;Password:&amp;lt;/dt&amp;gt;
+    &amp;lt;dd&amp;gt;&amp;lt;input type = password name = password&amp;gt;&amp;lt;/dd&amp;gt;
+ &amp;lt;/dl&amp;gt;
+ &amp;lt;p&amp;gt;&amp;lt;input type = submit value = Login&amp;gt;&amp;lt;/p&amp;gt;
+  &lt;/form&gt;
+</p></code></pre>
+<p>另一方面，如果登录成功，则会在索引模板上刷新成功消息。</p>
+<p>Index.html</p>
+<pre><code class="html">&lt;!doctype html&gt;
+
+  {% with messages = get_flashed_messages() %}
+     {% if messages %}
+        <ul>
+           {% for message in messages %}
+           <li<{{ message }}< li>
+           {% endfor %}
+        </li<{{></ul>
+     {% endif %}
+  {% endwith %}
+
+  &lt;h1&gt;Flask Message Flashing Example&lt;/h1&gt;
+  &lt;p&gt;Do you want to &lt;a href = &quot;{{ url_for('login') }}&quot;&gt;
+     &lt;b&gt;log in?&lt;/b&gt;&lt;/a&gt;&lt;/p&gt;
+</code></pre>
+<p>下面给出了Flask消息闪现示例的完整代码：</p>
+<p>Flash.py</p>
+<pre><code class="python">from flask import Flask, flash, redirect, render_template, request, url_for
+app = Flask(name)
+app.secret_key = &#39;random string&#39;
+
+@app.route(&#39;/&#39;)
+def index():
+    return render_template(&#39;index.html&#39;)
+
+
+@app.route(&#39;/login&#39;, methods = [&#39;GET&#39;, &#39;POST&#39;])
+def login():
+    error = None
+    if request.method == &#39;POST&#39;:
+        if request.form[&#39;username&#39;] != &#39;admin&#39; or \
+            request.form[&#39;password&#39;] != &#39;admin&#39;:
+            error = &#39;Invalid username or password. Please try again!&#39;
+        else:
+            flash(&#39;You were successfully logged in&#39;)
+            return redirect(url_for(&#39;index&#39;))
+
+    return render_template(&#39;login.html&#39;, error = error)
+
+
+if name == &quot;main&quot;:
+    app.run(debug = True)
+</code></pre>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎指出任何有错误或不够清晰的表达。欢迎邮件至 320479069@qq.com </span>
+    </div>
+</article>
+
+
+<p>
+    <a  class="dashang" onclick="dashangToggle()">赏</a>
+</p>
+
+
+
+
+
+
+    
+        <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="//cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<input type="hidden" id="MathJax-js"
+        value="//cdn.jsdelivr.net/npm/mathjax@2.7.8/unpacked/MathJax.js?config=TeX-MML-AM_CHTML">
+</input>
+    
+
+
+
+
     </div>
     <div class="copyright">
-        <%- fragment_cache('copyright', function(){
-            return partial('_partial/copyright');
-        }) %>
+        <p class="footer-entry"><span class="miit">
+                <img src="/img/gov.png" title="中华人民共和国工业和信息化部">
+                <a href="http://beian.miit.gov.cn/">京ICP备20023773号-1</a>
+        </span>
+    
+    ©2017-2021 CuiYonghua
+</p>
+
     </div>
     <div class="full-toc">
-        <%- fragment_cache('toc', function(){
-            return partial('_partial/full-toc');
-        }) %>
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
     </div>
 </div>
-<% if (theme.reward) {%>
-<%- fragment_cache('dashang', function(){
-    return partial('_partial/dashang');
-}) %>
-<% } %>
+
+<div class="hide_box" onclick="dashangToggle()"></div>
+<div class="shang_box">
+    <a class="shang_close"  onclick="dashangToggle()">×</a>
+    <div class="shang_tit">
+        <p>喜欢就点赞,疼爱就打赏</p>
+    </div>
+    <div class="shang_payimg">
+        <div class="pay_img">
+            <img src="/img/alipay.jpg" class="alipay" title="扫码支持">
+            <img src="/img/weixin.jpg" class="weixin" title="扫码支持">
+        </div>
+    </div>
+    <div class="shang_payselect">
+        <span><label><input type="radio" name="pay" checked value="alipay">支付宝</label></span><span><label><input type="radio" name="pay" value="weixin">微信</label></span>
+    </div>
+</div>
+
+
 </body>
-<%- fragment_cache('footer', function(){
-    return partial('_partial/footer');
-}) %>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+        $("input[name=pay]").on("click", function () {
+            if($("input[name=pay]:checked").val()=="weixin"){
+                $(".shang_box .shang_payimg .pay_img").addClass("weixin_img");
+            } else {
+                $(".shang_box .shang_payimg .pay_img").removeClass("weixin_img");
+            }
+        })
+        
+
+        /*高亮代码块行号*/
+        
+        $('pre code').each(function(){
+            var lines = $(this).text().trim().split('\n').length, widther='';
+            if (lines>99) {
+                widther = 'widther'
+            }
+            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
+            $(this).addClass('has-numbering ' + widther)
+                    .parent()
+                    .append($numbering);
+            for(var i=1;i<=lines;i++){
+                $numbering.append($('<li/>').text(i));
+            }
+        });
+        
+
+        /*访问数量*/
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+        /* 渲染*/
+        function HTMLDecode(text) {
+            var temp = document.createElement("div");
+            temp.innerHTML = text;
+            var output = temp.innerText || temp.textContent;
+            temp = null;
+            return output;
+        }
+        if (window.mermaid){
+            window.mermaid = null
+        }
+        $.getScript("//cdn.jsdelivr.net/npm/mermaid@8.4.2/dist/mermaid.min.js", function () {
+            var mermaidOptions = JSON.parse(HTMLDecode("{&quot;theme&quot;:&quot;default&quot;,&quot;startOnLoad&quot;:true,&quot;flowchart&quot;:{&quot;useMaxWidth&quot;:true,&quot;htmlLabels&quot;:true}}"))
+            if (window.mermaid) {
+                mermaid.initialize(mermaidOptions)
+                mermaid.contentLoaded()
+            }
+        })
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+    function dashangToggle() {
+        $(".shang_box").fadeToggle();
+        $(".hide_box").fadeToggle();
+    }
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<style>
+    pre{
+        position: relative;
+        margin-bottom: 24px;
+        border-radius: 10px;
+        border: 1px solid #e2dede;
+        background: #FFF;
+        overflow: hidden;
+    }
+    code.has-numbering{
+        margin-left: 30px;
+    }
+    code.has-numbering.widther{
+        margin-left: 35px;
+    }
+    .pre-numbering{
+        margin: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 20px;
+        padding: 0.5em 3px 0.7em 5px;
+        border-right: 1px solid #C3CCD0;
+        text-align: right;
+        color: #AAA;
+        background-color: ;
+    }
+    .pre-numbering.widther {
+        width: 35px;
+    }
+</style>
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 592px;
+    }
+    .nav.fullscreen {
+        margin-left: -592px;
+    }
+    .nav-left {
+        width: 170px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 542px;
+        }
+        .nav.fullscreen {
+            margin-left: -542px;
+        }
+        .nav-left {
+            width: 150px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 542px;
+            margin-left: -542px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+    .nav-right:before {
+        content: ' ';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.3;
+        background: url("/img/hanguoxiao.gif");
+        background-repeat: no-repeat;
+        background-position: 50% 0;
+        -ms-background-size: cover;
+        -o-background-size: cover;
+        -moz-background-size: cover;
+        -webkit-background-size: cover;
+        background-size: cover;
+    }
+    
+
+    
+</style>
+
+
+
+
+
+
+
 </html>
